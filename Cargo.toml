@@ -1,0 +1,41 @@
+[workspace]
+resolver  = "2"
+members   = [
+    "apps/web-dioxus",
+    "apps/desktop-dioxus",
+    "apps/mobile-dioxus",
+
+    "crates/conctr-dioxus-ui",
+    "crates/conctr-dioxus-api",
+
+    "crates/conctr-core",
+    "crates/conctr-connectors",
+    "crates/conctr-transform",
+    "crates/conctr-engine",
+    "crates/conctr-storage",
+    "crates/conctr-auth",
+    "crates/conctr-gateway",
+]
+
+[workspace.dependencies]
+dioxus            = { version = "0.7.1" }
+
+# Dioxus-specific packages
+conctr-dioxus-ui  = { path = "crates/conctr-dioxus-ui" }
+conctr-dioxus-api = { path = "crates/conctr-dioxus-api" }
+
+# CONCTR platform crates
+conctr-core       = { path = "crates/conctr-core" }
+conctr-connectors = { path = "crates/conctr-connectors" }
+conctr-transform  = { path = "crates/conctr-transform" }
+conctr-engine     = { path = "crates/conctr-engine" }
+conctr-storage    = { path = "crates/conctr-storage" }
+conctr-auth       = { path = "crates/conctr-auth" }
+conctr-gateway    = { path = "crates/conctr-gateway" }
+
+[workspace.package]
+authors     = ["Shubham Shinde <shubhamshinde225@gmail.com>"]
+edition     = "2024"
+license     = "MIT OR Apache-2.0"
+publish     = false
+repository  = "https://github.com/shubham225/conctr"

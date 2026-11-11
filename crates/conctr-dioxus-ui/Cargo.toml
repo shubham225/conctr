@@ -1,0 +1,15 @@
+[package]
+name        = "conctr-dioxus-ui"
+version     = "0.1.0"
+authors     = { workspace = true }
+edition     = { workspace = true }
+license     = { workspace = true }
+publish     = { workspace = true }
+repository  = { workspace = true }
+
+[dependencies]
+dioxus            = { workspace = true }
+conctr-dioxus-api = { workspace = true }
+
+[features]
+server = ["conctr-dioxus-api/server"]

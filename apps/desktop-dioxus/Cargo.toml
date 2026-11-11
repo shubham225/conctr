@@ -1,0 +1,17 @@
+[package]
+name        = "conctr-desktop-dioxus"
+version     = "0.1.0"
+authors     = { workspace = true }
+edition     = { workspace = true }
+license     = { workspace = true }
+publish     = { workspace = true }
+repository  = { workspace = true }
+
+[dependencies]
+dioxus            = { workspace = true, features = ["router", "fullstack"] }
+conctr-dioxus-ui  = { workspace = true }
+
+[features]
+default = []
+desktop = ["dioxus/desktop"]
+server  = ["dioxus/server", "conctr-dioxus-ui/server"]
