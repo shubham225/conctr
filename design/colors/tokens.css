@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@500;600;700&display=swap');
+
+/* CONCTR design tokens. Light is default. Dark applies via [data-theme="dark"]
+   or automatically when the OS prefers dark and no theme is forced. */
+:root {
+  --cn-font-display: "Sora", "Inter", system-ui, sans-serif;
+  --cn-font-ui: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --cn-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --cn-fs-display: 3rem;  --cn-fs-h1: 2.25rem; --cn-fs-h2: 1.75rem; --cn-fs-h3: 1.375rem;
+  --cn-fs-h4: 1.125rem;   --cn-fs-body: 1rem;  --cn-fs-small: .875rem; --cn-fs-caption: .75rem;
+  --cn-radius-sm: 6px; --cn-radius-md: 10px; --cn-radius-lg: 14px; --cn-radius-pill: 999px;
+  --cn-space-1: 4px; --cn-space-2: 8px; --cn-space-3: 12px; --cn-space-4: 16px;
+  --cn-space-5: 24px; --cn-space-6: 32px; --cn-space-7: 48px; --cn-space-8: 64px;
+  --cn-ease: cubic-bezier(.2,.7,.2,1); --cn-dur-fast: 120ms; --cn-dur: 200ms;
+}
+:root {
+  --cn-shadow-1: 0 1px 2px rgba(18,25,51,.06), 0 4px 16px rgba(18,25,51,.08);
+  --cn-bg: #F7F8FC;
+  --cn-surface: #FFFFFF;
+  --cn-raised: #FFFFFF;
+  --cn-sunken: #EEF0F7;
+  --cn-border: #E0E3EE;
+  --cn-border-strong: #C4C8D9;
+  --cn-text: #121933;
+  --cn-text-muted: #4B5578;
+  --cn-text-subtle: #6B7494;
+  --cn-primary: #4F46E5;
+  --cn-primary-hover: #4338CA;
+  --cn-primary-soft: #EEF0FF;
+  --cn-on-primary: #FFFFFF;
+  --cn-teal: #14B8A6;
+  --cn-teal-text: #0F766E;
+  --cn-teal-soft: #E6F7F4;
+  --cn-coral: #F2603C;
+  --cn-coral-text: #C2410C;
+  --cn-coral-soft: #FEEFEA;
+  --cn-amber: #F5A524;
+  --cn-amber-text: #B45309;
+  --cn-amber-soft: #FEF4DF;
+  --cn-success: #0F766E;
+  --cn-success-soft: #E6F7F4;
+  --cn-warning: #B45309;
+  --cn-warning-soft: #FEF4DF;
+  --cn-danger: #DC2626;
+  --cn-danger-soft: #FDECEC;
+  --cn-on-danger: #FFFFFF;
+  --cn-info: #4F46E5;
+  --cn-info-soft: #EEF0FF;
+  --cn-focus: #4F46E5;
+}
+[data-theme="dark"] {
+  --cn-shadow-1: 0 0 0 1px rgba(255,255,255,.04), 0 8px 24px rgba(0,0,0,.45);
+  --cn-bg: #0B1020;
+  --cn-surface: #121933;
+  --cn-raised: #1A2244;
+  --cn-sunken: #080C18;
+  --cn-border: #2A3459;
+  --cn-border-strong: #3B4672;
+  --cn-text: #EEF0F7;
+  --cn-text-muted: #AEB4CC;
+  --cn-text-subtle: #8089AA;
+  --cn-primary: #818CF8;
+  --cn-primary-hover: #9AA4FA;
+  --cn-primary-soft: #1E2556;
+  --cn-on-primary: #0B1020;
+  --cn-teal: #2DD4BF;
+  --cn-teal-text: #2DD4BF;
+  --cn-teal-soft: #0F2E34;
+  --cn-coral: #FF8A6B;
+  --cn-coral-text: #FF8A6B;
+  --cn-coral-soft: #3A1F24;
+  --cn-amber: #FBBF24;
+  --cn-amber-text: #FBBF24;
+  --cn-amber-soft: #33290F;
+  --cn-success: #2DD4BF;
+  --cn-success-soft: #0F2E34;
+  --cn-warning: #FBBF24;
+  --cn-warning-soft: #33290F;
+  --cn-danger: #F87171;
+  --cn-danger-soft: #3A1B20;
+  --cn-on-danger: #0B1020;
+  --cn-info: #818CF8;
+  --cn-info-soft: #1E2556;
+  --cn-focus: #A5B0FF;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cn-shadow-1: 0 0 0 1px rgba(255,255,255,.04), 0 8px 24px rgba(0,0,0,.45);
+    --cn-bg: #0B1020;
+    --cn-surface: #121933;
+    --cn-raised: #1A2244;
+    --cn-sunken: #080C18;
+    --cn-border: #2A3459;
+    --cn-border-strong: #3B4672;
+    --cn-text: #EEF0F7;
+    --cn-text-muted: #AEB4CC;
+    --cn-text-subtle: #8089AA;
+    --cn-primary: #818CF8;
+    --cn-primary-hover: #9AA4FA;
+    --cn-primary-soft: #1E2556;
+    --cn-on-primary: #0B1020;
+    --cn-teal: #2DD4BF;
+    --cn-teal-text: #2DD4BF;
+    --cn-teal-soft: #0F2E34;
+    --cn-coral: #FF8A6B;
+    --cn-coral-text: #FF8A6B;
+    --cn-coral-soft: #3A1F24;
+    --cn-amber: #FBBF24;
+    --cn-amber-text: #FBBF24;
+    --cn-amber-soft: #33290F;
+    --cn-success: #2DD4BF;
+    --cn-success-soft: #0F2E34;
+    --cn-warning: #FBBF24;
+    --cn-warning-soft: #33290F;
+    --cn-danger: #F87171;
+    --cn-danger-soft: #3A1B20;
+    --cn-on-danger: #0B1020;
+    --cn-info: #818CF8;
+    --cn-info-soft: #1E2556;
+    --cn-focus: #A5B0FF;
+  }
+}

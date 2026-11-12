@@ -1,10 +1,35 @@
-# CONCTR
+<p align="center">
+  <picture>
+    <source
+      media="(prefers-color-scheme: dark)"
+      srcset="assets/readme/logo/horizontal-color-on-dark.svg"
+    >
+    <source
+      media="(prefers-color-scheme: light)"
+      srcset="assets/readme/logo/horizontal-color.svg"
+    >
+    <img
+      src="assets/readme/logo/horizontal-color.svg"
+      height="64"
+      alt="CONCTR Logo"
+    >
+  </picture>
+</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/Rust-1.99.1-orange?style=flat-square&logo=rust" alt="Rust 1.99.1">
+  <img src="https://img.shields.io/badge/Cargo-1.99.1-orange?style=flat-square&logo=rust" alt="Cargo 1.99.1">
+  <img src="https://img.shields.io/badge/Dioxus-0.7.10-purple?style=flat-square" alt="Dioxus 0.7.10">
+  <a href="LICENSE-MIT">
+    <img src="https://img.shields.io/badge/license-MIT%20%2F%20Apache--2.0-blue?style=flat-square" alt="MIT / Apache-2.0 License">
+  </a>
+  <a href="https://github.com/shubham225/CONCTR">
+    <img src="https://img.shields.io/github/last-commit/shubham225/CONCTR?style=flat-square" alt="Last Commit">
+  </a>
+</p>
 
-**Where systems meet.**
+**CONCTR (pronounced Connector)** is an enterprise integration platform designed to connect applications, APIs, services, and data systems through a unified integration layer.
 
-CONCTR (pronounced Connector) is an enterprise integration platform
-designed to connect applications, APIs, services, and data systems
-through a unified integration layer.
+---
 
 ## Vision
 
@@ -35,10 +60,11 @@ CONCTR/
 │   ├── desktop-dioxus/
 │   └── mobile-dioxus/
 ├── crates/
+|   ├── conctr-api/
+│   ├── conctr-api-dioxus/
 │   ├── conctr-core/
 │   ├── conctr-auth/
 │   ├── conctr-connectors/
-│   ├── conctr-dioxus-api/
 │   ├── conctr-engine/
 │   ├── conctr-gateway/
 │   ├── conctr-storage/
@@ -51,6 +77,8 @@ CONCTR/
 ├── assets/
 ├── Cargo.toml
 ├── Cargo.lock
+├── LICENSE-MIT
+├── LICENSE-APACHE
 ├── README.md
 └── CONTRIBUTING.md
 ```
@@ -83,22 +111,13 @@ dx serve --package conctr-web-dioxus
 4. Clear separation of concerns.
 5. Explicit dependency boundaries.
 
-## Documentation
-
-- [Product Overview](docs/product/overview.md)
-- [Architecture](docs/architecture/README.md)
-- [System Overview](docs/architecture/system-overview.md)
-- [Development Setup](docs/development/setup.md)
-- [Workspace Guide](docs/development/workspace.md)
-- [Architecture Decision 0001](docs/architecture/decisions/0001-framework-independent-core.md)
-- [Contributing](CONTRIBUTING.md)
-
 ## Project Status
 
-CONCTR is in its initial development stage.
-The current repository establishes the workspace structure and
-foundational application scaffolding.
+CONCTR is in its initial development stage. The current repository establishes the workspace structure and foundational application scaffolding.
 
 ## License
 
-To be determined.
+CONCTR is dual-licensed under your choice of:
+
+- [MIT License](LICENSE-MIT)
+- [Apache License 2.0](LICENSE-APACHE)

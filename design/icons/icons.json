@@ -1,0 +1,62 @@
+[
+  {
+    "id": "rest",
+    "label": "REST / HTTP",
+    "file": "icons/color/rest.svg"
+  },
+  {
+    "id": "soap",
+    "label": "SOAP / XML",
+    "file": "icons/color/soap.svg"
+  },
+  {
+    "id": "odata",
+    "label": "OData",
+    "file": "icons/color/odata.svg"
+  },
+  {
+    "id": "graphql",
+    "label": "GraphQL",
+    "file": "icons/color/graphql.svg"
+  },
+  {
+    "id": "grpc",
+    "label": "gRPC",
+    "file": "icons/color/grpc.svg"
+  },
+  {
+    "id": "webhook",
+    "label": "Webhook / events",
+    "file": "icons/color/webhook.svg"
+  },
+  {
+    "id": "oauth2",
+    "label": "OAuth 2.0",
+    "file": "icons/color/oauth2.svg"
+  },
+  {
+    "id": "apikey",
+    "label": "API key",
+    "file": "icons/color/apikey.svg"
+  },
+  {
+    "id": "basic",
+    "label": "Basic auth",
+    "file": "icons/color/basic.svg"
+  },
+  {
+    "id": "jwt",
+    "label": "JWT / bearer",
+    "file": "icons/color/jwt.svg"
+  },
+  {
+    "id": "mtls",
+    "label": "mTLS",
+    "file": "icons/color/mtls.svg"
+  },
+  {
+    "id": "saml",
+    "label": "SAML / SSO",
+    "file": "icons/color/saml.svg"
+  }
+]

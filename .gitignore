@@ -54,3 +54,5 @@ lcov.info
 # Local configuration and cache
 .local/
 .cache/
+
+**/dioxus-test/**

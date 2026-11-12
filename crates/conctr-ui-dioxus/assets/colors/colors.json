@@ -1,0 +1,90 @@
+{
+  "brand": {
+    "indigo": {
+      "light": "#4F46E5",
+      "dark": "#818CF8"
+    },
+    "teal": {
+      "light": "#14B8A6",
+      "dark": "#2DD4BF"
+    },
+    "coral": {
+      "light": "#F2603C",
+      "dark": "#FF8A6B"
+    },
+    "amber": {
+      "light": "#F5A524",
+      "dark": "#FBBF24"
+    }
+  },
+  "themes": {
+    "light": {
+      "bg": "#F7F8FC",
+      "surface": "#FFFFFF",
+      "raised": "#FFFFFF",
+      "sunken": "#EEF0F7",
+      "border": "#E0E3EE",
+      "border-strong": "#C4C8D9",
+      "text": "#121933",
+      "text-muted": "#4B5578",
+      "text-subtle": "#6B7494",
+      "primary": "#4F46E5",
+      "primary-hover": "#4338CA",
+      "primary-soft": "#EEF0FF",
+      "on-primary": "#FFFFFF",
+      "teal": "#14B8A6",
+      "teal-text": "#0F766E",
+      "teal-soft": "#E6F7F4",
+      "coral": "#F2603C",
+      "coral-text": "#C2410C",
+      "coral-soft": "#FEEFEA",
+      "amber": "#F5A524",
+      "amber-text": "#B45309",
+      "amber-soft": "#FEF4DF",
+      "success": "#0F766E",
+      "success-soft": "#E6F7F4",
+      "warning": "#B45309",
+      "warning-soft": "#FEF4DF",
+      "danger": "#DC2626",
+      "danger-soft": "#FDECEC",
+      "on-danger": "#FFFFFF",
+      "info": "#4F46E5",
+      "info-soft": "#EEF0FF",
+      "focus": "#4F46E5"
+    },
+    "dark": {
+      "bg": "#0B1020",
+      "surface": "#121933",
+      "raised": "#1A2244",
+      "sunken": "#080C18",
+      "border": "#2A3459",
+      "border-strong": "#3B4672",
+      "text": "#EEF0F7",
+      "text-muted": "#AEB4CC",
+      "text-subtle": "#8089AA",
+      "primary": "#818CF8",
+      "primary-hover": "#9AA4FA",
+      "primary-soft": "#1E2556",
+      "on-primary": "#0B1020",
+      "teal": "#2DD4BF",
+      "teal-text": "#2DD4BF",
+      "teal-soft": "#0F2E34",
+      "coral": "#FF8A6B",
+      "coral-text": "#FF8A6B",
+      "coral-soft": "#3A1F24",
+      "amber": "#FBBF24",
+      "amber-text": "#FBBF24",
+      "amber-soft": "#33290F",
+      "success": "#2DD4BF",
+      "success-soft": "#0F2E34",
+      "warning": "#FBBF24",
+      "warning-soft": "#33290F",
+      "danger": "#F87171",
+      "danger-soft": "#3A1B20",
+      "on-danger": "#0B1020",
+      "info": "#818CF8",
+      "info-soft": "#1E2556",
+      "focus": "#A5B0FF"
+    }
+  }
+}

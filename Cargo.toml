@@ -5,8 +5,8 @@ members   = [
     "apps/desktop-dioxus",
     "apps/mobile-dioxus",
 
-    "crates/conctr-dioxus-ui",
-    "crates/conctr-dioxus-api",
+    "crates/conctr-ui-dioxus",
+    "crates/conctr-api-dioxus",
 
     "crates/conctr-core",
     "crates/conctr-connectors",
@@ -14,17 +14,18 @@ members   = [
     "crates/conctr-engine",
     "crates/conctr-storage",
     "crates/conctr-auth",
-    "crates/conctr-gateway",
+    "crates/conctr-gateway", "crates/conctr-api",
 ]
 
 [workspace.dependencies]
 dioxus            = { version = "0.7.1" }
 
 # Dioxus-specific packages
-conctr-dioxus-ui  = { path = "crates/conctr-dioxus-ui" }
-conctr-dioxus-api = { path = "crates/conctr-dioxus-api" }
+conctr-ui-dioxus  = { path = "crates/conctr-ui-dioxus" }
+conctr-api-dioxus = { path = "crates/conctr-api-dioxus" }
 
 # CONCTR platform crates
+conctr-api       = { path = "crates/conctr-api" }
 conctr-core       = { path = "crates/conctr-core" }
 conctr-connectors = { path = "crates/conctr-connectors" }
 conctr-transform  = { path = "crates/conctr-transform" }

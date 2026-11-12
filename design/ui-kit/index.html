@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conctr UI kit</title>
+<link rel="icon" href="../logo/favicon/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../colors/tokens.css">
+<link rel="stylesheet" href="conctr-ui.css">
+<style>
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 96px; }
+  h1 + p { margin-bottom: 40px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
+  section { margin-bottom: 48px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .stack { display: grid; gap: 16px; }
+  h2 { padding-bottom: 8px; border-bottom: 1px solid var(--cn-border); margin-bottom: 20px; }
+</style>
+</head>
+<body class="cn-body">
+<div class="wrap">
+  <header class="top">
+    <div>
+      <img class="cn-logo--light" src="../logo/svg/horizontal-color.svg" height="40" alt="Conctr">
+      <img class="cn-logo--dark" src="../logo/svg/horizontal-color-on-dark.svg" height="40" alt="Conctr">
+    </div>
+    <button class="cn-btn cn-btn--secondary cn-btn--sm" id="theme" type="button">Switch theme</button>
+  </header>
+
+  <h1>UI kit</h1>
+  <p>Components for the Conctr console and docs. Every color comes from <code>--cn-*</code> tokens, so light and dark mode work without extra styles.</p>
+
+  <section>
+    <h2>Connection flow</h2>
+    <div class="cn-card cn-card--raised">
+      <div class="cn-flow">
+        <div class="cn-node"><b>SAP S/4HANA</b><span class="cn-badge"><i class="cn-shape" data-s="triangle" style="--c:var(--cn-amber)"></i>OData v4</span></div>
+        <div class="cn-link"></div>
+        <div class="cn-hub">CONCTR</div>
+        <div class="cn-link"></div>
+        <div class="cn-node"><b>Salesforce</b><span class="cn-badge"><i class="cn-shape" data-s="circle" style="--c:var(--cn-teal)"></i>REST + OAuth 2.0</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Buttons</h2>
+    <div class="row">
+      <button class="cn-btn cn-btn--primary" type="button">Create connection</button>
+      <button class="cn-btn cn-btn--secondary" type="button">Test connection</button>
+      <button class="cn-btn cn-btn--ghost" type="button">View logs</button>
+      <button class="cn-btn cn-btn--danger" type="button">Delete connection</button>
+      <button class="cn-btn cn-btn--primary" type="button" disabled>Disabled</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Forms</h2>
+    <div class="grid2">
+      <div class="cn-field"><label class="cn-label" for="n">Connection name</label><input class="cn-input" id="n" placeholder="Orders to ERP"><span class="cn-hint">Shown in logs and alerts.</span></div>
+      <div class="cn-field"><label class="cn-label" for="p">Protocol</label><select class="cn-select" id="p"><option>REST</option><option>SOAP</option><option>OData</option></select></div>
+      <div class="cn-field"><label class="cn-label" for="u">Endpoint URL</label><input class="cn-input" id="u" value="erp.internal/orders" aria-invalid="true"><span class="cn-error">Add the scheme, for example https://</span></div>
+      <div class="cn-field"><span class="cn-label">Retry failed calls</span><label class="row"><input type="checkbox" class="cn-switch" checked> <span class="cn-hint">Up to 3 times, with backoff</span></label></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Protocol and status badges</h2>
+    <div class="row">
+      <span class="cn-badge"><i class="cn-shape" data-s="circle" style="--c:var(--cn-teal)"></i>REST</span>
+      <span class="cn-badge"><i class="cn-shape" data-s="square" style="--c:var(--cn-coral)"></i>SOAP</span>
+      <span class="cn-badge"><i class="cn-shape" data-s="triangle" style="--c:var(--cn-amber)"></i>OData</span>
+      <span class="cn-badge"><i class="cn-shape" data-s="diamond" style="--c:var(--cn-teal)"></i>GraphQL</span>
+      <span class="cn-badge"><i class="cn-shape" data-s="hex" style="--c:var(--cn-primary)"></i>gRPC</span>
+      <span class="cn-badge"><i class="cn-shape" data-s="ring" style="--c:var(--cn-coral)"></i>Webhook</span>
+      <span class="cn-badge cn-badge--success">Healthy</span>
+      <span class="cn-badge cn-badge--warning">Degraded</span>
+      <span class="cn-badge cn-badge--danger">Failing</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tabs and table</h2>
+    <div class="cn-tabs" role="tablist">
+      <button class="cn-tab" role="tab" aria-selected="true">Connections</button>
+      <button class="cn-tab" role="tab" aria-selected="false">Mappings</button>
+      <button class="cn-tab" role="tab" aria-selected="false">Run history</button>
+    </div>
+    <table class="cn-table">
+      <thead><tr><th>Connection</th><th>Source</th><th>Target</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Orders to ERP</td><td><span class="cn-badge"><i class="cn-shape" data-s="circle" style="--c:var(--cn-teal)"></i>REST</span></td><td><span class="cn-badge"><i class="cn-shape" data-s="triangle" style="--c:var(--cn-amber)"></i>OData</span></td><td><span class="cn-badge cn-badge--success">Healthy</span></td></tr>
+        <tr><td>Invoices to CRM</td><td><span class="cn-badge"><i class="cn-shape" data-s="square" style="--c:var(--cn-coral)"></i>SOAP</span></td><td><span class="cn-badge"><i class="cn-shape" data-s="circle" style="--c:var(--cn-teal)"></i>REST</span></td><td><span class="cn-badge cn-badge--warning">Degraded</span></td></tr>
+        <tr><td>Stock sync</td><td><span class="cn-badge"><i class="cn-shape" data-s="triangle" style="--c:var(--cn-amber)"></i>OData</span></td><td><span class="cn-badge"><i class="cn-shape" data-s="square" style="--c:var(--cn-coral)"></i>SOAP</span></td><td><span class="cn-badge cn-badge--danger">Failing</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Alerts and code</h2>
+    <div class="stack">
+      <div class="cn-alert cn-alert--danger"><div><strong>Stock sync failed at the target.</strong><br>The SOAP endpoint returned 401. Check the credentials for this connection, then run it again.</div></div>
+      <div class="cn-alert cn-alert--info"><div><strong>OAuth token refreshes automatically.</strong><br>You don't need to update this connection when the token expires.</div></div>
+      <pre class="cn-code"><span class="c"># Map an OData order to a REST payload</span>
+<span class="k">source</span>: sap-s4  <span class="c">(odata)</span>
+<span class="k">target</span>: salesforce  <span class="c">(rest, oauth2)</span>
+<span class="k">map</span>:
+  Account.Name: <span class="s">"$.SoldToParty.Name"</span></pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>Empty state</h2>
+    <div class="cn-card" style="text-align:center; padding:48px 24px">
+      <img class="cn-logo--light" src="../logo/svg/icon-color.svg" width="48" alt="">
+      <img class="cn-logo--dark" src="../logo/svg/icon-color-on-dark.svg" width="48" alt="">
+      <h3 style="margin-top:12px">No connections yet</h3>
+      <p style="margin:0 auto 20px">Connect two systems to start moving data between them.</p>
+      <button class="cn-btn cn-btn--primary" type="button">Create connection</button>
+    </div>
+  </section>
+</div>
+<script>
+  document.getElementById('theme').addEventListener('click', function () {
+    var r = document.documentElement;
+    var dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    r.dataset.theme = dark ? 'light' : 'dark';
+  });
+</script>
+</body>
+</html>
