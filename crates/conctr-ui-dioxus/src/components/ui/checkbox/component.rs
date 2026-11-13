@@ -9,7 +9,7 @@ struct Styles;
 pub fn Checkbox(props: CheckboxProps) -> Element {
     rsx! {
         checkbox::Checkbox {
-            class: Styles::dx_checkbox,
+            class: format!("{} cn-check", Styles::dx_checkbox),
             checked: props.checked,
             default_checked: props.default_checked,
             required: props.required,

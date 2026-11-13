@@ -73,8 +73,11 @@ Edit a control in `components/ui/<name>/component.rs` and its adjacent
 product-specific pages, fetching and state belong in the product application.
 Composed components may use UI controls and primitives; lower layers must not
 import compositions. There is no runtime registry lookup or code generator.
-Shared kit recipes remain in `assets/styles/conctr-ui.css`; CSS modules adapt
-those recipes to primitive markup. See [UPSTREAM.md](UPSTREAM.md) for provenance
+Shared recipes and semantic theme properties live in `assets/styles/main.css`;
+CSS modules retain component structure and behavior. See the
+[theming guide](../../docs/development/theming.md) for custom brands, density,
+scoped providers and the stylesheet contract. `MAIN_CSS` is the main asset;
+`CONCTR_UI_CSS` remains a compatibility alias. See [UPSTREAM.md](UPSTREAM.md) for provenance
 and [presentation architecture](../../docs/architecture/dioxus-presentation.md)
 for boundaries and the proposed shared multi-platform application structure.
 

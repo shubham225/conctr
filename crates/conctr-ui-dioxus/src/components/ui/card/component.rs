@@ -10,7 +10,7 @@ pub fn Card(
 ) -> Element {
     rsx! {
         div {
-            class: Styles::dx_card,
+            class: format!("{} cn-card", Styles::dx_card),
             "data-slot": "card",
             ..attributes,
             {children}

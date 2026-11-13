@@ -189,6 +189,18 @@
     "decisions": "docs/architecture/decisions/README.md",
     "roadmap": "docs/roadmap/milestones.md",
     "design": "design/docs/AI-INSTRUCTIONS.md",
-    "prototype": "docs/experience/prototype/index.html"
-  }
+    "prototype": "docs/experience/prototype/index.html",
+    "repository_instructions": "AGENTS.md",
+    "instruction_discovery": "docs/ai/README.md",
+    "theming": "docs/development/theming.md"
+  },
+  "instruction_entrypoints": [
+    "AGENTS.md",
+    "apps/AGENTS.md",
+    "crates/conctr-ui-dioxus/AGENTS.md",
+    "docs/AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    ".github/copilot-instructions.md"
+  ]
 }

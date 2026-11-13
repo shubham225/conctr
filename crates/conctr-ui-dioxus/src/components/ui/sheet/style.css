@@ -45,9 +45,9 @@
   box-sizing: border-box;
   flex-direction: column;
   border: none;
-  background: var(--primary-color-2);
+  background: var(--cn-surface);
   box-shadow: var(--cn-shadow-4);
-  color: var(--secondary-color-4);
+  color: var(--cn-text);
   font-family: var(--cn-font-ui);
   gap: 1rem;
   will-change: transform;
@@ -63,13 +63,13 @@
 
 .dx-sheet[data-side="right"] {
   right: 0;
-  border-left: 1px solid var(--primary-color-6);
+  border-left: 1px solid var(--cn-border);
   transform: translateX(100%);
 }
 
 .dx-sheet[data-side="left"] {
   left: 0;
-  border-right: 1px solid var(--primary-color-6);
+  border-right: 1px solid var(--cn-border);
   transform: translateX(-100%);
 }
 
@@ -81,13 +81,13 @@
 
 .dx-sheet[data-side="top"] {
   top: 0;
-  border-bottom: 1px solid var(--primary-color-6);
+  border-bottom: 1px solid var(--cn-border);
   transform: translateY(-100%);
 }
 
 .dx-sheet[data-side="bottom"] {
   bottom: 0;
-  border-top: 1px solid var(--primary-color-6);
+  border-top: 1px solid var(--cn-border);
   transform: translateY(100%);
 }
 
@@ -220,14 +220,14 @@
 
 .dx-sheet-title {
   margin: 0;
-  color: var(--secondary-color-4);
+  color: var(--cn-text);
   font-size: var(--cn-fs-body-lg);
   font-weight: 600;
 }
 
 .dx-sheet-description {
   margin: 0;
-  color: var(--secondary-color-5);
+  color: var(--cn-text-muted);
   font-size: var(--cn-fs-small);
 }
 
@@ -244,30 +244,27 @@
   border: none;
   border-radius: 4px;
   background: none;
-  color: var(--primary-color-7);
+  color: var(--cn-border-strong);
   cursor: pointer;
   transition: color 150ms ease, background-color 150ms ease;
 }
 
 .dx-sheet-close:hover {
-  color: var(--secondary-color-4);
+  color: var(--cn-text);
 }
 
-/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
-
-:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+/* Component-specific adaptations of the shared main.css recipes. */
 
 .dx-sheet-root { z-index: var(--cn-z-overlay); }
-.dx-sheet { z-index: var(--cn-z-overlay); background: var(--cn-raised); gap: var(--cn-space-6); max-height: 100dvh; overflow-y: auto; font: var(--cn-fw-regular) var(--cn-fs-body)/var(--cn-lh-body) var(--cn-font-ui); }
+.dx-sheet { z-index: var(--cn-z-overlay); background: var(--cn-raised); gap: var(--cn-space-6); max-height: 100dvh; overflow-y: auto; font: var(--cn-font-body); }
 .dx-sheet-header, .dx-sheet-footer { padding: var(--cn-space-6); gap: var(--cn-space-3); }
 .dx-sheet-header { padding-right: var(--cn-space-16); border-bottom: var(--cn-border-1) solid var(--cn-border); }
 .dx-sheet-footer { flex-direction: row; flex-wrap: wrap; justify-content: flex-end; border-top: var(--cn-border-1) solid var(--cn-border); }
-.dx-sheet .dx-sheet-title { margin: 0; font: var(--cn-fw-h4) var(--cn-fs-h4)/var(--cn-lh-h4) var(--cn-font-display); letter-spacing: var(--cn-ls-h4); }
-.dx-sheet .dx-sheet-description { margin: 0; font: var(--cn-fw-regular) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui); }
+.dx-sheet .dx-sheet-title { margin: 0; font: var(--cn-font-title); letter-spacing: var(--cn-ls-h4); }
+.dx-sheet .dx-sheet-description { margin: 0; font: var(--cn-font-small); }
 .dx-sheet-close { width: var(--cn-control-sm); height: var(--cn-control-sm); color: var(--cn-text-muted); border-radius: var(--cn-radius-sm); }
 .dx-sheet-close:hover { background: var(--cn-sunken); }
-.dx-sheet-footer > button { display: inline-flex; align-items: center; justify-content: center; min-height: var(--cn-control-md); padding: 0 var(--cn-space-4); border: var(--cn-border-1) solid var(--cn-border-strong); border-radius: var(--cn-radius-md); font: var(--cn-fw-medium) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui); cursor: pointer; }
+.dx-sheet-footer > button { display: inline-flex; align-items: center; justify-content: center; min-height: var(--cn-control-md); padding: 0 var(--cn-space-4); border: var(--cn-border-1) solid var(--cn-border-strong); border-radius: var(--cn-radius-md); font: var(--cn-font-label); cursor: pointer; }
 .dx-sheet-footer > button:not([data-style]) { background: var(--cn-surface); color: var(--cn-text); }
 .dx-sheet-footer > button:not([data-style]):hover { background: var(--cn-sunken); }
 /* Reduced motion must also resolve the closed-position transform. */

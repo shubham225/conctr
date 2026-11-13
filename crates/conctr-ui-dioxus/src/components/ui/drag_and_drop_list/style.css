@@ -24,11 +24,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 14px 12px 10px;
-  border: 1px solid var(--primary-color-6);
+  border: 1px solid var(--cn-border);
   border-radius: 10px;
-  background-color: var(--light, var(--cn-border))
-    var(--dark, var(--primary-color-4));
-  color: var(--secondary-color-4);
+  background-color: var(--cn-border);
+  color: var(--cn-text);
   cursor: grab;
   list-style: none;
   outline: none;
@@ -47,8 +46,8 @@
   .dx-dnd-list-item:hover {
     --gap-shift: -1px;
 
-    border-color: var(--primary-color-7);
-    background-color: var(--light, var(--cn-border)) var(--dark, var(--primary-color-6));
+    border-color: var(--cn-border-strong);
+    background-color: var(--cn-border);
     box-shadow: var(--cn-shadow-1);
   }
 
@@ -60,9 +59,9 @@
 }
 
 .dx-dnd-list-item:focus-visible {
-  border-color: var(--focused-border-color);
+  border-color: var(--cn-focus);
   box-shadow: 0 0 0 3px
-    var(--light, var(--cn-scrim)) var(--dark, var(--cn-scrim));
+    var(--cn-scrim) ;
 }
 
 .dx-dnd-list-item[data-is-grabbing="true"] {
@@ -70,7 +69,7 @@
   --tilt: 0deg;
 
   border-style: dashed;
-  border-color: var(--primary-color-7);
+  border-color: var(--cn-border-strong);
   background-color: transparent;
   box-shadow: none;
   cursor: grabbing;
@@ -80,22 +79,22 @@
 
 .dx-dnd-list-item[data-is-grabbing="true"][data-drop-at-origin="true"] {
   border-style: solid;
-  border-color: var(--focused-border-color);
+  border-color: var(--cn-focus);
   box-shadow: 0 0 0 3px
-    var(--light, var(--cn-scrim)) var(--dark, var(--cn-scrim));
+    var(--cn-scrim) ;
   opacity: 0.75;
 }
 
 .dx-item-icon {
   flex-shrink: 0;
   margin-right: 6px;
-  color: var(--secondary-color-6);
+  color: var(--cn-text-subtle);
   transition: color 150ms ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .dx-dnd-list-item:hover .dx-item-icon {
-    color: var(--secondary-color-2);
+    color: var(--cn-text);
   }
 }
 
@@ -120,7 +119,7 @@
   border-radius: 6px;
   margin-left: 10px;
   background-color: transparent;
-  color: var(--secondary-color-6);
+  color: var(--cn-text-subtle);
   cursor: pointer;
   transition:
     background-color 120ms ease,
@@ -129,9 +128,8 @@
 }
 
 .dx-remove-button:hover {
-  background-color: var(--light, var(--primary-color-5))
-    var(--dark, var(--primary-color-6));
-  color: var(--secondary-color-2);
+  background-color: var(--cn-sunken);
+  color: var(--cn-text);
 }
 
 .dx-remove-button:active {
@@ -139,7 +137,7 @@
 }
 
 .dx-remove-button:focus-visible {
-  outline: 2px solid var(--focused-border-color);
+  outline: 2px solid var(--cn-focus);
   outline-offset: 2px;
 }
 
@@ -154,7 +152,7 @@
   left: 10px;
   height: 3px;
   border-radius: 999px;
-  background-color: var(--focused-border-color);
+  background-color: var(--cn-focus);
   content: "";
   opacity: 0;
   pointer-events: none;
@@ -199,8 +197,3 @@
 
   transform-origin: center top;
 }
-
-/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
-
-:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

@@ -2,7 +2,47 @@
 
 Use [AI-INSTRUCTIONS.md](AI-INSTRUCTIONS.md) for shared product/architecture
 context and [project.json](project.json) for the dated machine-readable inventory.
-The repository root AGENTS.md points here; user instructions still take priority.
+The repository root [AGENTS.md](../../AGENTS.md) owns development policy and
+points here; explicit user instructions still take priority within the tool's
+instruction hierarchy.
+
+## Automatically discovered entry points
+
+| File | Purpose |
+| --- | --- |
+| [AGENTS.md](../../AGENTS.md) | Canonical repository policy for agents supporting this convention, including Cursor |
+| [apps/AGENTS.md](../../apps/AGENTS.md) | Launcher/shared-app ownership and showcase rules |
+| [UI library AGENTS.md](../../crates/conctr-ui-dioxus/AGENTS.md) | Component layers, shared styles, theming and browser verification |
+| [docs/AGENTS.md](../AGENTS.md) | Documentation status, inventories and maintenance |
+| [CLAUDE.md](../../CLAUDE.md) | Claude Code compatibility entry importing root AGENTS.md |
+| [GEMINI.md](../../GEMINI.md) | Gemini CLI entry directing it to canonical and scoped instructions |
+| [Copilot instructions](../../.github/copilot-instructions.md) | Repository-wide GitHub Copilot entry, with essential guards and links |
+
+Keep the tool entry files small. Update policy in root/scoped AGENTS.md and the
+owning contract, rather than maintaining different rules for each assistant.
+No duplicate Cursor rule is needed: Cursor supports root and nested AGENTS.md.
+Claude's entry imports the root explicitly for compatibility; it also directs
+the agent to read scoped AGENTS.md before edits. Gemini/Copilot links are reading
+instructions, not a promise that linked documents are automatically inlined.
+
+Discovery depends on the installed tool, trust/settings and session context.
+Start a new session or refresh project context after edits and inspect the tool's
+loaded instructions. These files do not change global configuration, permissions,
+models, hooks or external connections.
+
+For **Zed Agent**, the documented loader selects the first supported project
+instruction file. In this repository `.github/copilot-instructions.md` takes
+precedence over root AGENTS.md, so that entry explicitly directs it to the
+canonical policy. External ACP agents use their own discovery mechanisms; Zed's
+loader does not configure every external agent. Do not add a legacy `.rules` file
+that silently shadows these entries.
+
+Official discovery references, checked 2026-11-13:
+[Cursor rules](https://cursor.com/docs/rules),
+[Claude memory/imports](https://code.claude.com/docs/en/memory),
+[Gemini project context](https://geminicli.com/docs/cli/gemini-md/),
+[Copilot repository instructions](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions),
+[Zed instructions](https://zed.dev/docs/ai/instructions).
 
 ## Skills included
 
@@ -15,6 +55,25 @@ These skills live under `docs/` for review and portability. Their presence does
 not automatically register them with every AI tool. Ask an agent to read the
 SKILL.md explicitly, or install/link it into the tool's supported project skill
 location when desired. This task does not alter global AI configuration.
+
+## Context to load for a task
+
+Root/scoped instructions establish the rules. Then read AI-INSTRUCTIONS.md and
+only the relevant ownership/contracts: current state for progress claims, crate
+map for code placement, execution/security contracts for platform behavior, or
+design/presentation/theming contracts for UI work. Follow relevant links rather
+than loading the entire documentation tree into every prompt.
+
+`project.json` records instruction entry paths as well as dated package evidence.
+After changing an entry point, link or inventory, run:
+
+```sh
+python3 docs/development/scripts/check_docs.py
+```
+
+The checker verifies local Markdown links, standalone `@file` imports and declared
+instruction entry paths. It does not launch each AI product or prove that a local
+editor has enabled its instruction loader.
 
 ## Example requests
 

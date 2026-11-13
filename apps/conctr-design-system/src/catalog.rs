@@ -617,17 +617,13 @@ mod tests {
     }
 
     #[test]
-    fn bundled_reference_and_shared_styles_match_the_design_kit() {
+    fn bundled_reference_and_palette_match_the_design_kit() {
         assert_eq!(
             include_str!("../assets/reference/ui-kit/index.html"),
             include_str!("../../../design/ui-kit/index.html")
         );
         assert_eq!(
             include_str!("../assets/reference/ui-kit/conctr-ui.css"),
-            include_str!("../../../design/ui-kit/conctr-ui.css")
-        );
-        assert_eq!(
-            include_str!("../../../crates/conctr-ui-dioxus/assets/styles/conctr-ui.css"),
             include_str!("../../../design/ui-kit/conctr-ui.css")
         );
         assert_eq!(

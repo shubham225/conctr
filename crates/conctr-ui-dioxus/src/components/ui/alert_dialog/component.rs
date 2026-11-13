@@ -11,14 +11,14 @@ struct Styles;
 pub fn AlertDialog(props: AlertDialogRootProps) -> Element {
     rsx! {
         alert_dialog::AlertDialogRoot {
-            class: Styles::dx_alert_dialog_backdrop,
+            class: format!("{} cn-dialog-backdrop", Styles::dx_alert_dialog_backdrop),
             id: props.id,
             default_open: props.default_open,
             open: props.open,
             on_open_change: props.on_open_change,
             attributes: props.attributes,
             alert_dialog::AlertDialogContent {
-                class: Styles::dx_alert_dialog.to_string(),
+                class: format!("{} cn-modal cn-dialog", Styles::dx_alert_dialog),
                 {props.children}
             }
         }
@@ -29,7 +29,7 @@ pub fn AlertDialog(props: AlertDialogRootProps) -> Element {
 pub fn AlertDialogTitle(props: AlertDialogTitleProps) -> Element {
     rsx! {
         alert_dialog::AlertDialogTitle {
-            class: Styles::dx_alert_dialog_title,
+            class: format!("{} cn-dialog-title", Styles::dx_alert_dialog_title),
             attributes: props.attributes,
             {props.children}
         }
@@ -40,7 +40,7 @@ pub fn AlertDialogTitle(props: AlertDialogTitleProps) -> Element {
 pub fn AlertDialogDescription(props: AlertDialogDescriptionProps) -> Element {
     rsx! {
         alert_dialog::AlertDialogDescription {
-            class: Styles::dx_alert_dialog_description,
+            class: format!("{} cn-dialog-description", Styles::dx_alert_dialog_description),
             attributes: props.attributes,
             {props.children}
         }
@@ -50,7 +50,7 @@ pub fn AlertDialogDescription(props: AlertDialogDescriptionProps) -> Element {
 #[component]
 pub fn AlertDialogActions(props: AlertDialogActionsProps) -> Element {
     rsx! {
-        alert_dialog::AlertDialogActions { class: Styles::dx_alert_dialog_actions, attributes: props.attributes, {props.children} }
+        alert_dialog::AlertDialogActions { class: format!("{} cn-dialog-actions", Styles::dx_alert_dialog_actions), attributes: props.attributes, {props.children} }
     }
 }
 
@@ -59,7 +59,7 @@ pub fn AlertDialogCancel(props: AlertDialogCancelProps) -> Element {
     rsx! {
         alert_dialog::AlertDialogCancel {
             on_click: props.on_click,
-            class: Styles::dx_alert_dialog_cancel,
+            class: format!("{} cn-btn cn-btn--secondary", Styles::dx_alert_dialog_cancel),
             attributes: props.attributes,
             {props.children}
         }
@@ -70,7 +70,7 @@ pub fn AlertDialogCancel(props: AlertDialogCancelProps) -> Element {
 pub fn AlertDialogAction(props: AlertDialogActionProps) -> Element {
     rsx! {
         alert_dialog::AlertDialogAction {
-            class: Styles::dx_alert_dialog_action,
+            class: format!("{} cn-btn cn-btn--danger", Styles::dx_alert_dialog_action),
             on_click: props.on_click,
             attributes: props.attributes,
             {props.children}

@@ -44,7 +44,10 @@ pub fn DropdownMenuTrigger(props: DropdownMenuTriggerProps) -> Element {
 #[component]
 pub fn DropdownMenuContent(props: DropdownMenuContentProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_dropdown_menu_content,
+        class: format!(
+            "{} cn-popup cn-popup--bordered",
+            Styles::dx_dropdown_menu_content
+        ),
     });
     let merged = merge_attributes(vec![base, props.attributes.clone()]);
 

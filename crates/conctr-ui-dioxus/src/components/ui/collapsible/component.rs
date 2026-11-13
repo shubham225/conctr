@@ -40,7 +40,7 @@ pub fn CollapsibleTrigger(props: CollapsibleTriggerProps) -> Element {
             if show_icon {
                 ChevronsUpDown {
                     size: "1rem",
-                    stroke: "var(--secondary-color-3)",
+                    stroke: "var(--cn-text)",
                 }
             }
         }
@@ -66,7 +66,7 @@ pub fn CollapsibleItem(
 ) -> Element {
     rsx! {
         div {
-            border: "1px solid var(--primary-color-6)",
+            border: "1px solid var(--cn-border)",
             border_radius: "0.5rem",
             padding: "1rem",
             ..attributes,
@@ -86,7 +86,7 @@ pub fn CollapsibleList(
             flex_direction: "column",
             gap: "0.5rem",
             max_width: "20rem",
-            color: "var(--secondary-color-3)",
+            color: "var(--cn-text)",
             ..attributes,
             {children}
         }

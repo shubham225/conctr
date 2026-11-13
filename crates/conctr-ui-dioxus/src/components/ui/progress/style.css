@@ -6,7 +6,7 @@
     height: .5rem;
     box-sizing: border-box;
     border-radius: var(--cn-radius-pill);
-    background: var(--primary-color-5);
+    background: var(--cn-sunken);
 }
 
 .dx-progress[data-state='indeterminate'] .dx-progress-indicator {
@@ -17,7 +17,7 @@
 .dx-progress-indicator {
     width: var(--progress-value, 0%);
     height: 100%;
-    background-color: var(--secondary-color-1);
+    background-color: var(--cn-text);
     transition: width 250ms ease;
 }
 
@@ -31,11 +31,8 @@
     }
 }
 
-/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
+/* Component-specific adaptations of the shared main.css recipes. */
 .dx-progress { height: 8px; border-radius: var(--cn-radius-pill); background: var(--cn-sunken); border: var(--cn-border-1) solid var(--cn-border); overflow: hidden; }
 .dx-progress > i { display: block; height: 100%; background: var(--cn-primary); border-radius: inherit; }
-
-:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 
 .dx-progress-indicator { background: var(--cn-primary); border-radius: inherit; }

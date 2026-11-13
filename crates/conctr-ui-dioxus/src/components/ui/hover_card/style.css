@@ -14,15 +14,8 @@
   z-index: 1000;
   min-width: 200px;
   padding: 5px;
-  border: 1px solid var(--light, var(--primary-color-6))
-    var(--dark, var(--primary-color-7));
-  border-radius: var(--cn-radius-md);
-  animation: dx-hover-card-fade-in 0.1s ease-out;
-  background: var(--light, var(--primary-color))
-    var(--dark, var(--primary-color-5));
 
-  /* Semi transparent shadow effect in light mode */
-  box-shadow: var(--cn-shadow-3);
+  animation: dx-hover-card-fade-in 0.1s ease-out;
 }
 
 /* Positioning based on side */
@@ -111,24 +104,21 @@
 
 /* State styles */
 .dx-hover-card[data-disabled="true"] .dx-hover-card-trigger {
-  color: var(--secondary-color-5);
+  color: var(--cn-text-muted);
 }
 
 .dx-hover-card-content[data-state="closed"] {
   display: none;
 }
 
-/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
-
-:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+/* Component-specific adaptations of the shared main.css recipes. */
 
 .dx-hover-card { width: fit-content; max-width: 100%; justify-self: start; align-self: start; }
 .dx-hover-card-content { width: max-content; max-width: min(24rem, calc(100vw - var(--cn-space-8))); margin-inline: 0; text-align: left; }
 
-.dx-hover-card-content { padding: var(--cn-space-4); gap: var(--cn-space-3); border: var(--cn-border-1) solid var(--cn-border); background: var(--cn-raised); color: var(--cn-text); box-shadow: var(--cn-shadow-3); z-index: var(--cn-z-dropdown); font: var(--cn-fw-regular) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui); }
+.dx-hover-card-content { padding: var(--cn-space-4); gap: var(--cn-space-3);     z-index: var(--cn-z-dropdown); font: var(--cn-font-small); }
 .dx-hover-card-content p { margin: 0; }
 
-.dx-hover-card-trigger { color: var(--cn-primary); font: var(--cn-fw-medium) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui); text-decoration: underline; text-underline-offset: var(--cn-space-1); }
+.dx-hover-card-trigger { color: var(--cn-primary); font: var(--cn-font-label); text-decoration: underline; text-underline-offset: var(--cn-space-1); }
 .dx-hover-card-content[data-side="top"] { margin-bottom: var(--cn-space-2); }
 .dx-hover-card-content[data-side="bottom"] { margin-top: var(--cn-space-2); }

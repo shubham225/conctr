@@ -31,16 +31,16 @@ pub fn Select<T: Clone + PartialEq + 'static>(props: SelectProps<T>) -> Element 
             typeahead_timeout: props.typeahead_timeout,
             attributes: merged,
             select::SelectTrigger {
-                class: Styles::dx_select_trigger,
+                class: format!("{} cn-select", Styles::dx_select_trigger),
                 select::SelectValue {}
                 ChevronDown {
                     class: "dx-select-expand-icon",
                     size: "20px",
-                    stroke: "var(--primary-color-7)",
+                    stroke: "var(--cn-border-strong)",
                 }
             }
             select::SelectList {
-                class: Styles::dx_select_list,
+                class: format!("{} cn-popup", Styles::dx_select_list),
                 {props.children}
             }
         }
@@ -68,16 +68,16 @@ pub fn SelectMulti<T: Clone + PartialEq + 'static>(props: SelectMultiProps<T>) -
             typeahead_timeout: props.typeahead_timeout,
             attributes: merged,
             select::SelectTrigger {
-                class: Styles::dx_select_trigger,
+                class: format!("{} cn-select", Styles::dx_select_trigger),
                 select::SelectValue {}
                 ChevronDown {
                     class: "dx-select-expand-icon",
                     size: "20px",
-                    stroke: "var(--primary-color-7)",
+                    stroke: "var(--cn-border-strong)",
                 }
             }
             select::SelectList {
-                class: Styles::dx_select_list,
+                class: format!("{} cn-popup", Styles::dx_select_list),
                 {props.children}
             }
         }
@@ -121,7 +121,7 @@ pub fn SelectOption<T: Clone + PartialEq + 'static>(props: SelectOptionProps<T>)
             select::SelectItemIndicator {
                 Check {
                     size: "1rem",
-                    stroke: "var(--secondary-color-5)",
+                    stroke: "var(--cn-text-muted)",
                 }
             }
         }

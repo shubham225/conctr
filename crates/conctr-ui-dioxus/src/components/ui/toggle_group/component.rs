@@ -26,7 +26,7 @@ pub fn ToggleGroup(props: ToggleGroupProps) -> Element {
 pub fn ToggleItem(props: ToggleItemProps) -> Element {
     rsx! {
         toggle_group::ToggleItem {
-            class: Styles::dx_toggle_item,
+            class: format!("{} cn-toggle", Styles::dx_toggle_item),
             index: props.index,
             disabled: props.disabled,
             attributes: props.attributes,

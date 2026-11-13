@@ -14,6 +14,8 @@ these observations do not assert that changes have been committed or released.
 - [x] `conctr-design-system` catalog: 62 live example entries, foundation pages,
   light/dark switching and source examples. Samples are illustrative.
 - [x] Shared sidebar collapse/mobile-drawer behavior and component styling fixes.
+- [x] Shared CSS recipes and semantic theme roles in `styles/main.css`, with
+  customizable provider attributes and a [theming guide](../development/theming.md).
 - [x] Component/SSR/catalog tests plus a served CSS-selector regression checker.
 - [x] `conctr-app-dioxus` is now a workspace member. Its implementation is still
   the starter `add()` function/test; it has no shared App/routes yet.

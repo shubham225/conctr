@@ -3,6 +3,17 @@
 Use this context for Conctr platform/product work. Scope it to the user's task;
 it is not a mandate to implement every proposal or create all suggested crates.
 
+## Instruction ownership
+
+[Root AGENTS.md](../../AGENTS.md) owns repository-wide development policy.
+Read more specific `AGENTS.md` files along the target's directory path before
+editing, including when the AI tool does not discover them automatically.
+This file routes product/architecture context; the
+[discovery index](README.md) explains tool entry points and portable skills.
+Keep explicit user instructions authoritative within the tool's instruction
+hierarchy. Source/manifests are evidence of implementation; Proposed documents
+remain proposals. Do not copy all contracts into every always-loaded file.
+
 ## Load only the relevant sources
 
 - Read [current state](../roadmap/current-state.md) before reporting progress.
@@ -16,6 +27,7 @@ it is not a mandate to implement every proposal or create all suggested crates.
 - UI work: [experience](../experience/README.md),
   [presentation ownership](../architecture/dioxus-presentation.md) and the
   [canonical design instructions](../../design/docs/AI-INSTRUCTIONS.md).
+  For CSS/theme changes, also read the [theming contract](../development/theming.md).
 
 ## Non-obvious project rules
 
@@ -39,6 +51,13 @@ it is not a mandate to implement every proposal or create all suggested crates.
    OS behavior in launchers/adapters and screen-width behavior responsive.
 9. CSS-module source-path markers are required after moves; compilation/file
    presence alone does not prove served selectors match markup.
+10. Shared UI recipes and meaningful theme defaults live in
+    `crates/conctr-ui-dioxus/assets/styles/main.css`. Reuse existing `cn-*` recipes
+    and semantic `--cn-*` roles; local CSS modules own structure and primitive
+    behavior. Apply brand/density overrides on the provider scope. Keep global
+    focus/reduced-motion rules centralized and verify actual browser states.
+11. Use actual Cargo names: `conctr-api-dioxus` is the existing Dioxus transport
+    package. Do not introduce `conctr-dioxus-api` as a second package to match old prose.
 
 ## Planning and evidence
 

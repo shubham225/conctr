@@ -23,6 +23,7 @@ planning work.
 8. [Verification strategy](development/testing-strategy.md) and
    [documentation maintenance](development/documentation.md).
 9. [Decision records](architecture/decisions/README.md) — review and accept deliberately.
+10. [UI themes](development/theming.md) — shared CSS properties, custom brands and density.
 
 ## Document map
 

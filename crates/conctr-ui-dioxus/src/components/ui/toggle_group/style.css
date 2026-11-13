@@ -1,23 +1,5 @@
 /* CSS module source: /src/components/ui/toggle_group/style.css */
+/* Shared item sizing, surface and states: .cn-toggle. */
 .dx-toggle-group { display: inline-flex; flex-wrap: wrap; gap: var(--cn-space-1); width: fit-content; }
 .dx-toggle-group[data-orientation="vertical"] { flex-direction: column; }
-.dx-toggle-item {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--cn-control-md);
-  min-width: var(--cn-control-md);
-  padding: 0 var(--cn-space-4);
-  border: var(--cn-border-1) solid var(--cn-border-strong);
-  border-radius: var(--cn-radius-md);
-  background: var(--cn-surface);
-  color: var(--cn-text);
-  font: var(--cn-fw-medium) var(--cn-fs-small)/1 var(--cn-font-ui);
-  cursor: pointer;
-  transition: background var(--cn-dur-fast) var(--cn-ease);
-}
-.dx-toggle-item:hover:not(:disabled) { background: var(--cn-sunken); }
-.dx-toggle-item[data-state="on"] { color: var(--cn-primary); background: var(--cn-primary-soft); border-color: var(--cn-primary); }
-.dx-toggle-item:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
-.dx-toggle-item:disabled, .dx-toggle-item[data-disabled="true"] { opacity: var(--cn-opacity-disabled); cursor: not-allowed; }
-@media (prefers-reduced-motion: reduce) { .dx-toggle-item { transition: none; } }
+.dx-toggle-item { flex-shrink: 0; }

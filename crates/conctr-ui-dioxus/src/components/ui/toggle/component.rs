@@ -8,7 +8,7 @@ struct Styles;
 pub fn Toggle(props: ToggleProps) -> Element {
     rsx! {
         toggle::Toggle {
-            class: Styles::dx_toggle,
+            class: format!("{} cn-toggle", Styles::dx_toggle),
             pressed: props.pressed,
             default_pressed: props.default_pressed,
             disabled: props.disabled,

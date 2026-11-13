@@ -77,7 +77,7 @@ pub fn Button(
     children: Element,
 ) -> Element {
     let base = attributes!(button {
-        class: Styles::dx_button,
+        class: format!("{} cn-btn", Styles::dx_button),
         r#type: "button",
         disabled: disabled || loading,
         aria_busy: loading,

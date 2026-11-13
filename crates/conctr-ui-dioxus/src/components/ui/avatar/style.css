@@ -8,7 +8,7 @@
 
 .dx-avatar-label {
     margin: 0;
-    color: var(--secondary-color-4);
+    color: var(--cn-text);
     font-size: var(--cn-fs-small);
 }
 
@@ -22,7 +22,7 @@
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    color: var(--secondary-color-4);
+    color: var(--cn-text);
     font-weight: 500;
 }
 
@@ -62,11 +62,11 @@
 
 .dx-avatar[data-state="loading"] {
     animation: dx-pulse 1.5s infinite ease-in-out;
-    background: var(--primary-color-5);
+    background: var(--cn-sunken);
 }
 
 .dx-avatar[data-state="empty"] {
-    background: var(--primary-color-7);
+    background: var(--cn-border-strong);
 }
 
 @keyframes dx-pulse {
@@ -89,24 +89,22 @@
     height: 100%;
     align-items: center;
     justify-content: center;
-    background: var(--primary-color);
-    color: var(--secondary-color-4);
+    background: var(--cn-surface);
+    color: var(--cn-text);
     font-size: var(--cn-fs-h3);
 }
 
 .dx-avatar[data-state="error"] .dx-avatar-fallback {
-    background: var(--primary-color-3);
-    color: var(--secondary-color-4);
+    background: var(--cn-sunken);
+    color: var(--cn-text);
 }
 
-/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
+/* Component-specific adaptations of the shared main.css recipes. */
 .dx-avatar { display: inline-grid; place-items: center; width: var(--cn-control-md); height: var(--cn-control-md); border-radius: 50%; background: var(--cn-primary-soft); color: var(--cn-primary); font: var(--cn-fw-semibold) var(--cn-fs-small)/1 var(--cn-font-ui); flex: none; }
 .dx-avatar--sm { width: 24px; height: 24px; font-size: var(--cn-fs-caption); }
 .dx-avatar--md { width: var(--cn-control-sm); height: var(--cn-control-sm); font-size: var(--cn-fs-caption); }
 .dx-avatar--lg { width: var(--cn-control-lg); height: var(--cn-control-lg); font-size: var(--cn-fs-body); }
 
-:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 .dx-avatar.dx-avatar-sm { width: 24px; height: 24px; }
 .dx-avatar.dx-avatar-md { width: var(--cn-control-sm); height: var(--cn-control-sm); }
 .dx-avatar.dx-avatar-lg { width: var(--cn-control-lg); height: var(--cn-control-lg); }

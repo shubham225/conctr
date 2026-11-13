@@ -1,7 +1,0 @@
-/* CSS module source: /src/components/ui/virtual_list/style.css */
-/* VirtualList requires no custom styles — all layout is inline. */
-
-/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
-
-:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

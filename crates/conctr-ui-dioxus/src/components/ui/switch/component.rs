@@ -8,7 +8,7 @@ struct Styles;
 pub fn Switch(props: SwitchProps) -> Element {
     rsx! {
         switch::Switch {
-            class: Styles::dx_switch,
+            class: format!("{} cn-switch-track", Styles::dx_switch),
             checked: props.checked,
             default_checked: props.default_checked,
             disabled: props.disabled,
@@ -17,7 +17,7 @@ pub fn Switch(props: SwitchProps) -> Element {
             value: props.value,
             on_checked_change: props.on_checked_change,
             attributes: props.attributes,
-            switch::SwitchThumb { class: Styles::dx_switch_thumb }
+            switch::SwitchThumb { class: format!("{} cn-switch-thumb", Styles::dx_switch_thumb) }
         }
     }
 }

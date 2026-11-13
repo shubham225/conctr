@@ -121,10 +121,6 @@ const REGISTRY_STYLES: &[Asset] = &[
         manganis::AssetOptions::css_module()
     ),
     asset!(
-        "/src/components/ui/scroll_area/style.css",
-        manganis::AssetOptions::css_module()
-    ),
-    asset!(
         "/src/components/ui/select/style.css",
         manganis::AssetOptions::css_module()
     ),
@@ -182,10 +178,6 @@ const REGISTRY_STYLES: &[Asset] = &[
     ),
     asset!(
         "/src/components/ui/tooltip/style.css",
-        manganis::AssetOptions::css_module()
-    ),
-    asset!(
-        "/src/components/ui/virtual_list/style.css",
         manganis::AssetOptions::css_module()
     ),
 ];

@@ -30,7 +30,7 @@ pub fn Input(
 ) -> Element {
     rsx! {
         input {
-            class: Styles::dx_input,
+            class: format!("{} cn-input", Styles::dx_input),
             oninput: move |e| _ = oninput.map(|callback| callback(e)),
             onchange: move |e| _ = onchange.map(|callback| callback(e)),
             oninvalid: move |e| _ = oninvalid.map(|callback| callback(e)),

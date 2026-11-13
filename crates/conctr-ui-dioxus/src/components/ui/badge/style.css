@@ -1,6 +1,3 @@
 /* CSS module source: /src/components/ui/badge/style.css */
-.dx-badge { display: inline-flex; width: fit-content; align-items: center; gap: var(--cn-space-1); height: var(--cn-space-6); padding: 0 var(--cn-space-2); border-radius: var(--cn-radius-pill); font: var(--cn-fw-medium) var(--cn-fs-caption)/var(--cn-lh-caption) var(--cn-font-ui); background: var(--cn-sunken); color: var(--cn-text-muted); border: var(--cn-border-1) solid var(--cn-border); white-space: nowrap; }
-.dx-badge[data-style="success"] { background: var(--cn-success-soft); color: var(--cn-success); border-color: transparent; }
-.dx-badge[data-style="warning"] { background: var(--cn-warning-soft); color: var(--cn-warning); border-color: transparent; }
-.dx-badge[data-style="error"], .dx-badge[data-style="destructive"] { background: var(--cn-danger-soft); color: var(--cn-danger); border-color: transparent; }
-.dx-badge[data-style="info"] { background: var(--cn-info-soft); color: var(--cn-info); border-color: transparent; }
+/* Semantic appearance and variants: .cn-badge. */
+.dx-badge { width: fit-content; gap: var(--cn-space-1); font: var(--cn-font-badge); }

@@ -20,6 +20,13 @@ When updating, diff the upstream revision against these local sources; do not
 run `dx components add --force` over customized files. Review primitive API
 changes and preserve Conctr CSS, accessibility behavior and local fixes.
 
+Shared appearance belongs in `assets/styles/main.css`, using semantic `--cn-*`
+properties. Component CSS modules keep structural and primitive-specific rules;
+do not copy the shared recipes or global focus/motion rules back from upstream.
+The legacy `REGISTRY_CSS` asset retains numbered upstream palette aliases for
+existing consumers; new styles use semantic names directly.
+See the [theming guide](../../docs/development/theming.md).
+
 ## CSS module moves
 
 Keep the first `CSS module source` comment in each `style.css` synchronized with

@@ -68,7 +68,7 @@ pub fn Badge(props: BadgeProps) -> Element {
 fn BadgeElement(props: BadgeProps) -> Element {
     rsx! {
         span {
-            class: Styles::dx_badge,
+            class: format!("{} cn-badge", Styles::dx_badge),
             "data-style": props.variant.class(),
             ..props.attributes,
             {props.children}
@@ -81,7 +81,7 @@ pub fn VerifiedIcon() -> Element {
     rsx! {
         BadgeCheck {
             size: "12px",
-            stroke: "var(--secondary-color-4)",
+            stroke: "var(--cn-text)",
         }
     }
 }

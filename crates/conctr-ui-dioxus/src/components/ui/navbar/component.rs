@@ -40,7 +40,7 @@ pub fn NavbarTrigger(props: NavbarTriggerProps) -> Element {
             ChevronDown {
                 class: Styles::dx_navbar_expand_icon,
                 size: "20px",
-                stroke: "var(--secondary-color-4)",
+                stroke: "var(--cn-text)",
             }
         }
     }

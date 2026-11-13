@@ -24,6 +24,38 @@ fn button_loading_disables_submission_and_preserves_custom_attributes() {
 }
 
 #[test]
+fn themes_preserve_scope_and_consumer_attributes_when_nested() {
+    let html = render(|| {
+        rsx! {
+            ThemeProvider { theme: Theme::Dark, class: "consumer-theme", "data-brand": "ocean",
+                Button { class: "consumer-action", "Save" }
+                ThemeProvider { theme: Theme::Light, id: "light-preview",
+                    Input { aria_label: "Endpoint", class: "consumer-field" }
+                }
+            }
+        }
+    });
+    for attribute in [
+        "cn-body",
+        "consumer-theme",
+        "data-brand=\"ocean\"",
+        "data-theme=\"dark\"",
+        "data-theme=\"light\"",
+        "id=\"light-preview\"",
+        "cn-btn",
+        "cn-input",
+        "consumer-action",
+        "consumer-field",
+    ] {
+        assert!(
+            html.contains(attribute),
+            "Missing theme scope or recipe: {attribute}"
+        );
+    }
+    assert_eq!(html.matches("class=\"cn-body").count(), 2);
+}
+
+#[test]
 fn protocols_keep_brand_shapes_and_colors() {
     let html = render(|| {
         rsx! {

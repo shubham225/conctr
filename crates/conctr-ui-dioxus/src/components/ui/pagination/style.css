@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 0.625rem;
-  color: var(--secondary-color-4);
+  color: var(--cn-text);
   font-size: var(--cn-fs-small);
   font-weight: 500;
   gap: 0.5rem;
@@ -31,7 +31,7 @@
 }
 
 .dx-pagination-link:focus-visible {
-  box-shadow: 0 0 0 2px var(--focused-border-color);
+  box-shadow: 0 0 0 2px var(--cn-focus);
 }
 
 .dx-pagination-link[data-size="icon"] {
@@ -44,7 +44,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--secondary-color-4);
+  color: var(--cn-text);
 }
 
 .dx-pagination-link[data-size="icon"],
@@ -59,17 +59,17 @@
 }
 
 .dx-pagination-link[data-active="true"] {
-  border: 1px solid var(--primary-color-6);
-  background-color: var(--light, var(--primary-color)) var(--dark, var(--primary-color-3));
+  border: 1px solid var(--cn-border);
+  background-color: var(--cn-surface);
 }
 
 .dx-pagination-link[data-active="true"]:hover {
-  background-color: var(--primary-color-4);
+  background-color: var(--cn-sunken);
 }
 
 .dx-pagination-link[data-active="false"]:hover {
-  background-color: var(--primary-color-5);
-  color: var(--secondary-color-1);
+  background-color: var(--cn-sunken);
+  color: var(--cn-text);
 }
 
 .dx-pagination-link[data-kind="previous"],
@@ -104,11 +104,8 @@
   white-space: nowrap;
 }
 
-/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
+/* Component-specific adaptations of the shared main.css recipes. */
 .dx-pagination { display: flex; gap: var(--cn-space-1); }
 .dx-pagination button { min-width: var(--cn-control-sm); height: var(--cn-control-sm); padding: 0 var(--cn-space-2); border-radius: var(--cn-radius-sm); border: 0; background: none; color: var(--cn-text-muted); font: var(--cn-fw-medium) var(--cn-fs-small) var(--cn-font-ui); cursor: pointer; }
 .dx-pagination button:hover { background: var(--cn-sunken); }
 .dx-pagination [aria-current="page"] { background: var(--cn-primary-soft); color: var(--cn-primary); }
-
-:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

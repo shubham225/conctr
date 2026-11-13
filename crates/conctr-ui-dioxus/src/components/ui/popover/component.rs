@@ -41,9 +41,13 @@ pub fn PopoverTrigger(props: PopoverTriggerProps) -> Element {
 #[component]
 pub fn PopoverContent(props: PopoverContentProps) -> Element {
     let class = if let Some(class) = props.class {
-        format!("{} {}", Styles::dx_popover_content, class)
+        format!(
+            "{} cn-popup cn-popup--bordered {}",
+            Styles::dx_popover_content,
+            class
+        )
     } else {
-        Styles::dx_popover_content.to_string()
+        format!("{} cn-popup cn-popup--bordered", Styles::dx_popover_content)
     };
 
     rsx! {

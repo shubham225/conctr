@@ -53,7 +53,7 @@ pub fn Textarea(
 ) -> Element {
     rsx! {
         textarea {
-            class: Styles::dx_textarea,
+            class: format!("{} cn-textarea", Styles::dx_textarea),
             "data-slot": "textarea",
             "data-style": variant.class(),
             oninput: move |e| _ = oninput.map(|callback| callback(e)),

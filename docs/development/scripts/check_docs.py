@@ -38,6 +38,9 @@ def markdown_links(path):
             continue
         if fenced:
             continue
+        # Claude-style imports are not Markdown links but must also resolve.
+        if imported := re.fullmatch(r"@([^\s]+)", line.strip()):
+            check_link(path, imported.group(1))
         for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", line):
             check_link(path, target.split(' "', 1)[0])
     if fenced:
@@ -117,8 +120,18 @@ def validate_examples():
 
 
 def main():
-    markdown = sorted(DOCS.rglob("*.md")) + [ROOT / "AGENTS.md"]
-    for path in markdown:
+    project = json.loads((DOCS / "ai/project.json").read_text())
+    markdown = set(DOCS.rglob("*.md"))
+    for entry in project["instruction_entrypoints"]:
+        path = ROOT / entry
+        if not path.is_file():
+            errors.append(f"docs/ai/project.json: missing instruction entry {entry}")
+        else:
+            markdown.add(path)
+    for base in (ROOT / "apps", ROOT / "crates", DOCS):
+        markdown.update(base.rglob("AGENTS.md"))
+    markdown.add(ROOT / "AGENTS.md")
+    for path in sorted(markdown):
         markdown_links(path)
     for path in DOCS.rglob("*.html"):
         HtmlLinks(path).feed(path.read_text())

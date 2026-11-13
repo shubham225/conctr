@@ -528,7 +528,7 @@ fn DropDownIcon() -> Element {
     rsx! {
         ChevronDown {
             size: "20px",
-            stroke: "var(--secondary-color-4)",
+            stroke: "var(--cn-text)",
         }
     }
 }

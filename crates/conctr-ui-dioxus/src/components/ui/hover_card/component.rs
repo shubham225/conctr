@@ -36,7 +36,7 @@ pub fn HoverCardTrigger(props: HoverCardTriggerProps) -> Element {
 pub fn HoverCardContent(props: HoverCardContentProps) -> Element {
     rsx! {
         hover_card::HoverCardContent {
-            class: Styles::dx_hover_card_content,
+            class: format!("{} cn-popup cn-popup--bordered", Styles::dx_hover_card_content),
             side: props.side,
             align: props.align,
             id: props.id,

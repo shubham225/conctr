@@ -1,6 +1,6 @@
 /* CSS module source: /src/components/ui/separator/style.css */
 .dx-separator {
-  background-color: var(--light, var(--primary-color-6)) var(--dark, var(--primary-color-7));
+  background-color: var(--cn-border);
 }
 
 .dx-separator[data-orientation="horizontal"] {
@@ -12,8 +12,3 @@
   width: 1px;
   height: 100%;
 }
-
-/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
-
-:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

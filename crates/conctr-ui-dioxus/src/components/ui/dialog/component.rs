@@ -8,13 +8,13 @@ struct Styles;
 #[component]
 pub fn Dialog(props: DialogRootProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_dialog,
+        class: format!("{} cn-modal cn-dialog", Styles::dx_dialog),
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
         dialog::DialogRoot {
-            class: Styles::dx_dialog_backdrop,
+            class: format!("{} cn-dialog-backdrop", Styles::dx_dialog_backdrop),
             id: props.id,
             is_modal: props.is_modal,
             open: props.open,
@@ -32,7 +32,7 @@ pub fn Dialog(props: DialogRootProps) -> Element {
 #[component]
 pub fn DialogTitle(props: DialogTitleProps) -> Element {
     let base = attributes!(h2 {
-        class: Styles::dx_dialog_title,
+        class: format!("{} cn-dialog-title", Styles::dx_dialog_title),
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
@@ -48,7 +48,7 @@ pub fn DialogTitle(props: DialogTitleProps) -> Element {
 #[component]
 pub fn DialogDescription(props: DialogDescriptionProps) -> Element {
     let base = attributes!(p {
-        class: Styles::dx_dialog_description,
+        class: format!("{} cn-dialog-description", Styles::dx_dialog_description),
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 

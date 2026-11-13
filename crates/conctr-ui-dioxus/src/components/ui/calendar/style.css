@@ -6,9 +6,9 @@
     max-width: 100%;
     box-sizing: border-box;
     flex-direction: row;
-    border: 1px solid var(--primary-color-6);
+    border: 1px solid var(--cn-border);
     border-radius: var(--cn-radius-md);
-    background-color: var(--primary-color-2);
+    background-color: var(--cn-surface);
     box-shadow: var(--cn-shadow-1);
     font-family: var(--cn-font-ui);
 }
@@ -25,7 +25,7 @@
 }
 
 .dx-calendar-nav-title {
-    color: var(--secondary-color-4);
+    color: var(--cn-text);
     font-size: var(--cn-fs-body);
     font-weight: 600;
 }
@@ -38,11 +38,11 @@
     height: 1.75rem;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--primary-color-6);
+    border: 1px solid var(--cn-border);
     border-radius: var(--cn-radius-md);
-    background-color: var(--light, transparent)
-        var(--dark, var(--primary-color-3));
-    color: var(--secondary-color-5);
+    background-color: transparent
+        ;
+    color: var(--cn-text-muted);
     cursor: pointer;
     font-size: var(--cn-fs-body);
 }
@@ -57,21 +57,21 @@
 
 .dx-calendar-nav-prev:hover,
 .dx-calendar-nav-next:hover {
-    border-color: var(--primary-color-7);
-    background-color: var(--primary-color-4);
-    color: var(--secondary-color-4);
+    border-color: var(--cn-border-strong);
+    background-color: var(--cn-sunken);
+    color: var(--cn-text);
 }
 
 .dx-calendar-nav-prev:focus-visible,
 .dx-calendar-nav-next:focus-visible {
-    box-shadow: 0 0 0 2px var(--focused-border-color);
+    box-shadow: 0 0 0 2px var(--cn-focus);
 }
 
 .dx-calendar-nav-prev:disabled,
 .dx-calendar-nav-next:disabled {
-    border-color: var(--primary-color-5);
-    background-color: var(--primary-color-2);
-    color: var(--secondary-color-3);
+    border-color: var(--cn-sunken);
+    background-color: var(--cn-surface);
+    color: var(--cn-text);
     cursor: not-allowed;
 }
 
@@ -103,7 +103,7 @@
 
 .dx-calendar-grid-day-header {
     flex: 1;
-    color: var(--secondary-color-5);
+    color: var(--cn-text-muted);
     font-size: var(--cn-fs-caption);
     font-weight: 300;
     text-align: center;
@@ -122,39 +122,39 @@
     border-radius: var(--cn-radius-md);
     aspect-ratio: 1;
     background: none;
-    color: var(--secondary-color-4);
+    color: var(--cn-text);
     cursor: pointer;
     font-size: var(--cn-fs-small);
 }
 
 .dx-calendar-grid-cell[data-month="current"]:not([data-disabled="true"]):hover {
-    background-color: var(--primary-color-4);
+    background-color: var(--cn-sunken);
 }
 
 .dx-calendar-grid-cell[data-month="current"]:focus-visible {
-    outline: 2px solid var(--focused-border-color);
+    outline: 2px solid var(--cn-focus);
     outline-offset: 2px;
 }
 
 .dx-calendar-grid-cell[data-month="last"],
 .dx-calendar-grid-cell[data-month="next"],
 .dx-calendar-grid-cell[data-disabled="true"] {
-    color: var(--secondary-color-5);
+    color: var(--cn-text-muted);
     cursor: not-allowed;
 }
 
 .dx-calendar-grid-cell[data-month="last"][data-selected="true"],
 .dx-calendar-grid-cell[data-month="next"][data-selected="true"] {
-    background-color: var(--secondary-color-6);
+    background-color: var(--cn-text-subtle);
 }
 
 .dx-calendar-grid-cell[data-month="current"][data-selected="true"] {
-    background-color: var(--secondary-color-2);
-    color: var(--primary-color);
+    background-color: var(--cn-text);
+    color: var(--cn-surface);
 }
 
 .dx-calendar-grid-cell[data-month="current"][data-unavailable="true"] {
-    color: var(--secondary-color-6);
+    color: var(--cn-text-subtle);
     cursor: not-allowed;
     text-decoration: line-through;
 }
@@ -177,21 +177,21 @@
 .dx-calendar-grid-cell[data-month="last"][data-selection-between="true"],
 .dx-calendar-grid-cell[data-month="next"][data-selection-between="true"] {
     border-radius: 0;
-    background-color: var(--primary-color-5);
-    color: var(--secondary-color-5);
+    background-color: var(--cn-sunken);
+    color: var(--cn-text-muted);
 }
 
 .dx-calendar-grid-cell[data-month="current"][data-selection-between="true"] {
     border-radius: 0;
-    background-color: var(--primary-color-5);
-    color: var(--secondary-color-4);
+    background-color: var(--cn-sunken);
+    color: var(--cn-text);
 }
 
 td:has(.dx-calendar-grid-cell[data-selection-start="true"]) {
     padding: 0;
     margin-top: 1px;
     margin-bottom: 1px;
-    background-color: var(--primary-color-5);
+    background-color: var(--cn-sunken);
     border-bottom-left-radius: 0.5rem;
     border-top-left-radius: 0.5rem;
 }
@@ -200,29 +200,27 @@ td:has(.dx-calendar-grid-cell[data-selection-end="true"]) {
     padding: 0;
     margin-top: 1px;
     margin-bottom: 1px;
-    background-color: var(--primary-color-5);
+    background-color: var(--cn-sunken);
     border-bottom-right-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
 }
 
 .dx-calendar-grid-cell[data-month="current"][data-selected="true"]:hover {
-    background-color: var(--light, var(--secondary-color-2))
-        var(--dark, var(--primary-color-5));
-    color: var(--light, var(--primary-color))
-        var(--dark, var(--secondary-color-1));
-    font-weight: var(--light, 550) var(--dark, inherit);
+    background-color: var(--cn-text);
+    color: var(--cn-surface);
+    font-weight: 550 ;
 }
 
 .dx-calendar-grid-cell[data-month="current"][data-today="true"]:not(
         [data-selected="true"]
     ) {
-    background-color: var(--primary-color-5);
+    background-color: var(--cn-sunken);
 }
 
 .dx-calendar-grid-weeknum {
     border-radius: var(--cn-radius-md);
-    background-color: var(--primary-color);
-    color: var(--secondary-color-5);
+    background-color: var(--cn-surface);
+    color: var(--cn-text-muted);
     font-size: var(--cn-fs-caption);
 }
 
@@ -248,7 +246,7 @@ td:has(.dx-calendar-grid-cell[data-selection-end="true"]) {
 .dx-calendar-month-select-container:has(:focus-visible),
 .dx-calendar-year-select-container:has(:focus-visible) {
     border-radius: var(--cn-radius-md);
-    outline: 2px solid var(--focused-border-color);
+    outline: 2px solid var(--cn-focus);
 }
 
 .dx-calendar-month-select,
@@ -270,7 +268,7 @@ td:has(.dx-calendar-grid-cell[data-selection-end="true"]) {
     padding: 0.25rem;
     border: none;
     background-color: transparent;
-    color: var(--secondary-color-4);
+    color: var(--cn-text);
     cursor: pointer;
     font-size: var(--cn-fs-body);
     transition:
@@ -278,15 +276,12 @@ td:has(.dx-calendar-grid-cell[data-selection-end="true"]) {
         color 0.2s ease;
 }
 
-/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
-
-:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+/* Component-specific adaptations of the shared main.css recipes. */
 
 /* Keep the native month/year selects visible and theme their option lists. */
 .dx-calendar-navigation { padding: var(--cn-space-3) var(--cn-space-12) var(--cn-space-2); }
 .dx-calendar-month-select-container, .dx-calendar-year-select-container { min-width: 0; }
-.dx-calendar-month-select, .dx-calendar-year-select { position: relative; opacity: 1; width: auto; height: var(--cn-control-sm); padding: 0 var(--cn-space-2); border: var(--cn-border-1) solid var(--cn-border-strong); border-radius: var(--cn-radius-sm); background: var(--cn-surface); color: var(--cn-text); font: var(--cn-fw-medium) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui); cursor: pointer; }
+.dx-calendar-month-select, .dx-calendar-year-select { position: relative; opacity: 1; width: auto; height: var(--cn-control-sm); padding: 0 var(--cn-space-2); border: var(--cn-border-1) solid var(--cn-border-strong); border-radius: var(--cn-radius-sm); background: var(--cn-surface); color: var(--cn-text); font: var(--cn-font-label); cursor: pointer; }
 .dx-calendar-month-select option, .dx-calendar-year-select option { background: var(--cn-raised); color: var(--cn-text); }
 .dx-calendar-month-select-value, .dx-calendar-year-select-value { display: none; }
 .dx-calendar-nav-prev, .dx-calendar-nav-next { width: var(--cn-control-sm); height: var(--cn-control-sm); }
