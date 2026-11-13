@@ -1,0 +1,331 @@
+{
+  "name": "Conctr",
+  "wordmark": "CONCTR",
+  "category": "Integration platform",
+  "tagline": "Where systems meet.",
+  "description": "Conctr connects systems that speak different protocols (REST, SOAP, OData and more) and use different authentication methods, without custom glue code.",
+  "logo": {
+    "concept": "Hex orbit: a solid hexagon core (Conctr) linked to three nodes, each a different shape (circle, square, triangle), one per system or protocol.",
+    "files": {
+      "icon": "logo/svg/icon-*.svg",
+      "horizontal": "logo/svg/horizontal-*.svg",
+      "stacked": "logo/svg/stacked-*.svg",
+      "wordmark": "logo/svg/wordmark-*.svg",
+      "favicon": "logo/favicon/favicon.svg",
+      "app_icon": "logo/svg/app-icon.svg"
+    },
+    "variants": {
+      "color": "light backgrounds",
+      "color-on-dark": "dark backgrounds",
+      "black": "one-color print on light",
+      "white": "one-color on dark or photos"
+    },
+    "min_size_px": {
+      "icon": 16,
+      "horizontal_width": 96,
+      "stacked_width": 80
+    },
+    "clear_space": "2x, where x is the diameter of the circle node (about 17% of icon width)"
+  },
+  "shape_language": {
+    "circle": "REST / HTTP",
+    "square": "SOAP / XML",
+    "triangle": "OData",
+    "diamond": "GraphQL",
+    "hexagon": "gRPC or the Conctr core",
+    "ring": "Webhooks / events"
+  },
+  "colors": {
+    "light": {
+      "bg": "#F7F8FC",
+      "surface": "#FFFFFF",
+      "raised": "#FFFFFF",
+      "sunken": "#EEF0F7",
+      "border": "#E0E3EE",
+      "border-strong": "#C4C8D9",
+      "text": "#121933",
+      "text-muted": "#4B5578",
+      "text-subtle": "#6B7494",
+      "primary": "#4F46E5",
+      "primary-hover": "#4338CA",
+      "primary-soft": "#EEF0FF",
+      "on-primary": "#FFFFFF",
+      "teal": "#14B8A6",
+      "teal-text": "#0F766E",
+      "teal-soft": "#E6F7F4",
+      "coral": "#F2603C",
+      "coral-text": "#C2410C",
+      "coral-soft": "#FEEFEA",
+      "amber": "#F5A524",
+      "amber-text": "#B45309",
+      "amber-soft": "#FEF4DF",
+      "success": "#0F766E",
+      "success-soft": "#E6F7F4",
+      "warning": "#B45309",
+      "warning-soft": "#FEF4DF",
+      "danger": "#DC2626",
+      "danger-soft": "#FDECEC",
+      "on-danger": "#FFFFFF",
+      "info": "#4F46E5",
+      "info-soft": "#EEF0FF",
+      "focus": "#4F46E5",
+      "shadow-1": "0 1px 2px rgba(18,25,51,.06), 0 1px 3px rgba(18,25,51,.08)",
+      "shadow-2": "0 2px 4px rgba(18,25,51,.06), 0 4px 16px rgba(18,25,51,.08)",
+      "shadow-3": "0 4px 8px rgba(18,25,51,.06), 0 12px 32px rgba(18,25,51,.12)",
+      "shadow-4": "0 8px 16px rgba(18,25,51,.08), 0 24px 64px rgba(18,25,51,.18)",
+      "focus-ring": "0 0 0 3px rgba(79,70,229,.28)",
+      "scrim": "rgba(11,16,32,.5)"
+    },
+    "dark": {
+      "bg": "#0B1020",
+      "surface": "#121933",
+      "raised": "#1A2244",
+      "sunken": "#080C18",
+      "border": "#2A3459",
+      "border-strong": "#3B4672",
+      "text": "#EEF0F7",
+      "text-muted": "#AEB4CC",
+      "text-subtle": "#8089AA",
+      "primary": "#818CF8",
+      "primary-hover": "#9AA4FA",
+      "primary-soft": "#1E2556",
+      "on-primary": "#0B1020",
+      "teal": "#2DD4BF",
+      "teal-text": "#2DD4BF",
+      "teal-soft": "#0F2E34",
+      "coral": "#FF8A6B",
+      "coral-text": "#FF8A6B",
+      "coral-soft": "#3A1F24",
+      "amber": "#FBBF24",
+      "amber-text": "#FBBF24",
+      "amber-soft": "#33290F",
+      "success": "#2DD4BF",
+      "success-soft": "#0F2E34",
+      "warning": "#FBBF24",
+      "warning-soft": "#33290F",
+      "danger": "#F87171",
+      "danger-soft": "#3A1B20",
+      "on-danger": "#0B1020",
+      "info": "#818CF8",
+      "info-soft": "#1E2556",
+      "focus": "#A5B0FF",
+      "shadow-1": "0 0 0 1px rgba(255,255,255,.04), 0 1px 2px rgba(0,0,0,.4)",
+      "shadow-2": "0 0 0 1px rgba(255,255,255,.05), 0 4px 16px rgba(0,0,0,.45)",
+      "shadow-3": "0 0 0 1px rgba(255,255,255,.06), 0 12px 32px rgba(0,0,0,.55)",
+      "shadow-4": "0 0 0 1px rgba(255,255,255,.08), 0 24px 64px rgba(0,0,0,.65)",
+      "focus-ring": "0 0 0 3px rgba(165,176,255,.35)",
+      "scrim": "rgba(0,0,0,.6)"
+    }
+  },
+  "brand_colors": {
+    "indigo": [
+      "#4F46E5",
+      "#818CF8"
+    ],
+    "teal": [
+      "#14B8A6",
+      "#2DD4BF"
+    ],
+    "coral": [
+      "#F2603C",
+      "#FF8A6B"
+    ],
+    "amber": [
+      "#F5A524",
+      "#FBBF24"
+    ]
+  },
+  "fonts": {
+    "display": {
+      "family": "Sora",
+      "weights": [
+        500,
+        600,
+        700
+      ]
+    },
+    "ui": {
+      "family": "Inter",
+      "weights": [
+        400,
+        500,
+        600
+      ]
+    },
+    "mono": {
+      "family": "JetBrains Mono",
+      "weights": [
+        400,
+        500
+      ]
+    },
+    "files": "fonts/fonts.css",
+    "license": "SIL OFL 1.1"
+  },
+  "voice": [
+    "clear",
+    "precise",
+    "calm",
+    "engineer to engineer"
+  ],
+  "files": {
+    "tokens_css": "colors/tokens.css",
+    "tokens_json": "colors/design-tokens.json",
+    "tokens_rust": "colors/conctr_tokens.rs",
+    "tailwind": "colors/tailwind.config.js",
+    "fonts_css": "fonts/fonts.css",
+    "ui_css": "ui-kit/conctr-ui.css",
+    "ui_showcase": "ui-kit/index.html",
+    "icons": "icons/icons.json",
+    "docs": [
+      "docs/BRAND-GUIDELINES.md",
+      "docs/DESIGN-TOKENS.md",
+      "docs/COMPONENTS.md",
+      "docs/AI-INSTRUCTIONS.md"
+    ]
+  },
+  "version": "1.1",
+  "typography": {
+    "display": {
+      "size_px": 48,
+      "line_height_px": 56,
+      "weight": 600,
+      "family": "Sora"
+    },
+    "h1": {
+      "size_px": 36,
+      "line_height_px": 44,
+      "weight": 600,
+      "family": "Sora"
+    },
+    "h2": {
+      "size_px": 28,
+      "line_height_px": 36,
+      "weight": 600,
+      "family": "Sora"
+    },
+    "h3": {
+      "size_px": 22,
+      "line_height_px": 30,
+      "weight": 600,
+      "family": "Sora"
+    },
+    "h4": {
+      "size_px": 18,
+      "line_height_px": 26,
+      "weight": 600,
+      "family": "Sora"
+    },
+    "body-lg": {
+      "size_px": 18,
+      "line_height_px": 28,
+      "weight": 400,
+      "family": "Inter"
+    },
+    "body": {
+      "size_px": 16,
+      "line_height_px": 26,
+      "weight": 400,
+      "family": "Inter"
+    },
+    "small": {
+      "size_px": 14,
+      "line_height_px": 22,
+      "weight": 400,
+      "family": "Inter"
+    },
+    "caption": {
+      "size_px": 12,
+      "line_height_px": 18,
+      "weight": 400,
+      "family": "Inter"
+    },
+    "code": {
+      "size_px": 13,
+      "line_height_px": 20,
+      "weight": 400,
+      "family": "JetBrains Mono"
+    }
+  },
+  "spacing_px": {
+    "0": 0,
+    "1": 4,
+    "2": 8,
+    "3": 12,
+    "4": 16,
+    "5": 20,
+    "6": 24,
+    "8": 32,
+    "10": 40,
+    "12": 48,
+    "16": 64,
+    "20": 80,
+    "24": 96
+  },
+  "radius_px": {
+    "xs": 4,
+    "sm": 6,
+    "md": 10,
+    "lg": 14,
+    "xl": 20,
+    "pill": 999
+  },
+  "shadows": {
+    "light": {
+      "shadow-1": "0 1px 2px rgba(18,25,51,.06), 0 1px 3px rgba(18,25,51,.08)",
+      "shadow-2": "0 2px 4px rgba(18,25,51,.06), 0 4px 16px rgba(18,25,51,.08)",
+      "shadow-3": "0 4px 8px rgba(18,25,51,.06), 0 12px 32px rgba(18,25,51,.12)",
+      "shadow-4": "0 8px 16px rgba(18,25,51,.08), 0 24px 64px rgba(18,25,51,.18)"
+    },
+    "dark": {
+      "shadow-1": "0 0 0 1px rgba(255,255,255,.04), 0 1px 2px rgba(0,0,0,.4)",
+      "shadow-2": "0 0 0 1px rgba(255,255,255,.05), 0 4px 16px rgba(0,0,0,.45)",
+      "shadow-3": "0 0 0 1px rgba(255,255,255,.06), 0 12px 32px rgba(0,0,0,.55)",
+      "shadow-4": "0 0 0 1px rgba(255,255,255,.08), 0 24px 64px rgba(0,0,0,.65)"
+    }
+  },
+  "z_index": {
+    "base": 0,
+    "sticky": 100,
+    "dropdown": 200,
+    "overlay": 300,
+    "modal": 400,
+    "toast": 500,
+    "tooltip": 600
+  },
+  "motion": {
+    "dur-fast": "120ms",
+    "dur": "200ms",
+    "dur-slow": "320ms",
+    "ease": "cubic-bezier(.2,.7,.2,1)",
+    "ease-in": "cubic-bezier(.4,0,1,1)",
+    "ease-out": "cubic-bezier(0,0,.2,1)"
+  },
+  "sizing": {
+    "control_height_px": {
+      "control-sm": 32,
+      "control-md": 40,
+      "control-lg": 48
+    },
+    "icon_sizes_px": [
+      16,
+      20,
+      24,
+      32,
+      48
+    ],
+    "min_touch_target_px": 44,
+    "containers_px": {
+      "prose": 720,
+      "content": 1200,
+      "wide": 1440
+    },
+    "breakpoints_px": {
+      "sm": 640,
+      "md": 768,
+      "lg": 1024,
+      "xl": 1280,
+      "2xl": 1536
+    }
+  }
+}

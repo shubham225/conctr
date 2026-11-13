@@ -1,20 +1,107 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@500;600;700&display=swap');
-
-/* CONCTR design tokens. Light is default. Dark applies via [data-theme="dark"]
-   or automatically when the OS prefers dark and no theme is forced. */
+/* CONCTR design tokens v1.1
+   Load fonts first: <link rel="stylesheet" href="../fonts/fonts.css">
+   Light is default. Dark applies via [data-theme="dark"] on <html>,
+   or automatically when the OS prefers dark and no theme is forced.
+   Breakpoints cannot be CSS variables. Use these in media queries:
+   sm 640px, md 768px, lg 1024px, xl 1280px, 2xl 1536px (min-width). */
 :root {
   --cn-font-display: "Sora", "Inter", system-ui, sans-serif;
-  --cn-font-ui: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --cn-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --cn-fs-display: 3rem;  --cn-fs-h1: 2.25rem; --cn-fs-h2: 1.75rem; --cn-fs-h3: 1.375rem;
-  --cn-fs-h4: 1.125rem;   --cn-fs-body: 1rem;  --cn-fs-small: .875rem; --cn-fs-caption: .75rem;
-  --cn-radius-sm: 6px; --cn-radius-md: 10px; --cn-radius-lg: 14px; --cn-radius-pill: 999px;
-  --cn-space-1: 4px; --cn-space-2: 8px; --cn-space-3: 12px; --cn-space-4: 16px;
-  --cn-space-5: 24px; --cn-space-6: 32px; --cn-space-7: 48px; --cn-space-8: 64px;
-  --cn-ease: cubic-bezier(.2,.7,.2,1); --cn-dur-fast: 120ms; --cn-dur: 200ms;
+  --cn-font-ui: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --cn-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --cn-fs-display: 3rem;
+  --cn-lh-display: 3.5rem;
+  --cn-fw-display: 600;
+  --cn-ls-display: -0.02em;
+  --cn-fs-h1: 2.25rem;
+  --cn-lh-h1: 2.75rem;
+  --cn-fw-h1: 600;
+  --cn-ls-h1: -0.015em;
+  --cn-fs-h2: 1.75rem;
+  --cn-lh-h2: 2.25rem;
+  --cn-fw-h2: 600;
+  --cn-ls-h2: -0.01em;
+  --cn-fs-h3: 1.375rem;
+  --cn-lh-h3: 1.875rem;
+  --cn-fw-h3: 600;
+  --cn-ls-h3: -0.01em;
+  --cn-fs-h4: 1.125rem;
+  --cn-lh-h4: 1.625rem;
+  --cn-fw-h4: 600;
+  --cn-ls-h4: -0.005em;
+  --cn-fs-body-lg: 1.125rem;
+  --cn-lh-body-lg: 1.75rem;
+  --cn-fw-body-lg: 400;
+  --cn-ls-body-lg: 0em;
+  --cn-fs-body: 1rem;
+  --cn-lh-body: 1.625rem;
+  --cn-fw-body: 400;
+  --cn-ls-body: 0em;
+  --cn-fs-small: 0.875rem;
+  --cn-lh-small: 1.375rem;
+  --cn-fw-small: 400;
+  --cn-ls-small: 0em;
+  --cn-fs-caption: 0.75rem;
+  --cn-lh-caption: 1.125rem;
+  --cn-fw-caption: 400;
+  --cn-ls-caption: 0.005em;
+  --cn-fs-code: 0.8125rem;
+  --cn-lh-code: 1.25rem;
+  --cn-fw-code: 400;
+  --cn-ls-code: 0em;
+  --cn-fw-regular: 400;
+  --cn-fw-medium: 500;
+  --cn-fw-semibold: 600;
+  --cn-fw-bold: 700;
+  --cn-space-0: 0px;
+  --cn-space-1: 4px;
+  --cn-space-2: 8px;
+  --cn-space-3: 12px;
+  --cn-space-4: 16px;
+  --cn-space-5: 20px;
+  --cn-space-6: 24px;
+  --cn-space-8: 32px;
+  --cn-space-10: 40px;
+  --cn-space-12: 48px;
+  --cn-space-16: 64px;
+  --cn-space-20: 80px;
+  --cn-space-24: 96px;
+  --cn-radius-xs: 4px;
+  --cn-radius-sm: 6px;
+  --cn-radius-md: 10px;
+  --cn-radius-lg: 14px;
+  --cn-radius-xl: 20px;
+  --cn-radius-pill: 999px;
+  --cn-radius-full: 50%;
+  --cn-border-1: 1px;
+  --cn-border-2: 2px;
+  --cn-control-sm: 32px;
+  --cn-control-md: 40px;
+  --cn-control-lg: 48px;
+  --cn-z-base: 0;
+  --cn-z-sticky: 100;
+  --cn-z-dropdown: 200;
+  --cn-z-overlay: 300;
+  --cn-z-modal: 400;
+  --cn-z-toast: 500;
+  --cn-z-tooltip: 600;
+  --cn-dur-fast: 120ms;
+  --cn-dur: 200ms;
+  --cn-dur-slow: 320ms;
+  --cn-ease: cubic-bezier(.2,.7,.2,1);
+  --cn-ease-in: cubic-bezier(.4,0,1,1);
+  --cn-ease-out: cubic-bezier(0,0,.2,1);
+  --cn-container-prose: 720px;
+  --cn-container-content: 1200px;
+  --cn-container-wide: 1440px;
+  --cn-opacity-disabled: .45;
 }
+
+/* Responsive type: display, h1 and h2 step down on small screens */
+@media (max-width: 640px) {
+  :root { --cn-fs-display: 2.25rem; --cn-lh-display: 2.75rem; --cn-fs-h1: 1.875rem; --cn-lh-h1: 2.375rem; --cn-fs-h2: 1.5rem; --cn-lh-h2: 2rem; }
+}
+
 :root {
-  --cn-shadow-1: 0 1px 2px rgba(18,25,51,.06), 0 4px 16px rgba(18,25,51,.08);
   --cn-bg: #F7F8FC;
   --cn-surface: #FFFFFF;
   --cn-raised: #FFFFFF;
@@ -47,9 +134,15 @@
   --cn-info: #4F46E5;
   --cn-info-soft: #EEF0FF;
   --cn-focus: #4F46E5;
+  --cn-shadow-1: 0 1px 2px rgba(18,25,51,.06), 0 1px 3px rgba(18,25,51,.08);
+  --cn-shadow-2: 0 2px 4px rgba(18,25,51,.06), 0 4px 16px rgba(18,25,51,.08);
+  --cn-shadow-3: 0 4px 8px rgba(18,25,51,.06), 0 12px 32px rgba(18,25,51,.12);
+  --cn-shadow-4: 0 8px 16px rgba(18,25,51,.08), 0 24px 64px rgba(18,25,51,.18);
+  --cn-focus-ring: 0 0 0 3px rgba(79,70,229,.28);
+  --cn-scrim: rgba(11,16,32,.5);
 }
+
 [data-theme="dark"] {
-  --cn-shadow-1: 0 0 0 1px rgba(255,255,255,.04), 0 8px 24px rgba(0,0,0,.45);
   --cn-bg: #0B1020;
   --cn-surface: #121933;
   --cn-raised: #1A2244;
@@ -82,10 +175,16 @@
   --cn-info: #818CF8;
   --cn-info-soft: #1E2556;
   --cn-focus: #A5B0FF;
+  --cn-shadow-1: 0 0 0 1px rgba(255,255,255,.04), 0 1px 2px rgba(0,0,0,.4);
+  --cn-shadow-2: 0 0 0 1px rgba(255,255,255,.05), 0 4px 16px rgba(0,0,0,.45);
+  --cn-shadow-3: 0 0 0 1px rgba(255,255,255,.06), 0 12px 32px rgba(0,0,0,.55);
+  --cn-shadow-4: 0 0 0 1px rgba(255,255,255,.08), 0 24px 64px rgba(0,0,0,.65);
+  --cn-focus-ring: 0 0 0 3px rgba(165,176,255,.35);
+  --cn-scrim: rgba(0,0,0,.6);
 }
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --cn-shadow-1: 0 0 0 1px rgba(255,255,255,.04), 0 8px 24px rgba(0,0,0,.45);
     --cn-bg: #0B1020;
     --cn-surface: #121933;
     --cn-raised: #1A2244;
@@ -118,5 +217,11 @@
     --cn-info: #818CF8;
     --cn-info-soft: #1E2556;
     --cn-focus: #A5B0FF;
+    --cn-shadow-1: 0 0 0 1px rgba(255,255,255,.04), 0 1px 2px rgba(0,0,0,.4);
+    --cn-shadow-2: 0 0 0 1px rgba(255,255,255,.05), 0 4px 16px rgba(0,0,0,.45);
+    --cn-shadow-3: 0 0 0 1px rgba(255,255,255,.06), 0 12px 32px rgba(0,0,0,.55);
+    --cn-shadow-4: 0 0 0 1px rgba(255,255,255,.08), 0 24px 64px rgba(0,0,0,.65);
+    --cn-focus-ring: 0 0 0 3px rgba(165,176,255,.35);
+    --cn-scrim: rgba(0,0,0,.6);
   }
 }

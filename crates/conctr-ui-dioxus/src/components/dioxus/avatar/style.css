@@ -1,0 +1,117 @@
+.dx-avatar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dx-avatar-label {
+    margin: 0;
+    color: var(--secondary-color-4);
+    font-size: var(--cn-fs-small);
+}
+
+/* Avatar Component Styles */
+.dx-avatar {
+    position: relative;
+    display: inline-flex;
+    overflow: hidden;
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-color-4);
+    font-weight: 500;
+}
+
+.dx-avatar-image {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+}
+
+/* Avatar sizes */
+.dx-avatar-sm {
+    width: 2rem;
+    height: 2rem;
+    font-size: var(--cn-fs-small);
+}
+
+.dx-avatar-md {
+    width: 3rem;
+    height: 3rem;
+    font-size: var(--cn-fs-h4);
+}
+
+.dx-avatar-lg {
+    width: 4rem;
+    height: 4rem;
+    font-size: var(--cn-fs-h2);
+}
+
+/* Avatar shape */
+.dx-avatar-circle {
+    border-radius: 50%;
+}
+
+.dx-avatar-rounded {
+    border-radius: var(--cn-radius-md);
+}
+
+.dx-avatar[data-state="loading"] {
+    animation: dx-pulse 1.5s infinite ease-in-out;
+    background: var(--primary-color-5);
+}
+
+.dx-avatar[data-state="empty"] {
+    background: var(--primary-color-7);
+}
+
+@keyframes dx-pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.dx-avatar-fallback {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color);
+    color: var(--secondary-color-4);
+    font-size: var(--cn-fs-h3);
+}
+
+.dx-avatar[data-state="error"] .dx-avatar-fallback {
+    background: var(--primary-color-3);
+    color: var(--secondary-color-4);
+}
+
+/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
+.dx-avatar { display: inline-grid; place-items: center; width: var(--cn-control-md); height: var(--cn-control-md); border-radius: 50%; background: var(--cn-primary-soft); color: var(--cn-primary); font: var(--cn-fw-semibold) var(--cn-fs-small)/1 var(--cn-font-ui); flex: none; }
+.dx-avatar--sm { width: 24px; height: 24px; font-size: var(--cn-fs-caption); }
+.dx-avatar--md { width: var(--cn-control-sm); height: var(--cn-control-sm); font-size: var(--cn-fs-caption); }
+.dx-avatar--lg { width: var(--cn-control-lg); height: var(--cn-control-lg); font-size: var(--cn-fs-body); }
+
+:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+.dx-avatar.dx-avatar-sm { width: 24px; height: 24px; }
+.dx-avatar.dx-avatar-md { width: var(--cn-control-sm); height: var(--cn-control-sm); }
+.dx-avatar.dx-avatar-lg { width: var(--cn-control-lg); height: var(--cn-control-lg); }
+
+/* Preserve the kit's initials treatment through the primitive fallback node. */
+.dx-avatar.dx-avatar-default { width: var(--cn-control-md); height: var(--cn-control-md); font-size: var(--cn-fs-small); }
+.dx-avatar.dx-avatar-sm, .dx-avatar.dx-avatar-md { font-size: var(--cn-fs-caption); }
+.dx-avatar.dx-avatar-lg { font-size: var(--cn-fs-body); }
+.dx-avatar .dx-avatar-fallback, .dx-avatar[data-state="error"] .dx-avatar-fallback { background: inherit; color: inherit; font: inherit; }

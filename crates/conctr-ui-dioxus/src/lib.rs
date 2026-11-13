@@ -1,5 +1,89 @@
-//! This crate contains all shared UI for the workspace.
-
+//! Shared Dioxus adapters for the Conctr design kit.
+//! Mount [`components::ThemeProvider`] once to load fonts, tokens and styles.
 pub mod assets;
-
-// TODO: add shared mod components, utils etc
+pub mod components;
+/// Common components and types for application imports.
+pub mod prelude {
+    pub use crate::assets::styles::ConctrStyles;
+    pub use crate::components::accordion::*;
+    pub use crate::components::alert::*;
+    pub use crate::components::alert_dialog::*;
+    pub use crate::components::aspect_ratio::*;
+    pub use crate::components::avatar::*;
+    pub use crate::components::badge::*;
+    pub use crate::components::breadcrumb::*;
+    pub use crate::components::button::*;
+    pub use crate::components::calendar::*;
+    pub use crate::components::card::*;
+    pub use crate::components::checkbox::*;
+    pub use crate::components::cluster::*;
+    pub use crate::components::code_block::*;
+    pub use crate::components::collapsible::*;
+    pub use crate::components::color_picker::*;
+    pub use crate::components::combobox::*;
+    pub use crate::components::connection_flow::*;
+    pub use crate::components::connection_node::*;
+    pub use crate::components::container::*;
+    pub use crate::components::context_menu::*;
+    pub use crate::components::date_picker::*;
+    pub use crate::components::dialog::*;
+    pub use crate::components::divider::*;
+    pub use crate::components::dropdown::*;
+    pub use crate::components::dropdown_menu::*;
+    pub use crate::components::empty_state::*;
+    pub use crate::components::field::*;
+    pub use crate::components::field_error::*;
+    pub use crate::components::form::*;
+    pub use crate::components::heading::*;
+    pub use crate::components::hint::*;
+    pub use crate::components::hover_card::*;
+    pub use crate::components::icon::*;
+    pub use crate::components::input::*;
+    pub use crate::components::item::*;
+    pub use crate::components::keyboard_key::*;
+    pub use crate::components::label::*;
+    pub use crate::components::logo::*;
+    pub use crate::components::menu::*;
+    pub use crate::components::menu_item::*;
+    pub use crate::components::menubar::*;
+    pub use crate::components::modal::*;
+    pub use crate::components::modal_footer::*;
+    pub use crate::components::nav_group::*;
+    pub use crate::components::nav_item::*;
+    pub use crate::components::navbar::*;
+    pub use crate::components::navigation::*;
+    pub use crate::components::pagination::*;
+    pub use crate::components::popover::*;
+    pub use crate::components::progress::*;
+    pub use crate::components::protocol::*;
+    pub use crate::components::protocol_badge::*;
+    pub use crate::components::radio::*;
+    pub use crate::components::radio_group::*;
+    pub use crate::components::scroll_area::*;
+    pub use crate::components::select::*;
+    pub use crate::components::separator::*;
+    pub use crate::components::shape::*;
+    pub use crate::components::sheet::*;
+    pub use crate::components::sidebar::*;
+    pub use crate::components::skeleton::*;
+    pub use crate::components::slider::*;
+    pub use crate::components::spinner::*;
+    pub use crate::components::stack::*;
+    pub use crate::components::stat::*;
+    pub use crate::components::status::*;
+    pub use crate::components::status_alert::*;
+    pub use crate::components::status_badge::*;
+    pub use crate::components::switch::*;
+    pub use crate::components::table::*;
+    pub use crate::components::table_container::*;
+    pub use crate::components::tabs::*;
+    pub use crate::components::textarea::*;
+    pub use crate::components::theme::*;
+    pub use crate::components::theme_provider::*;
+    pub use crate::components::toast::*;
+    pub use crate::components::toggle::*;
+    pub use crate::components::toggle_group::*;
+    pub use crate::components::toolbar::*;
+    pub use crate::components::tooltip::*;
+    pub use crate::components::virtual_list::*;
+}

@@ -1,0 +1,23 @@
+.dx-skeleton {
+  border-radius: var(--cn-radius-sm);
+  animation: dx-skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: var(--primary-color-5);
+}
+
+@keyframes dx-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  61.8% {
+    opacity: 0.5;
+  }
+}
+
+/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
+.dx-skeleton { height: 14px; border-radius: var(--cn-radius-sm); background: linear-gradient(90deg, var(--cn-sunken), var(--cn-border), var(--cn-sunken)); background-size: 200% 100%; animation: cn-shimmer 1.4s linear infinite; }
+.dx-skeleton { animation: none; }
+
+:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

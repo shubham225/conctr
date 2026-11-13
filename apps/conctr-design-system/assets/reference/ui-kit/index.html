@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conctr UI kit</title>
+<link rel="icon" href="../logo/favicon/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../colors/tokens.css">
+<link rel="stylesheet" href="conctr-ui.css">
+<style>
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 96px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
+  section { margin-bottom: 56px; }
+  section > h2 { padding-bottom: 8px; border-bottom: 1px solid var(--cn-border); margin-bottom: 20px; }
+  h1 + p { margin-bottom: 40px; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .spec { display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--cn-border); }
+  .spec__meta { display: grid; gap: 2px; }
+  .spec--row { grid-template-columns: 90px 50px 1fr; padding: 6px 0; align-items: center; border: 0; }
+  .bar { display: block; height: 12px; background: var(--cn-primary); border-radius: 2px; }
+  .tile { display: grid; gap: 4px; justify-items: start; }
+  .rbox, .sbox { display: block; width: 88px; height: 72px; background: var(--cn-surface); border: 1px solid var(--cn-border-strong); }
+  .rbox { background: var(--cn-primary-soft); border-color: var(--cn-primary); }
+  .sbox { border-color: var(--cn-border); border-radius: var(--cn-radius-md); }
+  .stage { position: relative; min-height: 260px; border: 1px dashed var(--cn-border-strong); border-radius: var(--cn-radius-lg); overflow: hidden; background: var(--cn-bg); }
+  .stage .cn-scrim { position: absolute; }
+  @media (max-width: 640px) { .spec { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body class="cn-body">
+<div class="wrap">
+  <header class="top">
+    <div>
+      <img class="cn-logo--light" src="../logo/svg/horizontal-color.svg" height="40" alt="Conctr">
+      <img class="cn-logo--dark" src="../logo/svg/horizontal-color-on-dark.svg" height="40" alt="Conctr">
+    </div>
+    <button class="cn-btn cn-btn--secondary cn-btn--sm" id="theme" type="button">Switch theme</button>
+  </header>
+
+  <h1>UI kit</h1>
+  <p>Tokens, type, components and patterns for the Conctr console and docs. Every value comes from <code>--cn-*</code> tokens, so light and dark mode work without extra styles.</p>
+
+  <section>
+    <h2>Typography</h2>
+    <div class="cn-cluster" style="margin-bottom:16px">
+      <span class="cn-badge">Sora: display and headings</span><span class="cn-badge">Inter: UI and body</span><span class="cn-badge">JetBrains Mono: code</span>
+    </div>
+    <div class="spec"><div class="spec__meta"><b>display</b><span class="cn-caption">48 / 56, weight 600, Sora</span></div><div class="cn-display" style="margin:0">Where systems meet</div></div>
+<div class="spec"><div class="spec__meta"><b>h1</b><span class="cn-caption">36 / 44, weight 600, Sora</span></div><div class="cn-h1" style="margin:0">Where systems meet</div></div>
+<div class="spec"><div class="spec__meta"><b>h2</b><span class="cn-caption">28 / 36, weight 600, Sora</span></div><div class="cn-h2" style="margin:0">Where systems meet</div></div>
+<div class="spec"><div class="spec__meta"><b>h3</b><span class="cn-caption">22 / 30, weight 600, Sora</span></div><div class="cn-h3" style="margin:0">Where systems meet</div></div>
+<div class="spec"><div class="spec__meta"><b>h4</b><span class="cn-caption">18 / 26, weight 600, Sora</span></div><div class="cn-h4" style="margin:0">Where systems meet</div></div>
+<div class="spec"><div class="spec__meta"><b>body-lg</b><span class="cn-caption">18 / 28, weight 400, Inter</span></div><div class="cn-body-lg" style="margin:0">Where systems meet</div></div>
+<div class="spec"><div class="spec__meta"><b>body</b><span class="cn-caption">16 / 26, weight 400, Inter</span></div><div class="" style="margin:0">Where systems meet</div></div>
+<div class="spec"><div class="spec__meta"><b>small</b><span class="cn-caption">14 / 22, weight 400, Inter</span></div><div class="cn-small" style="margin:0">Where systems meet</div></div>
+<div class="spec"><div class="spec__meta"><b>caption</b><span class="cn-caption">12 / 18, weight 400, Inter</span></div><div class="cn-caption" style="margin:0">Where systems meet</div></div>
+<div class="spec"><div class="spec__meta"><b>code</b><span class="cn-caption">13 / 20, weight 400, JetBrains Mono</span></div><div class="cn-mono" style="margin:0">GET /orders/4711 returned 200</div></div>
+
+  </section>
+
+  <section>
+    <h2>Spacing</h2>
+    <p>4 px base unit. The token number times 4 gives the size in pixels. Some numbers are skipped on purpose (7, 9, 11, 13 to 15, 17 to 19, 21 to 23) to keep the scale short.</p>
+    <div class="spec spec--row"><span class="cn-mono spec__tok">space-1</span><span class="cn-caption spec__val">4px</span><i class="bar" style="width:4px"></i></div>
+<div class="spec spec--row"><span class="cn-mono spec__tok">space-2</span><span class="cn-caption spec__val">8px</span><i class="bar" style="width:8px"></i></div>
+<div class="spec spec--row"><span class="cn-mono spec__tok">space-3</span><span class="cn-caption spec__val">12px</span><i class="bar" style="width:12px"></i></div>
+<div class="spec spec--row"><span class="cn-mono spec__tok">space-4</span><span class="cn-caption spec__val">16px</span><i class="bar" style="width:16px"></i></div>
+<div class="spec spec--row"><span class="cn-mono spec__tok">space-5</span><span class="cn-caption spec__val">20px</span><i class="bar" style="width:20px"></i></div>
+<div class="spec spec--row"><span class="cn-mono spec__tok">space-6</span><span class="cn-caption spec__val">24px</span><i class="bar" style="width:24px"></i></div>
+<div class="spec spec--row"><span class="cn-mono spec__tok">space-8</span><span class="cn-caption spec__val">32px</span><i class="bar" style="width:32px"></i></div>
+<div class="spec spec--row"><span class="cn-mono spec__tok">space-10</span><span class="cn-caption spec__val">40px</span><i class="bar" style="width:40px"></i></div>
+<div class="spec spec--row"><span class="cn-mono spec__tok">space-12</span><span class="cn-caption spec__val">48px</span><i class="bar" style="width:48px"></i></div>
+<div class="spec spec--row"><span class="cn-mono spec__tok">space-16</span><span class="cn-caption spec__val">64px</span><i class="bar" style="width:64px"></i></div>
+<div class="spec spec--row"><span class="cn-mono spec__tok">space-20</span><span class="cn-caption spec__val">80px</span><i class="bar" style="width:80px"></i></div>
+<div class="spec spec--row"><span class="cn-mono spec__tok">space-24</span><span class="cn-caption spec__val">96px</span><i class="bar" style="width:96px"></i></div>
+
+  </section>
+
+  <section>
+    <h2>Border radius</h2>
+    <div class="cn-cluster" style="gap:24px; align-items:flex-start"><div class="tile"><i class="rbox" style="border-radius:4px"></i><b>radius-xs</b><span class="cn-caption">4px</span></div><div class="tile"><i class="rbox" style="border-radius:6px"></i><b>radius-sm</b><span class="cn-caption">6px</span></div><div class="tile"><i class="rbox" style="border-radius:10px"></i><b>radius-md</b><span class="cn-caption">10px</span></div><div class="tile"><i class="rbox" style="border-radius:14px"></i><b>radius-lg</b><span class="cn-caption">14px</span></div><div class="tile"><i class="rbox" style="border-radius:20px"></i><b>radius-xl</b><span class="cn-caption">20px</span></div><div class="tile"><i class="rbox" style="border-radius:999px"></i><b>radius-pill</b><span class="cn-caption">999px</span></div></div>
+  </section>
+
+  <section>
+    <h2>Elevation</h2>
+    <div class="cn-cluster" style="gap:32px; align-items:flex-start"><div class="tile"><i class="sbox" style="box-shadow:var(--cn-shadow-1)"></i><b>shadow-1</b><span class="cn-caption">Resting raised elements</span></div><div class="tile"><i class="sbox" style="box-shadow:var(--cn-shadow-2)"></i><b>shadow-2</b><span class="cn-caption">Sticky bars, floating cards</span></div><div class="tile"><i class="sbox" style="box-shadow:var(--cn-shadow-3)"></i><b>shadow-3</b><span class="cn-caption">Menus, popovers, tooltips, toasts</span></div><div class="tile"><i class="sbox" style="box-shadow:var(--cn-shadow-4)"></i><b>shadow-4</b><span class="cn-caption">Modals and dialogs</span></div></div>
+  </section>
+
+  <section>
+    <h2>Connection flow</h2>
+    <div class="cn-card cn-card--raised">
+      <div class="cn-flow">
+        <div class="cn-node"><b>SAP S/4HANA</b><span class="cn-badge"><i class="cn-shape" data-s="triangle" style="--c:var(--cn-amber)"></i>OData v4</span></div>
+        <div class="cn-link"></div>
+        <div class="cn-hub">CONCTR</div>
+        <div class="cn-link"></div>
+        <div class="cn-node"><b>Salesforce</b><span class="cn-badge"><i class="cn-shape" data-s="circle" style="--c:var(--cn-teal)"></i>REST + OAuth 2.0</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Buttons</h2>
+    <div class="cn-stack">
+      <div class="cn-cluster">
+        <button class="cn-btn cn-btn--primary" type="button">Create connection</button>
+        <button class="cn-btn cn-btn--secondary" type="button">Test connection</button>
+        <button class="cn-btn cn-btn--ghost" type="button">View logs</button>
+        <button class="cn-btn cn-btn--danger" type="button">Delete connection</button>
+        <button class="cn-btn cn-btn--primary" type="button" disabled>Disabled</button>
+      </div>
+      <div class="cn-cluster">
+        <button class="cn-btn cn-btn--primary cn-btn--sm" type="button">Small 32</button>
+        <button class="cn-btn cn-btn--primary" type="button">Medium 40</button>
+        <button class="cn-btn cn-btn--primary cn-btn--lg" type="button">Large 48</button>
+        <button class="cn-btn cn-btn--secondary cn-btn--icon cn-tip" data-tip="Refresh" type="button" aria-label="Refresh">&#8635;</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Forms</h2>
+    <div class="grid2">
+      <div class="cn-field"><label class="cn-label" for="n">Connection name</label><input class="cn-input" id="n" placeholder="Orders to ERP"><span class="cn-hint">Shown in logs and alerts.</span></div>
+      <div class="cn-field"><label class="cn-label" for="p">Protocol</label><select class="cn-select" id="p"><option>REST</option><option>SOAP</option><option>OData</option></select></div>
+      <div class="cn-field"><label class="cn-label" for="u">Endpoint URL</label><input class="cn-input" id="u" value="erp.internal/orders" aria-invalid="true"><span class="cn-error">Add the scheme, for example https://</span></div>
+      <div class="cn-field"><label class="cn-label" for="d">Disabled field</label><input class="cn-input" id="d" value="Read only" disabled></div>
+      <div class="cn-field" style="grid-column:1/-1"><label class="cn-label" for="t">Transformation notes</label><textarea class="cn-textarea" id="t" placeholder="Describe what this mapping does"></textarea></div>
+      <div class="cn-stack" style="gap:12px">
+        <label class="cn-option"><input type="checkbox" class="cn-check" checked> Log request bodies</label>
+        <label class="cn-option"><input type="checkbox" class="cn-check"> Mask personal data</label>
+      </div>
+      <div class="cn-stack" style="gap:12px">
+        <label class="cn-option"><input type="radio" name="a" class="cn-radio" checked> OAuth 2.0</label>
+        <label class="cn-option"><input type="radio" name="a" class="cn-radio"> API key</label>
+        <label class="cn-option"><input type="checkbox" class="cn-switch" checked> Retry failed calls</label>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Badges and shapes</h2>
+    <div class="cn-cluster">
+      <span class="cn-badge"><i class="cn-shape" data-s="circle" style="--c:var(--cn-teal)"></i>REST</span>
+      <span class="cn-badge"><i class="cn-shape" data-s="square" style="--c:var(--cn-coral)"></i>SOAP</span>
+      <span class="cn-badge"><i class="cn-shape" data-s="triangle" style="--c:var(--cn-amber)"></i>OData</span>
+      <span class="cn-badge"><i class="cn-shape" data-s="diamond" style="--c:var(--cn-teal)"></i>GraphQL</span>
+      <span class="cn-badge"><i class="cn-shape" data-s="hex" style="--c:var(--cn-primary)"></i>gRPC</span>
+      <span class="cn-badge"><i class="cn-shape" data-s="ring" style="--c:var(--cn-coral)"></i>Webhook</span>
+    </div>
+    <div class="cn-cluster" style="margin-top:12px">
+      <span class="cn-badge cn-badge--success">Healthy</span><span class="cn-badge cn-badge--warning">Degraded</span>
+      <span class="cn-badge cn-badge--danger">Failing</span><span class="cn-badge cn-badge--info">Draft</span>
+      <span class="cn-kbd">Ctrl</span><span class="cn-kbd">K</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Navigation</h2>
+    <div class="cn-stack" style="gap:24px">
+      <ol class="cn-breadcrumb"><li><a href="#">Connections</a></li><li><a href="#">Orders to ERP</a></li><li aria-current="page">Mappings</li></ol>
+      <div class="cn-tabs" role="tablist">
+        <button class="cn-tab" role="tab" aria-selected="true">Connections</button>
+        <button class="cn-tab" role="tab" aria-selected="false">Mappings</button>
+        <button class="cn-tab" role="tab" aria-selected="false">Run history</button>
+      </div>
+      <div class="cn-cluster" style="gap:48px; align-items:flex-start">
+        <nav class="cn-nav" aria-label="Main">
+          <a class="cn-nav__item" href="#" aria-current="page">Connections</a>
+          <a class="cn-nav__item" href="#">Mappings</a>
+          <a class="cn-nav__item" href="#">Run history</a>
+          <div class="cn-nav__group">Workspace</div>
+          <a class="cn-nav__item" href="#">Credentials</a>
+          <a class="cn-nav__item" href="#">Members</a>
+        </nav>
+        <div class="cn-pagination" aria-label="Pagination"><button>Prev</button><button>1</button><button aria-current="page">2</button><button>3</button><button>Next</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Data display</h2>
+    <div class="cn-stack" style="gap:24px">
+      <div class="grid2">
+        <div class="cn-card cn-stat"><span class="cn-stat__label">Runs today</span><span class="cn-stat__value">12,480</span><span class="cn-badge cn-badge--success" style="justify-self:start">99.2% succeeded</span></div>
+        <div class="cn-card cn-stat"><span class="cn-stat__label">Active connections</span><span class="cn-stat__value">38</span><span class="cn-caption">3 need attention</span></div>
+      </div>
+      <div class="cn-table-wrap">
+        <table class="cn-table">
+          <thead><tr><th>Connection</th><th>Source</th><th>Target</th><th>Owner</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Orders to ERP</td><td><span class="cn-badge"><i class="cn-shape" data-s="circle" style="--c:var(--cn-teal)"></i>REST</span></td><td><span class="cn-badge"><i class="cn-shape" data-s="triangle" style="--c:var(--cn-amber)"></i>OData</span></td><td><span class="cn-avatar cn-avatar--sm">AK</span></td><td><span class="cn-badge cn-badge--success">Healthy</span></td></tr>
+            <tr><td>Invoices to CRM</td><td><span class="cn-badge"><i class="cn-shape" data-s="square" style="--c:var(--cn-coral)"></i>SOAP</span></td><td><span class="cn-badge"><i class="cn-shape" data-s="circle" style="--c:var(--cn-teal)"></i>REST</span></td><td><span class="cn-avatar cn-avatar--sm">RS</span></td><td><span class="cn-badge cn-badge--warning">Degraded</span></td></tr>
+            <tr><td>Stock sync</td><td><span class="cn-badge"><i class="cn-shape" data-s="triangle" style="--c:var(--cn-amber)"></i>OData</span></td><td><span class="cn-badge"><i class="cn-shape" data-s="square" style="--c:var(--cn-coral)"></i>SOAP</span></td><td><span class="cn-avatar cn-avatar--sm">MP</span></td><td><span class="cn-badge cn-badge--danger">Failing</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <pre class="cn-code"><span class="c"># Map an OData order to a REST payload</span>
+<span class="k">source</span>: sap-s4  <span class="c">(odata)</span>
+<span class="k">target</span>: salesforce  <span class="c">(rest, oauth2)</span>
+<span class="k">map</span>:
+  Account.Name: <span class="s">"$.SoldToParty.Name"</span></pre>
+      <div class="cn-cluster"><span class="cn-avatar cn-avatar--sm">AK</span><span class="cn-avatar cn-avatar--md">AK</span><span class="cn-avatar">AK</span><span class="cn-avatar cn-avatar--lg">AK</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Feedback</h2>
+    <div class="cn-stack">
+      <div class="cn-alert cn-alert--danger"><div><strong>Stock sync failed at the target.</strong><br>The SOAP endpoint returned 401. Check the credentials for this connection, then run it again.</div></div>
+      <div class="cn-alert cn-alert--warning"><div><strong>Orders to ERP is slow.</strong><br>Responses take 4 s on average. The target may be rate limiting.</div></div>
+      <div class="cn-alert cn-alert--success"><div><strong>Connection created.</strong><br>Run a test to confirm both systems respond.</div></div>
+      <div class="cn-alert cn-alert--info"><div><strong>OAuth token refreshes automatically.</strong><br>You don't need to update this connection when the token expires.</div></div>
+      <div class="grid2">
+        <div class="cn-stack" style="gap:8px"><span class="cn-small">Importing mapping, 62%</span><div class="cn-progress" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"><i style="width:62%"></i></div></div>
+        <div class="cn-cluster"><div class="cn-spinner" role="status" aria-label="Loading"></div><span class="cn-small cn-muted">Testing connection</span></div>
+        <div class="cn-stack" style="gap:8px"><div class="cn-skeleton" style="width:70%"></div><div class="cn-skeleton" style="width:100%"></div><div class="cn-skeleton" style="width:45%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Overlays</h2>
+    <div class="cn-cluster" style="align-items:flex-start; gap:32px">
+      <div class="cn-menu" role="menu">
+        <button class="cn-menu__item" role="menuitem">Edit connection</button>
+        <button class="cn-menu__item" role="menuitem">Duplicate</button>
+        <div class="cn-menu__sep"></div>
+        <button class="cn-menu__item cn-menu__item--danger" role="menuitem">Delete</button>
+      </div>
+      <div class="cn-stack" style="gap:16px">
+        <span class="cn-tooltip">Copies the endpoint URL</span>
+        <div class="cn-toast" role="status"><i class="cn-shape" data-s="circle" style="--c:var(--cn-teal)"></i>Connection created<button class="cn-btn cn-btn--ghost cn-btn--sm" type="button">Undo</button></div>
+      </div>
+    </div>
+    <div class="stage" style="margin-top:24px">
+      <div class="cn-scrim">
+        <div class="cn-modal" role="dialog" aria-labelledby="mt">
+          <h4 id="mt">Delete connection?</h4>
+          <p style="margin:0">Orders to ERP will stop running. Its run history stays available for 30 days.</p>
+          <div class="cn-modal__footer"><button class="cn-btn cn-btn--secondary" type="button">Cancel</button><button class="cn-btn cn-btn--danger" type="button">Delete connection</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Empty state</h2>
+    <div class="cn-card" style="text-align:center; padding:48px 24px">
+      <img class="cn-logo--light" src="../logo/svg/icon-color.svg" width="48" alt="">
+      <img class="cn-logo--dark" src="../logo/svg/icon-color-on-dark.svg" width="48" alt="">
+      <h3 style="margin-top:12px">No connections yet</h3>
+      <p style="margin:0 auto 20px">Connect two systems to start moving data between them.</p>
+      <button class="cn-btn cn-btn--primary" type="button">Create connection</button>
+    </div>
+  </section>
+</div>
+<script>
+  document.getElementById('theme').addEventListener('click', function () {
+    var r = document.documentElement;
+    var dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    r.dataset.theme = dark ? 'light' : 'dark';
+  });
+</script>
+</body>
+</html>

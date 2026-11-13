@@ -4,12 +4,20 @@ version     = "0.1.0"
 authors     = { workspace = true }
 edition     = { workspace = true }
 license     = { workspace = true }
-publish     = { workspace = true }
+publish     = true
+description = "Conctr design system: editable Dioxus components and shared design tokens"
+readme = "README.md"
 repository  = { workspace = true }
 
 [dependencies]
 dioxus            = { workspace = true }
-conctr-api-dioxus = { workspace = true }
+dioxus-primitives = { git = "https://github.com/DioxusLabs/components", version = "0.0.1", default-features = false, features = ["router"] }
+dioxus-icons = "0.1.0"
+palette = "0.7.6"
+time = { version = "0.3.44", features = ["wasm-bindgen"] }
 
 [features]
-server = ["conctr-api-dioxus/server"]
+server = []
+
+[dev-dependencies]
+dioxus-ssr = "0.7.1"

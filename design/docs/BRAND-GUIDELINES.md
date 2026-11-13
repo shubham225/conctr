@@ -1,6 +1,6 @@
 # Conctr brand guidelines
 
-Version 1.0. This document is for designers, developers, marketers and partners. AI tools should read `AI-INSTRUCTIONS.md` first, then this file for detail.
+Version 1.1. This document is for designers, developers, marketers and partners. AI tools should read `AI-INSTRUCTIONS.md` first, then this file for detail.
 
 ## 1. Brand essence
 
@@ -106,27 +106,28 @@ Indigo, teal, coral, amber, then tints of indigo. Always pair color with the sha
 
 ## 4. Typography
 
+Full reference (all tokens, rules, platform mapping): `DESIGN-TOKENS.md`. Font files are bundled in `fonts/` (self-hosted WOFF2, open source licenses).
+
 | Role | Font | Weights | Notes |
 |---|---|---|---|
-| Display and headings | Sora | 600, 700 | Geometric, matches the drawn wordmark. Tight tracking (-0.01em). |
+| Display and headings | Sora | 600, 700 (500 available) | Geometric, matches the drawn wordmark. Tight tracking. |
 | UI and body | Inter | 400, 500, 600 | Interface text, docs, forms. |
 | Code and data | JetBrains Mono | 400, 500 | Payloads, logs, endpoints, IDs. |
 
-Both Sora and Inter are open source (Google Fonts). Fallbacks: `system-ui, sans-serif`.
+| Token suffix | Size / line (px) | Rem | Weight | Tracking | Font | Use |
+|---|---|---|---|---|---|---|
+| `display` | 48 / 56 (below 640 px: 36 / 44) | 3rem / 3.5rem | 600 | -0.02em | Sora | Marketing hero, one per page |
+| `h1` | 36 / 44 (below 640 px: 30 / 38) | 2.25rem / 2.75rem | 600 | -0.015em | Sora | Page title |
+| `h2` | 28 / 36 (below 640 px: 24 / 32) | 1.75rem / 2.25rem | 600 | -0.01em | Sora | Section title |
+| `h3` | 22 / 30 | 1.375rem / 1.875rem | 600 | -0.01em | Sora | Card or panel title |
+| `h4` | 18 / 26 | 1.125rem / 1.625rem | 600 | -0.005em | Sora | Subsection, dialog title |
+| `body-lg` | 18 / 28 | 1.125rem / 1.75rem | 400 | 0em | Inter | Intro paragraphs, marketing body |
+| `body` | 16 / 26 | 1rem / 1.625rem | 400 | 0em | Inter | Default text |
+| `small` | 14 / 22 | 0.875rem / 1.375rem | 400 | 0em | Inter | Dense UI, tables, form labels (500) |
+| `caption` | 12 / 18 | 0.75rem / 1.125rem | 400 | 0.005em | Inter | Hints, metadata, badges (500) |
+| `code` | 13 / 20 | 0.8125rem / 1.25rem | 400 | 0em | JetBrains Mono | Payloads, logs, endpoints, IDs |
 
-| Style | Size / line height | Font |
-|---|---|---|
-| Display | 48 / 56 | Sora 600 |
-| H1 | 36 / 44 | Sora 600 |
-| H2 | 28 / 36 | Sora 600 |
-| H3 | 22 / 30 | Sora 600 |
-| H4 | 18 / 26 | Sora 600 |
-| Body | 16 / 26 | Inter 400 |
-| Small | 14 / 22 | Inter 400 / 500 |
-| Caption | 12 / 18 | Inter 400 |
-| Code | 13 / 20 | JetBrains Mono 400 |
-
-Rules: sentence case everywhere (headings, buttons, menu items). Keep lines under 75 characters. Do not set body text in all caps. Do not use all caps for labels either, use weight and color.
+Key rules: sentence case everywhere; reading lines 45 to 75 characters; tabular numbers in tables; mono for anything a person might copy (IDs, URLs, field paths); no all caps (except the wordmark); body text is at least 16 px on mobile; display, h1 and h2 step down below 640 px.
 
 ## 5. Shape language and iconography
 
@@ -158,13 +159,17 @@ Auth icons (OAuth 2.0, API key, Basic, JWT, mTLS, SAML) use indigo as the base w
 4. **Say what happened and what to do.** Errors name the cause and the fix. They do not apologise.
 5. **Density for operators.** Tables and logs are first class. Use 14 px body in dense views.
 
-**Layout.** 4 px base unit. Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64. 12-column grid, max content width 1200 px, docs width 720 px.
+**Spacing.** 4 px base unit. Scale: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96 (`--cn-space-1` to `--cn-space-24`). Related items are closer than unrelated ones. Page margin 16 / 24 / 32 px (mobile / tablet / desktop).
 
-**Radius.** 6 px (small controls, tags), 10 px (buttons, inputs), 14 px (cards, dialogs), pill (badges).
+**Grid and breakpoints.** 12 columns. Breakpoints 640, 768, 1024, 1280, 1536 px (mobile first). Content width 1200 px, prose 720 px, wide 1440 px.
 
-**Elevation.** Light mode uses a soft shadow plus a 1 px border. Dark mode uses surface lightness (`surface` < `raised`) and a hairline border, not heavy shadows.
+**Radius.** xs 4 (keys, inline code), sm 6 (tags, tooltips), md 10 (buttons, inputs, menus), lg 14 (cards), xl 20 (modals), pill (badges). Nested radius = outer radius minus padding.
 
-**Components** (`ui-kit/index.html`, `ui-kit/conctr-ui.css`): buttons (primary, secondary, ghost, danger), inputs, select, switch, shape badges, status badges, cards, alerts, tabs, table, code block, connection flow, empty state. All states (hover, focus, disabled, error) are implemented.
+**Elevation.** Flat with a 1 px border by default. Four shadow levels: 1 cards, 2 sticky bars, 3 menus and toasts, 4 modals. Dark mode adds a faint 1 px ring because black shadows vanish on navy.
+
+**Control sizes.** 32, 40 (default) and 48 px heights. Touch targets are at least 44 px.
+
+**Components** (`ui-kit/index.html`, `ui-kit/conctr-ui.css`, specs in `COMPONENTS.md`): buttons, inputs, textarea, select, checkbox, radio, switch, shape and status badges, cards, alerts, toasts, tabs, breadcrumb, pagination, sidebar nav, table, stat, code block, avatar, progress, spinner, skeleton, menu, tooltip, modal, connection flow, empty state. All states (hover, focus, disabled, error) are implemented.
 
 **Accessibility.** Visible 2 px focus ring on every interactive element. Targets at least 32 px (40 px default). Respect `prefers-reduced-motion`. All token pairs listed in section 3 meet AA.
 
@@ -214,16 +219,19 @@ Auth icons (OAuth 2.0, API key, Basic, JWT, mTLS, SAML) use indigo as the base w
 ```
 logo/svg, logo/png, logo/favicon   Logos in every lockup and variant
 icons/color, icons/mono            12 protocol and auth icons
-colors/                            tokens.css, colors.json, tailwind config, palette preview
+fonts/                             Sora, Inter, JetBrains Mono (WOFF2) + fonts.css + licenses
+colors/                            tokens.css, design-tokens.json, colors.json,
+                                   tailwind.config.js, conctr_tokens.rs, palette preview
 ui-kit/                            conctr-ui.css and index.html (open in a browser)
 assets/                            Social card
 brand.json                         Machine-readable brand data
-docs/                              This guide and the AI instructions
+docs/                              BRAND-GUIDELINES, DESIGN-TOKENS, COMPONENTS, AI-INSTRUCTIONS
 ```
 
 ## 12. Quick start for developers
 
 ```html
+<link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="colors/tokens.css">
 <link rel="stylesheet" href="ui-kit/conctr-ui.css">
 <body class="cn-body">
@@ -232,4 +240,4 @@ docs/                              This guide and the AI instructions
 </body>
 ```
 
-Use `var(--cn-*)` tokens in your own CSS. Never hard-code hex values for UI.
+Use `var(--cn-*)` tokens in your own CSS. Never hard-code hex, px, radius or shadow values for UI. See `DESIGN-TOKENS.md` and `COMPONENTS.md`.

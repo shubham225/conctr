@@ -1,0 +1,87 @@
+.dx-tabs {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.dx-tabs-list {
+    display: flex;
+    width: fit-content;
+    box-sizing: border-box;
+    flex: 1;
+    flex-direction: row;
+    padding: 0.25rem;
+    border: none;
+    border-radius: var(--cn-radius-md);
+    gap: 0.25rem;
+}
+
+[data-variant="default"] .dx-tabs-list {
+    background: var(--light, var(--primary-color-3))
+        var(--dark, var(--primary-color-5));
+}
+
+.dx-tabs-trigger {
+    padding: 4px 8px;
+    border: none;
+    border-radius: calc(0.5rem - 0.25rem);
+    background: none;
+    color: var(--secondary-color-5);
+    cursor: pointer;
+}
+
+[data-variant="default"] .dx-tabs-trigger[data-state="active"] {
+    background-color: var(--light, var(--primary-color))
+        var(--dark, var(--primary-color-6));
+    box-shadow: var(--dark, inset 0 0 0 1px var(--primary-color-7))
+        var(--light, 0 1px 2px var(--cn-scrim));
+}
+
+.dx-tabs-trigger[data-state="active"] {
+    color: var(--secondary-color-1);
+}
+
+.dx-tabs-trigger[data-disabled="true"] {
+    color: var(--secondary-color-5);
+    cursor: not-allowed;
+}
+
+.dx-tabs-trigger:hover:not([data-disabled="true"]),
+.dx-tabs-trigger:focus-visible {
+    color: var(--secondary-color-3);
+}
+
+.dx-tabs-content {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2rem;
+}
+
+[data-variant="default"] .dx-tabs-content-themed {
+    border: 1px solid var(--light, var(--primary-color-6))
+        var(--dark, var(--primary-color-7));
+    border-radius: var(--cn-radius-md);
+    background: var(--light, var(--primary-color))
+        var(--dark, var(--primary-color-3));
+    box-shadow: var(--cn-shadow-1);
+}
+
+.dx-tabs-content[data-state="inactive"] {
+    display: none;
+}
+
+/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
+.dx-tabs-list { display: flex; gap: var(--cn-space-1); border-bottom: var(--cn-border-1) solid var(--cn-border); }
+.dx-tabs-trigger { padding: 10px var(--cn-space-4); font: var(--cn-fw-medium) var(--cn-fs-small) var(--cn-font-ui); color: var(--cn-text-muted); background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; }
+.dx-tabs-trigger:hover { color: var(--cn-text); }
+.dx-tabs-trigger[aria-selected="true"] { color: var(--cn-primary); border-color: var(--cn-primary); }
+
+:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* Conctr tabs are an underline navigation row in both registry variants. */
+.dx-tabs[data-variant] .dx-tabs-list { width: 100%; padding: 0; border-radius: 0; background: transparent; border-bottom: var(--cn-border-1) solid var(--cn-border); }
+.dx-tabs[data-variant] .dx-tabs-trigger { border-radius: 0; border: 0; border-bottom: var(--cn-border-2) solid transparent; background: transparent; color: var(--cn-text-muted); padding: 10px var(--cn-space-4); box-shadow: none; }
+.dx-tabs[data-variant] .dx-tabs-trigger[data-state="active"] { color: var(--cn-primary); background: transparent; border-bottom-color: var(--cn-primary); box-shadow: none; }
+.dx-tabs[data-variant] .dx-tabs-content-themed { background: transparent; border: 0; border-radius: 0; padding: var(--cn-space-4) 0; }

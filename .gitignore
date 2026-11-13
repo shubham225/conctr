@@ -55,4 +55,3 @@ lcov.info
 .local/
 .cache/
 
-**/dioxus-test/**

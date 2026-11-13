@@ -15,6 +15,7 @@
     >
   </picture>
 </p>
+
 <p align="center">
   <img src="https://img.shields.io/badge/Rust-1.99.1-orange?style=flat-square&logo=rust" alt="Rust 1.99.1">
   <img src="https://img.shields.io/badge/Cargo-1.99.1-orange?style=flat-square&logo=rust" alt="Cargo 1.99.1">
@@ -27,7 +28,9 @@
   </a>
 </p>
 
-**CONCTR (pronounced Connector)** is an enterprise integration platform designed to connect applications, APIs, services, and data systems through a unified integration layer.
+<p align="center">
+<b>CONCTR (pronounced Connector)</b> is an enterprise integration platform designed to connect applications, APIs, services, and data systems through a unified integration layer.
+</p>
 
 ---
 
@@ -58,7 +61,8 @@ CONCTR/
 ├── apps/
 │   ├── web-dioxus/
 │   ├── desktop-dioxus/
-│   └── mobile-dioxus/
+│   ├── mobile-dioxus/
+│   └── conctr-design-system/
 ├── crates/
 |   ├── conctr-api/
 │   ├── conctr-api-dioxus/
@@ -121,3 +125,14 @@ CONCTR is dual-licensed under your choice of:
 
 - [MIT License](LICENSE-MIT)
 - [Apache License 2.0](LICENSE-APACHE)
+
+## Design system
+
+Inspect the reusable Conctr UI components, typography and design tokens:
+
+```sh
+dx serve --package conctr-design-system --platform web
+```
+
+The [gallery](apps/conctr-design-system/README.md) includes live component examples
+and copyable Rust usage. Applications consume [conctr-ui-dioxus](crates/conctr-ui-dioxus/README.md).
