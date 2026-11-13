@@ -442,3 +442,14 @@ dx serve --package conctr-mobile-dioxus
 - Prefer small, focused changes over unnecessary rewrites.
 - Explain important architectural or dependency changes.
 - Use the official Dioxus 0.7 documentation when uncertain about an API.
+
+
+## Product architecture and planning context
+
+For Conctr product/platform work, start with [docs/ai/AI-INSTRUCTIONS.md](docs/ai/AI-INSTRUCTIONS.md)
+and read the relevant ownership/contracts from there. The dated implementation
+inventory is [docs/roadmap/current-state.md](docs/roadmap/current-state.md).
+Proposed ADRs and prototype screens are plans, not claims of working features.
+Portable task-specific skills are indexed in [docs/ai/README.md](docs/ai/README.md).
+Use this context within the user's requested scope; it does not require creating
+all planned crates or seeking approval for every documented open question.

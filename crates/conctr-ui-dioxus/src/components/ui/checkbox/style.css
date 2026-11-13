@@ -1,0 +1,38 @@
+/* CSS module source: /src/components/ui/checkbox/style.css */
+.dx-checkbox {
+    width: 1rem;
+    height: 1rem;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    margin: 0;
+    background-color: var(--primary-color-3);
+    box-shadow: inset 0 0 0 1px var(--primary-color-7);
+    color: var(--secondary-color-4);
+    cursor: pointer;
+}
+
+.dx-checkbox-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dx-checkbox[data-state="checked"] {
+    background-color: var(--secondary-color-2);
+    box-shadow: none;
+    color: var(--primary-color);
+}
+
+.dx-checkbox:focus-visible {
+    box-shadow: 0 0 0 2px var(--focused-border-color);
+}
+
+/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
+
+:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+ .dx-checkbox { width: 18px; height: 18px; border: var(--cn-border-2) solid var(--cn-border-strong); border-radius: var(--cn-radius-xs); background: var(--cn-surface); }
+.dx-checkbox[data-state="checked"], .dx-checkbox[data-state="indeterminate"] { background: var(--cn-primary); color: var(--cn-on-primary); border-color: var(--cn-primary); }

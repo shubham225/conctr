@@ -78,3 +78,10 @@ dioxus = { workspace = true }
 
 Framework-independent platform crates must not depend on
 framework-specific UI crates.
+
+For component ownership and the recommended shared web/desktop/mobile product
+app, see [Dioxus presentation structure](../architecture/dioxus-presentation.md).
+
+See [verification strategy](testing-strategy.md) for boundary-specific testing and
+[documentation maintenance](documentation.md) for keeping plans and implementation
+evidence aligned.

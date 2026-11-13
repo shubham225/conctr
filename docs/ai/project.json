@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "audit_date": "2026-11-13",
+  "name": "Conctr",
+  "tagline": "Where systems meet.",
+  "documentation_status": "reviewable-proposal",
+  "current_state": "UI/design-system foundation; backend and shared product app mostly scaffolds",
+  "existing_packages": [
+    {
+      "name": "conctr-api",
+      "path": "crates/conctr-api",
+      "status": "scaffold",
+      "targets": [
+        "bin"
+      ]
+    },
+    {
+      "name": "conctr-api-dioxus",
+      "path": "crates/conctr-api-dioxus",
+      "status": "demo",
+      "targets": [
+        "lib"
+      ]
+    },
+    {
+      "name": "conctr-app-dioxus",
+      "path": "crates/conctr-app-dioxus",
+      "status": "scaffold",
+      "targets": [
+        "lib"
+      ]
+    },
+    {
+      "name": "conctr-auth",
+      "path": "crates/conctr-auth",
+      "status": "scaffold",
+      "targets": [
+        "lib"
+      ]
+    },
+    {
+      "name": "conctr-connectors",
+      "path": "crates/conctr-connectors",
+      "status": "scaffold",
+      "targets": [
+        "lib"
+      ]
+    },
+    {
+      "name": "conctr-core",
+      "path": "crates/conctr-core",
+      "status": "scaffold",
+      "targets": [
+        "lib"
+      ]
+    },
+    {
+      "name": "conctr-design-system",
+      "path": "apps/conctr-design-system",
+      "status": "implemented-showcase",
+      "targets": [
+        "bin"
+      ]
+    },
+    {
+      "name": "conctr-desktop-dioxus",
+      "path": "apps/desktop-dioxus",
+      "status": "placeholder-app",
+      "targets": [
+        "bin"
+      ]
+    },
+    {
+      "name": "conctr-engine",
+      "path": "crates/conctr-engine",
+      "status": "scaffold",
+      "targets": [
+        "lib"
+      ]
+    },
+    {
+      "name": "conctr-gateway",
+      "path": "crates/conctr-gateway",
+      "status": "scaffold",
+      "targets": [
+        "lib"
+      ]
+    },
+    {
+      "name": "conctr-mobile-dioxus",
+      "path": "apps/mobile-dioxus",
+      "status": "placeholder-app",
+      "targets": [
+        "bin"
+      ]
+    },
+    {
+      "name": "conctr-storage",
+      "path": "crates/conctr-storage",
+      "status": "scaffold",
+      "targets": [
+        "lib"
+      ]
+    },
+    {
+      "name": "conctr-transform",
+      "path": "crates/conctr-transform",
+      "status": "scaffold",
+      "targets": [
+        "lib"
+      ]
+    },
+    {
+      "name": "conctr-ui-dioxus",
+      "path": "crates/conctr-ui-dioxus",
+      "status": "implemented-library",
+      "targets": [
+        "lib",
+        "test"
+      ]
+    },
+    {
+      "name": "conctr-web-dioxus",
+      "path": "apps/web-dioxus",
+      "status": "placeholder-app",
+      "targets": [
+        "bin"
+      ]
+    }
+  ],
+  "recommended_packages": [
+    {
+      "name": "conctr-flow",
+      "phase": "M1",
+      "purpose": "Canonical manifest, validation and plan compilation"
+    },
+    {
+      "name": "conctr-application",
+      "phase": "M1",
+      "purpose": "Framework-independent authorized use cases and administrative ports"
+    },
+    {
+      "name": "conctr-contracts",
+      "phase": "M1",
+      "purpose": "Framework-independent public DTO and event contracts"
+    },
+    {
+      "name": "conctr-secrets",
+      "phase": "M1-M2",
+      "purpose": "Scoped credential references/resolution and redaction boundary"
+    }
+  ],
+  "deferred_packages": [
+    "conctr-client",
+    "conctr-connector-testkit",
+    "conctr-scheduler",
+    "conctr-observability",
+    "conctr-plugin-api"
+  ],
+  "deferred_applications": [
+    "apps/conctr-worker"
+  ],
+  "proposed_runtime": {
+    "topology": "modular server first",
+    "store": "PostgreSQL",
+    "delivery": "at-least-once work processing with operation-specific idempotency",
+    "unsafe_unknown_effect": "needs-attention/reconciliation",
+    "first_slice": [
+      "manual trigger",
+      "HTTP source",
+      "declarative JSON mapping",
+      "HTTP target",
+      "persisted run inspection"
+    ]
+  },
+  "invariants": [
+    "Platform crates do not depend on Dioxus",
+    "Executable semantics are independent of canvas layout",
+    "Runs pin immutable version and bindings",
+    "No generic exactly-once external-effects promise",
+    "Scope and authorization are server-enforced",
+    "Secret material is excluded from flows, exports, logs and UI previews",
+    "Proposed architecture is not implemented capability"
+  ],
+  "references": {
+    "instructions": "docs/ai/AI-INSTRUCTIONS.md",
+    "state": "docs/roadmap/current-state.md",
+    "crates": "docs/architecture/crate-map.md",
+    "decisions": "docs/architecture/decisions/README.md",
+    "roadmap": "docs/roadmap/milestones.md",
+    "design": "design/docs/AI-INSTRUCTIONS.md",
+    "prototype": "docs/experience/prototype/index.html"
+  }
+}

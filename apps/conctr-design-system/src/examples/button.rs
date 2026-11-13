@@ -18,6 +18,18 @@ pub fn Demo() -> Element {
             Button { size: ButtonSize::Lg, "Large action" }
         }
         Cluster { Button { disabled: true, "Disabled" } Button { loading: true, "Testing connection" } }
+        Cluster {
+            Tooltip {
+                TooltipTrigger { as: move |attrs: Vec<Attribute>| rsx! {
+                    Button { size: ButtonSize::Icon, variant: ButtonVariant::Secondary, aria_label: "Connection settings", attributes: attrs,
+                        UiIcon { name: IconName::Settings }
+                    }
+                } }
+                TooltipContent { "Connection settings" }
+            }
+            Button { size: ButtonSize::IconSm, variant: ButtonVariant::Ghost, aria_label: "Connection settings", UiIcon { name: IconName::Settings } }
+            Button { size: ButtonSize::IconLg, aria_label: "Connection settings", UiIcon { name: IconName::Settings } }
+        }
         p { role: "status", "Test action invoked {count} times." }
     }
         }

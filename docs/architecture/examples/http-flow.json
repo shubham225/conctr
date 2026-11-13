@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "name": "Example HTTP mapping",
+  "bindings": {
+    "source": {
+      "connector": "http",
+      "version": "1"
+    },
+    "target": {
+      "connector": "http",
+      "version": "1"
+    }
+  },
+  "nodes": [
+    {
+      "id": "start",
+      "kind": "trigger.manual",
+      "version": "1",
+      "config": {}
+    },
+    {
+      "id": "read",
+      "kind": "http.request",
+      "version": "1",
+      "config": {
+        "connection": "source",
+        "method": "GET",
+        "path": "/sample"
+      }
+    },
+    {
+      "id": "map",
+      "kind": "transform.map",
+      "version": "1",
+      "config": {
+        "fields": {
+          "id": {
+            "from": "/id",
+            "required": true
+          },
+          "status": {
+            "value": "received"
+          }
+        }
+      }
+    },
+    {
+      "id": "send",
+      "kind": "http.request",
+      "version": "1",
+      "config": {
+        "connection": "target",
+        "method": "POST",
+        "path": "/sample"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": {
+        "node": "start",
+        "port": "success"
+      },
+      "to": {
+        "node": "read",
+        "port": "input"
+      }
+    },
+    {
+      "from": {
+        "node": "read",
+        "port": "success"
+      },
+      "to": {
+        "node": "map",
+        "port": "input"
+      }
+    },
+    {
+      "from": {
+        "node": "map",
+        "port": "success"
+      },
+      "to": {
+        "node": "send",
+        "port": "input"
+      }
+    }
+  ],
+  "policy": {
+    "maxAttempts": 1,
+    "runTimeoutSeconds": 60,
+    "onError": "fail"
+  }
+}

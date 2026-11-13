@@ -197,3 +197,24 @@ Sidebar 240 px (from `lg`), top bar 56 px with breadcrumb and a user menu, conte
 - When unsure about a size or space value, pick the nearest token, never an arbitrary number.
 - Always produce a light and dark friendly result by using `var(--cn-*)` tokens only.
 - Keep copy short, in sentence case, with consistent verbs between buttons, modals and toasts.
+
+## Dioxus layout primitives
+
+The Dioxus adapters extend the existing Stack/Cluster layout helpers with Box,
+Flex, Grid and Inline. They reuse the spacing scale and add no colors or type
+styles. Box is a neutral div with token-based padding. Stack is a vertical flex
+layout; Inline is a wrapping horizontal layout. Flex exposes row/column,
+alignment, distribution and wrapping. Grid lays out up to twelve equal columns
+and reduces the column count when the available width cannot fit the configured
+minimum item width. Use gap for siblings; avoid padding on both parent and
+children unless both levels need it. All accept native attributes and semantic
+labels as needed. Layout containers have no implicit interactive semantics.
+
+The gallery groups these as Primitives, individual controls as Core, and Stats,
+connection flows, empty states and composed Modal as Composed. This organization
+leaves a home for future dashboard, data-table and flow-editor compositions.
+
+General interface action icons are supplied by the existing Lucide dependency
+in the Dioxus adapter. The branded kit currently contains protocol and
+authentication artwork only. Keep its six protocol shape meanings unchanged;
+new protocol shapes require an explicit design specification.

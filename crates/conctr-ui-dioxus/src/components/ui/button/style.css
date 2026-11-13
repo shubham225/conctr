@@ -1,0 +1,23 @@
+/* CSS module source: /src/components/ui/button/style.css */
+/* Conctr button recipe. Variants use the actual primitive data attributes. */
+.dx-button { display: inline-flex; width: fit-content; box-sizing: border-box; flex-shrink: 0; align-items: center; justify-content: center; gap: var(--cn-space-2); height: var(--cn-control-md); padding: 0 var(--cn-space-4); border: var(--cn-border-1) solid transparent; border-radius: var(--cn-radius-md); font: var(--cn-fw-medium) var(--cn-fs-small)/1 var(--cn-font-ui); cursor: pointer; white-space: nowrap; text-decoration: none; transition: background-color var(--cn-dur-fast) var(--cn-ease), border-color var(--cn-dur-fast) var(--cn-ease); }
+.dx-button svg, .dx-button img { width: var(--cn-space-5); height: var(--cn-space-5); flex-shrink: 0; pointer-events: none; }
+.dx-button[data-size="xs"], .dx-button[data-size="sm"] { height: var(--cn-control-sm); padding-inline: var(--cn-space-3); font-size: var(--cn-fs-caption); }
+.dx-button[data-size="lg"] { height: var(--cn-control-lg); padding-inline: var(--cn-space-6); font-size: var(--cn-fs-body); }
+.dx-button[data-size^="icon"] { width: var(--cn-control-md); padding: 0; }
+.dx-button[data-size="icon-xs"], .dx-button[data-size="icon-sm"] { width: var(--cn-control-sm); height: var(--cn-control-sm); }
+.dx-button[data-size="icon-lg"] { width: var(--cn-control-lg); height: var(--cn-control-lg); }
+.dx-button[data-size="sm"] svg, .dx-button[data-size="xs"] svg, .dx-button[data-size="icon-sm"] svg, .dx-button[data-size="icon-xs"] svg { width: var(--cn-space-4); height: var(--cn-space-4); }
+.dx-button[data-style="primary"] { background: var(--cn-primary); color: var(--cn-on-primary); }
+.dx-button[data-style="primary"]:hover:not(:disabled) { background: var(--cn-primary-hover); }
+.dx-button[data-style="secondary"], .dx-button[data-style="outline"] { background: var(--cn-surface); color: var(--cn-text); border-color: var(--cn-border-strong); }
+.dx-button[data-style="secondary"]:hover:not(:disabled), .dx-button[data-style="outline"]:hover:not(:disabled) { background: var(--cn-sunken); }
+.dx-button[data-style="ghost"], .dx-button[data-style="link"] { background: transparent; color: var(--cn-primary); }
+.dx-button[data-style="ghost"]:hover:not(:disabled) { background: var(--cn-primary-soft); }
+.dx-button[data-style="link"]:hover:not(:disabled) { text-decoration: underline; text-underline-offset: var(--cn-space-1); }
+.dx-button[data-style="destructive"] { background: var(--cn-danger); color: var(--cn-on-danger); }
+.dx-button[data-style="destructive"]:hover:not(:disabled) { filter: brightness(.92); }
+.dx-button:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: var(--cn-border-2); }
+.dx-button:disabled, .dx-button[aria-disabled="true"] { opacity: var(--cn-opacity-disabled); cursor: not-allowed; }
+@media (pointer: coarse) { .dx-button { min-width: var(--cn-control-lg); min-height: var(--cn-control-lg); } }
+@media (prefers-reduced-motion: reduce) { .dx-button { transition: none; } }

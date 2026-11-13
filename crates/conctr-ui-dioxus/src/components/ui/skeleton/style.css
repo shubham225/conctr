@@ -1,0 +1,5 @@
+/* CSS module source: /src/components/ui/skeleton/style.css */
+.dx-skeleton { position: relative; overflow: hidden; height: var(--cn-space-4); border-radius: var(--cn-radius-sm); background: var(--cn-sunken); }
+.dx-skeleton::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, var(--cn-border), transparent); transform: translateX(-100%); animation: dx-skeleton-shimmer 1.4s linear infinite; }
+@keyframes dx-skeleton-shimmer { to { transform: translateX(100%); } }
+@media (prefers-reduced-motion: reduce) { .dx-skeleton::after { animation: none; transform: none; } }

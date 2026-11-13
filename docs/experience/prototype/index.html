@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Conctr · Proposed application blueprint</title>
+<link rel="icon" href="../../../design/logo/favicon/favicon.svg">
+<link rel="stylesheet" href="../../../design/fonts/fonts.css">
+<link rel="stylesheet" href="../../../design/colors/tokens.css">
+<link rel="stylesheet" href="../../../design/ui-kit/conctr-ui.css">
+<link rel="stylesheet" href="prototype.css">
+</head>
+<body class="cn-body">
+<a class="skip" href="#main">Skip to app blueprint</a>
+<header class="review-bar">
+ <div><strong>Conctr application blueprint</strong><span class="cn-caption">Proposed experience · synthetic data · local-only actions</span></div>
+ <div class="cn-cluster" aria-label="Preview controls">
+  <div class="modes" role="group" aria-label="Application surface">
+   <button class="cn-btn cn-btn--secondary cn-btn--sm" data-mode="web" aria-pressed="true">Web</button>
+   <button class="cn-btn cn-btn--secondary cn-btn--sm" data-mode="desktop" aria-pressed="false">Desktop</button>
+   <button class="cn-btn cn-btn--secondary cn-btn--sm" data-mode="mobile" aria-pressed="false">Mobile</button>
+  </div>
+  <button id="theme" class="cn-btn cn-btn--secondary cn-btn--sm" aria-pressed="false">Dark theme</button>
+ </div>
+</header>
+<p class="review-note cn-small">Explore a flow designer, operations pages and device layouts. These are documentation wireframes, not connected product features. The mobile surface focuses on operations; full authoring is proposed for web and desktop.</p>
+<div id="window" class="app-window" data-mode="web">
+ <div class="native-bar" aria-hidden="true">Conctr — Example server profile <span>Desktop window / native menus are proposed</span></div>
+ <div class="app-layout">
+  <aside class="app-sidebar" aria-label="Workspace navigation">
+   <div class="brand"><img class="cn-logo--light" src="../../../design/logo/svg/horizontal-color.svg" width="128" alt="Conctr"><img class="cn-logo--dark" src="../../../design/logo/svg/horizontal-color-on-dark.svg" width="128" alt="Conctr"></div>
+   <div class="workspace"><strong class="cn-small">Example workspace</strong><span class="cn-caption">Illustrative organization</span></div>
+   <nav id="navigation" aria-label="Application pages"></nav>
+   <div class="sidebar-footer cn-caption">Fixture mode · no live endpoint<br>Credentials are never included</div>
+  </aside>
+  <div class="app-main">
+   <header class="app-header"><span class="cn-small" id="breadcrumb">Workspace / Overview</span><span class="cn-badge cn-badge--info">Development</span></header>
+   <main id="main" tabindex="-1"><div id="screen"></div></main>
+  </div>
+ </div>
+</div>
+<div id="notice" role="status" class="notice cn-alert cn-alert--info" hidden></div>
+<script src="prototype.js"></script>
+</body>
+</html>

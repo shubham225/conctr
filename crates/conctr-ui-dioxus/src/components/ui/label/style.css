@@ -1,0 +1,17 @@
+/* CSS module source: /src/components/ui/label/style.css */
+/* Label Styles */
+.dx-label {
+  display: flex;
+  align-items: center;
+  color: var(--secondary-color-4);
+  font-size: var(--cn-fs-small);
+  line-height: 1;
+}
+
+/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
+.dx-label { font-size: var(--cn-fs-small); font-weight: var(--cn-fw-medium); color: var(--cn-text); }
+
+:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+.dx-label { line-height: inherit; }

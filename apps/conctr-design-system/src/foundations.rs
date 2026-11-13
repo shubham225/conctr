@@ -29,7 +29,7 @@ pub fn Colors() -> Element {
         h2 { "Brand & feedback" }
         div { class: "ds-token-grid", for token in ["primary", "primary-hover", "primary-soft", "teal", "teal-text", "coral", "coral-text", "amber", "amber-text", "success", "success-soft", "warning", "warning-soft", "danger", "danger-soft", "info", "info-soft", "focus"] { ColorToken { token: token.to_string() } } }
         h2 { "Protocol language" }
-        Cluster { for protocol in [Protocol::Rest, Protocol::Soap, Protocol::OData, Protocol::GraphQl, Protocol::Grpc, Protocol::Webhook] { ProtocolBadge { protocol } } }
+        Cluster { class: "ds-foundation-stage", for protocol in [Protocol::Rest, Protocol::Soap, Protocol::OData, Protocol::GraphQl, Protocol::Grpc, Protocol::Webhook] { ProtocolBadge { protocol } } }
         p { class: "ds-guidance", "Use semantic tokens for UI. The -text accent tokens provide readable colored text on light backgrounds." }
     }
 }
@@ -62,11 +62,28 @@ pub fn Branding() -> Element {
         div { class: "ds-page-head", span { class: "ds-eyebrow", "Foundations" } h1 { "Logo & icons" } p { "Original supplied artwork, with themed logo variants. Protocol shapes retain their fixed meanings." } }
         div { class: "ds-brand-stage", Logo {} }
         h2 { "Application marks" }
-        Cluster { img { src: images::APP_ICON_SVG, alt: "Conctr application icon", class: "ds-brand-icon" } img { src: images::ICON_COLOR_SVG, alt: "Conctr mark on a light surface", class: "ds-brand-icon" } }
+        Cluster { class: "ds-foundation-stage", img { src: images::APP_ICON_SVG, alt: "Conctr application icon", class: "ds-brand-icon" } img { src: images::ICON_COLOR_SVG, alt: "Conctr mark on a light surface", class: "ds-brand-icon" } }
         h2 { "Interface icons" }
-        Cluster { Icon { src: icons::API_KEY_MONO, alt: "API key" } Icon { src: icons::API_KEY_COLOR, alt: "API key, color" } }
+        div { class: "ds-token-grid ds-icon-grid",
+            for (name, mono, color) in [("API key", icons::API_KEY_MONO, icons::API_KEY_COLOR), ("Basic auth", icons::BASIC_MONO, icons::BASIC_COLOR), ("OAuth 2", icons::OAUTH2_MONO, icons::OAUTH2_COLOR), ("JWT", icons::JWT_MONO, icons::JWT_COLOR), ("SAML", icons::SAML_MONO, icons::SAML_COLOR), ("Mutual TLS", icons::MTLS_MONO, icons::MTLS_COLOR)] {
+                div { class: "ds-icon-tile", Cluster { Icon { src: mono, monochrome: true, alt: "{name}, monochrome" } Icon { src: color, alt: "{name}, color" } } span { class: "cn-small", "{name}" } }
+            }
+        }
+        p { class: "cn-small", "These are the supplied authentication icons. General interface actions currently use Lucide; a branded interface icon set is not included in the kit." }
+        h2 { "Interface actions" }
+        div { class: "ds-token-grid ds-icon-grid",
+            for (name, icon) in [("Connections", IconName::Connections), ("Runs", IconName::Runs), ("Settings", IconName::Settings), ("Search", IconName::Search), ("Add", IconName::Add), ("Panel", IconName::Panel), ("Folder", IconName::Folder), ("More", IconName::More), ("Close", IconName::Close)] {
+                div { class: "ds-icon-tile", UiIcon { name: icon } span { class: "cn-small", "{name}" } }
+            }
+        }
         h2 { "Protocol shapes" }
-        Cluster { for protocol in [Protocol::Rest, Protocol::Soap, Protocol::OData, Protocol::GraphQl, Protocol::Grpc, Protocol::Webhook] { ProtocolBadge { protocol } } }
+        Cluster { class: "ds-foundation-stage", for protocol in [Protocol::Rest, Protocol::Soap, Protocol::OData, Protocol::GraphQl, Protocol::Grpc, Protocol::Webhook] { ProtocolBadge { protocol } } }
+        h2 { "Protocol icons" }
+        div { class: "ds-token-grid ds-icon-grid",
+            for (name, mono, color) in [("REST", icons::REST_MONO, icons::REST_COLOR), ("SOAP", icons::SOAP_MONO, icons::SOAP_COLOR), ("OData", icons::ODATA_MONO, icons::ODATA_COLOR), ("GraphQL", icons::GRAPHQL_MONO, icons::GRAPHQL_COLOR), ("gRPC", icons::GRPC_MONO, icons::GRPC_COLOR), ("Webhook", icons::WEBHOOK_MONO, icons::WEBHOOK_COLOR)] {
+                div { class: "ds-icon-tile", Cluster { Icon { src: mono, monochrome: true, alt: "{name}, monochrome" } Icon { src: color, alt: "{name}, color" } } span { class: "cn-small", "{name}" } }
+            }
+        }
         CodeBlock { "use conctr_ui_dioxus::prelude::*;\nuse conctr_ui_dioxus::assets::{{images, icons}};" }
     }
 }

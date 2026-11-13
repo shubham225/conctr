@@ -11,8 +11,9 @@ dx serve --package conctr-design-system --platform web
 
 The gallery provides:
 
-- A searchable catalog of 57 live examples, covering every Dioxus registry family
-  in the shared crate and Conctr's kit-specific components.
+- A searchable catalog of live examples, covering every Dioxus registry family
+  in the shared crate and Conctr's kit-specific components, organized into
+  Primitives, Core categories and Composed components.
 - Direct URLs under `/components/<name>`, including `/components/toggle`,
   `/components/switch`, `/components/connection-flow` and `/components/dialog`.
 - Foundation pages for typography, colors, spacing, radii, shadows, logos and icons.
@@ -50,3 +51,30 @@ cargo clippy -p conctr-design-system -p conctr-ui-dioxus --all-targets -- -D war
 
 The gallery is tracked source; it is no longer covered by the old test-app ignore
 rule. The shared UI crate remains the library that applications consume.
+
+Layout examples include Box, Flex, Grid, Stack and Inline. Stats, connection
+flows, empty states and the composed Modal are grouped under Composed. Future
+application patterns (data tables, flow editors, dashboards) belong alongside
+these compositions, using the same core controls.
+
+The branding foundations expose all supplied protocol and authentication icons
+and a curated set of Lucide interface actions. The kit has no branded general
+interface icon set, nor approved protocol shapes beyond the existing six.
+
+The application name remains **Conctr Design System**: it documents the tokens,
+components and usage rules. `design/` is the accompanying design kit of assets
+and reference examples. Shared source is organized under
+`components/primitives`, `components/ui`, and `components/composed`; the gallery's
+import snippets and source guidance point to these canonical modules. See the
+[presentation architecture](../../docs/architecture/dioxus-presentation.md).
+
+To catch CSS module selectors that no longer match rendered markup, run the
+served-styles regression check against the fullstack gallery:
+
+```sh
+python3 apps/conctr-design-system/scripts/check-component-styles.py http://127.0.0.1:8080
+```
+
+This fetches every catalog page and its linked CSS and checks that each rendered
+component class has a matching selector. It catches asset-cache regressions that
+compilation and source-path checks cannot detect.

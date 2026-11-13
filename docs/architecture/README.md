@@ -1,35 +1,25 @@
-# Architecture Overview
+# Architecture guide
 
-## Objective
+The implemented foundation is a Rust workspace and layered Dioxus design system.
+The integration runtime and product application remain largely scaffolds.
+See [current-state evidence](../roadmap/current-state.md).
 
-CONCTR follows a modular architecture built around a framework-independent
-Rust platform.
+The following designs are **Proposed** unless an ADR explicitly says Accepted.
 
-Applications provide user interfaces and entry points. Reusable crates
-provide platform functionality.
+| Topic | Document |
+| --- | --- |
+| System boundaries and topology | [System overview](system-overview.md) |
+| Package inventory and new crate recommendations | [Crate map](crate-map.md) |
+| Domain ownership and lifecycle | [Domain model](domain-model.md) |
+| Canonical manifest and graph validation | [Flow definition](flow-definition.md) |
+| Durable execution, retries and recovery | [Execution model](execution-model.md) |
+| Connector and transformation boundaries | [Connector contract](connector-contract.md) |
+| API and event contracts | [API and events](api-and-events.md) |
+| Persistence and transactions | [Data and storage](data-and-storage.md) |
+| Trust, tenancy, credentials and egress | [Security](security.md) |
+| Implemented UI layers and proposed shared pages | [Dioxus presentation](dioxus-presentation.md) |
+| Decisions, alternatives and review status | [Decision records](decisions/README.md) |
 
-## Architectural Principles
-
-1. Separation of concerns.
-2. Framework independence.
-3. Reusable platform capabilities.
-4. Explicit interfaces.
-5. Dependency direction toward stable abstractions.
-
-## Main Components
-
-- Applications: user-facing applications and runnable services.
-- Core: foundational types and shared primitives.
-- Domain and application logic: business rules and use cases.
-- Infrastructure: storage, connectors, and execution implementations.
-- UI adapters: framework-specific presentation components.
-
-## Frontend Independence
-
-Dioxus is the initial frontend framework.
-
-Future frontends may use GPUI, egui, React, or other technologies.
-
-Replacing a frontend should not require rewriting platform business logic.
-
-See [System Overview](system-overview.md).
+The documentation recommends a direction; it does not automatically authorize
+creating every planned crate or adding every suggested dependency. Implement
+phase-sized vertical slices through explicit boundaries.

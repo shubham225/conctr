@@ -1,0 +1,41 @@
+/* CSS module source: /src/components/ui/progress/style.css */
+.dx-progress {
+    position: relative;
+    overflow: hidden;
+    min-width: 200px;
+    height: .5rem;
+    box-sizing: border-box;
+    border-radius: var(--cn-radius-pill);
+    background: var(--primary-color-5);
+}
+
+.dx-progress[data-state='indeterminate'] .dx-progress-indicator {
+    width: 50%;
+    animation: dx-indeterminate 1s infinite linear;
+}
+
+.dx-progress-indicator {
+    width: var(--progress-value, 0%);
+    height: 100%;
+    background-color: var(--secondary-color-1);
+    transition: width 250ms ease;
+}
+
+@keyframes dx-indeterminate {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(200%);
+    }
+}
+
+/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
+.dx-progress { height: 8px; border-radius: var(--cn-radius-pill); background: var(--cn-sunken); border: var(--cn-border-1) solid var(--cn-border); overflow: hidden; }
+.dx-progress > i { display: block; height: 100%; background: var(--cn-primary); border-radius: inherit; }
+
+:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+.dx-progress-indicator { background: var(--cn-primary); border-radius: inherit; }

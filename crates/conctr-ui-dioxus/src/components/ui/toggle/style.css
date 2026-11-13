@@ -1,0 +1,24 @@
+/* CSS module source: /src/components/ui/toggle/style.css */
+/* Toggle uses the kit's control dimensions and selected-state recipe. */
+.dx-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cn-space-2);
+  min-width: var(--cn-control-md);
+  height: var(--cn-control-md);
+  padding: 0 var(--cn-space-4);
+  border: var(--cn-border-1) solid var(--cn-border-strong);
+  border-radius: var(--cn-radius-md);
+  background: var(--cn-surface);
+  color: var(--cn-text);
+  font: var(--cn-fw-medium) var(--cn-fs-small)/1 var(--cn-font-ui);
+  cursor: pointer;
+  transition: background var(--cn-dur-fast) var(--cn-ease);
+}
+.dx-toggle:hover:not(:disabled) { background: var(--cn-sunken); }
+.dx-toggle[data-state="on"] { background: var(--cn-primary-soft); color: var(--cn-primary); border-color: var(--cn-primary); }
+.dx-toggle[data-state="on"]:hover:not(:disabled) { background: var(--cn-primary-soft); }
+.dx-toggle:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
+.dx-toggle:disabled, .dx-toggle[data-disabled="true"] { opacity: var(--cn-opacity-disabled); cursor: not-allowed; }
+@media (prefers-reduced-motion: reduce) { .dx-toggle { transition: none; } }

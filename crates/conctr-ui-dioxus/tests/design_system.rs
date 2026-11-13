@@ -55,3 +55,93 @@ fn tabs_allow_explicit_ssr_panel_associations() {
     assert!(html.contains("aria-selected=true"));
     assert!(html.contains("aria-controls="));
 }
+
+#[test]
+fn semantic_badges_and_compatibility_adapter_share_the_same_markup() {
+    for (variant, status) in [
+        (BadgeVariant::Success, Status::Success),
+        (BadgeVariant::Warning, Status::Warning),
+        (BadgeVariant::Error, Status::Danger),
+        (BadgeVariant::Info, Status::Info),
+    ] {
+        let mut dom = VirtualDom::new_with_props(
+            |(variant, status): (BadgeVariant, Status)| {
+                rsx! {
+                    Badge { variant, "Connection status" }
+                    StatusBadge { status, "Connection status" }
+                }
+            },
+            (variant, status),
+        );
+        dom.rebuild_in_place();
+        let html = dioxus_ssr::render(&dom);
+        assert_eq!(
+            html.matches(&format!("data-style=\"{}\"", variant.class()))
+                .count(),
+            2
+        );
+        assert_eq!(html.matches("Connection status").count(), 2);
+    }
+}
+
+#[test]
+fn layout_primitives_compose_and_preserve_consumer_attributes() {
+    use conctr_ui_dioxus::components::primitives;
+    let html = render(|| {
+        rsx! {
+            primitives::Box { padding: Space::Xl, id: "workspace", class: "consumer-layout", aria_label: "Workspace",
+                Flex { direction: Direction::Column, wrap: true, justify: Justify::Between,
+                    Grid { columns: 0, gap: Space::Sm,
+                        Stack { gap: Space::Md, Inline { Badge { "Draft" } } }
+                    }
+                }
+            }
+        }
+    });
+    assert!(html.contains("consumer-layout"));
+    assert!(html.contains("cn-box"));
+    assert!(html.contains("id=\"workspace\""));
+    assert!(html.contains("aria-label=\"Workspace\""));
+    assert!(html.contains("padding: var(--cn-space-6)"));
+    assert!(html.contains("flex-direction: column"));
+    assert!(html.contains("flex-wrap: wrap"));
+    assert!(html.contains("--cn-grid-columns: 1"));
+    assert!(html.contains("--cn-grid-gap: var(--cn-space-2)"));
+    assert!(html.contains("gap: var(--cn-space-3)"));
+}
+
+#[test]
+fn layered_imports_and_legacy_imports_share_component_implementations() {
+    use conctr_ui_dioxus::components::{composed, primitives, ui};
+    let html = render(|| {
+        rsx! {
+            primitives::stack::Stack {
+                ui::button::Button { "Layered button" }
+                conctr_ui_dioxus::components::button::Button { "Existing button" }
+                composed::stat::Stat { label: "Runs today", value: "0" }
+                ui::pagination::PaginationRoot {
+                    ui::pagination::PaginationContent { "Layered pagination parts" }
+                }
+                conctr_ui_dioxus::components::dioxus::pagination::Pagination {
+                    "Existing registry pagination"
+                }
+                conctr_ui_dioxus::components::pagination::Pagination {
+                    page: 1, pages: 2, onchange: |_| {},
+                }
+            }
+        }
+    });
+    for label in [
+        "Layered button",
+        "Existing button",
+        "Runs today",
+        "Layered pagination parts",
+        "Existing registry pagination",
+    ] {
+        assert!(
+            html.contains(label),
+            "Missing component after module reorganization: {label}"
+        );
+    }
+    assert!(html.contains("aria-label=\"Page 2\""));
+}

@@ -1,0 +1,18 @@
+/* CSS module source: /src/components/ui/toast/style.css */
+/* Variable-height, readable notifications. Never overlap or crop the message. */
+.dx-toast-container { position: fixed; z-index: var(--cn-z-toast); right: var(--cn-space-6); bottom: var(--cn-space-6); width: min(420px, calc(100vw - var(--cn-space-8))); }
+.dx-toast-container ol { display: flex; flex-direction: column-reverse; gap: var(--cn-space-3); padding: 0; margin: 0; list-style: none; }
+.dx-toast-container li { display: flex; min-width: 0; }
+.dx-toast { display: flex; align-items: flex-start; width: 100%; height: auto; gap: var(--cn-space-3); padding: var(--cn-space-4); border: var(--cn-border-1) solid var(--cn-border); border-radius: var(--cn-radius-md); background: var(--cn-raised); color: var(--cn-text); box-shadow: var(--cn-shadow-3); font: var(--cn-fw-regular) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui); animation: dx-toast-enter var(--cn-dur) var(--cn-ease); }
+.dx-toast[data-type="success"] { background: var(--cn-success-soft); color: var(--cn-success); }
+.dx-toast[data-type="warning"] { background: var(--cn-warning-soft); color: var(--cn-warning); }
+.dx-toast[data-type="error"] { background: var(--cn-danger-soft); color: var(--cn-danger); }
+.dx-toast[data-type="info"] { background: var(--cn-info-soft); color: var(--cn-info); }
+.dx-toast-content { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.dx-toast .dx-toast-title { margin: 0 0 var(--cn-space-1); font: var(--cn-fw-semibold) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui); color: inherit; }
+.dx-toast .dx-toast-description { margin: 0; font: var(--cn-fw-regular) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui); color: var(--cn-text-muted); }
+.dx-toast-close { display: grid; place-items: center; flex-shrink: 0; width: var(--cn-control-sm); height: var(--cn-control-sm); border: 0; border-radius: var(--cn-radius-sm); padding: 0; background: transparent; color: inherit; cursor: pointer; font: inherit; }
+.dx-toast-close:hover { background: var(--cn-surface); }
+@keyframes dx-toast-enter { from { opacity: 0; transform: translateY(var(--cn-space-3)); } to { opacity: 1; transform: none; } }
+@media (max-width: 639px) { .dx-toast-container { right: var(--cn-space-4); bottom: var(--cn-space-4); } }
+@media (prefers-reduced-motion: reduce) { .dx-toast { animation: none; } }

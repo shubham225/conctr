@@ -21,11 +21,15 @@
 :focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
 
 /* ---------- Layout helpers ---------- */
-.cn-stack { display: grid; gap: var(--cn-space-4); }
+.cn-stack { display: flex; flex-direction: column; gap: var(--cn-space-4); }
 .cn-cluster { display: flex; flex-wrap: wrap; gap: var(--cn-space-3); align-items: center; }
 .cn-divider { border: 0; border-top: var(--cn-border-1) solid var(--cn-border); margin: var(--cn-space-6) 0; }
 .cn-container { max-width: var(--cn-container-content); margin-inline: auto; padding-inline: var(--cn-space-6); }
 .cn-prose { max-width: var(--cn-container-prose); }
+
+.cn-box, .cn-flex, .cn-grid, .cn-inline, .cn-stack { min-width: 0; }
+.cn-inline { display: flex; flex-wrap: wrap; }
+.cn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, max(var(--cn-grid-min), calc((100% - (var(--cn-grid-columns) - 1) * var(--cn-grid-gap)) / var(--cn-grid-columns)))), 1fr)); }
 
 /* ---------- Logo theme switch ---------- */
 .cn-logo--dark { display: none; }

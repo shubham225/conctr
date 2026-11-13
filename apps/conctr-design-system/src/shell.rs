@@ -77,6 +77,7 @@ pub fn Home() -> Element {
             }
         }
         h2 { "Component catalog" }
+        p { "Primitives handle layout. Core components provide reusable controls. Composed components combine them for richer application interfaces." }
         p { "Each page includes a live preview, its public import and the exact example source. All connection names and values are illustrative." }
         for group in GROUPS {
             section { class: "ds-catalog-group", h3 { "{group}" }
@@ -104,10 +105,16 @@ pub fn ComponentPage(slug: String) -> Element {
     let Some(entry) = ENTRIES.iter().find(|entry| entry.slug == slug) else {
         return rsx! { NotFound { segments: vec![slug] } };
     };
+    let source_path = entry.module.replace("::", "/");
+    let import = if entry.module == "primitives" {
+        "use conctr_ui_dioxus::{components::primitives, prelude::*};".to_string()
+    } else {
+        format!("use conctr_ui_dioxus::components::{}::*;", entry.module)
+    };
     rsx! {
         document::Title { "{entry.name} · Conctr design system" }
         div { class: "ds-page-head", span { class: "ds-eyebrow", "Components / {entry.group}" } h1 { "{entry.name}" } p { class: "cn-body-lg", "{entry.description}" } }
-        div { class: "ds-import", code { "use conctr_ui_dioxus::components::{entry.module}::*;" } }
+        div { class: "ds-import", code { "{import}" } }
         section { class: "ds-example-section", aria_label: "Live example",
             div { class: "ds-section-label", h2 { "Preview" } span { class: "cn-caption", "Interactive · shared library components" } }
             div { class: "ds-preview", Preview { key: "{slug}", slug: slug.clone() } }
@@ -115,8 +122,8 @@ pub fn ComponentPage(slug: String) -> Element {
         div { Source { key: "source-{slug}", source: entry.source.to_string() } }
         aside { class: "ds-guidance", h3 { "Using this component" }
             p { "Import from the shared library and mount ThemeProvider once at your application root. The theme provider loads the fonts and design tokens used in this preview." }
-            code { "crates/conctr-ui-dioxus/src/components/{entry.module}/" }
-            p { class: "cn-small", "For registry components, edit the owned implementation and CSS in components/dioxus/. For Conctr-specific components, edit the component’s own module." }
+            code { "crates/conctr-ui-dioxus/src/components/{source_path}/" }
+            p { class: "cn-small", "Edit the implementation and adjacent stylesheet in this component’s module. Base controls live in ui/, layout helpers in primitives/, and reusable combinations in composed/." }
         }
     }
 }

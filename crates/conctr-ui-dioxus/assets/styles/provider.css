@@ -65,3 +65,15 @@ body { margin: 0; }
 [data-theme="dark"] { --cn-logo-light-display: none; --cn-logo-dark-display: inline; }
 :root .cn-body .cn-logo--light { display: var(--cn-logo-light-display); }
 :root .cn-body .cn-logo--dark { display: var(--cn-logo-dark-display); }
+
+/* Shared layout and native kit typography adapters. */
+.cn-breadcrumb, .cn-breadcrumb a { font: var(--cn-fw-medium) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui); }
+.cn-table { font-family: var(--cn-font-ui); line-height: var(--cn-lh-small); }
+.cn-table caption { padding: var(--cn-space-4); text-align: left; caption-side: bottom; color: var(--cn-text-muted); font: var(--cn-fw-regular) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui); border-top: var(--cn-border-1) solid var(--cn-border); }
+.cn-modal__footer { margin-top: var(--cn-space-2); flex-wrap: wrap; }
+.cn-input[aria-invalid="true"]:focus-visible, .cn-textarea[aria-invalid="true"]:focus-visible { outline-color: var(--cn-danger); border-color: var(--cn-danger); box-shadow: 0 0 0 var(--cn-space-1) var(--cn-danger-soft); }
+
+.cn-ui-icon { display: inline-flex; align-items: center; justify-content: center; width: var(--cn-space-5); height: var(--cn-space-5); flex-shrink: 0; color: inherit; }
+.cn-ui-icon svg { display: block; width: 100%; height: 100%; }
+
+.cn-icon-mask { display: inline-block; width: var(--cn-space-5); height: var(--cn-space-5); flex-shrink: 0; background: currentColor; mask-position: center; mask-size: contain; mask-repeat: no-repeat; }

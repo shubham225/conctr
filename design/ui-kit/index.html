@@ -78,6 +78,28 @@
   </section>
 
   <section>
+    <h2>Layout primitives</h2>
+    <p>Box supplies padding, Stack flows vertically, Inline wraps horizontally, Flex controls alignment, and Grid adapts its columns to the available width.</p>
+    <div class="cn-box" style="padding:var(--cn-space-6); background:var(--cn-surface); border:var(--cn-border-1) solid var(--cn-border); border-radius:var(--cn-radius-lg)">
+      <div class="cn-stack" style="gap:var(--cn-space-6)">
+        <div class="cn-flex" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--cn-space-4)">
+          <h3 style="margin:0">Connection layout</h3>
+          <button class="cn-btn cn-btn--secondary" type="button">Edit connection</button>
+        </div>
+        <div class="cn-grid" style="--cn-grid-columns:3; --cn-grid-min:12rem; --cn-grid-gap:var(--cn-space-4); gap:var(--cn-grid-gap)">
+          <div class="cn-box cn-small" style="padding:var(--cn-space-4); background:var(--cn-sunken)">Source</div>
+          <div class="cn-box cn-small" style="padding:var(--cn-space-4); background:var(--cn-sunken)">Mapping</div>
+          <div class="cn-box cn-small" style="padding:var(--cn-space-4); background:var(--cn-sunken)">Target</div>
+        </div>
+        <div class="cn-inline" style="gap:var(--cn-space-2); align-items:center">
+          <span class="cn-badge cn-badge--success">Healthy</span>
+          <span class="cn-badge">REST</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
     <h2>Border radius</h2>
     <div class="cn-cluster" style="gap:24px; align-items:flex-start"><div class="tile"><i class="rbox" style="border-radius:4px"></i><b>radius-xs</b><span class="cn-caption">4px</span></div><div class="tile"><i class="rbox" style="border-radius:6px"></i><b>radius-sm</b><span class="cn-caption">6px</span></div><div class="tile"><i class="rbox" style="border-radius:10px"></i><b>radius-md</b><span class="cn-caption">10px</span></div><div class="tile"><i class="rbox" style="border-radius:14px"></i><b>radius-lg</b><span class="cn-caption">14px</span></div><div class="tile"><i class="rbox" style="border-radius:20px"></i><b>radius-xl</b><span class="cn-caption">20px</span></div><div class="tile"><i class="rbox" style="border-radius:999px"></i><b>radius-pill</b><span class="cn-caption">999px</span></div></div>
   </section>

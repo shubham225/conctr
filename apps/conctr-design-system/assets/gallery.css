@@ -94,3 +94,18 @@ html { scroll-padding-top: var(--cn-space-24); }
 
 .ds-virtual-frame > .dx-virtual-list-container { position: relative; height: 100%; overflow-y: auto; }
 .ds-sidebar-demo [data-slot="sidebar-wrapper"] { height: 320px; }
+
+/* Foundation samples need the same breathing room as other kit sections. */
+.ds-foundation-stage { padding: var(--cn-space-6); gap: var(--cn-space-6); border: var(--cn-border-1) solid var(--cn-border); border-radius: var(--cn-radius-lg); background: var(--cn-surface); margin-bottom: var(--cn-space-12); }
+.ds-icon-tile { display: grid; justify-items: start; align-content: start; gap: var(--cn-space-4); padding: var(--cn-space-6); border: var(--cn-border-1) solid var(--cn-border); border-radius: var(--cn-radius-md); background: var(--cn-surface); }
+.ds-layout-cell { border: var(--cn-border-1) solid var(--cn-border); border-radius: var(--cn-radius-md); background: var(--cn-sunken); font-size: var(--cn-fs-small); }
+.ds-sheet-body { padding-block: 0; }
+.ds-sidebar-demo [data-slot="sidebar-container"] { height: 100%; }
+.ds-sidebar-demo [data-slot="sidebar-wrapper"] { height: 480px; min-height: 480px; }
+.ds-sidebar-demo { min-height: 480px; }
+.ds-sidebar-bar { display: flex; align-items: center; gap: var(--cn-space-3); padding: var(--cn-space-3) var(--cn-space-4); border-bottom: var(--cn-border-1) solid var(--cn-border); background: var(--cn-surface); }
+.ds-sidebar-content { display: grid; gap: var(--cn-space-4); }
+
+@media (max-width: 1023px) { .ds-sidebar-demo { isolation: auto; } }
+
+.ds-overlay-demo { display: flex; justify-content: center; align-items: center; width: 100%; min-height: var(--cn-space-24); }

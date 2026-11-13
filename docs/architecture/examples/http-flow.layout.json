@@ -1,0 +1,23 @@
+{
+  "layoutVersion": 1,
+  "document": "example-http-mapping",
+  "nodes": {
+    "start": {
+      "x": 0,
+      "y": 0
+    },
+    "read": {
+      "x": 240,
+      "y": 0
+    },
+    "map": {
+      "x": 480,
+      "y": 0
+    },
+    "send": {
+      "x": 720,
+      "y": 0
+    }
+  },
+  "note": "Documentation layout only; positions do not affect execution."
+}

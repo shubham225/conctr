@@ -46,34 +46,37 @@ a directory so their relative WOFF2 URLs survive asset hashing.
 
 ```text
 src/components/
-  dioxus/
+  primitives/              # Box, Flex, Grid, Stack, Inline, Container, ...
+  ui/                      # Base controls and presentation foundations
     button/
       mod.rs
-      component.rs      # locally owned Dioxus registry implementation
-      style.css         # scoped Conctr skin and primitive states
-    tabs/ ...           # all 45 registry families follow this structure
-  button/
-    mod.rs
-    component.rs        # public facade re-exporting the themed implementation
-  connection_flow/
-    mod.rs
-    component.rs        # Conctr-specific implementation
-  empty_state/ ...
+      component.rs         # Locally owned implementation
+      style.css            # Adjacent Conctr skin
+    dialog/ ...
+  composed/                # Reusable combinations; future complex components
+    connection_flow/
+    empty_state/
+    modal/
+    stat/
 ```
 
-Use `components::button::Button` for explicit imports or `prelude::*` for common
-components. Advanced families with overlapping names (`tag_group` and
-`drag_and_drop_list`) are available through their named modules. The prelude does
-not export the `components::dioxus` module, avoiding a collision with the Dioxus
-crate name.
+Use `components::ui::button::Button`, `components::primitives::Stack`, or
+`components::composed::connection_flow::ConnectionFlow` for explicit imports.
+`prelude::*` remains available. Existing flat paths such as
+`components::button::Button` remain supported by re-exports, without duplicate
+facade directories. The old `components::dioxus` namespace is a hidden
+compatibility alias. Advanced families with overlapping names (`tag_group` and
+`drag_and_drop_list`) remain available through their named modules.
 
-The editable source lives in this repository, as in shadcn's copy-in model. There
-is no runtime registry lookup or code generator. Customize a registry component
-in `components/dioxus/<name>/component.rs` and its adjacent `style.css`; every
-public facade uses that same implementation. Add composition, defaults or a
-product-specific wrapper in `components/<name>/component.rs`. Shared kit recipes
-remain in `assets/styles/conctr-ui.css`; the CSS modules adapt those recipes to
-the primitive markup. See [UPSTREAM.md](UPSTREAM.md) for provenance and upgrades.
+Edit a control in `components/ui/<name>/component.rs` and its adjacent
+`style.css`. Add reusable compositions to `components/composed/<name>/`;
+product-specific pages, fetching and state belong in the product application.
+Composed components may use UI controls and primitives; lower layers must not
+import compositions. There is no runtime registry lookup or code generator.
+Shared kit recipes remain in `assets/styles/conctr-ui.css`; CSS modules adapt
+those recipes to primitive markup. See [UPSTREAM.md](UPSTREAM.md) for provenance
+and [presentation architecture](../../docs/architecture/dioxus-presentation.md)
+for boundaries and the proposed shared multi-platform application structure.
 
 ## Component catalog
 
@@ -94,11 +97,11 @@ Kit coverage:
 | UI kit family | Public components |
 | --- | --- |
 | Typography | `Heading`, `HeadingLevel`; kit classes `cn-display`, `cn-body-lg`, `cn-small`, `cn-caption`, `cn-mono` |
-| Layout | `Container`, `Stack`, `Cluster`, `Divider` |
+| Layout primitives | `primitives::Box` (`LayoutBox` in the prelude), `Flex`, `Grid`, `Stack`, `Inline`, `Space`, `Align`, `Justify`, `Direction`; also `Container`, `Cluster`, `Divider` |
 | Actions | `Button`, `ButtonVariant`, `ButtonSize`; `loading` disables the action and exposes busy state |
 | Forms | `Form`, `Field`, `Label`, `Input`, `Textarea`, `Select`, `Hint`, `FieldError` |
 | Choices | `Checkbox`, `CheckboxState`, `RadioGroup`, `RadioItem`, `Switch`; native `Radio` also available |
-| Badges/shapes | `Badge`, `StatusBadge`, `Status`, `ProtocolBadge`, `Protocol`, `Shape` |
+| Badges/shapes | `Badge`, `BadgeVariant` (neutral, success, warning, info, error), `StatusBadge` (compatibility adapter), `Status`, `ProtocolBadge`, `Protocol`, `Shape` |
 | Surfaces/messages | `Card` and its parts, `StatusAlert`, `Alert`, `ToastProvider`, `use_toast`, `ToastOptions` |
 | Navigation | `Tabs`, `TabList`, `TabTrigger`, `TabContent`, `Breadcrumb`, `Pagination`, `Navigation`, `NavItem`, `NavGroup`, `Sidebar` |
 | Data | `TableContainer`, `Table`, `CodeBlock`, `Stat`, `Avatar` and its parts, `KeyboardKey` |
@@ -106,7 +109,7 @@ Kit coverage:
 | Overlays | `DropdownMenu` and its parts, `Menu`, `MenuItem`, `Tooltip` and its parts, `Dialog`, `Modal`, `ModalFooter` |
 | Connection flow | `ConnectionFlow`, `ConnectionNode`, `FlowState` (healthy, paused, failing) |
 | Empty state | `EmptyState` with caller-supplied action/icon |
-| Branding | `Logo`, `Icon`, provided logo/icon assets |
+| Branding | `Logo`, `Icon`, `UiIcon`, `IconName`, provided logo/icon assets |
 
 `Dropdown`, `Menu` and `MenuItem` are simple native composition helpers. Use the
 primitive-backed `DropdownMenu` family when you need menu keyboard behavior.
@@ -164,3 +167,70 @@ searchable navigation, foundation pages, light/dark previews and copyable source
 Run `dx serve --package conctr-design-system --platform web`.
 When adding a new CSS module, register its asset in
 `src/assets/registry_styles.rs` so later SSR requests also include its stylesheet.
+
+## Component layers
+
+The gallery separates **Primitives**, **Core** component categories and
+**Composed** components. Primitives handle layout; core components handle a
+single control or interaction. Composed components combine those pieces into
+application patterns. `Stat`, `ConnectionFlow`, `EmptyState` and the convenience
+`Modal` wrapper live in the composed catalog. Keep future data tables, flow
+editors and dashboard compositions in their own public component modules, built
+from core controls. Platform business logic stays outside this crate. Existing
+public module paths remain available through compatibility re-exports.
+
+### Layout primitives
+
+```rust
+use conctr_ui_dioxus::{components::primitives, prelude::*};
+use dioxus::prelude::*;
+
+#[component]
+fn LayoutExample() -> Element {
+    rsx! {
+        primitives::Box { padding: Space::Xl,
+            Stack { gap: Space::Xl,
+                Flex { justify: Justify::Between, align: Align::Center, wrap: true,
+                    Heading { level: HeadingLevel::H4, "Connection settings" }
+                    Button { variant: ButtonVariant::Secondary, "Edit connection" }
+                }
+                Grid { columns: 3, gap: Space::Lg,
+                    for name in ["Source", "Mapping", "Target"] {
+                        primitives::Box { padding: Space::Lg, "{name}" }
+                    }
+                }
+                Inline { gap: Space::Sm,
+                    Badge { variant: BadgeVariant::Success, "Healthy" }
+                    ProtocolBadge { protocol: Protocol::Rest }
+                }
+            }
+        }
+    }
+}
+```
+
+`Space` maps to existing tokens: None=0, Xs=4, Sm=8, Md=12, Lg=16,
+Xl=24, Xxl=32, Section=48px. `Grid` supports 1–12 equal columns and
+collapses columns when they would be narrower than `min_item_width` (12rem by
+default). Every primitive accepts native div attributes. Use qualified
+`primitives::Box` or the prelude's `LayoutBox`: glob-importing a component named
+`Box` shadows Rust's `Box` used by RSX macros.
+
+`BadgeVariant::Error` and `Danger` share the danger treatment. `StatusBadge`
+remains a compatibility adapter over `Badge`; new compositions should use the
+semantic Badge variants directly. All twelve supplied protocol/authentication
+icons are exported in both color and mono forms from `assets::icons`.
+`Icon { monochrome: true, .. }` masks supplied mono artwork with currentColor
+so it inherits the surrounding text color in both themes.
+`UiIcon` uses the existing Lucide dependency for general interface actions;
+these are not new branded protocol shapes.
+
+`Sidebar` supports icon collapse, off-canvas collapse and fixed mode, with
+`SidebarTrigger`, header/content/footer, groups, menus and nested menu parts.
+The desktop rail is 240px; below 1024px navigation opens as a drawer. Give icon
+rail items labels/tooltips, and use `is_active` to expose the current page.
+The gallery demonstrates icon collapse and selectable navigation.
+
+`Menu` is a static surface for composition. Use `DropdownMenu` with a labeled
+trigger for interactive menus; this keeps the menu hidden until activated and
+supplies arrow-key navigation, dismissal and focus restoration.

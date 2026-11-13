@@ -1,0 +1,97 @@
+/* CSS module source: /src/components/ui/textarea/style.css */
+/* Base */
+.dx-textarea {
+  width: 100%;
+  min-height: 4rem;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: none;
+  border-radius: var(--cn-radius-md);
+  margin: 0;
+  appearance: none;
+  background: none;
+  color: var(--secondary-color-4);
+  font-family: inherit;
+  line-height: 1.5;
+  outline: none;
+  resize: vertical;
+  transition: background-color 100ms ease-out, border-color 100ms ease-out, box-shadow 100ms ease-out;
+}
+
+.dx-textarea:disabled {
+  color: var(--secondary-color-5);
+  cursor: not-allowed;
+}
+
+.dx-textarea::placeholder {
+  color: var(--secondary-color-5);
+}
+
+/* Default Variant */
+.dx-textarea[data-style="default"] {
+  background: var(--light, var(--primary-color)) var(--dark, var(--primary-color-3));
+  box-shadow: inset 0 0 0 1px var(--light, var(--primary-color-6)) var(--dark, var(--primary-color-7));
+}
+
+.dx-textarea[data-style="default"]:hover:not(:disabled),
+.dx-textarea[data-style="default"]:focus {
+  background: var(--light, var(--primary-color-4)) var(--dark, var(--primary-color-5));
+  color: var(--secondary-color-1);
+}
+
+/* Fade Variant */
+.dx-textarea[data-style="fade"] {
+  background: var(--light, var(--primary-color)) var(--dark, var(--primary-color-3));
+}
+
+.dx-textarea[data-style="fade"]:hover:not(:disabled),
+.dx-textarea[data-style="fade"]:focus {
+  background: var(--light, var(--primary-color-4)) var(--dark, var(--primary-color-5));
+  color: var(--secondary-color-1);
+}
+
+/* Outline Variant */
+.dx-textarea[data-style="outline"] {
+  border: 1px solid var(--primary-color-6);
+  background-color: var(--light, var(--primary-color))
+    var(--dark, var(--primary-color-3));
+}
+
+.dx-textarea[data-style="outline"]:hover:not(:disabled, :focus) {
+  border-color: var(--primary-color-7);
+}
+
+.dx-textarea[data-style="outline"]:focus {
+  border-color: var(--focused-border-color);
+}
+
+.dx-textarea[data-style="outline"]:invalid,
+.dx-textarea[data-style="outline"][aria-invalid="true"] {
+  border-color: var(--primary-error-color);
+}
+
+/* Ghost Variant */
+.dx-textarea[data-style="ghost"] {
+  background-color: transparent;
+}
+
+.dx-textarea[data-style="ghost"]:hover:not(:disabled) {
+  background-color: var(--primary-color-5);
+  color: var(--secondary-color-1);
+}
+
+.dx-textarea[data-style="ghost"]:focus {
+  border-color: var(--focused-border-color);
+}
+
+/* Conctr recipes: source of truth is design/ui-kit/conctr-ui.css. */
+ .dx-textarea { height: var(--cn-control-md); padding: 0 var(--cn-space-3); border-radius: var(--cn-radius-md); border: var(--cn-border-1) solid var(--cn-border-strong); background: var(--cn-surface); color: var(--cn-text); font: var(--cn-fw-regular) var(--cn-fs-body)/1.25 var(--cn-font-ui); width: 100%; transition: border-color var(--cn-dur-fast) var(--cn-ease), box-shadow var(--cn-dur-fast) var(--cn-ease); }
+.dx-textarea { height: auto; min-height: 96px; padding: var(--cn-space-3); resize: vertical; line-height: var(--cn-lh-small); }
+ .dx-textarea::placeholder { color: var(--cn-text-subtle); }
+ .dx-textarea:hover { border-color: var(--cn-text-subtle); }
+ .dx-textarea:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 0; border-color: var(--cn-focus); box-shadow: var(--cn-focus-ring); }
+ .dx-textarea[aria-invalid="true"] { border-color: var(--cn-danger); }
+ .dx-textarea:disabled { opacity: var(--cn-opacity-disabled); cursor: not-allowed; background: var(--cn-sunken); }
+
+:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

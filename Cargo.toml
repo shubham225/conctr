@@ -17,6 +17,7 @@ members   = [
     "crates/conctr-storage",
     "crates/conctr-auth",
     "crates/conctr-gateway",
+    "crates/conctr-app-dioxus"
 ]
 
 [workspace.dependencies]
