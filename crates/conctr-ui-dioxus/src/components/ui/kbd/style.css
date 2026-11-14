@@ -1,0 +1,15 @@
+/* CSS module source: /src/components/ui/kbd/style.css */
+@layer components {
+  .cn-kbd {
+    border-radius: calc(var(--radius) - 6px);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--input);
+    font: var(--cn-fw-medium) var(--cn-fs-caption)/1.4 var(--cn-font-mono);
+    border-bottom-width: 2px;
+    min-height: var(--cn-space-6);
+    min-width: var(--cn-space-6);
+    padding: 0 var(--cn-space-1);
+  }
+  .cn-kbd-group { color: var(--muted-foreground); }
+}

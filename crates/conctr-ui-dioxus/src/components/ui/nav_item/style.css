@@ -1,0 +1,14 @@
+/* CSS module source: /src/components/ui/nav_item/style.css */
+@layer components {
+  .cn-nav__item {
+    color: var(--muted-foreground);
+  }
+  .cn-nav__item:hover {
+    background-color: var(--muted);
+    color: var(--foreground);
+  }
+  .cn-nav__item[aria-current="page"] {
+    background-color: var(--accent);
+    color: var(--primary);
+  }
+}

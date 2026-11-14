@@ -1,0 +1,18 @@
+/* CSS module source: /src/components/composed/connection_node/style.css */
+@layer components {
+  .cn-node {
+    border-radius: var(--radius);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--border);
+    padding: var(--cn-space-3) var(--cn-space-4);
+  }
+  .cn-node b {
+    font-size: var(--cn-fs-body);
+    line-height: var(--cn-lh-body);
+    font-weight: var(--cn-fw-semibold);
+  }
+  .cn-node :global(.cn-badge) {
+    justify-self: flex-start;
+  }
+}

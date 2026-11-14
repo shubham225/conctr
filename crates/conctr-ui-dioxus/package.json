@@ -1,0 +1,13 @@
+{
+  "name": "@conctr/ui-dioxus-styles",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i assets/styles/tailwind.input.css -o assets/styles/tailwind.css --minify",
+    "watch:css": "npm run build:css -- --watch",
+    "check:css": "node scripts/check-css.mjs"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.1.18",
+    "tailwindcss": "4.1.18"
+  }
+}

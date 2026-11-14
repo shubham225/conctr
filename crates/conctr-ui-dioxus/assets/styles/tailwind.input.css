@@ -1,0 +1,8 @@
+/* Library-only compiler input. Consumers load the bundled tailwind.css. */
+@import "tailwindcss" source(none);
+@import "./theme.css";
+@source "../../src";
+
+/* Workspace consumers share this compiler; no application Tailwind setup. */
+@source "../../../../apps";
+@source "../../../conctr-app-dioxus/src";

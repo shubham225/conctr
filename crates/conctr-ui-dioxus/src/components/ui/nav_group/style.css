@@ -1,0 +1,6 @@
+/* CSS module source: /src/components/ui/nav_group/style.css */
+@layer components {
+  .cn-nav__group {
+    padding: var(--cn-space-4) var(--cn-space-3) var(--cn-space-1);
+  }
+}

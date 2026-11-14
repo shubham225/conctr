@@ -1,0 +1,32 @@
+/* CSS module source: /src/components/ui/alert/style.css */
+@layer components {
+  .cn-alert {
+    padding: var(--cn-space-3) var(--cn-space-4);
+    border-radius: var(--radius);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--border);
+    font-size: var(--cn-fs-small);
+    line-height: var(--cn-lh-small);
+  }
+  :global(.cn-alert--info), .cn-alert[data-status="info"] {
+    background-color: var(--accent);
+    border-color: #0000;
+  }
+  :global(.cn-alert--success), .cn-alert[data-status="success"] {
+    background-color: var(--success-soft);
+    border-color: #0000;
+  }
+  :global(.cn-alert--warning), .cn-alert[data-status="warning"] {
+    background-color: var(--warning-soft);
+    border-color: #0000;
+  }
+  :global(.cn-alert--danger), .cn-alert[data-status="danger"] {
+    background-color: var(--destructive-soft);
+    border-color: #0000;
+  }
+  .cn-alert strong {
+    font-weight: var(--cn-fw-semibold);
+    color: var(--foreground);
+  }
+}

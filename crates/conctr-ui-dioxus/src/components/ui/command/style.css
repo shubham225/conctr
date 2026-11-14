@@ -1,0 +1,26 @@
+/* CSS module source: /src/components/ui/command/style.css */
+@layer components {
+  .command { width: 100%; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--popover); color: var(--popover-foreground); box-shadow: var(--elevation-1); font: var(--cn-font-small); }
+  .search { padding: var(--cn-space-3) var(--cn-space-4); border-bottom: 1px solid var(--border); color: var(--muted-foreground); }
+  .input { height: var(--cn-control-sm); border: 0; outline: none; box-shadow: none; font: var(--cn-font-field); color: var(--foreground); }
+  .input::placeholder { color: var(--subtle-foreground); }
+  .search:focus-within { box-shadow: inset 0 -2px color-mix(in srgb, var(--ring) 40%, transparent); }
+  .list { max-height: 320px; padding: var(--cn-space-1); scroll-padding-block: var(--cn-space-1); }
+  .group:not(:has([data-command-item]:not([hidden]))) { display: none; }
+  .heading { padding: var(--cn-space-3) var(--cn-space-3) var(--cn-space-2); font: var(--cn-font-badge); color: var(--muted-foreground); }
+  .item { min-height: var(--cn-control-md); padding: var(--cn-space-2) var(--cn-space-3); border-radius: var(--radius-sm); cursor: pointer; outline: none; }
+  .item[hidden] { display: none; }
+  .item[data-selected="true"] { background: var(--accent); color: var(--accent-foreground); }
+  .item[data-disabled="true"] { opacity: var(--cn-opacity-disabled); cursor: not-allowed; }
+  .item > svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .empty { padding: var(--cn-space-8) var(--cn-space-4); text-align: center; color: var(--muted-foreground); }
+  .list:has([data-command-item]:not([hidden])) .empty { display: none; }
+  .separator { height: 1px; background: var(--border); margin: var(--cn-space-1) var(--cn-space-2); }
+  .command[data-filtering="true"] .separator, .list:not(:has([data-command-item]:not([hidden]))) .separator { display: none; }
+  .shortcut { font: var(--cn-fw-regular) var(--cn-fs-caption)/1 var(--cn-font-mono); color: var(--muted-foreground); }
+  .dialog { --dialog-padding: 0; --dialog-gap: 0; --dialog-width: 560px; }
+  .dialog .command { border: 0; box-shadow: none; }
+  .dialog .search { min-height: var(--cn-space-16); padding-inline-end: var(--cn-space-16); }
+  .dialog .close { position: absolute; top: var(--cn-space-4); right: var(--cn-space-3); }
+  @media (pointer: coarse) { .dialog .close { top: var(--cn-space-2); } }
+}

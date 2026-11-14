@@ -1,0 +1,14 @@
+/* CSS module source: /src/components/ui/spinner/style.css */
+@layer components {
+  .cn-spinner {
+    border: 2px solid var(--input);
+    border-top-color: var(--primary);
+    border-radius: 2147483647px;
+    animation: .8s linear infinite cn-spin;
+  }
+  @keyframes cn-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

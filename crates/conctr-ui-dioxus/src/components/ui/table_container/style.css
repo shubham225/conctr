@@ -1,0 +1,6 @@
+/* CSS module source: /src/components/ui/table_container/style.css */
+@layer components {
+  .cn-table-wrap {
+    overflow: auto hidden;
+  }
+}

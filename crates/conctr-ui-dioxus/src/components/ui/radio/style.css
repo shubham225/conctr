@@ -1,0 +1,31 @@
+/* CSS module source: /src/components/ui/radio/style.css */
+@layer components {
+  .cn-radio {
+    cursor: pointer;
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--input);
+    background-color: var(--card);
+    transition: background-color var(--cn-motion-control), border-color var(--cn-motion-control);
+    position: relative;
+  }
+  .cn-radio:disabled {
+    cursor: not-allowed;
+    opacity: var(--cn-opacity-disabled);
+  }
+  .cn-radio {
+    border-radius: 2147483647px;
+  }
+  .cn-radio:checked {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .cn-radio:checked:after {
+    content: "";
+    background-color: var(--primary-foreground);
+    border-radius: 2147483647px;
+    position: absolute;
+    inset: 3px;
+  }
+}

@@ -1,0 +1,10 @@
+/* CSS module source: /src/components/ui/menu/style.css */
+@layer components {
+  .cn-menu {
+    box-shadow: var(--elevation-3);
+    z-index: var(--cn-z-dropdown);
+  }
+  :global(.cn-menu__sep) {
+    margin: var(--cn-space-1) 0;
+  }
+}

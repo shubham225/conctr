@@ -1,0 +1,9 @@
+/* CSS module source: /src/components/primitives/divider/style.css */
+@layer components {
+  .cn-divider {
+    border-style: solid;
+    border-width: 0;
+    border-top: var(--cn-border-1) solid var(--border);
+    margin: var(--cn-space-6) 0;
+  }
+}

@@ -1,0 +1,16 @@
+/* CSS module source: /src/components/ui/code_block/style.css */
+@layer components {
+  .cn-code {
+    font: var(--cn-fw-regular) var(--cn-fs-code)/1.6 var(--cn-font-mono);
+    color: var(--foreground);
+  }
+  .cn-code :global(.k) {
+    color: var(--primary);
+  }
+  .cn-code :global(.s) {
+    color: var(--cn-teal-text);
+  }
+  .cn-code :global(.c) {
+    color: var(--subtle-foreground);
+  }
+}

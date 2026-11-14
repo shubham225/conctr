@@ -1,0 +1,37 @@
+{
+  "languages": {
+    "Rust": {
+      "language_servers": [
+        "rust-analyzer",
+        "tailwindcss-language-server",
+        "..."
+      ],
+      "lsp_document_colors": "inlay",
+      "show_completions_on_input": true
+    }
+  },
+  "lsp": {
+    "tailwindcss-language-server": {
+      "settings": {
+        "includeLanguages": {
+          "rust": "html"
+        },
+        "colorDecorators": true,
+        "experimental": {
+          "configFile": {
+            "crates/conctr-ui-dioxus/assets/styles/tailwind.input.css": [
+              "crates/**/*.rs",
+              "apps/**/*.rs",
+              "crates/conctr-ui-dioxus/assets/**/*.css"
+            ]
+          },
+          "classRegex": [
+            "\\bclass\\s*:\\s*\"([^\"]*)\""
+          ]
+        },
+        "suggestions": true,
+        "hovers": true
+      }
+    }
+  }
+}

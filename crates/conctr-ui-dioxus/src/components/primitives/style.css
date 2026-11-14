@@ -1,0 +1,9 @@
+/* CSS module source: /src/components/primitives/style.css */
+@layer components {
+  .cn-box, .cn-flex, .cn-grid, .cn-inline {
+    min-width: 0;
+  }
+  .cn-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, max(var(--cn-grid-min), calc((100% - (var(--cn-grid-columns) - 1) * var(--cn-grid-gap)) / var(--cn-grid-columns)))), 1fr));
+  }
+}

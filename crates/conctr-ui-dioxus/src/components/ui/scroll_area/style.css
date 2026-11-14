@@ -1,0 +1,9 @@
+/* CSS module source: /src/components/ui/scroll_area/style.css */
+@layer components {
+  .cn-ui-scroll-area:global(.dx-scroll-area-auto-hide) {
+    scrollbar-color: transparent transparent;
+  }
+  .cn-ui-scroll-area:global(.dx-scroll-area-auto-hide):is(:hover, :focus-within), .cn-ui-scroll-area:global(.dx-scroll-area-always-show) {
+    scrollbar-color: var(--input) transparent;
+  }
+}

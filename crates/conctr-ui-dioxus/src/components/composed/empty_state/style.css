@@ -1,0 +1,17 @@
+/* CSS module source: /src/components/composed/empty_state/style.css */
+@layer components {
+  .cn-empty-state {
+    padding: var(--cn-space-12) var(--cn-space-6);
+    gap: var(--cn-space-6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    box-shadow: var(--elevation-1);
+  }
+  .cn-empty-state-icon { color: var(--primary); }
+  .cn-empty-state-icon :is(img, svg) { width: 48px; height: 48px; }
+  .cn-empty-state-copy { max-width: 40ch; }
+  .cn-empty-state-copy h3 { margin: 0; text-wrap: balance; }
+  .cn-empty-state-copy p { margin: 0; color: var(--muted-foreground); text-wrap: pretty; }
+  .cn-empty-state-actions:empty { display: none; }
+}

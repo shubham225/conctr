@@ -1,0 +1,21 @@
+/* CSS module source: /src/components/ui/file_uploader/style.css */
+@layer components {
+  .uploader { width: 100%; font: var(--cn-font-small); }
+  .dropzone { padding: var(--cn-space-8) var(--cn-space-6); border: 1px dashed var(--input); border-radius: var(--radius-lg); background: var(--card); transition: border-color var(--cn-motion-control), background var(--cn-motion-control); }
+  .dropzone:hover, .dropzone[data-dragging="true"] { border-color: var(--primary); background: var(--accent); }
+  .dropzone:focus-within { outline: 2px solid color-mix(in srgb, var(--ring) 30%, transparent); outline-offset: 3px; border-color: var(--ring); }
+  .picker { border-radius: inherit; z-index: 1; }
+  .upload_icon { width: 48px; height: 48px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--primary); background: var(--card); box-shadow: var(--elevation-1); }
+  .copy strong { font: var(--cn-font-label); color: var(--foreground); }
+  .copy span { color: var(--muted-foreground); max-width: 40ch; }
+  .choose { min-height: var(--cn-control-sm); padding-inline: var(--cn-space-3); border: 1px solid var(--input); border-radius: var(--radius-sm); background: var(--card); color: var(--foreground); font: var(--cn-font-label); }
+  .uploader .hint { margin: 0; font-size: var(--cn-fs-caption); color: var(--muted-foreground); }
+  .errors { margin: 0; padding: 0; list-style: none; color: var(--destructive); font-size: var(--cn-fs-caption); }
+  .list { list-style: none; padding: 0; margin: 0; }
+  .row { padding: var(--cn-space-3); border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); }
+  .file_type { color: var(--primary); }
+  .metadata span { overflow-wrap: anywhere; font-weight: var(--cn-fw-medium); }
+  .metadata small { color: var(--muted-foreground); font-size: var(--cn-fs-caption); }
+  .uploader[data-disabled="true"] .dropzone { opacity: var(--cn-opacity-disabled); cursor: not-allowed; background: var(--muted); border-color: var(--border); }
+  .picker:disabled { cursor: not-allowed; }
+}

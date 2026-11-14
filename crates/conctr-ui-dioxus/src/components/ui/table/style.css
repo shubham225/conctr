@@ -1,0 +1,42 @@
+/* CSS module source: /src/components/ui/table/style.css */
+@layer components {
+  .cn-table {
+    border-collapse: collapse;
+    font-size: var(--cn-fs-small);
+    line-height: var(--cn-lh-small);
+  }
+  .cn-table th {
+    text-align: left;
+    font-weight: var(--cn-fw-medium);
+    color: var(--subtle-foreground);
+    padding: 10px var(--cn-space-4);
+    border-bottom: var(--cn-border-1) solid var(--border);
+    background-color: var(--muted);
+  }
+  .cn-table td {
+    padding: 14px var(--cn-space-4);
+    border-bottom: var(--cn-border-1) solid var(--border);
+    color: var(--foreground);
+  }
+  :global(.cn-table--dense) td {
+    padding: var(--cn-space-2) var(--cn-space-4);
+  }
+  .cn-table tr:last-child td {
+    border-bottom: 0;
+  }
+  .cn-table tbody tr:hover td {
+    background-color: var(--muted);
+  }
+  .cn-table {
+    font-family: var(--cn-font-ui);
+    line-height: var(--cn-lh-small);
+  }
+  .cn-table caption {
+    padding: calc(var(--spacing, .25rem) * 4);
+    text-align: left;
+    caption-side: bottom;
+    color: var(--muted-foreground);
+    font: var(--cn-fw-regular) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui);
+    border-top: var(--cn-border-1) solid var(--border);
+  }
+}

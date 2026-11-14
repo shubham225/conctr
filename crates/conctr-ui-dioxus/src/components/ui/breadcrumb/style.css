@@ -1,0 +1,29 @@
+/* CSS module source: /src/components/ui/breadcrumb/style.css */
+@layer components {
+  .cn-breadcrumb {
+    font-size: var(--cn-fs-small);
+    line-height: var(--cn-lh-small);
+    color: var(--muted-foreground);
+    margin: 0;
+  }
+  .cn-breadcrumb li + li:before {
+    content: "/";
+    margin-right: calc(var(--spacing, .25rem) * 2);
+    color: var(--subtle-foreground);
+  }
+  .cn-breadcrumb a {
+    color: var(--muted-foreground);
+    text-decoration-line: none;
+  }
+  .cn-breadcrumb a:hover {
+    color: var(--foreground);
+    text-decoration-line: underline;
+  }
+  .cn-breadcrumb [aria-current="page"] {
+    font-weight: var(--cn-fw-medium);
+    color: var(--foreground);
+  }
+  .cn-breadcrumb, .cn-breadcrumb a {
+    font: var(--cn-fw-medium) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui);
+  }
+}

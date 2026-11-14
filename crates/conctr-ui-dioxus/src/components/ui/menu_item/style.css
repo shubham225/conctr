@@ -1,0 +1,14 @@
+/* CSS module source: /src/components/ui/menu_item/style.css */
+@layer components {
+  .cn-menu__item {
+    color: var(--foreground);
+    font: var(--cn-fw-regular) var(--cn-fs-small) var(--cn-font-ui);
+    background: none;
+  }
+  .cn-menu__item:hover, .cn-menu__item:focus-visible {
+    background-color: var(--muted);
+  }
+  :global(.cn-menu__item--danger) {
+    color: var(--destructive);
+  }
+}

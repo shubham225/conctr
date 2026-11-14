@@ -1,0 +1,7 @@
+/* CSS module source: /src/components/composed/stat/style.css */
+@layer components {
+  .cn-stat__value {
+    font: var(--cn-fw-semibold) var(--cn-fs-h2)/var(--cn-lh-h2) var(--cn-font-display);
+    letter-spacing: var(--cn-ls-h2);
+  }
+}

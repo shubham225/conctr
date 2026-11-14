@@ -1,0 +1,26 @@
+/* CSS module source: /src/components/ui/shape/style.css */
+@layer components {
+  .cn-shape {
+    background: var(--c, var(--primary));
+  }
+  .cn-shape[data-s="circle"] {
+    border-radius: 2147483647px;
+  }
+  .cn-shape[data-s="square"] {
+    border-radius: 2px;
+  }
+  .cn-shape[data-s="triangle"] {
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  }
+  .cn-shape[data-s="diamond"] {
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  }
+  .cn-shape[data-s="hex"] {
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .cn-shape[data-s="ring"] {
+    border: 2px solid var(--c);
+    background: none;
+    border-radius: 2147483647px;
+  }
+}
