@@ -24,7 +24,7 @@ const STYLES: Asset = asset!(
 // constants
 const SIDEBAR_WIDTH: &str = "240px";
 const SIDEBAR_WIDTH_MOBILE: &str = "18rem";
-const SIDEBAR_WIDTH_ICON: &str = "3rem";
+const SIDEBAR_WIDTH_ICON: &str = "4rem";
 const SIDEBAR_KEYBOARD_SHORTCUT: &str = "b";
 const MOBILE_BREAKPOINT: u32 = 1024;
 

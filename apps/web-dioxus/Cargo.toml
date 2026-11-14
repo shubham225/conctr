@@ -9,9 +9,9 @@ repository  = { workspace = true }
 
 [dependencies]
 dioxus            = { workspace = true, features = ["router", "fullstack"] }
-conctr-ui-dioxus  = { workspace = true }
+conctr-app-dioxus = { workspace = true }
 
 [features]
 default = []
 web     = ["dioxus/web"]
-server  = ["dioxus/server", "conctr-ui-dioxus/server"]
+server  = ["dioxus/server", "conctr-app-dioxus/server"]

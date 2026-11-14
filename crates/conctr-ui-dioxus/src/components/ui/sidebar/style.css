@@ -658,5 +658,4 @@
     clip-path: inset(50%);
     white-space: nowrap;
   }
-  .cn-ui-sidebar-header + .cn-ui-sidebar-separator[data-sidebar="separator"] { display: none; }
 }

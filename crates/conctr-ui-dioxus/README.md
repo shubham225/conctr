@@ -376,3 +376,23 @@ The gallery demonstrates icon collapse and selectable navigation.
 `Menu` is a static surface for composition. Use `DropdownMenu` with a labeled
 trigger for interactive menus; this keeps the menu hidden until activated and
 supplies arrow-key navigation, dismissal and focus restoration.
+
+### Theme toggle
+
+`ThemeToggle` is controlled by the same state passed to `ThemeProvider`:
+
+```rust,ignore
+ThemeToggle { dark: dark(), on_change: move |value| dark.set(value) }
+```
+
+Import it from `conctr_ui_dioxus::prelude` or `components::ui::theme_toggle`.
+It requests the next light/dark value through `on_change`, supports `disabled`
+and global attributes, and leaves theme storage/persistence to the caller.
+Both themes expand outward from the button,
+using browser view-transition snapshots. The callback still owns theme state;
+no application animation code is needed. Keyboard activation uses the same
+button-centered origin. Rapid activations are ignored until the reveal finishes.
+Linux native WebKitGTK bypasses view transitions to avoid a native crash; its
+sun/moon icon still animates. Reduced motion and browsers/WebViews without View Transition support update
+immediately. Sun/moon icons animate with opacity and transforms unless reduced
+motion is enabled. Its accessible label describes the next action.

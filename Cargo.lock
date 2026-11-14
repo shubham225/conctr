@@ -634,6 +634,10 @@ dependencies = [
 [[package]]
 name = "conctr-app-dioxus"
 version = "0.1.0"
+dependencies = [
+ "conctr-ui-dioxus",
+ "dioxus",
+]
 
 [[package]]
 name = "conctr-auth"
@@ -662,7 +666,7 @@ dependencies = [
 name = "conctr-desktop-dioxus"
 version = "0.1.0"
 dependencies = [
- "conctr-ui-dioxus",
+ "conctr-app-dioxus",
  "dioxus",
 ]
 
@@ -678,7 +682,7 @@ version = "0.1.0"
 name = "conctr-mobile-dioxus"
 version = "0.1.0"
 dependencies = [
- "conctr-ui-dioxus",
+ "conctr-app-dioxus",
  "dioxus",
 ]
 
@@ -706,7 +710,7 @@ dependencies = [
 name = "conctr-web-dioxus"
 version = "0.1.0"
 dependencies = [
- "conctr-ui-dioxus",
+ "conctr-app-dioxus",
  "dioxus",
 ]
 

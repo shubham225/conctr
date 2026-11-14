@@ -8,3 +8,8 @@ publish.workspace = true
 repository.workspace = true
 
 [dependencies]
+dioxus = { workspace = true, features = ["router"] }
+conctr-ui-dioxus = { workspace = true }
+
+[features]
+server = ["conctr-ui-dioxus/server"]

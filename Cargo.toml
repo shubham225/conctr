@@ -24,6 +24,7 @@ members   = [
 dioxus            = { version = "0.7.1" }
 
 # Dioxus-specific packages
+conctr-app-dioxus = { path = "crates/conctr-app-dioxus" }
 conctr-ui-dioxus  = { path = "crates/conctr-ui-dioxus" }
 conctr-api-dioxus = { path = "crates/conctr-api-dioxus" }
 

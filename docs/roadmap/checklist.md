@@ -22,7 +22,8 @@ implementation. See [current state](current-state.md) for the dated source audit
 - [ ] Specify normalization, schema/version migration and fixture round trips.
 - [ ] Create `conctr-application` and define scoped use cases/transaction ports.
 - [ ] Create `conctr-contracts` for the first API; avoid leaking SQL/Dioxus types.
-- [ ] Implement shared App, providers, Routable enum and feature page structure.
+- [x] Implement shared App, providers, Routable enum and initial product pages.
+- [x] Wire web/desktop/mobile launchers to the shared App.
 - [ ] Wire web/desktop/mobile launchers to the shared App and test renderer features.
 
 ## M2 — Reliable execution slice

@@ -88,6 +88,7 @@ pub mod prelude {
     pub use crate::components::ui::textarea::*;
     pub use crate::components::ui::theme::*;
     pub use crate::components::ui::theme_provider::*;
+    pub use crate::components::ui::theme_toggle::*;
     pub use crate::components::ui::toast::*;
     pub use crate::components::ui::toggle::*;
     pub use crate::components::ui::toggle_group::*;

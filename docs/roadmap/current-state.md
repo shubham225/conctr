@@ -6,7 +6,7 @@ these observations do not assert that changes have been committed or released.
 ## Delivered foundation
 
 - [x] Cargo workspace with four runnable Dioxus application packages, platform
-  library scaffolds, a server-binary scaffold and a shared-app scaffold.
+  library scaffolds, a server-binary scaffold and a shared product UI shell.
 - [x] Framework-independent-core decision and component-layer decision recorded.
 - [x] Shared `conctr-ui-dioxus` components, fonts, tokens and supplied brand assets.
 - [x] Physical `components/primitives`, `components/ui`, `components/composed`
@@ -29,8 +29,10 @@ these observations do not assert that changes have been committed or released.
   obsolete numbered palette stylesheet/export and copied Tailwind reset removed. See
   [component usage](../../crates/conctr-ui-dioxus/README.md#usage) and
   [SSR details](../development/theming.md#ssr-css-module-workaround).
-- [x] `conctr-app-dioxus` is now a workspace member. Its implementation is still
-  the starter `add()` function/test; it has no shared App/routes yet.
+- [x] Shared `conctr-app-dioxus` App, Connections/Runs/Settings routes, responsive
+  sidebar, light/dark theme switching and explicit service-unavailable empty states.
+  All three launchers use it; desktop supplies an undecorated window with native
+  drag, minimize, maximize/restore and close controls. Mobile packaging remains deferred.
 
 Evidence: [workspace manifest](../../Cargo.toml),
 [UI source](../../crates/conctr-ui-dioxus/src/lib.rs),
@@ -53,6 +55,23 @@ command filtering/dialog focus, native file browsing, file validation/removal an
 drops, dark palettes and narrow layouts for the new controls. These checks do not establish native
 SDK support or backend functionality; scaffold tests remain scaffold evidence.
 
+Shared-shell verification (2026-11-14): workspace check/tests, formatting and strict
+Clippy pass; the desktop renderer feature compiles. Chrome checks cover routes,
+theme switching, collapse, narrow-screen drawer navigation, overflow and unknown
+routes. The gallery served-style checker passes all 66 pages. Native window
+interaction and mobile SDK packaging have not been exercised.
+
+The shared header now uses the library's controlled animated `ThemeToggle`, with
+a circular reveal (both themes expand outward from the button),
+sun/moon transitions and reduced-motion
+support. Unsupported browsers/WebViews update immediately. Linux native WebKitGTK
+bypasses the screen reveal to avoid the theme-click crash, retaining animated
+sun/moon icons. Four consecutive native dark/light toggles passed using a temporary
+diagnostic that was removed after verification. Its gallery example includes a
+disabled state. The sidebar uses a smaller supplied wordmark and a centered brand
+icon when collapsed. The sidebar header uses one visible `SidebarSeparator`;
+its adjacent-header styling no longer hides it.
+
 ## Scaffold or demo only
 
 | Item | Evidence | Not implemented yet |
@@ -60,7 +79,7 @@ SDK support or backend functionality; scaffold tests remain scaffold evidence.
 | core/auth/connectors/engine/transform/storage/gateway | Starter `add()` functions and tests | Their intended business/runtime/storage behavior |
 | `conctr-api` | Hello-world `main.rs` | HTTP server, dependency wiring and health endpoints |
 | `conctr-api-dioxus` | Echo server function | Authorized product use cases and real API contracts |
-| web/desktop/mobile | Separate placeholder root components | Shared product routes/pages and native auth/backend integration |
+| web/desktop/mobile | Shared UI shell and routes; desktop window adapter | Native auth/backend integration and mobile packaging validation |
 | protocol/auth icons | Supplied visual artwork | Production protocol clients or credential implementations |
 
 ## No implementation evidence yet

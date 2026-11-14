@@ -156,3 +156,6 @@ pub mod resizable;
 pub use resizable::*;
 pub mod file_uploader;
 pub use file_uploader::*;
+
+pub mod theme_toggle;
+pub use theme_toggle::*;

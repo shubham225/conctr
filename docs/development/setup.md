@@ -54,6 +54,14 @@ cargo fmt --all
 dx serve --package conctr-web-dioxus
 ```
 
+Keep one `dx serve` process per package. Different ports still share that
+package's generated build output. Use the URL printed by the active server.
+After adding or changing workspace path dependencies, stop and restart `dx serve`
+so it discovers the current dependency graph and watched source directories;
+pressing `r` only rebuilds within the existing session. RSX edits should update
+in place; other Rust changes rebuild and refresh the browser automatically.
+See [Dioxus hot reload](https://dioxuslabs.com/learn/0.7/essentials/ui/hotreload/).
+
 ## Run Desktop Application
 
 ```bash

@@ -1,0 +1,16 @@
+/* CSS module source: /src/components/ui/theme_toggle/style.css */
+@layer components {
+  .toggle { color: var(--cn-text-muted); }
+  .sun, .moon {
+    transition: transform 200ms var(--cn-ease), opacity 200ms var(--cn-ease);
+    transform-origin: center;
+  }
+  .sun { opacity: 1; transform: rotate(0deg) scale(1); }
+  .moon { opacity: 0; transform: rotate(-90deg) scale(.5); }
+  .toggle[data-dark="true"] .sun { opacity: 0; transform: rotate(90deg) scale(.5); }
+  .toggle[data-dark="true"] .moon { opacity: 1; transform: rotate(0deg) scale(1); }
+  @media (prefers-reduced-motion: reduce) {
+    .sun, .moon { transition: none; }
+  }
+}
+

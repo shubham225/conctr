@@ -66,3 +66,5 @@ pub mod command;
 pub mod file_uploader;
 pub mod kbd;
 pub mod resizable;
+
+pub mod theme_toggle;

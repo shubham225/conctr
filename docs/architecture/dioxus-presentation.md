@@ -74,12 +74,14 @@ component showcase. Keep its current package name.
 Use **design kit** for the supplied assets and reference examples in `design/`,
 including `design/ui-kit/`. The kit is one part of the design system.
 
-## Recommended application structure (proposed)
+## Shared application and future feature structure
 
-The application crates currently contain placeholder App components. The shared
-application crate now exists as a workspace scaffold (starter add function/test).
-The structure below is still a recommendation: App, routes, product pages and
-launcher wiring are not implemented.
+The shared application now implements App, routes, a responsive sidebar shell,
+and basic Connections/Runs/Settings pages in `src/lib.rs`, `src/routes.rs` and
+`src/pages.rs`. All three launchers consume it. `AppWithTitlebar` accepts native
+chrome supplied by the desktop launcher; OS operations remain in that adapter.
+Pages explicitly identify unavailable backend services. The larger feature layout
+below remains a recommendation for future work.
 
 Keep three small launchers while sharing one Dioxus application. Separate
 executables support different packaging, feature flags and native configuration;
@@ -99,7 +101,7 @@ apps/
   conctr-design-system/        # Independent component documentation app
 
 crates/
-  conctr-app-dioxus/            # Scaffold exists; proposed contents below
+  conctr-app-dioxus/            # Shared shell exists; future organization below
     Cargo.toml
     assets/app.css             # App layouts; component styles stay in UI crate
     src/

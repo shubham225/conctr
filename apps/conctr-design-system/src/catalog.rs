@@ -22,6 +22,15 @@ pub const GROUPS: &[&str] = &[
 ];
 pub static ENTRIES: &[Entry] = &[
     Entry {
+        slug: "theme-toggle",
+        name: "Theme toggle",
+        group: "Core · Actions",
+        description: "Both themes expand outward from the button. Includes animated icons, keyboard support and reduced-motion handling.",
+        module: "ui::theme_toggle",
+        source: include_str!("examples/theme_toggle.rs"),
+        preview: || rsx! { crate::examples::theme_toggle::Demo {} },
+    },
+    Entry {
         slug: "file-uploader",
         name: "File uploader",
         group: "Core · Forms",

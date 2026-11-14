@@ -4,6 +4,6 @@
     border-style: solid;
     border-width: 0;
     border-top: var(--cn-border-1) solid var(--border);
-    margin: var(--cn-space-6) 0;
+    margin: var(--cn-space-1) 0;
   }
 }

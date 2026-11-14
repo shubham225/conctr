@@ -188,3 +188,19 @@ fn module_source_markers_follow_their_paths() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
     assert!(visit(&root.join("src/components"), root) > 0);
 }
+
+#[test]
+fn theme_toggle_registers_its_animation_styles_in_every_document() {
+    fn app() -> Element {
+        rsx! { ThemeToggle { dark: false, on_change: move |_| {} } }
+    }
+    let sheet = asset!(
+        "/src/components/ui/theme_toggle/style.css",
+        manganis::AssetOptions::css_module()
+    )
+    .to_string();
+    for _ in 0..2 {
+        let links = styles(app);
+        assert_eq!(links.iter().filter(|href| **href == sheet).count(), 1);
+    }
+}
