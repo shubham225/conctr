@@ -9,7 +9,11 @@ pub fn Navigation(
     attributes: Vec<Attribute>,
     children: Element,
 ) -> Element {
-    let base = attributes!(nav { class: "cn-nav" });
+    let base = attributes!(nav {
+        class: "cn-nav grid gap-0.5 w-60"
+    });
     let merged = merge_attributes(vec![base, attributes]);
-    rsx! { nav { ..merged, {children} } }
+    rsx! {
+        nav { ..merged,{children} }
+    }
 }

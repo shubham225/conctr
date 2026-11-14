@@ -25,11 +25,11 @@ pub fn Shell() -> Element {
         a { class: "ds-skip", href: "#main-content", "Skip to content" }
         header { class: "ds-header",
             Link { to: Route::Home {}, class: "ds-brand", Logo {} span { class: "cn-body-lg", "Design System" } }
-            div { class: "cn-cluster",
+            Cluster {
                 a { class: "ds-reference cn-small", href: format!("{}/ui-kit/index.html", asset!("/assets/reference")), target: "_blank", rel: "noopener", "HTML reference ↗" }
                 Label { html_for: "gallery-theme", "Dark theme" }
                 Switch { id: "gallery-theme", checked: dark(), on_checked_change: move |value| dark.set(value) }
-                button { class: "cn-btn cn-btn--secondary ds-nav-toggle", r#type: "button", aria_expanded: navigation_open(), aria_controls: "catalog-navigation", onclick: move |_| navigation_open.toggle(), "Browse" }
+                Button { variant: ButtonVariant::Secondary, class: "ds-nav-toggle", r#type: "button", aria_expanded: navigation_open(), aria_controls: "catalog-navigation", onclick: move |_| navigation_open.toggle(), "Browse" }
             }
         }
         div { class: "ds-shell",
@@ -142,7 +142,7 @@ fn Source(source: String) -> Element {
     rsx! {
         section { class: "ds-example-section",
             div { class: "ds-section-label", h2 { "Usage" }
-                div { class: "cn-cluster", span { class: "cn-caption", role: "status", "{copy_status}" }
+                Cluster { span { class: "cn-caption", role: "status", "{copy_status}" }
                     Button { variant: ButtonVariant::Secondary, size: ButtonSize::Sm,
                         onclick: {
                             let source = source.clone();
@@ -159,7 +159,7 @@ fn Source(source: String) -> Element {
                     }
                 }
             }
-            pre { class: "cn-code ds-source", code { "{source}" } }
+            CodeBlock { class: "ds-source", code { "{source}" } }
         }
     }
 }

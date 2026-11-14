@@ -9,6 +9,12 @@ use dioxus_primitives::merge_attributes;
 #[css_module("/src/components/ui/sheet/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/sheet/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 #[derive(Debug, Clone, Copy, Default, PartialEq)]
 pub enum SheetSide {
     Top,
@@ -32,26 +38,24 @@ impl SheetSide {
 #[component]
 pub fn Sheet(props: DialogRootProps) -> Element {
     let content_base = attributes!(div {
-        class: Styles::dx_sheet,
+        class: "cn-ui-sheet {Styles::cn_ui_sheet.inner} flex bg-card text-foreground flex-col gap-4 box-border fixed bg-popover gap-6 max-h-dvh overflow-y-auto",
         "data-slot": "sheet-content",
         "data-side": SheetSide::Right.as_str(),
     });
     let content_attributes = merge_attributes(vec![content_base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         dialog::DialogRoot {
-            class: Styles::dx_sheet_root,
+            class: "cn-ui-sheet-root {Styles::cn_ui_sheet_root.inner} inset-0 fixed",
             "data-slot": "sheet-root",
             id: props.id,
             is_modal: props.is_modal,
             open: props.open,
             default_open: props.default_open,
             on_open_change: props.on_open_change,
-            dialog::DialogContent {
-                class: None,
-                attributes: content_attributes,
-                {props.children}
-            }
+            dialog::DialogContent { class: None, attributes: content_attributes, {props.children} }
         }
     }
 }
@@ -61,11 +65,13 @@ pub fn SheetContentClose(
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     let base = attributes!(button {
-        class: Styles::dx_sheet_close,
+        class: "cn-ui-sheet-close {Styles::cn_ui_sheet_close.inner} flex items-center absolute p-0 cursor-pointer w-6 h-6 justify-center top-4 right-4 w-(--cn-control-sm) h-(--cn-control-sm)",
     });
     let attributes = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         SheetClose { attributes,
             X { size: "20px" }
         }
@@ -78,7 +84,14 @@ pub fn SheetHeader(
     children: Element,
 ) -> Element {
     rsx! {
-        div { class: Styles::dx_sheet_header, "data-slot": "sheet-header", ..attributes, {children} }
+        document::Stylesheet { href: STYLES }
+
+        div {
+            class: "cn-ui-sheet-header {Styles::cn_ui_sheet_header.inner} flex flex-col",
+            "data-slot": "sheet-header",
+            ..attributes,
+            {children}
+        }
     }
 }
 
@@ -88,16 +101,25 @@ pub fn SheetFooter(
     children: Element,
 ) -> Element {
     rsx! {
-        div { class: Styles::dx_sheet_footer, "data-slot": "sheet-footer", ..attributes, {children} }
+        document::Stylesheet { href: STYLES }
+
+        div {
+            class: "cn-ui-sheet-footer {Styles::cn_ui_sheet_footer.inner} flex-col mt-auto",
+            "data-slot": "sheet-footer",
+            ..attributes,
+            {children}
+        }
     }
 }
 
 #[component]
 pub fn SheetTitle(props: DialogTitleProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         dialog::DialogTitle {
             id: props.id,
-            class: Styles::dx_sheet_title,
+            class: "cn-ui-sheet-title {Styles::cn_ui_sheet_title.inner} text-foreground",
             "data-slot": "sheet-title",
             attributes: props.attributes,
             {props.children}
@@ -108,9 +130,11 @@ pub fn SheetTitle(props: DialogTitleProps) -> Element {
 #[component]
 pub fn SheetDescription(props: DialogDescriptionProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         dialog::DialogDescription {
             id: props.id,
-            class: Styles::dx_sheet_description,
+            class: "cn-ui-sheet-description {Styles::cn_ui_sheet_description.inner} text-muted-foreground",
             "data-slot": "sheet-description",
             attributes: props.attributes,
             {props.children}
@@ -139,7 +163,9 @@ pub fn SheetClose(
         dynamic.call(merged)
     } else {
         rsx! {
-            button { ..merged, {children} }
+            document::Stylesheet { href: STYLES }
+
+            button { ..merged,{children} }
         }
     }
 }

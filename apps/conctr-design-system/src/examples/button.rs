@@ -30,6 +30,7 @@ pub fn Demo() -> Element {
             Button { size: ButtonSize::IconSm, variant: ButtonVariant::Ghost, aria_label: "Connection settings", UiIcon { name: IconName::Settings } }
             Button { size: ButtonSize::IconLg, aria_label: "Connection settings", UiIcon { name: IconName::Settings } }
         }
+        Button { variant: ButtonVariant::Danger, style: "--radius: 999px;", "Custom rounded action" }
         p { role: "status", "Test action invoked {count} times." }
     }
         }

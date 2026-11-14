@@ -1,7 +1,14 @@
 use dioxus::prelude::*;
 use dioxus_icons::lucide::{ChevronLeft, ChevronRight, Ellipsis};
+
 #[css_module("/src/components/ui/pagination/style.css")]
 struct Styles;
+
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/pagination/style.css",
+    manganis::AssetOptions::css_module()
+);
 
 #[derive(Copy, Clone, PartialEq, Default)]
 #[non_exhaustive]
@@ -42,8 +49,10 @@ pub fn Pagination(
     children: Element,
 ) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         nav {
-            class: Styles::dx_pagination,
+            class: "cn-ui-pagination {Styles::cn_ui_pagination.inner} flex w-full justify-center gap-1",
             "data-slot": "pagination",
             role: "navigation",
             aria_label: "pagination",
@@ -59,8 +68,10 @@ pub fn PaginationContent(
     children: Element,
 ) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         ul {
-            class: Styles::dx_pagination_content,
+            class: "cn-ui-pagination-content flex items-center gap-1 p-0 m-0 list-none",
             "data-slot": "pagination-content",
             ..attributes,
             {children}
@@ -74,11 +85,9 @@ pub fn PaginationItem(
     children: Element,
 ) -> Element {
     rsx! {
-        li {
-            "data-slot": "pagination-item",
-            ..attributes,
-            {children}
-        }
+        document::Stylesheet { href: STYLES }
+
+        li { "data-slot": "pagination-item", ..attributes, {children} }
     }
 }
 
@@ -104,13 +113,15 @@ pub fn PaginationLink(props: PaginationLinkProps) -> Element {
     let aria_current = if props.is_active { Some("page") } else { None };
     let data_kind = props.data_kind.map(|kind| kind.attr());
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         a {
-            class: Styles::dx_pagination_link,
+            class: "cn-ui-pagination-link {Styles::cn_ui_pagination_link.inner} items-center box-border inline-flex justify-center no-underline",
             "data-slot": "pagination-link",
             "data-active": props.is_active,
             "data-size": props.size.class(),
             "data-kind": data_kind,
-            aria_current: aria_current,
+            aria_current,
             onclick: move |event| {
                 if let Some(f) = &props.onclick {
                     f.call(event);
@@ -142,6 +153,8 @@ pub fn PaginationPrevious(
     attributes: Vec<Attribute>,
 ) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         PaginationLink {
             size: PaginationLinkSize::Default,
             aria_label: "Go to previous page",
@@ -151,7 +164,7 @@ pub fn PaginationPrevious(
             onmouseup,
             attributes,
             ChevronLeft { size: "1rem" }
-            span { class: Styles::dx_pagination_label, "Previous" }
+            span { class: "cn-ui-pagination-label {Styles::cn_ui_pagination_label.inner}", "Previous" }
         }
     }
 }
@@ -166,6 +179,8 @@ pub fn PaginationNext(
     attributes: Vec<Attribute>,
 ) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         PaginationLink {
             size: PaginationLinkSize::Default,
             aria_label: "Go to next page",
@@ -174,7 +189,7 @@ pub fn PaginationNext(
             onmousedown,
             onmouseup,
             attributes,
-            span { class: Styles::dx_pagination_label, "Next" }
+            span { class: "cn-ui-pagination-label {Styles::cn_ui_pagination_label.inner}", "Next" }
             ChevronRight { size: "1rem" }
         }
     }
@@ -185,13 +200,15 @@ pub fn PaginationEllipsis(
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         span {
-            class: Styles::dx_pagination_ellipsis,
+            class: "cn-ui-pagination-ellipsis {Styles::cn_ui_pagination_ellipsis.inner} flex items-center text-foreground justify-center",
             "data-slot": "pagination-ellipsis",
             aria_hidden: "true",
             ..attributes,
             Ellipsis { size: "1rem" }
-            span { class: Styles::dx_sr_only, "More pages" }
+            span { class: "sr-only", "More pages" }
         }
     }
 }

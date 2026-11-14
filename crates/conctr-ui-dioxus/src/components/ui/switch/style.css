@@ -1,4 +1,46 @@
 /* CSS module source: /src/components/ui/switch/style.css */
-/* Native and primitive track/thumb appearance is shared in main.css. */
-.dx-switch { display: inline-flex; vertical-align: middle; }
-.dx-switch-thumb { transform: translateX(0); }
+@layer components {
+  :global(.cn-switch), .cn-switch-track {
+    height: var(--switch-height);
+    width: var(--switch-width);
+    cursor: pointer;
+    appearance: none;
+    background-color: var(--input);
+    transition: background var(--cn-motion-control);
+    border-style: solid;
+    border-width: 0;
+    border-radius: 2147483647px;
+    flex: none;
+    padding: 0;
+    position: relative;
+  }
+  :global(.cn-switch):after, .cn-switch-thumb {
+    top: var(--switch-thumb-inset);
+    left: var(--switch-thumb-inset);
+    height: var(--switch-thumb-size);
+    width: var(--switch-thumb-size);
+    background: var(--switch-thumb);
+    transition: transform var(--cn-motion-control);
+    border-radius: 2147483647px;
+    position: absolute;
+  }
+  :global(.cn-switch):after {
+    content: "";
+  }
+  :global(.cn-switch):checked, .cn-switch-track[data-state="checked"] {
+    background-color: var(--primary);
+  }
+  :global(.cn-switch):checked:after, .cn-switch-track[data-state="checked"] .cn-switch-thumb {
+    transform: translateX(calc(var(--switch-width) - var(--switch-thumb-size) - 2 * var(--switch-thumb-inset)));
+  }
+  :global(.cn-switch):disabled, .cn-switch-track:is(:disabled, [data-disabled="true"]) {
+    opacity: var(--cn-opacity-disabled);
+    cursor: not-allowed;
+  }
+  .cn-ui-switch {
+    vertical-align: middle;
+  }
+  .cn-ui-switch-thumb {
+    transform: translateX(0);
+  }
+}

@@ -3,6 +3,12 @@ use dioxus::prelude::*;
 #[css_module("/src/components/ui/textarea/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/textarea/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 #[derive(Copy, Clone, PartialEq, Default)]
 #[non_exhaustive]
 pub enum TextareaVariant {
@@ -52,8 +58,10 @@ pub fn Textarea(
     children: Element,
 ) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         textarea {
-            class: format!("{} cn-textarea", Styles::dx_textarea),
+            class: "cn-ui-textarea {Styles::cn_ui_textarea.inner} cn-textarea {Styles::cn_textarea.inner} m-0 appearance-none w-full min-h-24 resize-y cn-field-control",
             "data-slot": "textarea",
             "data-style": variant.class(),
             oninput: move |e| _ = oninput.map(|callback| callback(e)),

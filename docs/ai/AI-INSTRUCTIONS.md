@@ -49,13 +49,14 @@ remain proposals. Do not copy all contracts into every always-loaded file.
 8. Shared product pages go in `conctr-app-dioxus`; generic presentation goes in
    `conctr-ui-dioxus`. Preserve the primitives/ui/composed direction. Keep actual
    OS behavior in launchers/adapters and screen-width behavior responsive.
-9. CSS-module source-path markers are required after moves; compilation/file
-   presence alone does not prove served selectors match markup.
-10. Shared UI recipes and meaningful theme defaults live in
-    `crates/conctr-ui-dioxus/assets/styles/main.css`. Reuse existing `cn-*` recipes
-    and semantic `--cn-*` roles; local CSS modules own structure and primitive
-    behavior. Apply brand/density overrides on the provider scope. Keep global
-    focus/reduced-motion rules centralized and verify actual browser states.
+9. The UI library owns Tailwind 4.1 tooling, input and the shipped utility bundle.
+   Apps import components and `ThemeProvider`/`ConctrStyles`; no app Tailwind setup
+   or build step. Adjacent CSS modules load per component, with explicit document
+   registration for SSR. No global registry or per-component generated files.
+10. Palette/scales live in UI `assets/colors/tokens.css`; generic shadcn aliases
+    and interactions in `assets/styles/main.css`; compiler mappings in `theme.css`.
+    Keep local CSS in the components layer. Verify scoped themes, served module
+    selectors, utility coverage and browser states. See the theming contract.
 11. Use actual Cargo names: `conctr-api-dioxus` is the existing Dioxus transport
     package. Do not introduce `conctr-dioxus-api` as a second package to match old prose.
 

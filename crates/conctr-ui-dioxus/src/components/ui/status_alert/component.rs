@@ -1,8 +1,8 @@
-use crate::components::ui::status::Status;
+use crate::components::ui::{alert::Alert, status::Status};
 use dioxus::prelude::*;
 
-/// Accessible message; danger messages are announced immediately.
+/// Compatibility adapter. Prefer `Alert { status, .. }` in new code.
 #[component]
 pub fn StatusAlert(#[props(default)] status: Status, children: Element) -> Element {
-    rsx! { div { class: "cn-alert cn-alert--{status.class()}", role: if status == Status::Danger { "alert" } else { "status" }, {children} } }
+    rsx! { Alert { status, {children} } }
 }

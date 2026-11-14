@@ -1,5 +1,15 @@
 /* CSS module source: /src/components/ui/input/style.css */
-/* Shared field recipe: .cn-input. */
-.dx-input { position: relative; display: flex; }
-.dx-input--sm { height: var(--cn-control-sm); }
-.dx-input--lg { height: var(--cn-control-lg); }
+@layer components {
+  :global(.cn-input--sm) {
+    height: var(--cn-control-sm);
+  }
+  :global(.cn-input--lg) {
+    height: var(--cn-control-lg);
+  }
+  :global(.cn-ui-input--sm) {
+    height: var(--cn-control-sm);
+  }
+  :global(.cn-ui-input--lg) {
+    height: var(--cn-control-lg);
+  }
+}

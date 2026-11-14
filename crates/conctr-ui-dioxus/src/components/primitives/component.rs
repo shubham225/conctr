@@ -1,6 +1,15 @@
 use dioxus::prelude::*;
 use dioxus_primitives::{dioxus_attributes::attributes, merge_attributes};
 
+#[css_module("/src/components/primitives/style.css")]
+struct Styles;
+
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/primitives/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 /// The kit’s 4px spacing scale. Values map directly to CSS tokens.
 #[derive(Clone, Copy, PartialEq, Default)]
 pub enum Space {
@@ -94,11 +103,14 @@ pub fn LayoutBox(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: "cn-box",
+        class: "cn-box {Styles::cn_box.inner}",
         style: format!("padding: {};", padding.token())
     });
     let merged = merge_attributes(vec![base, attributes]);
-    rsx! { div { ..merged, {children} } }
+    rsx! {
+        document::Stylesheet { href: STYLES }
+        div { ..merged,{children} }
+    }
 }
 
 /// Flexible row/column layout. Use `Inline` for wrapping rows or `Stack` for columns.
@@ -123,11 +135,14 @@ pub fn Flex(
         if wrap { "wrap" } else { "nowrap" }
     );
     let base = attributes!(div {
-        class: "cn-flex",
+        class: "cn-flex {Styles::cn_flex.inner}",
         style
     });
     let merged = merge_attributes(vec![base, attributes]);
-    rsx! { div { ..merged, {children} } }
+    rsx! {
+        document::Stylesheet { href: STYLES }
+        div { ..merged,{children} }
+    }
 }
 
 /// Responsive equal-width columns; `min_item_width` collapses columns on narrow containers.
@@ -149,11 +164,14 @@ pub fn Grid(
         align.css()
     );
     let base = attributes!(div {
-        class: "cn-grid",
+        class: "cn-grid {Styles::cn_grid.inner} grid",
         style
     });
     let merged = merge_attributes(vec![base, attributes]);
-    rsx! { div { ..merged, {children} } }
+    rsx! {
+        document::Stylesheet { href: STYLES }
+        div { ..merged,{children} }
+    }
 }
 
 /// Wrapping horizontal layout with centered items by default.
@@ -168,7 +186,7 @@ pub fn Inline(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: "cn-inline",
+        class: "cn-inline {Styles::cn_inline.inner} flex flex-wrap",
         style: format!(
             "gap: {}; align-items: {}; justify-content: {};",
             gap.token(),
@@ -177,5 +195,8 @@ pub fn Inline(
         )
     });
     let merged = merge_attributes(vec![base, attributes]);
-    rsx! { div { ..merged, {children} } }
+    rsx! {
+        document::Stylesheet { href: STYLES }
+        div { ..merged,{children} }
+    }
 }

@@ -9,7 +9,11 @@ pub fn Hint(
     attributes: Vec<Attribute>,
     children: Element,
 ) -> Element {
-    let base = attributes!(span { class: "cn-hint" });
+    let base = attributes!(span {
+        class: "cn-hint text-xs text-subtle-foreground"
+    });
     let merged = merge_attributes(vec![base, attributes]);
-    rsx! { span { ..merged, {children} } }
+    rsx! {
+        span { ..merged,{children} }
+    }
 }

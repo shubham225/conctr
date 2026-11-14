@@ -8,9 +8,17 @@ use std::time::Duration;
 #[css_module("/src/components/ui/toast/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/toast/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 #[component]
 fn StyledToast(props: ToastProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         Toast {
             id: props.id,
             index: props.index,
@@ -20,7 +28,7 @@ fn StyledToast(props: ToastProps) -> Element {
             on_close: props.on_close,
             permanent: props.permanent,
             duration: props.duration,
-            class: Styles::dx_toast,
+            class: "cn-ui-toast {Styles::cn_ui_toast.inner} flex border border-solid border-border rounded-md gap-3 w-full p-4 items-start h-auto",
             attributes: props.attributes,
             ToastContent {
                 ToastTitle {}
@@ -34,19 +42,19 @@ fn StyledToast(props: ToastProps) -> Element {
 #[component]
 fn ToastContent(props: ToastContentProps) -> Element {
     rsx! {
-        toast::ToastContent {
-            class: Styles::dx_toast_content,
-            attributes: props.attributes,
-            {props.children}
-        }
+        document::Stylesheet { href: STYLES }
+
+        toast::ToastContent { class: "cn-ui-toast-content {Styles::cn_ui_toast_content.inner} min-w-0 flex-1", attributes: props.attributes, {props.children} }
     }
 }
 
 #[component]
 fn ToastTitle(props: ToastTitleProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         toast::ToastTitle {
-            class: Styles::dx_toast_title,
+            class: "cn-ui-toast-title {Styles::cn_ui_toast_title.inner}",
             attributes: props.attributes,
             children: props.children,
         }
@@ -56,8 +64,10 @@ fn ToastTitle(props: ToastTitleProps) -> Element {
 #[component]
 fn ToastDescription(props: ToastDescriptionProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         toast::ToastDescription {
-            class: Styles::dx_toast_description,
+            class: "cn-ui-toast-description {Styles::cn_ui_toast_description.inner}",
             attributes: props.attributes,
             children: props.children,
         }
@@ -67,8 +77,10 @@ fn ToastDescription(props: ToastDescriptionProps) -> Element {
 #[component]
 fn ToastCloseButton(props: ToastCloseButtonProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         toast::ToastCloseButton {
-            class: Styles::dx_toast_close,
+            class: "cn-ui-toast-close {Styles::cn_ui_toast_close.inner} grid place-items-center border-0 p-0 cursor-pointer w-(--cn-control-sm) h-(--cn-control-sm) shrink-0 text-inherit rounded-sm",
             attributes: props.attributes,
             children: props.children,
         }
@@ -85,12 +97,18 @@ pub fn ToastProvider(
     children: Element,
 ) -> Element {
     let render_toast = render_toast.unwrap_or_else(|| {
-        Callback::new(|p: toast::ToastPropsWithOwner| rsx! { StyledToast { ..p } })
+        Callback::new(|p: toast::ToastPropsWithOwner| {
+            rsx! {
+                StyledToast { ..p }
+            }
+        })
     });
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         toast::ToastProvider {
-            class: Styles::dx_toast_container,
+            class: "cn-ui-toast-container {Styles::cn_ui_toast_container.inner} fixed",
             default_duration,
             max_toasts,
             render_toast,
@@ -124,9 +142,7 @@ mod tests {
     fn styled_toast_preserves_primitive_fallback_children() {
         let mut dom = VirtualDom::new(|| {
             rsx! {
-                ToastProvider {
-                    TriggerToast {}
-                }
+                ToastProvider { TriggerToast {} }
             }
         });
         dom.rebuild_in_place();

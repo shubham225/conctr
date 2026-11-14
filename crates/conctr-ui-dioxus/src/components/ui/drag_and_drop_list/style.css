@@ -1,199 +1,132 @@
 /* CSS module source: /src/components/ui/drag_and_drop_list/style.css */
-.dx-dnd-list {
-  --dx-item-gap: 6px;
-
-  width: 100%;
-}
-
-.dx-dnd-list-ul {
-  display: flex;
-  flex-direction: column;
-  padding-left: 0;
-  margin: 0;
-  gap: var(--dx-item-gap);
-  perspective: 1200px;
-}
-
-.dx-dnd-list-item {
-  --gap-shift: 0px;
-  --tilt: 0deg;
-
-  position: relative;
-  display: flex;
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 14px 12px 10px;
-  border: 1px solid var(--cn-border);
-  border-radius: 10px;
-  background-color: var(--cn-border);
-  color: var(--cn-text);
-  cursor: grab;
-  list-style: none;
-  outline: none;
-  transform: translateY(var(--gap-shift)) rotateX(var(--tilt));
-  transform-style: preserve-3d;
-  transition:
-    border-color 150ms ease,
-    background-color 150ms ease,
-    box-shadow 150ms ease,
-    transform 180ms cubic-bezier(0.2, 0.9, 0.3, 1),
-    opacity 150ms ease;
-  user-select: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .dx-dnd-list-item:hover {
-    --gap-shift: -1px;
-
-    border-color: var(--cn-border-strong);
-    background-color: var(--cn-border);
-    box-shadow: var(--cn-shadow-1);
+@layer components {
+  .cn-ui-dnd-list {
+    --dx-item-gap: 6px;
   }
-
-  .dx-dnd-list-item:active {
+  .cn-ui-dnd-list-ul {
+    perspective: 1200px;
+  }
+  .cn-ui-dnd-list-item {
     --gap-shift: 0px;
-
+    --tilt: 0deg;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--border);
+    background-color: var(--border);
+    color: var(--foreground);
+    cursor: grab;
+    transform: translateY(var(--gap-shift)) rotateX(var(--tilt));
+    transform-style: preserve-3d;
+    border-radius: 10px;
+    outline: none;
+    padding: 12px 14px 12px 10px;
+    transition: border-color .15s, background-color .15s, box-shadow .15s, transform .18s cubic-bezier(.2, .9, .3, 1), opacity .15s;
+    position: relative;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .cn-ui-dnd-list-item:hover {
+      --gap-shift: -1px;
+      border-color: var(--input);
+      background-color: var(--border);
+      box-shadow: var(--elevation-1);
+    }
+    .cn-ui-dnd-list-item:active {
+      --gap-shift: 0px;
+      transition-duration: 80ms;
+    }
+  }
+  .cn-ui-dnd-list-item:focus-visible {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px
+    var(--overlay);
+  }
+  .cn-ui-dnd-list-item[data-is-grabbing="true"] {
+    --gap-shift: 0px;
+    --tilt: 0deg;
+    border-style: dashed;
+    border-color: var(--input);
+    box-shadow: none;
+    cursor: grabbing;
+    opacity: .5;
+    background-color: #0000;
     transition-duration: 80ms;
   }
-}
-
-.dx-dnd-list-item:focus-visible {
-  border-color: var(--cn-focus);
-  box-shadow: 0 0 0 3px
-    var(--cn-scrim) ;
-}
-
-.dx-dnd-list-item[data-is-grabbing="true"] {
-  --gap-shift: 0px;
-  --tilt: 0deg;
-
-  border-style: dashed;
-  border-color: var(--cn-border-strong);
-  background-color: transparent;
-  box-shadow: none;
-  cursor: grabbing;
-  opacity: 0.5;
-  transition-duration: 80ms;
-}
-
-.dx-dnd-list-item[data-is-grabbing="true"][data-drop-at-origin="true"] {
-  border-style: solid;
-  border-color: var(--cn-focus);
-  box-shadow: 0 0 0 3px
-    var(--cn-scrim) ;
-  opacity: 0.75;
-}
-
-.dx-item-icon {
-  flex-shrink: 0;
-  margin-right: 6px;
-  color: var(--cn-text-subtle);
-  transition: color 150ms ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .dx-dnd-list-item:hover .dx-item-icon {
-    color: var(--cn-text);
+  .cn-ui-dnd-list-item[data-is-grabbing="true"][data-drop-at-origin="true"] {
+    border-style: solid;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px
+    var(--overlay);
+    opacity: .75;
   }
-}
-
-.dx-item-body-div {
-  min-width: 0;
-  flex-grow: 1;
-  font-size: var(--cn-fs-small);
-  font-weight: normal;
-  line-height: 20px;
-}
-
-.dx-remove-button {
-  display: flex;
-  overflow: visible;
-  width: 26px;
-  height: 26px;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border-style: none;
-  border-radius: 6px;
-  margin-left: 10px;
-  background-color: transparent;
-  color: var(--cn-text-subtle);
-  cursor: pointer;
-  transition:
-    background-color 120ms ease,
-    color 120ms ease,
-    transform 80ms ease;
-}
-
-.dx-remove-button:hover {
-  background-color: var(--cn-sunken);
-  color: var(--cn-text);
-}
-
-.dx-remove-button:active {
-  transform: scale(0.92);
-}
-
-.dx-remove-button:focus-visible {
-  outline: 2px solid var(--cn-focus);
-  outline-offset: 2px;
-}
-
-.dx-drop-indicator {
-  display: none;
-}
-
-.dx-dnd-list-item::before,
-.dx-dnd-list-item::after {
-  position: absolute;
-  right: 10px;
-  left: 10px;
-  height: 3px;
-  border-radius: 999px;
-  background-color: var(--cn-focus);
-  content: "";
-  opacity: 0;
-  pointer-events: none;
-  transform:
-    rotateX(calc(-1 * var(--tilt)))
+  .cn-ui-item-icon {
+    color: var(--subtle-foreground);
+    transition: color .15s;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .cn-ui-dnd-list-item:hover .cn-ui-item-icon {
+      color: var(--foreground);
+    }
+  }
+  .cn-ui-item-body-div {
+    font-size: var(--cn-fs-small);
+    font-weight: normal;
+    line-height: 20px;
+  }
+  .cn-ui-remove-button {
+    color: var(--subtle-foreground);
+    background-color: #0000;
+    border-style: none;
+    border-radius: 6px;
+    transition: background-color .12s, color .12s, transform 80ms;
+  }
+  .cn-ui-remove-button:hover {
+    background-color: var(--muted);
+    color: var(--foreground);
+  }
+  .cn-ui-remove-button:active {
+    transform: scale(.92);
+  }
+  .cn-ui-remove-button:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .cn-ui-dnd-list-item:before, .cn-ui-dnd-list-item:after {
+    right: calc(var(--spacing, .25rem) * 2.5);
+    left: calc(var(--spacing, .25rem) * 2.5);
+    background-color: var(--ring);
+    content: "";
+    opacity: 0;
+    pointer-events: none;
+    height: 3px;
+    transform: rotateX(calc(-1 * var(--tilt)))
     translateY(calc(-1 * var(--gap-shift)))
-    scaleX(0.7);
-  transition:
-    opacity 140ms ease-out,
-    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.dx-dnd-list-item::before {
-  top: calc(-1 * (var(--dx-item-gap) / 2 + 2.5px));
-  transform-origin: center bottom;
-}
-
-.dx-dnd-list-item::after {
-  bottom: calc(-1 * (var(--dx-item-gap) / 2 + 2.5px));
-  transform-origin: center top;
-}
-
-.dx-drop-indicator[data-position="before"] + .dx-dnd-list-item::before,
-.dx-dnd-list-item:has(+ .dx-drop-indicator[data-position="after"])::after {
-  opacity: 0.9;
-  transform:
-    rotateX(calc(-1 * var(--tilt)))
+    scaleX(.7);
+    border-radius: 999px;
+    transition: opacity .14s ease-out, transform .22s cubic-bezier(.2, .8, .2, 1);
+    position: absolute;
+  }
+  .cn-ui-dnd-list-item:before {
+    top: calc(-1 * (var(--dx-item-gap) / 2 + 2.5px));
+    transform-origin: bottom;
+  }
+  .cn-ui-dnd-list-item:after {
+    bottom: calc(-1 * (var(--dx-item-gap) / 2 + 2.5px));
+    transform-origin: top;
+  }
+  .cn-ui-drop-indicator[data-position="before"] + .cn-ui-dnd-list-item:before, .cn-ui-dnd-list-item:has( + .cn-ui-drop-indicator[data-position="after"]):after {
+    opacity: .9;
+    transform: rotateX(calc(-1 * var(--tilt)))
     translateY(calc(-1 * var(--gap-shift)))
     scaleX(1);
-}
-
-.dx-dnd-list-item:has(+ .dx-drop-indicator) {
-  --gap-shift: -1px;
-  --tilt: -3deg;
-
-  transform-origin: center bottom;
-}
-
-.dx-drop-indicator + .dx-dnd-list-item {
-  --gap-shift: 1px;
-  --tilt: 3deg;
-
-  transform-origin: center top;
+  }
+  .cn-ui-dnd-list-item:has( + .cn-ui-drop-indicator) {
+    --gap-shift: -1px;
+    --tilt: -3deg;
+    transform-origin: bottom;
+  }
+  .cn-ui-drop-indicator + .cn-ui-dnd-list-item {
+    --gap-shift: 1px;
+    --tilt: 3deg;
+    transform-origin: top;
+  }
 }

@@ -5,14 +5,22 @@ use dioxus_primitives::{dioxus_attributes::attributes, merge_attributes};
 #[css_module("/src/components/ui/toolbar/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/toolbar/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 #[component]
 pub fn Toolbar(props: ToolbarProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_toolbar,
+        class: "cn-ui-toolbar {Styles::cn_ui_toolbar.inner}",
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         toolbar::Toolbar {
             aria_label: props.aria_label,
             disabled: props.disabled,
@@ -26,6 +34,8 @@ pub fn Toolbar(props: ToolbarProps) -> Element {
 #[component]
 pub fn ToolbarButton(props: ToolbarButtonProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         toolbar::ToolbarButton {
             index: props.index,
             disabled: props.disabled,
@@ -39,11 +49,13 @@ pub fn ToolbarButton(props: ToolbarButtonProps) -> Element {
 #[component]
 pub fn ToolbarSeparator(props: ToolbarSeparatorProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_toolbar_separator,
+        class: "cn-ui-toolbar-separator {Styles::cn_ui_toolbar_separator.inner} h-6 bg-border w-px",
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         toolbar::ToolbarSeparator {
             decorative: props.decorative,
             horizontal: props.horizontal,
@@ -60,11 +72,13 @@ pub fn ToolbarGroup(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_toolbar_group,
+        class: "cn-ui-toolbar-group {Styles::cn_ui_toolbar_group.inner} flex flex-row",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        div { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        div { ..merged,{children} }
     }
 }

@@ -1,39 +1,54 @@
 /* CSS module source: /src/components/ui/card/style.css */
-.dx-card { display: flex; flex-direction: column; gap: var(--cn-space-4); }
-
-.dx-card-header {
-  display: grid;
-  align-items: start;
-  gap: 0.5rem;
-  grid-auto-rows: min-content;
-  grid-template-rows: auto auto;
+@layer components {
+  .cn-card {
+    border-radius: calc(var(--radius) + 4px);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--border);
+    background-color: var(--card);
+    padding: var(--card-padding);
+  }
+  :global(.cn-card--compact) {
+    padding: calc(var(--spacing, .25rem) * 4);
+  }
+  :global(.cn-card--raised) {
+    background-color: var(--popover);
+    box-shadow: var(--elevation-1);
+  }
+  :global(.cn-card--interactive) {
+    cursor: pointer;
+    transition: box-shadow var(--cn-dur) var(--cn-ease), border-color var(--cn-dur) var(--cn-ease);
+  }
+  :global(.cn-card--interactive):hover {
+    border-color: var(--input);
+    box-shadow: var(--elevation-2);
+  }
+  [data-slot="card"]:global(.cn-card--compact) {
+    padding: calc(var(--spacing, .25rem) * 4);
+  }
+  [data-slot="card"]:global(.cn-card--raised) {
+    background-color: var(--popover);
+    box-shadow: var(--elevation-1);
+  }
+  .cn-ui-card-header {
+    grid-template-rows: auto auto;
+    grid-auto-rows: min-content;
+  }
+  .cn-ui-card-header:has([data-slot="card-action"]) {
+    grid-template-columns: 1fr auto;
+  }
+  .cn-ui-card-title {
+    font-size: var(--cn-fs-body);
+    font-weight: var(--cn-fw-semibold);
+    line-height: 1;
+  }
+  .cn-ui-card-description {
+    font-size: var(--cn-fs-small);
+    line-height: 1.25rem;
+  }
+  .cn-ui-card-action {
+    grid-row: 1 / span 2;
+    grid-column-start: 2;
+    place-self: start end;
+  }
 }
-
-.dx-card-header:has([data-slot="card-action"]) {
-  grid-template-columns: 1fr auto;
-}
-
-.dx-card-title {
-  font-size: var(--cn-fs-body);
-  font-weight: 600;
-  line-height: 1;
-}
-
-.dx-card-description {
-  color: var(--cn-text-muted);
-  font-size: var(--cn-fs-small);
-  line-height: 1.25rem;
-}
-
-.dx-card-action {
-  grid-column-start: 2;
-  grid-row: 1 / span 2;
-  place-self: start end;
-}
-
-.dx-card-footer {
-  display: flex;
-  align-items: center;
-}
-
-.dx-card-content { min-width: 0; }

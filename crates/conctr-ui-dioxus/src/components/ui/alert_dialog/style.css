@@ -1,9 +1,69 @@
 /* CSS module source: /src/components/ui/alert_dialog/style.css */
-/* Shared surface, typography, buttons and backdrop: main.css. */
-.dx-alert-dialog { display: flex; flex-direction: column; }
-.dx-alert-dialog-backdrop { will-change: opacity; }
-.dx-alert-dialog-title { text-wrap: balance; }
-.dx-alert-dialog-description { max-width: 68ch; }
-.dx-alert-dialog-actions { flex-direction: column-reverse; }
-.dx-alert-dialog-cancel, .dx-alert-dialog-action { min-height: var(--cn-control-height); font: var(--cn-font-label); gap: 0; }
-@media (width >= 40rem) { .dx-alert-dialog-actions { flex-direction: row; justify-content: flex-end; } }
+@layer components {
+  .cn-dialog-backdrop {
+    z-index: var(--cn-z-modal);
+    background: var(--overlay);
+  }
+  .cn-dialog-backdrop[data-state="open"] {
+    opacity: 1;
+    animation: cn-overlay-in var(--cn-motion-overlay) forwards;
+  }
+  .cn-dialog-backdrop[data-state="closed"] {
+    opacity: 0;
+    pointer-events: none;
+    animation: cn-overlay-out var(--cn-motion-overlay) forwards;
+  }
+  .cn-modal {
+    border-radius: calc(var(--radius) + 10px);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--border);
+    background-color: var(--popover);
+    box-shadow: var(--elevation-4);
+    padding: var(--dialog-padding);
+  }
+  .cn-dialog {
+    z-index: var(--cn-z-modal);
+    max-height: calc(100dvh - var(--dialog-viewport-gap));
+    width: min(var(--dialog-width), calc(100% - var(--dialog-viewport-gap)));
+    gap: var(--dialog-gap);
+    color: var(--popover-foreground);
+    font: var(--cn-font-body);
+    margin: 0;
+    transform: translate(-50%, -50%);
+  }
+  .cn-dialog .cn-dialog-title {
+    color: var(--popover-foreground);
+    font: var(--cn-font-title);
+    letter-spacing: var(--cn-ls-h4);
+    margin: 0;
+  }
+  .cn-dialog .cn-dialog-description {
+    color: var(--muted-foreground);
+    font: var(--cn-font-body);
+    margin: 0;
+  }
+  .cn-dialog p {
+    margin: 0;
+  }
+  .cn-ui-alert-dialog-backdrop {
+    will-change: opacity;
+  }
+  .cn-ui-alert-dialog-description {
+    max-width: 68ch;
+  }
+  .cn-ui-alert-dialog-actions {
+    flex-direction: column-reverse;
+  }
+  .cn-ui-alert-dialog-cancel, .cn-ui-alert-dialog-action {
+    min-height: var(--control-height);
+    font: var(--cn-font-label);
+    gap: 0;
+  }
+  @media (min-width: 40rem) {
+    .cn-ui-alert-dialog-actions {
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+  }
+}

@@ -9,16 +9,24 @@ use dioxus_primitives::merge_attributes;
 #[css_module("/src/components/ui/collapsible/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/collapsible/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 #[component]
 pub fn Collapsible(props: CollapsibleProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         collapsible::Collapsible {
             keep_mounted: props.keep_mounted,
             default_open: props.default_open,
             disabled: props.disabled,
             open: props.open,
             on_open_change: props.on_open_change,
-            as: props.r#as,
+            r#as: props.r#as,
             attributes: props.attributes,
             {props.children}
         }
@@ -28,20 +36,19 @@ pub fn Collapsible(props: CollapsibleProps) -> Element {
 #[component]
 pub fn CollapsibleTrigger(props: CollapsibleTriggerProps) -> Element {
     let base = attributes!(button {
-        class: Styles::dx_collapsible_trigger,
+        class: "cn-ui-collapsible-trigger {Styles::cn_ui_collapsible_trigger.inner} flex items-center bg-transparent text-foreground border-0 w-full box-border flex-row justify-between p-0 pt-4 pb-4 text-left overflow-hidden py-4",
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     let show_icon = props.r#as.is_none();
 
     rsx! {
-        collapsible::CollapsibleTrigger { as: props.r#as, attributes: merged,
+        document::Stylesheet { href: STYLES }
+
+        collapsible::CollapsibleTrigger { r#as: props.r#as, attributes: merged,
             {props.children}
             if show_icon {
-                ChevronsUpDown {
-                    size: "1rem",
-                    stroke: "var(--cn-text)",
-                }
+                ChevronsUpDown { size: "1rem", stroke: "var(--cn-text)" }
             }
         }
     }
@@ -50,8 +57,10 @@ pub fn CollapsibleTrigger(props: CollapsibleTriggerProps) -> Element {
 #[component]
 pub fn CollapsibleContent(props: CollapsibleContentProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         collapsible::CollapsibleContent {
-            class: Styles::dx_collapsible_content,
+            class: "cn-ui-collapsible-content {Styles::cn_ui_collapsible_content.inner} text-muted-foreground",
             id: props.id,
             attributes: props.attributes,
             {props.children}
@@ -65,6 +74,8 @@ pub fn CollapsibleItem(
     children: Element,
 ) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div {
             border: "1px solid var(--cn-border)",
             border_radius: "0.5rem",
@@ -81,6 +92,8 @@ pub fn CollapsibleList(
     children: Element,
 ) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div {
             display: "flex",
             flex_direction: "column",

@@ -7,14 +7,22 @@ use dioxus_primitives::{dioxus_attributes::attributes, merge_attributes};
 #[css_module("/src/components/ui/popover/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/popover/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 #[component]
 pub fn PopoverRoot(props: PopoverRootProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_popover
+        class: "cn-ui-popover {Styles::cn_ui_popover.inner} relative inline-block w-fit max-w-full"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         popover::PopoverRoot {
             is_modal: props.is_modal,
             open: props.open,
@@ -29,28 +37,29 @@ pub fn PopoverRoot(props: PopoverRootProps) -> Element {
 #[component]
 pub fn PopoverTrigger(props: PopoverTriggerProps) -> Element {
     let base = attributes!(button {
-        class: Styles::dx_popover_trigger
+        class: "cn-ui-popover-trigger {Styles::cn_ui_popover_trigger.inner} border border-solid border-border rounded-md text-foreground cursor-pointer h-(--cn-control-md)"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         popover::PopoverTrigger { attributes: merged, {props.children} }
     }
 }
 
 #[component]
 pub fn PopoverContent(props: PopoverContentProps) -> Element {
-    let class = if let Some(class) = props.class {
-        format!(
-            "{} cn-popup cn-popup--bordered {}",
-            Styles::dx_popover_content,
-            class
-        )
-    } else {
-        format!("{} cn-popup cn-popup--bordered", Styles::dx_popover_content)
-    };
+    let class = format!(
+        "cn-ui-popover-content {} cn-popup {} cn-popup--bordered flex-col box-border min-w-50 gap-3 w-max bg-popover text-popover-foreground {}",
+        Styles::cn_ui_popover_content.inner,
+        Styles::cn_popup.inner,
+        props.class.unwrap_or_default(),
+    );
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         popover::PopoverContent {
             class,
             id: props.id,

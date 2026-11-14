@@ -6,14 +6,22 @@ use dioxus_primitives::tooltip::{self, TooltipContentProps, TooltipProps, Toolti
 #[css_module("/src/components/ui/tooltip/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/tooltip/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 #[component]
 pub fn Tooltip(props: TooltipProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_tooltip,
+        class: "cn-ui-tooltip {Styles::cn_ui_tooltip.inner} relative inline-block w-fit max-w-full",
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         tooltip::Tooltip {
             disabled: props.disabled,
             open: props.open,
@@ -28,28 +36,27 @@ pub fn Tooltip(props: TooltipProps) -> Element {
 #[component]
 pub fn TooltipTrigger(props: TooltipTriggerProps) -> Element {
     let base = attributes!(button {
-        class: Styles::dx_tooltip_trigger,
+        class: "cn-ui-tooltip-trigger {Styles::cn_ui_tooltip_trigger.inner}",
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
-        tooltip::TooltipTrigger {
-            id: props.id,
-            as: props.r#as,
-            attributes: merged,
-            {props.children}
-        }
+        document::Stylesheet { href: STYLES }
+
+        tooltip::TooltipTrigger { id: props.id, r#as: props.r#as, attributes: merged, {props.children} }
     }
 }
 
 #[component]
 pub fn TooltipContent(props: TooltipContentProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_tooltip_content,
+        class: "cn-ui-tooltip-content {Styles::cn_ui_tooltip_content.inner} bg-foreground text-card justify-self-start text-background text-left w-max",
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         tooltip::TooltipContent {
             id: props.id,
             side: props.side,

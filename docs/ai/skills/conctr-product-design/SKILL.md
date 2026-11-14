@@ -26,6 +26,7 @@ never make essential operations drag-only. Mobile starts with operations and
 inspection unless the user changes that scope. The HTML documentation prototype
 is illustrative; it is not a replacement product frontend or proof of a backend.
 
-When moving CSS modules, keep source markers synchronized and verify served
-selectors. Test actual layout, keyboard/focus and relevant interactions in a
+Use library-owned Tailwind classes in Rust and adjacent CSS modules. Consumers
+need only the library style provider. Keep ownership markers accurate and verify
+served styles. Test actual layout, keyboard/focus and relevant interactions in a
 browser when available; do not equate a successful build with visual correctness.

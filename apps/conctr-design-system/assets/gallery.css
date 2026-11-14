@@ -1,8 +1,8 @@
 /* Gallery layout. All component skins remain owned by conctr-ui-dioxus. */
 html { scroll-padding-top: var(--cn-space-24); }
 .ds-header { position: sticky; top: 0; z-index: var(--cn-z-sticky); min-height: var(--cn-space-20); display: flex; align-items: center; justify-content: space-between; gap: var(--cn-space-6); padding: var(--cn-space-4) var(--cn-space-8); border-bottom: var(--cn-border-1) solid var(--cn-border); background: var(--cn-surface); }
-.ds-brand { display: flex; align-items: center; gap: var(--cn-space-6); text-decoration: none; color: var(--cn-text); font-size: var(--cn-fs-small); font-weight: var(--cn-fw-medium); }
-.ds-brand > span { border-left: var(--cn-border-1) solid var(--cn-border); padding-left: var(--cn-space-6); }
+.ds-brand { display: flex; flex-shrink: 0; align-items: center; gap: var(--cn-space-6); text-decoration: none; color: var(--cn-text); font-size: var(--cn-fs-small); font-weight: var(--cn-fw-medium); }
+.ds-brand > span { white-space: nowrap; border-left: var(--cn-border-1) solid var(--cn-border); padding-left: var(--cn-space-6); }
 .ds-reference { color: var(--cn-text-muted); text-decoration: none; }
 .ds-reference:hover { color: var(--cn-primary); }
 .ds-shell { display: grid; grid-template-columns: 256px minmax(0, 1fr); max-width: var(--cn-container-wide); margin-inline: auto; }
@@ -92,7 +92,6 @@ html { scroll-padding-top: var(--cn-space-24); }
  .ds-source { max-height: 400px; }
 }
 
-.ds-virtual-frame > .dx-virtual-list-container { position: relative; height: 100%; overflow-y: auto; }
 .ds-sidebar-demo [data-slot="sidebar-wrapper"] { height: 320px; }
 
 /* Foundation samples need the same breathing room as other kit sections. */

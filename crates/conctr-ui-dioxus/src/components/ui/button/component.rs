@@ -5,6 +5,20 @@ use dioxus_primitives::merge_attributes;
 #[css_module("/src/components/ui/button/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/button/style.css",
+    manganis::AssetOptions::css_module()
+);
+#[css_module("/src/components/ui/spinner/style.css")]
+struct SpinnerStyles;
+
+// Register for every document, including repeated SSR requests.
+const SPINNER_STYLES: Asset = asset!(
+    "/src/components/ui/spinner/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 #[derive(Copy, Clone, PartialEq, Default)]
 #[non_exhaustive]
 pub enum ButtonVariant {
@@ -77,7 +91,7 @@ pub fn Button(
     children: Element,
 ) -> Element {
     let base = attributes!(button {
-        class: format!("{} cn-btn", Styles::dx_button),
+        class: "cn-ui-button {Styles::cn_ui_button.inner} cn-btn {Styles::cn_btn.inner} items-center gap-2 inline-flex justify-center whitespace-nowrap",
         r#type: "button",
         disabled: disabled || loading,
         aria_busy: loading,
@@ -87,6 +101,8 @@ pub fn Button(
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         button {
             onclick: move |event| {
                 if let Some(f) = &onclick {
@@ -109,7 +125,10 @@ pub fn Button(
                 }
             },
             ..merged,
-            if loading { span { class: "cn-spinner", aria_hidden: "true" } }
+            if loading {
+                document::Stylesheet { href: SPINNER_STYLES }
+                span { class: "cn-spinner {SpinnerStyles::cn_spinner.inner} w-5 h-5", aria_hidden: "true" }
+            }
             {children}
         }
     }

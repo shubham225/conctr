@@ -2,8 +2,15 @@ use crate::components::ui::separator::Separator;
 use dioxus::prelude::*;
 use dioxus_primitives::dioxus_attributes::attributes;
 use dioxus_primitives::merge_attributes;
+
 #[css_module("/src/components/ui/item/style.css")]
 struct Styles;
+
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/item/style.css",
+    manganis::AssetOptions::css_module()
+);
 
 #[derive(Copy, Clone, PartialEq, Default)]
 #[non_exhaustive]
@@ -68,13 +75,15 @@ pub fn ItemGroup(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_item_group,
+        class: "cn-ui-item-group flex flex-col",
         role: "list",
         "data-slot": "item-group",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div { ..merged,{children} }
     }
 }
@@ -86,12 +95,14 @@ pub fn ItemSeparator(
     attributes: Vec<Attribute>,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_item_separator,
+        class: "cn-ui-item-separator m-0",
         "data-slot": "item-separator",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         Separator { horizontal: true, decorative: true, attributes: merged }
     }
 }
@@ -109,7 +120,7 @@ pub fn Item(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_item,
+        class: "cn-ui-item {Styles::cn_ui_item.inner} flex flex-wrap items-center text-sm box-border",
         "data-slot": "item",
         "data-variant": variant.class(),
         "data-size": size.class(),
@@ -117,6 +128,8 @@ pub fn Item(
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         if let Some(dynamic) = r#as {
             {dynamic.call(merged)}
         } else {
@@ -147,13 +160,15 @@ pub fn ItemMedia(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_item_media,
+        class: "cn-ui-item-media {Styles::cn_ui_item_media.inner} flex items-center gap-2 shrink-0 justify-center",
         "data-slot": "item-media",
         "data-variant": variant.class(),
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div { ..merged,{children} }
     }
 }
@@ -166,12 +181,14 @@ pub fn ItemContent(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_item_content,
+        class: "cn-ui-item-content {Styles::cn_ui_item_content.inner} flex gap-1 flex-col",
         "data-slot": "item-content",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div { ..merged,{children} }
     }
 }
@@ -184,12 +201,14 @@ pub fn ItemTitle(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_item_title,
+        class: "cn-ui-item-title {Styles::cn_ui_item_title.inner} flex items-center gap-2 w-fit",
         "data-slot": "item-title",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div { ..merged,{children} }
     }
 }
@@ -202,12 +221,14 @@ pub fn ItemDescription(
     children: Element,
 ) -> Element {
     let base = attributes!(p {
-        class: Styles::dx_item_description,
+        class: "cn-ui-item-description {Styles::cn_ui_item_description.inner} text-left overflow-hidden text-balance m-0",
         "data-slot": "item-description",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         p { ..merged,{children} }
     }
 }
@@ -220,12 +241,14 @@ pub fn ItemActions(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_item_actions,
+        class: "cn-ui-item-actions flex items-center gap-2",
         "data-slot": "item-actions",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div { ..merged,{children} }
     }
 }
@@ -238,12 +261,14 @@ pub fn ItemHeader(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_item_header,
+        class: "cn-ui-item-header {Styles::cn_ui_item_header.inner}",
         "data-slot": "item-header",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div { ..merged,{children} }
     }
 }
@@ -256,12 +281,14 @@ pub fn ItemFooter(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_item_footer,
+        class: "cn-ui-item-footer {Styles::cn_ui_item_footer.inner}",
         "data-slot": "item-footer",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div { ..merged,{children} }
     }
 }

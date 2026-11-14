@@ -10,8 +10,10 @@ pub fn Cluster(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: "cn-cluster"
+        class: "cn-cluster flex flex-wrap items-center gap-3"
     });
     let merged = merge_attributes(vec![base, attributes]);
-    rsx! { div { ..merged, {children} } }
+    rsx! {
+        div { ..merged,{children} }
+    }
 }

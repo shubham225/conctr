@@ -1,161 +1,170 @@
 /* CSS module source: /src/components/ui/tooltip/style.css */
-/* Tooltip Styles */
-.dx-tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-.dx-tooltip-trigger {
-  display: inline-block;
-}
-
-.dx-tooltip-content {
-  position: absolute;
-  z-index: 1000;
-  max-width: 250px;
-  padding: 8px 12px;
-  border-radius: var(--cn-radius-md);
-  animation: dx-tooltip-fade-in 0.2s ease-in-out;
-  background-color: var(--cn-text);
-  color: var(--cn-surface);
-  font-size: var(--cn-fs-small);
-  line-height: 1.4;
-}
-
-.dx-tooltip-content::after {
-  position: absolute;
-  border-width: 0.25rem;
-  border-style: solid;
-  margin-left: -0.25rem;
-  content: " ";
-  rotate: 45deg;
-}
-
-/* Positioning based on side */
-.dx-tooltip-content[data-side="top"] {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-bottom: 8px;
-  transform: translateX(-50%);
-}
-
-.dx-tooltip-content[data-side="top"]::after {
-  top: calc(100% - 0.25rem);
-  left: 50%;
-  border-color: var(--cn-text);
-  border-radius: 0 0 0.1rem;
-}
-
-.dx-tooltip-content[data-side="right"] {
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  margin-left: 8px;
-  transform: translateY(-50%);
-}
-
-.dx-tooltip-content[data-side="right"]::after {
-  top: calc(50% - 0.25rem);
-  left: 0;
-  border-color: var(--cn-text);
-  border-radius: 0 0 0 0.1rem;
-}
-
-.dx-tooltip-content[data-side="bottom"] {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-top: 8px;
-  transform: translateX(-50%);
-}
-
-.dx-tooltip-content[data-side="bottom"]::after {
-  bottom: calc(100% - 0.25rem);
-  left: 50%;
-  border-color: var(--cn-text);
-  border-radius: 0.1rem 0 0;
-}
-
-.dx-tooltip-content[data-side="left"] {
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  margin-right: 8px;
-  transform: translateY(-50%);
-}
-
-.dx-tooltip-content[data-side="left"]::after {
-  top: calc(50% - 0.25rem);
-  right: -0.25rem;
-  border-color: var(--cn-text);
-  border-radius: 0 0.1rem 0 0;
-}
-
-/* Alignment styles for top and bottom */
-.dx-tooltip-content[data-side="top"][data-align="start"],
-.dx-tooltip-content[data-side="bottom"][data-align="start"] {
-  left: 0;
-  transform: none;
-}
-
-.dx-tooltip-content[data-side="top"][data-align="end"],
-.dx-tooltip-content[data-side="bottom"][data-align="end"] {
-  right: 0;
-  left: auto;
-  transform: none;
-}
-
-/* Alignment styles for left and right */
-.dx-tooltip-content[data-side="left"][data-align="start"],
-.dx-tooltip-content[data-side="right"][data-align="start"] {
-  top: 0;
-  transform: none;
-}
-
-.dx-tooltip-content[data-side="left"][data-align="center"],
-.dx-tooltip-content[data-side="right"][data-align="center"] {
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.dx-tooltip-content[data-side="left"][data-align="end"],
-.dx-tooltip-content[data-side="right"][data-align="end"] {
-  top: auto;
-  bottom: 0;
-  transform: none;
-}
-
-/* Animation */
-@keyframes dx-tooltip-fade-in {
-  from {
-    opacity: 0;
+@layer components {
+  :global(.cn-tip) {
+    position: relative;
   }
-
-  to {
-    opacity: 1;
+  :global(.cn-tip):hover:after, :global(.cn-tip):focus-visible:after {
+    content: attr(data-tip);
+    white-space: nowrap;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  :global(.cn-tip):hover:after, :global(.cn-tip):focus-visible:after, :global(.cn-tooltip) {
+    padding: 6px var(--cn-space-2);
+    border-radius: calc(var(--radius) - 4px);
+    background-color: var(--foreground);
+    color: var(--background);
+    font: var(--cn-fw-medium) var(--cn-fs-caption)/1.3 var(--cn-font-ui);
+    box-shadow: var(--elevation-3);
+    z-index: var(--cn-z-tooltip);
+  }
+  .cn-ui-tooltip-trigger {
+    display: inline-block;
+  }
+  .cn-ui-tooltip-content {
+    z-index: 1000;
+    max-width: calc(var(--spacing, .25rem) * 62.5);
+    border-radius: var(--radius);
+    font-size: var(--cn-fs-small);
+    padding: 8px 12px;
+    line-height: 1.4;
+    animation: .2s ease-in-out dx-tooltip-fade-in;
+    position: absolute;
+  }
+  .cn-ui-tooltip-content:after {
+    content: " ";
+    border-style: solid;
+    border-width: .25rem;
+    margin-left: -.25rem;
+    position: absolute;
+    rotate: 45deg;
+  }
+  .cn-ui-tooltip-content[data-side="top"] {
+    margin-bottom: calc(var(--spacing, .25rem) * 2);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .cn-ui-tooltip-content[data-side="top"]:after {
+    border-color: var(--foreground);
+    border-radius: 0 0 .1rem;
+    top: calc(100% - .25rem);
+    left: 50%;
+  }
+  .cn-ui-tooltip-content[data-side="right"] {
+    margin-left: calc(var(--spacing, .25rem) * 2);
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+  }
+  .cn-ui-tooltip-content[data-side="right"]:after {
+    border-color: var(--foreground);
+    border-radius: 0 0 0 .1rem;
+    top: calc(50% - .25rem);
+    left: 0;
+  }
+  .cn-ui-tooltip-content[data-side="bottom"] {
+    margin-top: calc(var(--spacing, .25rem) * 2);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .cn-ui-tooltip-content[data-side="bottom"]:after {
+    border-color: var(--foreground);
+    border-radius: .1rem 0 0;
+    bottom: calc(100% - .25rem);
+    left: 50%;
+  }
+  .cn-ui-tooltip-content[data-side="left"] {
+    margin-right: calc(var(--spacing, .25rem) * 2);
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%);
+  }
+  .cn-ui-tooltip-content[data-side="left"]:after {
+    border-color: var(--foreground);
+    border-radius: 0 .1rem 0 0;
+    top: calc(50% - .25rem);
+    right: -.25rem;
+  }
+  .cn-ui-tooltip-content[data-side="top"][data-align="start"], .cn-ui-tooltip-content[data-side="bottom"][data-align="start"] {
+    left: 0;
+    transform: none;
+  }
+  .cn-ui-tooltip-content[data-side="top"][data-align="end"], .cn-ui-tooltip-content[data-side="bottom"][data-align="end"] {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+  .cn-ui-tooltip-content[data-side="left"][data-align="start"], .cn-ui-tooltip-content[data-side="right"][data-align="start"] {
+    top: 0;
+    transform: none;
+  }
+  .cn-ui-tooltip-content[data-side="left"][data-align="center"], .cn-ui-tooltip-content[data-side="right"][data-align="center"] {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .cn-ui-tooltip-content[data-side="left"][data-align="end"], .cn-ui-tooltip-content[data-side="right"][data-align="end"] {
+    top: auto;
+    bottom: 0;
+    transform: none;
+  }
+  @keyframes dx-tooltip-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .cn-ui-tooltip[data-disabled="true"] .cn-ui-tooltip-trigger {
+    cursor: default;
+  }
+  .cn-ui-tooltip-content[data-state="closed"] {
+    display: none;
+  }
+  .cn-ui-tooltip-content[data-state="open"] {
+    display: block;
+  }
+  .cn-ui-tooltip-content {
+    padding: 6px var(--cn-space-2);
+    border-radius: calc(var(--radius) - 4px);
+    font: var(--cn-fw-medium) var(--cn-fs-caption)/1.3 var(--cn-font-ui);
+    box-shadow: var(--elevation-3);
+    z-index: var(--cn-z-tooltip);
+    display: inline-block;
+  }
+  .cn-ui-tooltip {
+    place-self: flex-start;
+  }
+  .cn-ui-tooltip-content {
+    max-width: min(24rem, calc(100vw - var(--cn-space-8)));
+    margin-inline: 0;
+  }
+  .cn-ui-tooltip-trigger:not([data-style]):not([data-sidebar]) {
+    font: var(--cn-font-label);
+    min-height: var(--cn-control-md);
+    cursor: pointer;
+    border-radius: var(--radius);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--input);
+    background-color: var(--card);
+    padding-inline: calc(var(--spacing, .25rem) * 4);
+    color: var(--foreground);
+    justify-content: center;
+    align-items: center;
+    padding-block: 0;
+    display: inline-flex;
+  }
+  .cn-ui-tooltip-content {
+    padding: calc(var(--spacing, .25rem) * 2);
+    line-height: var(--cn-lh-caption);
   }
 }
-
-/* State styles */
-.dx-tooltip[data-disabled="true"] .dx-tooltip-trigger {
-  cursor: default;
-}
-
-.dx-tooltip-content[data-state="closed"] {
-  display: none;
-}
-
-.dx-tooltip-content[data-state="open"] {
-  display: block;
-}
-
-/* Component-specific adaptations of the shared main.css recipes. */
- .dx-tooltip-content { padding: 6px var(--cn-space-2); border-radius: var(--cn-radius-sm); background: var(--cn-text); color: var(--cn-bg); font: var(--cn-fw-medium) var(--cn-fs-caption)/1.3 var(--cn-font-ui); box-shadow: var(--cn-shadow-3); z-index: var(--cn-z-tooltip); }
-.dx-tooltip-content { display: inline-block; justify-self: start; }
-
-.dx-tooltip { width: fit-content; max-width: 100%; justify-self: start; align-self: start; }
-.dx-tooltip-content { width: max-content; max-width: min(24rem, calc(100vw - var(--cn-space-8))); margin-inline: 0; text-align: left; }
-
-.dx-tooltip-trigger:not([data-style]):not([data-sidebar]) { display: inline-flex; align-items: center; justify-content: center; font: var(--cn-font-label); min-height: var(--cn-control-md); padding: 0 var(--cn-space-4); border: var(--cn-border-1) solid var(--cn-border-strong); border-radius: var(--cn-radius-md); background: var(--cn-surface); color: var(--cn-text); cursor: pointer; }
-.dx-tooltip-content { padding: var(--cn-space-2); line-height: var(--cn-lh-caption); }

@@ -6,7 +6,7 @@ use dioxus_primitives::{dioxus_attributes::attributes, merge_attributes};
 #[component]
 pub fn VirtualList(props: VirtualListProps) -> Element {
     let base = attributes!(div {
-        class: "dx-virtual-list-container"
+        class: "cn-ui-virtual-list-container relative h-full overflow-y-auto"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 

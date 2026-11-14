@@ -8,6 +8,12 @@ use dioxus_primitives::drag_and_drop_list::{
 #[css_module("/src/components/ui/drag_and_drop_list/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/drag_and_drop_list/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 #[derive(Props, Clone, PartialEq)]
 pub struct DragAndDropListProps {
     /// Items (labels) to be rendered.
@@ -50,7 +56,7 @@ pub fn DragAndDropList(props: DragAndDropListProps) -> Element {
                 .unwrap_or_else(|| idx.to_string());
             rsx! {
                 DragIcon { key: "{key}" }
-                div { class: Styles::dx_item_body_div, {item} }
+                div { class: "cn-ui-item-body-div {Styles::cn_ui_item_body_div.inner} min-w-0 grow", {item} }
                 if is_removable {
                     RemoveButton {}
                 }
@@ -59,15 +65,15 @@ pub fn DragAndDropList(props: DragAndDropListProps) -> Element {
         .collect();
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         drag_and_drop_list::DragAndDropList {
-            class: Styles::dx_dnd_list,
+            class: "cn-ui-dnd-list {Styles::cn_ui_dnd_list.inner} w-full",
             items,
             aria_label: props.aria_label,
             attributes: props.attributes,
             drag_and_drop_list::DragAndDropInstructions {}
-            DragAndDropListItems {
-                aria_label,
-            }
+            DragAndDropListItems { aria_label }
             drag_and_drop_list::DragAndDropLiveRegion {}
             {props.children}
         }
@@ -77,8 +83,10 @@ pub fn DragAndDropList(props: DragAndDropListProps) -> Element {
 #[component]
 pub fn DragAndDropListItem(props: DragAndDropListItemProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         drag_and_drop_list::DragAndDropListItem {
-            class: Styles::dx_dnd_list_item,
+            class: "cn-ui-dnd-list-item {Styles::cn_ui_dnd_list_item.inner} flex items-center box-border justify-between list-none select-none",
             index: props.index,
             // Forward the stable item key so the primitive tracks focus by
             // identity across reorders and removals instead of losing it.
@@ -92,26 +100,17 @@ pub fn DragAndDropListItem(props: DragAndDropListItemProps) -> Element {
 #[component]
 pub fn DragAndDropListItems(props: DragAndDropListItemsProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         drag_and_drop_list::DragAndDropListItems {
-            class: Styles::dx_dnd_list_ul,
+            class: "cn-ui-dnd-list-ul {Styles::cn_ui_dnd_list_ul.inner} flex flex-col m-0 pl-0 gap-(--dx-item-gap)",
             aria_label: props.aria_label,
             attributes: props.attributes,
             for item in drag_and_drop_list::use_drag_and_drop_list_items() {
-                Fragment {
-                    key: "{item.key}",
-                    DragAndDropDropIndicator {
-                        index: item.index,
-                        position: "before",
-                    }
-                    DragAndDropListItem {
-                        index: item.index,
-                        item_key: item.key.clone(),
-                        {item.children}
-                    }
-                    DragAndDropDropIndicator {
-                        index: item.index,
-                        position: "after",
-                    }
+                Fragment { key: "{item.key}",
+                    DragAndDropDropIndicator { index: item.index, position: "before" }
+                    DragAndDropListItem { index: item.index, item_key: item.key.clone(), {item.children} }
+                    DragAndDropDropIndicator { index: item.index, position: "after" }
                 }
             }
         }
@@ -121,8 +120,10 @@ pub fn DragAndDropListItems(props: DragAndDropListItemsProps) -> Element {
 #[component]
 pub fn DragAndDropDropIndicator(props: DragAndDropDropIndicatorProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         drag_and_drop_list::DragAndDropDropIndicator {
-            class: Styles::dx_drop_indicator,
+            class: "cn-ui-drop-indicator {Styles::cn_ui_drop_indicator.inner} hidden",
             index: props.index,
             position: props.position,
             attributes: props.attributes,
@@ -133,11 +134,9 @@ pub fn DragAndDropDropIndicator(props: DragAndDropDropIndicatorProps) -> Element
 #[component]
 fn DragIcon() -> Element {
     rsx! {
-        GripVertical {
-            class: Styles::dx_item_icon,
-            "aria-hidden": "true",
-            size: "16px",
-        }
+        document::Stylesheet { href: STYLES }
+
+        GripVertical { class: "cn-ui-item-icon {Styles::cn_ui_item_icon.inner} shrink-0 mr-1.5", "aria-hidden": "true", size: "16px" }
     }
 }
 
@@ -151,8 +150,10 @@ pub fn RemoveButton(
     let index = item_ctx.index();
     let label = format!("Remove item {}", index + 1);
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         button {
-            class: Styles::dx_remove_button,
+            class: "cn-ui-remove-button {Styles::cn_ui_remove_button.inner} flex items-center p-0 cursor-pointer shrink-0 justify-center overflow-visible w-6.5 h-6.5 ml-2.5 ml-1 m-0 min-w-6 min-h-6",
             r#type: "button",
             aria_label: "{label}",
             draggable: "false",

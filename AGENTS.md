@@ -92,12 +92,19 @@ Read [design instructions](design/docs/AI-INSTRUCTIONS.md),
 or CSS. Preserve the `primitives → ui → composed` dependency direction: composed
 components may depend on the lower layers; lower layers do not import compositions.
 
-Shared recipes and semantic `--cn-*` properties belong in the UI library's
-`assets/styles/main.css`; adjacent CSS modules retain structure and primitive
-behavior. Preserve source-path markers and explicit stylesheet registration.
-Do not target generated class hashes, duplicate shared recipes or introduce new
-numbered palette aliases. Use the supplied assets, type/spacing scales and protocol
-meanings; cover light/dark, keyboard focus, disabled/error states and reduced motion.
+Use Tailwind 4.1 utility classes directly in component Rust. All Tailwind tooling,
+compiler inputs and the bundled utility CSS belong to `conctr-ui-dioxus`; consuming
+apps need only `ThemeProvider` or `ConctrStyles`. Keep consumer scan paths in the UI compiler; do not add app Tailwind configs
+or generated assets. Library development dependencies refresh the
+bundle during Cargo rebuilds; consumers use the shipped CSS without Node.
+Keep palettes and design scales in `assets/colors/tokens.css`, semantic shadcn
+aliases/shared interactions in `assets/styles/main.css`, and Tailwind compiler
+mappings in `theme.css`. Adjacent `style.css` files use CSS modules and explicit
+per-component `document::Stylesheet` registration for repeated SSR documents.
+Keep ownership comments accurate; no global stylesheet registry or per-component
+generated CSS. Preserve supplied assets, type/spacing scales, protocol meanings,
+light/dark themes, keyboard focus, disabled/error states and reduced motion.
+Reuse shared styles and avoid numbered palette aliases.
 
 ## Verification and documentation
 

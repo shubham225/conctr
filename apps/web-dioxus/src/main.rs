@@ -14,8 +14,11 @@ fn App() -> Element {
         // Global app resources
         document::Title {"{title}"}
         document::Link { rel: "icon", href: images::FAVICON }
-        document::Link { rel: "stylesheet", href: styles::MAIN_CSS }
+        styles::ConctrStyles {}
 
-        "Hello World!!!"
+        div {
+          class: "p-8 h-full w-full flex justify-center",
+          "Hello World!!!"
+        }
     }
 }

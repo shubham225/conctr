@@ -5,6 +5,12 @@ use dioxus_primitives::{dioxus_attributes::attributes, merge_attributes};
 #[css_module("/src/components/ui/tabs/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/tabs/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 /// The props for the [`Tabs`] component.
 #[derive(Props, Clone, PartialEq)]
 pub struct TabsProps {
@@ -70,12 +76,14 @@ impl TabsVariant {
 #[component]
 pub fn Tabs(props: TabsProps) -> Element {
     let base = attributes!(div {
-        class: format!("{} {}", props.class, Styles::dx_tabs),
+        class: format!("{} cn-ui-tabs {} flex gap-2 flex-col", props.class, Styles::cn_ui_tabs.inner),
         "data-variant": props.variant.to_class(),
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         tabs::Tabs {
             value: props.value,
             default_value: props.default_value,
@@ -92,11 +100,13 @@ pub fn Tabs(props: TabsProps) -> Element {
 #[component]
 pub fn TabList(props: TabListProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_tabs_list
+        class: "cn-ui-tabs-list {Styles::cn_ui_tabs_list.inner} flex gap-1 box-border flex-row flex-1"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         tabs::TabList { attributes: merged, {props.children} }
     }
 }
@@ -105,14 +115,16 @@ pub fn TabList(props: TabListProps) -> Element {
 pub fn TabTrigger(props: TabTriggerProps) -> Element {
     let base = attributes!(button {
         class: format!(
-            "{} {}",
-            Styles::dx_tabs_trigger,
+            "cn-ui-tabs-trigger {} {}",
+            Styles::cn_ui_tabs_trigger.inner,
             props.class.unwrap_or_default()
         )
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         tabs::TabTrigger {
             class: None,
             id: props.id,
@@ -129,15 +141,17 @@ pub fn TabTrigger(props: TabTriggerProps) -> Element {
 pub fn TabContent(props: TabContentProps) -> Element {
     let base = attributes!(div {
         class: format!(
-            "{} {} {}",
-            props.class.unwrap_or_default(),
-            Styles::dx_tabs_content,
-            Styles::dx_tabs_content_themed
+            "cn-ui-tabs-content {} cn-ui-tabs-content-themed {} w-full box-border p-8 {}",
+            Styles::cn_ui_tabs_content.inner,
+            Styles::cn_ui_tabs_content_themed.inner,
+            props.class.unwrap_or_default()
         )
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         tabs::TabContent {
             class: None,
             value: props.value,

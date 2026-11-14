@@ -1,124 +1,110 @@
 /* CSS module source: /src/components/ui/hover_card/style.css */
-/* Hover Card Styles */
-.dx-hover-card {
-  position: relative;
-  display: inline-block;
-}
-
-.dx-hover-card-trigger {
-  display: inline-block;
-}
-
-.dx-hover-card-content {
-  position: absolute;
-  z-index: 1000;
-  min-width: 200px;
-  padding: 5px;
-
-  animation: dx-hover-card-fade-in 0.1s ease-out;
-}
-
-/* Positioning based on side */
-.dx-hover-card-content[data-side="top"] {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-bottom: 10px;
-  transform: translateX(-50%);
-}
-
-.dx-hover-card-content[data-side="right"] {
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  margin-left: 10px;
-  transform: translateY(-50%);
-}
-
-.dx-hover-card-content[data-side="bottom"] {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-top: 10px;
-  transform: translateX(-50%);
-}
-
-.dx-hover-card-content[data-side="left"] {
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  margin-right: 10px;
-  transform: translateY(-50%);
-}
-
-/* Alignment styles for top and bottom */
-.dx-hover-card-content[data-side="top"][data-align="start"],
-.dx-hover-card-content[data-side="bottom"][data-align="start"] {
-  left: 0;
-  transform: none;
-}
-
-.dx-hover-card-content[data-side="top"][data-align="center"],
-.dx-hover-card-content[data-side="bottom"][data-align="center"] {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.dx-hover-card-content[data-side="top"][data-align="end"],
-.dx-hover-card-content[data-side="bottom"][data-align="end"] {
-  right: 0;
-  left: auto;
-  transform: none;
-}
-
-/* Alignment styles for left and right */
-.dx-hover-card-content[data-side="left"][data-align="start"],
-.dx-hover-card-content[data-side="right"][data-align="start"] {
-  top: 0;
-  transform: none;
-}
-
-.dx-hover-card-content[data-side="left"][data-align="center"],
-.dx-hover-card-content[data-side="right"][data-align="center"] {
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.dx-hover-card-content[data-side="left"][data-align="end"],
-.dx-hover-card-content[data-side="right"][data-align="end"] {
-  top: auto;
-  bottom: 0;
-  transform: none;
-}
-
-/* Animation */
-@keyframes dx-hover-card-fade-in {
-  from {
-    opacity: 0;
+@layer components {
+  .cn-popup {
+    border-radius: var(--radius);
+    box-shadow: var(--elevation-3);
   }
-
-  to {
-    opacity: 1;
+  :global(.cn-popup--bordered) {
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--border);
+  }
+  .cn-ui-hover-card-content {
+    z-index: 1000;
+    padding: 5px;
+    animation: .1s ease-out dx-hover-card-fade-in;
+    position: absolute;
+  }
+  .cn-ui-hover-card-content[data-side="top"] {
+    margin-bottom: calc(var(--spacing, .25rem) * 2.5);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .cn-ui-hover-card-content[data-side="right"] {
+    margin-left: calc(var(--spacing, .25rem) * 2.5);
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+  }
+  .cn-ui-hover-card-content[data-side="bottom"] {
+    margin-top: calc(var(--spacing, .25rem) * 2.5);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .cn-ui-hover-card-content[data-side="left"] {
+    margin-right: calc(var(--spacing, .25rem) * 2.5);
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%);
+  }
+  .cn-ui-hover-card-content[data-side="top"][data-align="start"], .cn-ui-hover-card-content[data-side="bottom"][data-align="start"] {
+    left: 0;
+    transform: none;
+  }
+  .cn-ui-hover-card-content[data-side="top"][data-align="center"], .cn-ui-hover-card-content[data-side="bottom"][data-align="center"] {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .cn-ui-hover-card-content[data-side="top"][data-align="end"], .cn-ui-hover-card-content[data-side="bottom"][data-align="end"] {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+  .cn-ui-hover-card-content[data-side="left"][data-align="start"], .cn-ui-hover-card-content[data-side="right"][data-align="start"] {
+    top: 0;
+    transform: none;
+  }
+  .cn-ui-hover-card-content[data-side="left"][data-align="center"], .cn-ui-hover-card-content[data-side="right"][data-align="center"] {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .cn-ui-hover-card-content[data-side="left"][data-align="end"], .cn-ui-hover-card-content[data-side="right"][data-align="end"] {
+    top: auto;
+    bottom: 0;
+    transform: none;
+  }
+  @keyframes dx-hover-card-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .cn-ui-hover-card[data-disabled="true"] .cn-ui-hover-card-trigger {
+    color: var(--muted-foreground);
+  }
+  .cn-ui-hover-card-content[data-state="closed"] {
+    display: none;
+  }
+  .cn-ui-hover-card {
+    place-self: flex-start;
+  }
+  .cn-ui-hover-card-content {
+    max-width: min(24rem, calc(100vw - var(--cn-space-8)));
+    padding: calc(var(--spacing, .25rem) * 4);
+    z-index: var(--cn-z-dropdown);
+    font: var(--cn-font-small);
+    margin-inline: 0;
+  }
+  .cn-ui-hover-card-content p {
+    margin: 0;
+  }
+  .cn-ui-hover-card-trigger {
+    color: var(--primary);
+    font: var(--cn-font-label);
+    text-underline-offset: var(--cn-space-1);
+  }
+  .cn-ui-hover-card-content[data-side="top"] {
+    margin-bottom: calc(var(--spacing, .25rem) * 2);
+  }
+  .cn-ui-hover-card-content[data-side="bottom"] {
+    margin-top: calc(var(--spacing, .25rem) * 2);
   }
 }
-
-/* State styles */
-.dx-hover-card[data-disabled="true"] .dx-hover-card-trigger {
-  color: var(--cn-text-muted);
-}
-
-.dx-hover-card-content[data-state="closed"] {
-  display: none;
-}
-
-/* Component-specific adaptations of the shared main.css recipes. */
-
-.dx-hover-card { width: fit-content; max-width: 100%; justify-self: start; align-self: start; }
-.dx-hover-card-content { width: max-content; max-width: min(24rem, calc(100vw - var(--cn-space-8))); margin-inline: 0; text-align: left; }
-
-.dx-hover-card-content { padding: var(--cn-space-4); gap: var(--cn-space-3);     z-index: var(--cn-z-dropdown); font: var(--cn-font-small); }
-.dx-hover-card-content p { margin: 0; }
-
-.dx-hover-card-trigger { color: var(--cn-primary); font: var(--cn-font-label); text-decoration: underline; text-underline-offset: var(--cn-space-1); }
-.dx-hover-card-content[data-side="top"] { margin-bottom: var(--cn-space-2); }
-.dx-hover-card-content[data-side="bottom"] { margin-top: var(--cn-space-2); }

@@ -10,8 +10,10 @@ pub fn Container(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: "cn-container"
+        class: "cn-container max-w-(--cn-container-content) mx-auto px-6"
     });
     let merged = merge_attributes(vec![base, attributes]);
-    rsx! { div { ..merged, {children} } }
+    rsx! {
+        div { ..merged,{children} }
+    }
 }

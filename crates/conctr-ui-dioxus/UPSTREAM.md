@@ -20,20 +20,27 @@ When updating, diff the upstream revision against these local sources; do not
 run `dx components add --force` over customized files. Review primitive API
 changes and preserve Conctr CSS, accessibility behavior and local fixes.
 
-Shared appearance belongs in `assets/styles/main.css`, using semantic `--cn-*`
-properties. Component CSS modules keep structural and primitive-specific rules;
-do not copy the shared recipes or global focus/motion rules back from upstream.
-The legacy `REGISTRY_CSS` asset retains numbered upstream palette aliases for
-existing consumers; new styles use semantic names directly.
-See the [theming guide](../../docs/development/theming.md).
+## Tailwind customization
 
-## CSS module moves
+Components use Tailwind 4.1.18 utility classes in Rust with shadcn-style variables.
+All tooling and the shipped utility bundle belong to this crate; applications
+only mount `ThemeProvider` or `ConctrStyles`. Palette/scales come from `tokens.css`.
+`main.css` maps semantic roles and shared interactions; `theme.css` supplies
+compiler mappings. Adjacent `style.css` files use Manganis CSS modules, with
+explicit per-component `document::Stylesheet` registration for repeated SSR.
+There are no per-component generated files or central stylesheet registry.
+Keep ownership comments accurate and preserve primitive behavior and licenses.
 
-Keep the first `CSS module source` comment in each `style.css` synchronized with
-its crate-relative source path. Manganis scopes class names by source path,
-while its processed asset cache can reuse an asset with identical contents after
-a move. Updating the comment changes the source content/cache identity so the
-served selectors agree with the generated Rust class names. A unit test guards
-this invariant. Validate a running showcase with
-`python3 apps/conctr-design-system/scripts/check-component-styles.py http://127.0.0.1:8080`;
-this checks served CSS against rendered component classes, not just file presence.
+The explicit CSS-module registrations work around the resolved Dioxus/Manganis
+0.7.10 SSR bug described in [Dioxus #5707](https://github.com/DioxusLabs/dioxus/pull/5707).
+Preserve them when refreshing upstream sources. Removal criteria and regression
+checks are in the [SSR guide](../../docs/development/theming.md#ssr-css-module-workaround).
+
+## Locally implemented controls
+
+`file_uploader`, `resizable`, `kbd` and `command` are local Rust implementations.
+The [resizable](https://ui.shadcn.com/docs/components/base/resizable),
+[kbd](https://ui.shadcn.com/docs/components/base/kbd) and
+[command](https://ui.shadcn.com/docs/components/base/command) compositions informed
+the public surface; no React runtime or JavaScript component package is required.
+`KeyboardKey` aliases `Kbd`; `StatusAlert` forwards to the canonical `Alert` API.

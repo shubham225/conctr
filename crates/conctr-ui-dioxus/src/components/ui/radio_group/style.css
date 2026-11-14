@@ -1,9 +1,40 @@
 /* CSS module source: /src/components/ui/radio_group/style.css */
-.dx-radio-group { display: flex; flex-direction: column; gap: var(--cn-space-3); }
-.dx-radio-item { display: flex; flex-direction: row; align-items: center; padding: 0; border: none; background: transparent; color: var(--cn-text); gap: var(--cn-space-2); font: var(--cn-font-small); }
-.dx-radio-item::before { content: ""; display: block; flex: none; width: var(--cn-choice-size); height: var(--cn-choice-size); border-radius: var(--cn-radius-full); border: var(--cn-border-2) solid var(--cn-choice-border); background: var(--cn-choice-background); cursor: pointer; }
-.dx-radio-item:focus-visible { outline: none; }
-.dx-radio-item:focus-visible::before { box-shadow: 0 0 0 var(--cn-border-2) var(--cn-focus); }
-.dx-radio-item[data-state="checked"]::before { border: 5px solid var(--cn-choice-checked-background); background: var(--cn-choice-checked-foreground); }
-.dx-radio-item:disabled { color: var(--cn-text-muted); cursor: not-allowed; opacity: var(--cn-control-disabled-opacity); }
-.dx-radio-item:disabled::before { cursor: not-allowed; }
+@layer components {
+  .cn-ui-radio-item {
+    border-style: solid;
+    color: var(--foreground);
+    font: var(--cn-font-small);
+    background-color: #0000;
+    border-width: 0;
+    display: flex;
+  }
+  .cn-ui-radio-item:before {
+    content: "";
+    height: var(--choice-size);
+    width: var(--choice-size);
+    border: var(--cn-border-2) solid var(--input);
+    cursor: pointer;
+    background-color: var(--card);
+    border-radius: 2147483647px;
+    flex: none;
+    display: block;
+  }
+  .cn-ui-radio-item:focus-visible {
+    outline: none;
+  }
+  .cn-ui-radio-item:focus-visible:before {
+    box-shadow: 0 0 0 var(--cn-border-2) var(--ring);
+  }
+  .cn-ui-radio-item[data-state="checked"]:before {
+    border: 5px solid var(--primary);
+    background-color: var(--primary-foreground);
+  }
+  .cn-ui-radio-item:disabled {
+    cursor: not-allowed;
+    color: var(--muted-foreground);
+    opacity: var(--cn-opacity-disabled);
+  }
+  .cn-ui-radio-item:disabled:before {
+    cursor: not-allowed;
+  }
+}

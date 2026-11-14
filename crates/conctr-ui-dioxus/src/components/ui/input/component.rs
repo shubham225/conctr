@@ -1,6 +1,13 @@
 use dioxus::prelude::*;
+
 #[css_module("/src/components/ui/input/style.css")]
 struct Styles;
+
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/input/style.css",
+    manganis::AssetOptions::css_module()
+);
 
 #[component]
 pub fn Input(
@@ -29,8 +36,10 @@ pub fn Input(
     children: Element,
 ) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         input {
-            class: format!("{} cn-input", Styles::dx_input),
+            class: "cn-ui-input cn-input flex relative w-full cn-field-control",
             oninput: move |e| _ = oninput.map(|callback| callback(e)),
             onchange: move |e| _ = onchange.map(|callback| callback(e)),
             oninvalid: move |e| _ = oninvalid.map(|callback| callback(e)),

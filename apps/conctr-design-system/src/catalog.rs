@@ -22,6 +22,42 @@ pub const GROUPS: &[&str] = &[
 ];
 pub static ENTRIES: &[Entry] = &[
     Entry {
+        slug: "file-uploader",
+        name: "File uploader",
+        group: "Core · Forms",
+        description: "Drag-and-drop file selection with type and size validation, keyboard browsing and removable files.",
+        module: "ui::file_uploader",
+        source: include_str!("examples/file_uploader.rs"),
+        preview: || rsx! { crate::examples::file_uploader::Demo {} },
+    },
+    Entry {
+        slug: "resizable",
+        name: "Resizable",
+        group: "Core · Layout",
+        description: "Nested panel layouts with pointer capture, keyboard resizing and minimum sizes.",
+        module: "ui::resizable",
+        source: include_str!("examples/resizable.rs"),
+        preview: || rsx! { crate::examples::resizable::Demo {} },
+    },
+    Entry {
+        slug: "kbd",
+        name: "Kbd",
+        group: "Core · Data display",
+        description: "Keyboard keys and grouped shortcut hints using the Conctr type and border scales.",
+        module: "ui::kbd",
+        source: include_str!("examples/kbd.rs"),
+        preview: || rsx! { crate::examples::kbd::Demo {} },
+    },
+    Entry {
+        slug: "command",
+        name: "Command",
+        group: "Core · Overlays",
+        description: "Searchable grouped commands with keyboard navigation, empty results and a dialog palette.",
+        module: "ui::command",
+        source: include_str!("examples/command.rs"),
+        preview: || rsx! { crate::examples::command::Demo {} },
+    },
+    Entry {
         slug: "box",
         name: "Box",
         group: "Primitives",
@@ -449,7 +485,7 @@ pub static ENTRIES: &[Entry] = &[
         name: "Alerts",
         group: "Core · Feedback",
         description: "Alerts composed from the shared Conctr component library. Inspect the live example and copy its source.",
-        module: "alerts",
+        module: "ui::alert",
         source: include_str!("examples/alerts.rs"),
         preview: || rsx! { crate::examples::alerts::Demo {} },
     },
@@ -588,17 +624,27 @@ mod tests {
 
     #[test]
     fn catalog_covers_every_registry_family_with_unique_live_examples() {
-        let styles = include_str!("../../../crates/conctr-ui-dioxus/src/assets/registry_styles.rs");
+        let ui = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../crates/conctr-ui-dioxus/src/components/ui");
         let modules: HashSet<_> = ENTRIES.iter().map(|entry| entry.module).collect();
         let slugs: HashSet<_> = ENTRIES.iter().map(|entry| entry.slug).collect();
         assert_eq!(slugs.len(), ENTRIES.len(), "Duplicate catalog URLs");
-        // Every styled registry family still has a live example after moving
-        // its source; the stylesheet asset manifest is the canonical list.
-        for path in styles.split("/src/components/ui/").skip(1) {
-            let family = path.split('/').next().expect("component family");
+        // Every primitive-backed styled family needs a live example. Native kit
+        // helpers can be demonstrated together in an existing family example.
+        for family in std::fs::read_dir(ui).expect("UI families") {
+            let family = family.expect("UI family").path();
+            let source = std::fs::read_to_string(family.join("component.rs")).unwrap_or_default();
+            if !family.join("style.css").is_file() || !source.contains("dioxus_primitives::") {
+                continue;
+            }
+            let name = family.file_name().expect("family name").to_string_lossy();
+            // Native helpers import attribute-merging utilities, not primitives.
+            if !source.contains(&format!("dioxus_primitives::{name}")) {
+                continue;
+            }
             assert!(
-                modules.contains(format!("ui::{family}").as_str()),
-                "Missing live example for {family}"
+                modules.contains(format!("ui::{name}").as_str()),
+                "Missing live example for {name}"
             );
         }
         for entry in ENTRIES {
@@ -626,9 +672,22 @@ mod tests {
             include_str!("../assets/reference/ui-kit/conctr-ui.css"),
             include_str!("../../../design/ui-kit/conctr-ui.css")
         );
-        assert_eq!(
-            include_str!("../../../crates/conctr-ui-dioxus/assets/colors/tokens.css"),
-            include_str!("../../../design/colors/tokens.css")
+        // The library scopes the same kit values to nested providers.
+        fn tokens(css: &str) -> std::collections::BTreeSet<(&str, &str)> {
+            css.split([';', '{', '}'])
+                .filter_map(|part| part.trim().split_once(':'))
+                .filter(|(name, _)| name.starts_with("--cn-"))
+                .map(|(name, value)| (name.trim(), value.trim()))
+                .collect()
+        }
+        let canonical = tokens(include_str!("../../../design/colors/tokens.css"));
+        let bundled = tokens(include_str!(
+            "../../../crates/conctr-ui-dioxus/assets/colors/tokens.css"
+        ));
+        assert!(!canonical.is_empty());
+        assert!(
+            canonical.is_subset(&bundled),
+            "Keep canonical kit token values"
         );
     }
 }

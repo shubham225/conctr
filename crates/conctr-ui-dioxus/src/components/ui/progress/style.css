@@ -1,38 +1,55 @@
 /* CSS module source: /src/components/ui/progress/style.css */
-.dx-progress {
-    position: relative;
-    overflow: hidden;
-    min-width: 200px;
-    height: .5rem;
-    box-sizing: border-box;
-    border-radius: var(--cn-radius-pill);
-    background: var(--cn-sunken);
-}
-
-.dx-progress[data-state='indeterminate'] .dx-progress-indicator {
-    width: 50%;
-    animation: dx-indeterminate 1s infinite linear;
-}
-
-.dx-progress-indicator {
-    width: var(--progress-value, 0%);
+@layer components {
+  :global(.cn-progress) {
+    height: calc(var(--spacing, .25rem) * 2);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--border);
+    background-color: var(--muted);
+    border-radius: 2147483647px;
+  }
+  :global(.cn-progress) > i {
+    background-color: var(--primary);
+    border-radius: inherit;
     height: 100%;
-    background-color: var(--cn-text);
-    transition: width 250ms ease;
-}
-
-@keyframes dx-indeterminate {
+    display: block;
+  }
+  .cn-ui-progress {
+    height: calc(var(--spacing, .25rem) * 2);
+    background-color: var(--muted);
+    border-radius: 2147483647px;
+  }
+  .cn-ui-progress[data-state="indeterminate"] .cn-ui-progress-indicator {
+    width: 50%;
+    animation: 1s linear infinite dx-indeterminate;
+  }
+  .cn-ui-progress-indicator {
+    width: var(--progress-value, 0%);
+    transition: width .25s;
+  }
+  @keyframes dx-indeterminate {
     0% {
-        transform: translateX(-100%);
+      transform: translateX(-100%);
     }
-
     100% {
-        transform: translateX(200%);
+      transform: translateX(200%);
     }
+  }
+  .cn-ui-progress {
+    height: calc(var(--spacing, .25rem) * 2);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--border);
+    background-color: var(--muted);
+    border-radius: 2147483647px;
+  }
+  .cn-ui-progress > i {
+    background-color: var(--primary);
+    border-radius: inherit;
+    height: 100%;
+    display: block;
+  }
+  .cn-ui-progress-indicator {
+    border-radius: inherit;
+  }
 }
-
-/* Component-specific adaptations of the shared main.css recipes. */
-.dx-progress { height: 8px; border-radius: var(--cn-radius-pill); background: var(--cn-sunken); border: var(--cn-border-1) solid var(--cn-border); overflow: hidden; }
-.dx-progress > i { display: block; height: 100%; background: var(--cn-primary); border-radius: inherit; }
-
-.dx-progress-indicator { background: var(--cn-primary); border-radius: inherit; }

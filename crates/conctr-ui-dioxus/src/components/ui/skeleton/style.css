@@ -1,5 +1,36 @@
 /* CSS module source: /src/components/ui/skeleton/style.css */
-.dx-skeleton { position: relative; overflow: hidden; height: var(--cn-space-4); border-radius: var(--cn-radius-sm); background: var(--cn-sunken); }
-.dx-skeleton::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, var(--cn-border), transparent); transform: translateX(-100%); animation: dx-skeleton-shimmer 1.4s linear infinite; }
-@keyframes dx-skeleton-shimmer { to { transform: translateX(100%); } }
-@media (prefers-reduced-motion: reduce) { .dx-skeleton::after { animation: none; transform: none; } }
+@layer components {
+  :global(.cn-skeleton) {
+    background: linear-gradient(90deg, var(--muted), var(--border), var(--muted));
+    background-size: 200% 100%;
+    animation: 1.4s linear infinite cn-shimmer;
+  }
+  @keyframes cn-shimmer {
+    to {
+      background-position: -200% 0;
+    }
+  }
+  .cn-ui-skeleton {
+    background-color: var(--muted);
+    position: relative;
+  }
+  .cn-ui-skeleton:after {
+    content: "";
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    animation: 1.4s linear infinite dx-skeleton-shimmer;
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+  }
+  @keyframes dx-skeleton-shimmer {
+    to {
+      transform: translateX(100%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cn-ui-skeleton:after {
+      animation: none;
+      transform: none;
+    }
+  }
+}

@@ -12,7 +12,7 @@ fn App() -> Element {
     rsx! {
         // Global app resources
         document::Link { rel: "icon", href: images::FAVICON }
-        document::Link { rel: "stylesheet", href: styles::MAIN_CSS }
+        styles::ConctrStyles {}
 
         "Hello World!!!"
     }

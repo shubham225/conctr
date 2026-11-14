@@ -11,6 +11,12 @@ use crate::components::ui::input::Input;
 #[css_module("/src/components/ui/color_picker/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/color_picker/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 fn format_color_hex(color: Color) -> String {
     format!("#{color:X}")
 }
@@ -67,8 +73,10 @@ pub fn ColorPickerRoot(props: ColorPickerRootProps) -> Element {
     });
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         color_picker::ColorPicker {
-            class: Styles::dx_color_picker,
+            class: "cn-ui-color-picker {Styles::cn_ui_color_picker.inner} relative inline-block",
             color: props.color,
             on_color_change: props.on_color_change,
             disabled: props.disabled,
@@ -124,6 +132,8 @@ pub struct ColorPickerProps {
 #[component]
 pub fn ColorPicker(props: ColorPickerProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         ColorPickerRoot {
             color: props.color,
             on_color_change: props.on_color_change,
@@ -132,9 +142,7 @@ pub fn ColorPicker(props: ColorPickerProps) -> Element {
             default_open: props.default_open,
             on_open_change: props.on_open_change,
             attributes: props.attributes,
-            ColorPickerTrigger {
-                label: props.label,
-            }
+            ColorPickerTrigger { label: props.label }
             ColorPickerPopover {
                 ColorPickerSelect {}
                 {props.children}
@@ -167,14 +175,18 @@ pub fn ColorPickerTrigger(props: ColorPickerTriggerProps) -> Element {
     });
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         popover::PopoverTrigger {
-            class: Styles::dx_color_picker_button,
+            class: "cn-ui-color-picker-button {Styles::cn_ui_color_picker_button.inner} flex items-center gap-2 bg-transparent text-foreground justify-center",
             disabled: if (ctx.disabled)() { true },
             aria_label: format!("Color picker {aria_hex}"),
             aria_expanded: (ctx.open)(),
             attributes: props.attributes,
             ColorSwatch { color: ctx.color }
-            if let Some(label) = props.label { span { {label} } }
+            if let Some(label) = props.label {
+                span { {label} }
+            }
             {props.children}
         }
     }
@@ -194,8 +206,10 @@ pub struct ColorPickerPopoverProps {
 #[component]
 pub fn ColorPickerPopover(props: ColorPickerPopoverProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         popover::PopoverContent {
-            class: Styles::dx_color_picker_popover.to_string(),
+            class: format!("cn-ui-color-picker-popover {} absolute left-0 bg-card rounded-md block top-full mt-1", Styles::cn_ui_color_picker_popover.inner),
             attributes: props.attributes,
             {props.children}
         }
@@ -256,13 +270,13 @@ fn ColorField(props: ColorFieldProps) -> Element {
     });
 
     rsx! {
-        div {
-            class: Styles::dx_color_field_container,
-            ..props.attributes,
+        document::Stylesheet { href: STYLES }
+
+        div { class: "cn-ui-color-field-container flex gap-1 flex-col flex-1", ..props.attributes,
             if let Some(label) = props.label {
                 Label {
                     html_for: "color_field",
-                    class: Styles::dx_color_slider_title,
+                    class: "cn-ui-color-slider-title {Styles::cn_ui_color_slider_title.inner} text-foreground w-fit",
                     {label}
                 }
             }
@@ -290,7 +304,7 @@ fn ColorField(props: ColorFieldProps) -> Element {
                 },
             }
             if let Some(text) = props.description {
-                span { class: Styles::dx_color_field_description, {text} }
+                span { class: "cn-ui-color-field-description {Styles::cn_ui_color_field_description.inner} text-muted-foreground", {text} }
             }
             {props.children}
         }
@@ -323,10 +337,12 @@ fn ColorSwatch(props: ColorSwatchProps) -> Element {
     });
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div {
             role: "img",
             aria_label: format!("Selected color {hex_color}"),
-            class: Styles::dx_color_swatch,
+            class: "cn-ui-color-swatch {Styles::cn_ui_color_swatch.inner} h-8 box-border w-8",
             style: "--swatch-color: {hex_color}",
             ..props.attributes,
             {props.children}
@@ -388,14 +404,13 @@ fn ColorSlider(props: ColorSliderProps) -> Element {
     };
 
     rsx! {
+        document::Stylesheet { href: STYLES }
 
-        div {
-            class: Styles::dx_color_slider_container,
-            ..props.attributes,
-            label { class: Styles::dx_color_slider_title, {props.title} }
-            output { class: Styles::dx_color_slider_output, "{display_value}" }
+        div { class: "cn-ui-color-slider-container {Styles::cn_ui_color_slider_container.inner} grid items-center gap-2 flex-col w-56", ..props.attributes,
+            label { class: "cn-ui-color-slider-title {Styles::cn_ui_color_slider_title.inner} text-foreground w-fit", {props.title} }
+            output { class: "cn-ui-color-slider-output {Styles::cn_ui_color_slider_output.inner} text-muted-foreground", "{display_value}" }
             Slider {
-                class: Styles::dx_color_slider,
+                class: "cn-ui-color-slider {Styles::cn_ui_color_slider.inner} flex items-center relative",
                 label: "Color Slider",
                 horizontal: true,
                 max: 360.0,
@@ -406,10 +421,9 @@ fn ColorSlider(props: ColorSliderProps) -> Element {
                     current_hue.set(h);
                     ctx.set_hue(h);
                 },
-                SliderTrack {
-                    class: Styles::dx_color_slider_track,
+                SliderTrack { class: "cn-ui-color-slider-track {Styles::cn_ui_color_slider_track.inner} relative box-border h-6 rounded-sm grow",
                     SliderThumb {
-                        class: Styles::dx_color_slider_thumb,
+                        class: "cn-ui-color-slider-thumb {Styles::cn_ui_color_slider_thumb.inner} absolute cursor-pointer w-4 h-4 top-1/2 block",
                         aria_label: "Hue",
                         aria_valuetext: format!("{:.0}°", current_hue()),
                         background_color: format_color_hex(thumb_color()),
@@ -424,20 +438,16 @@ fn ColorSlider(props: ColorSliderProps) -> Element {
 #[component]
 fn ColorArea(props: ColorAreaProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         color_picker::ColorArea {
-            class: Styles::dx_color_area_container,
+            class: "cn-ui-color-area-container {Styles::cn_ui_color_area_container.inner} flex relative w-full aspect-square max-w-56 min-h-29",
             step: props.step,
             attributes: props.attributes,
-            color_picker::AreaTrack {
-                class: Styles::dx_color_area_track,
-                color_picker::AreaThumb {
-                    class: Styles::dx_color_area_thumb,
-                    color_picker::AreaThumbSaturationInput {
-                        class: Styles::dx_color_area_input,
-                    }
-                    color_picker::AreaThumbValueInput {
-                        class: Styles::dx_color_area_input,
-                    }
+            color_picker::AreaTrack { class: "cn-ui-color-area-track {Styles::cn_ui_color_area_track.inner} box-border grow",
+                color_picker::AreaThumb { class: "cn-ui-color-area-thumb {Styles::cn_ui_color_area_thumb.inner} absolute cursor-pointer w-4 h-4 block",
+                    color_picker::AreaThumbSaturationInput { class: "cn-ui-color-area-input {Styles::cn_ui_color_area_input.inner} absolute border-0 w-full p-0 overflow-hidden h-full whitespace-nowrap pointer-events-none opacity-0" }
+                    color_picker::AreaThumbValueInput { class: "cn-ui-color-area-input {Styles::cn_ui_color_area_input.inner} absolute border-0 w-full p-0 overflow-hidden h-full whitespace-nowrap pointer-events-none opacity-0" }
                 }
             }
             {props.children}
@@ -461,13 +471,12 @@ pub fn ColorPickerSelect(props: ColorPickerSelectProps) -> Element {
     let ctx = use_context::<ColorPickerContext>();
 
     rsx! {
-        div {
-            class: Styles::dx_color_picker_dialog,
-            ..props.attributes,
+        document::Stylesheet { href: STYLES }
+
+        div { class: "cn-ui-color-picker-dialog flex gap-2 flex-col box-border p-2", ..props.attributes,
             ColorArea {}
             ColorSlider { title: "Hue" }
-            div {
-                class: Styles::dx_color_picker_input,
+            div { class: "cn-ui-color-picker-input flex gap-1 flex-row items-end",
                 ColorField { label: "Hex" }
                 ColorSwatch { color: ctx.color() }
             }

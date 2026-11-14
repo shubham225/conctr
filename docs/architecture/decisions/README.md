@@ -1,7 +1,7 @@
 # Architecture decision records
 
-Accepted records document existing direction. The new records below are
-recommendations for review; they do not silently replace accepted policy.
+Accepted records document existing direction. Proposed records remain
+recommendations for review; superseded records link to the replacing decision.
 
 | ADR | Status | Topic |
 | --- | --- | --- |
@@ -14,6 +14,9 @@ recommendations for review; they do not silently replace accepted policy.
 | [0007](0007-persistence-and-queue.md) | Proposed | PostgreSQL first with a durable work queue |
 | [0008](0008-application-and-transports.md) | Proposed | Shared product app and transport-independent use cases |
 | [0009](0009-trusted-connectors-and-mapping.md) | Proposed | Trusted connectors and bounded declarative mapping first |
+| [0010](0010-tailwind-component-styles.md) | Superseded by 0011 | Tailwind theme and component-local styles |
+| [0011](0011-dx-managed-tailwind.md) | Superseded by 0012 | DX-managed Tailwind 4.1 and plain local CSS |
+| [0012](0012-library-owned-tailwind.md) | Accepted | Library-owned Tailwind and component CSS modules |
 
 ## Record lifecycle
 

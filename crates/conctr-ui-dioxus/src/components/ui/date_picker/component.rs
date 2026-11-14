@@ -21,6 +21,12 @@ use super::super::popover::*;
 #[css_module("/src/components/ui/date_picker/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/date_picker/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 fn fixed_date(year: i32, month: Month, day: u8) -> Date {
     Date::from_calendar_date(year, month, day).expect("valid fixed date")
 }
@@ -150,13 +156,15 @@ pub struct DateRangePickerProps {
 #[component]
 pub fn DatePicker(props: DatePickerProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_date_picker
+        class: "cn-ui-date-picker {Styles::cn_ui_date_picker.inner} items-center relative inline-flex"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
     let month_count = props.month_count.max(1);
     use_context_provider(|| StyledDatePickerContext { month_count });
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div {
             date_picker::DatePicker {
                 on_value_change: props.on_value_change,
@@ -168,8 +176,7 @@ pub fn DatePicker(props: DatePickerProps) -> Element {
                 disabled_ranges: props.disabled_ranges,
                 roving_loop: props.roving_loop,
                 attributes: merged,
-                date_picker::DatePickerPopover {
-                    popover_root: PopoverRoot,
+                date_picker::DatePickerPopover { popover_root: PopoverRoot,
                     DatePickerInput {
                         on_format_day_placeholder: props.on_format_day_placeholder,
                         on_format_month_placeholder: props.on_format_month_placeholder,
@@ -184,13 +191,15 @@ pub fn DatePicker(props: DatePickerProps) -> Element {
 #[component]
 pub fn DateRangePicker(props: DateRangePickerProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_date_picker
+        class: "cn-ui-date-picker {Styles::cn_ui_date_picker.inner} items-center relative inline-flex"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
     let month_count = props.month_count.max(1);
     use_context_provider(|| StyledDatePickerContext { month_count });
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div {
             date_picker::DateRangePicker {
                 on_range_change: props.on_range_change,
@@ -202,8 +211,7 @@ pub fn DateRangePicker(props: DateRangePickerProps) -> Element {
                 disabled_ranges: props.disabled_ranges,
                 roving_loop: props.roving_loop,
                 attributes: merged,
-                date_picker::DatePickerPopover {
-                    popover_root: PopoverRoot,
+                date_picker::DatePickerPopover { popover_root: PopoverRoot,
                     DateRangePickerInput {
                         on_format_day_placeholder: props.on_format_day_placeholder,
                         on_format_month_placeholder: props.on_format_month_placeholder,
@@ -218,13 +226,15 @@ pub fn DateRangePicker(props: DateRangePickerProps) -> Element {
 #[component]
 pub(crate) fn DatePickerInput(props: DatePickerInputProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_date_picker_group
+        class: "cn-ui-date-picker-group {Styles::cn_ui_date_picker_group.inner} gap-1 text-foreground flex-row w-fit min-w-37.5"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
     let extra_children = props.children;
     let month_count = styled_month_count();
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         date_picker::DatePickerInput {
             on_format_day_placeholder: props.on_format_day_placeholder,
             on_format_month_placeholder: props.on_format_month_placeholder,
@@ -258,13 +268,15 @@ pub(crate) fn DatePickerInput(props: DatePickerInputProps) -> Element {
 #[component]
 pub(crate) fn DateRangePickerInput(props: DatePickerInputProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_date_picker_group
+        class: "cn-ui-date-picker-group {Styles::cn_ui_date_picker_group.inner} gap-1 text-foreground flex-row w-fit min-w-37.5"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
     let extra_children = props.children;
     let month_count = styled_month_count();
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         date_picker::DateRangePickerInput {
             on_format_day_placeholder: props.on_format_day_placeholder,
             on_format_month_placeholder: props.on_format_month_placeholder,
@@ -294,10 +306,8 @@ pub(crate) fn DateRangePickerInput(props: DatePickerInputProps) -> Element {
                 {extra_children}
             }
             DatePickerPopoverTrigger {}
-            DatePickerPopoverContent {
-                align: ContentAlign::Center,
-                date_picker::DateRangePickerCalendar {
-                    calendar: RangeCalendarRoot,
+            DatePickerPopoverContent { align: ContentAlign::Center,
+                date_picker::DateRangePickerCalendar { calendar: RangeCalendarRoot,
                     for offset in 0..month_count {
                         CalendarMonthView { key: "{offset}", offset, month_count }
                     }
@@ -310,38 +320,37 @@ pub(crate) fn DateRangePickerInput(props: DatePickerInputProps) -> Element {
 #[component]
 pub(crate) fn DatePickerYearSegment(props: DatePickerYearSegmentProps) -> Element {
     rsx! {
-        date_picker::DatePickerYearSegment {
-            class: Styles::dx_date_segment,
-            attributes: props.attributes,
-        }
+        document::Stylesheet { href: STYLES }
+
+        date_picker::DatePickerYearSegment { class: "cn-ui-date-segment {Styles::cn_ui_date_segment.inner}", attributes: props.attributes }
     }
 }
 
 #[component]
 pub(crate) fn DatePickerMonthSegment(props: DatePickerMonthSegmentProps) -> Element {
     rsx! {
-        date_picker::DatePickerMonthSegment {
-            class: Styles::dx_date_segment,
-            attributes: props.attributes,
-        }
+        document::Stylesheet { href: STYLES }
+
+        date_picker::DatePickerMonthSegment { class: "cn-ui-date-segment {Styles::cn_ui_date_segment.inner}", attributes: props.attributes }
     }
 }
 
 #[component]
 pub(crate) fn DatePickerDaySegment(props: DatePickerDaySegmentProps) -> Element {
     rsx! {
-        date_picker::DatePickerDaySegment {
-            class: Styles::dx_date_segment,
-            attributes: props.attributes,
-        }
+        document::Stylesheet { href: STYLES }
+
+        date_picker::DatePickerDaySegment { class: "cn-ui-date-segment {Styles::cn_ui_date_segment.inner}", attributes: props.attributes }
     }
 }
 
 #[component]
 pub(crate) fn DatePickerSeparator(props: DatePickerSeparatorProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         date_picker::DatePickerSeparator {
-            class: Styles::dx_date_segment,
+            class: "cn-ui-date-segment {Styles::cn_ui_date_segment.inner}",
             symbol: props.symbol,
             attributes: props.attributes,
         }
@@ -351,30 +360,32 @@ pub(crate) fn DatePickerSeparator(props: DatePickerSeparatorProps) -> Element {
 #[component]
 pub(crate) fn DateRangePickerStartValue(props: DateRangePickerStartValueProps) -> Element {
     rsx! {
-        date_picker::DateRangePickerStartValue {
-            {props.children}
-        }
+        document::Stylesheet { href: STYLES }
+
+        date_picker::DateRangePickerStartValue { {props.children} }
     }
 }
 
 #[component]
 pub(crate) fn DateRangePickerEndValue(props: DateRangePickerEndValueProps) -> Element {
     rsx! {
-        date_picker::DateRangePickerEndValue {
-            {props.children}
-        }
+        document::Stylesheet { href: STYLES }
+
+        date_picker::DateRangePickerEndValue { {props.children} }
     }
 }
 
 #[component]
 pub(crate) fn DatePickerPopoverTrigger(props: PopoverTriggerProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         PopoverTrigger {
-            class: Styles::dx_date_picker_popover_trigger,
+            class: "cn-ui-date-picker-popover-trigger {Styles::cn_ui_date_picker_popover_trigger.inner}",
             aria_label: "Show Calendar",
             attributes: props.attributes,
             ChevronDown {
-                class: Styles::dx_date_picker_trigger,
+                class: "cn-ui-date-picker-trigger {Styles::cn_ui_date_picker_trigger.inner}",
                 size: "20px",
                 stroke: "var(--cn-border-strong)",
             }
@@ -385,8 +396,10 @@ pub(crate) fn DatePickerPopoverTrigger(props: PopoverTriggerProps) -> Element {
 #[component]
 pub(crate) fn DatePickerPopoverContent(props: PopoverContentProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         PopoverContent {
-            class: Styles::dx_date_picker_popover_content.to_string(),
+            class: format!("cn-ui-date-picker-popover-content {}", Styles::cn_ui_date_picker_popover_content.inner),
             id: props.id,
             side: props.side,
             align: props.align,
@@ -404,9 +417,7 @@ mod tests {
     #[component]
     fn DatePickerWithDefaultInput() -> Element {
         rsx! {
-            DatePicker {
-                selected_date: Some(fixed_date(2026, Month::May, 7)),
-            }
+            DatePicker { selected_date: Some(fixed_date(2026, Month::May, 7)) }
         }
     }
 
@@ -414,10 +425,9 @@ mod tests {
     fn DateRangePickerWithDefaultInput() -> Element {
         rsx! {
             DateRangePicker {
-                selected_range: Some(DateRange::new(
-                    fixed_date(2026, Month::May, 7),
-                    fixed_date(2026, Month::May, 11),
-                )),
+                selected_range: Some(
+                    DateRange::new(fixed_date(2026, Month::May, 7), fixed_date(2026, Month::May, 11)),
+                ),
             }
         }
     }

@@ -8,6 +8,12 @@ use dioxus_primitives::{dioxus_attributes::attributes, merge_attributes};
 #[css_module("/src/components/ui/combobox/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/combobox/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 #[derive(Props, Clone, PartialEq)]
 pub struct ComboboxProps<T: Clone + PartialEq + 'static = String> {
     #[props(default)]
@@ -64,11 +70,13 @@ pub struct ComboboxProps<T: Clone + PartialEq + 'static = String> {
 #[component]
 pub fn Combobox<T: Clone + PartialEq + 'static>(props: ComboboxProps<T>) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_combobox
+        class: "cn-ui-combobox relative inline-block"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         combobox::Combobox {
             value: props.value,
             default_value: props.default_value,
@@ -83,19 +91,16 @@ pub fn Combobox<T: Clone + PartialEq + 'static>(props: ComboboxProps<T>) -> Elem
             roving_loop: props.roving_loop,
             filter: props.filter,
             attributes: merged,
-            div { class: Styles::dx_combobox_input_wrapper,
+            div { class: "cn-ui-combobox-input-wrapper relative w-50",
                 combobox::ComboboxInput {
-                    class: Styles::dx_combobox_input,
+                    class: "cn-ui-combobox-input {Styles::cn_ui_combobox_input.inner} rounded-md border-0 w-full box-border h-9",
                     placeholder: props.placeholder,
                     aria_label: props.aria_label.clone(),
                 }
-                ChevronsUpDown {
-                    class: Styles::dx_combobox_expand_icon,
-                    size: "16px",
-                }
+                ChevronsUpDown { class: "cn-ui-combobox-expand-icon {Styles::cn_ui_combobox_expand_icon.inner} absolute opacity-50 pointer-events-none right-3 top-1/2", size: "16px" }
             }
             combobox::ComboboxList {
-                class: Styles::dx_combobox_list,
+                class: "cn-ui-combobox-list {Styles::cn_ui_combobox_list.inner} flex absolute left-0 bg-card rounded-md text-foreground flex-col p-1 w-50 max-h-75",
                 aria_label: props.list_aria_label.clone(),
                 {props.children}
             }
@@ -106,26 +111,27 @@ pub fn Combobox<T: Clone + PartialEq + 'static>(props: ComboboxProps<T>) -> Elem
 #[component]
 pub fn ComboboxEmpty(props: ComboboxEmptyProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_combobox_empty
+        class: "cn-ui-combobox-empty {Styles::cn_ui_combobox_empty.inner} text-center text-sm"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
-        combobox::ComboboxEmpty {
-            attributes: merged,
-            {props.children}
-        }
+        document::Stylesheet { href: STYLES }
+
+        combobox::ComboboxEmpty { attributes: merged, {props.children} }
     }
 }
 
 #[component]
 pub fn ComboboxOption<T: Clone + PartialEq + 'static>(props: ComboboxOptionProps<T>) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_combobox_option
+        class: "cn-ui-combobox-option {Styles::cn_ui_combobox_option.inner} flex items-center gap-2 rounded-sm select-none"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         combobox::ComboboxOption::<T> {
             value: props.value,
             text_value: props.text_value,
@@ -137,10 +143,7 @@ pub fn ComboboxOption<T: Clone + PartialEq + 'static>(props: ComboboxOptionProps
             attributes: merged,
             {props.children}
             combobox::ComboboxItemIndicator {
-                Check {
-                    class: Styles::dx_combobox_check_icon,
-                    size: "16px",
-                }
+                Check { class: "cn-ui-combobox-check-icon text-muted-foreground ml-auto", size: "16px" }
             }
         }
     }

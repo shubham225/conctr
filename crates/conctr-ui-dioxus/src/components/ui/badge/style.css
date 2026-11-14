@@ -1,3 +1,37 @@
 /* CSS module source: /src/components/ui/badge/style.css */
-/* Semantic appearance and variants: .cn-badge. */
-.dx-badge { width: fit-content; gap: var(--cn-space-1); font: var(--cn-font-badge); }
+@layer components {
+  .cn-badge {
+    gap: calc(var(--spacing, .25rem) * 1.5);
+    font: var(--cn-fw-medium) var(--cn-fs-caption)/1 var(--cn-font-ui);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--border);
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+    border-radius: 2147483647px;
+  }
+  :global(.cn-badge--success), .cn-badge[data-style="success"] {
+    background-color: var(--success-soft);
+    color: var(--success);
+    border-color: #0000;
+  }
+  :global(.cn-badge--warning), .cn-badge[data-style="warning"] {
+    background-color: var(--warning-soft);
+    color: var(--warning);
+    border-color: #0000;
+  }
+  :global(.cn-badge--danger), .cn-badge[data-style="danger"], .cn-badge[data-style="error"], .cn-badge[data-style="destructive"] {
+    background-color: var(--destructive-soft);
+    color: var(--destructive);
+    border-color: #0000;
+  }
+  :global(.cn-badge--info), .cn-badge[data-style="info"] {
+    background-color: var(--accent);
+    color: var(--primary);
+    border-color: #0000;
+  }
+  .cn-ui-badge {
+    gap: var(--spacing, .25rem);
+    font: var(--cn-font-badge);
+  }
+}

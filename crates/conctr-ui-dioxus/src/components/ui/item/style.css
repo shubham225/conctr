@@ -1,178 +1,115 @@
 /* CSS module source: /src/components/ui/item/style.css */
-/* Item Group */
-.dx-item-group {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Item Separator */
-.dx-item-separator {
-  margin: 0;
-}
-
-/* Base Item */
-.dx-item {
-  display: flex;
-  box-sizing: border-box;
-  flex-wrap: wrap;
-  align-items: center;
-  border: 1px solid transparent;
-  border-radius: var(--cn-radius-sm);
-  font-size: var(--cn-fs-small);
-  outline: none;
-  transition:
-    color 0.1s ease,
-    background-color 0.1s ease,
-    border-color 0.1s ease;
-}
-
-.dx-item:focus-visible {
-  border-color: var(--cn-focus);
-  box-shadow: 0 0 0 3px
-    color-mix(in srgb, var(--cn-focus) 50%, transparent);
-}
-
-a.dx-item {
-  color: inherit;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-a.dx-item:hover {
-  background-color: var(--cn-sunken);
-}
-
-/* Item Variants */
-.dx-item[data-variant="default"] {
-  border-color: transparent;
-}
-
-.dx-item[data-variant="outline"] {
-  border-color: var(--cn-border);
-}
-
-.dx-item[data-variant="muted"] {
-  border-color: transparent;
-  background-color: color-mix(in srgb, var(--cn-sunken) 50%, transparent);
-}
-
-/* Item Sizes */
-.dx-item[data-size="default"] {
-  padding: 1rem;
-  gap: 1rem;
-}
-
-.dx-item[data-size="sm"] {
-  padding: 0.75rem 1rem;
-  gap: 0.625rem;
-}
-
-/* Item Media */
-.dx-item-media {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.dx-item:has([data-slot="item-description"]) .dx-item-media {
-  align-self: flex-start;
-  transform: translateY(0.125rem);
-}
-
-.dx-item-media svg {
-  pointer-events: none;
-}
-
-.dx-item-media[data-variant="default"] {
-  background-color: transparent;
-}
-
-.dx-item-media[data-variant="icon"] {
-  width: 2rem;
-  height: 2rem;
-  border-radius: var(--cn-radius-xs);
-}
-
-.dx-item-media[data-variant="icon"] svg {
-  width: 1rem;
-  height: 1rem;
-}
-
-.dx-item-media[data-variant="image"] {
-  overflow: hidden;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: var(--cn-radius-xs);
-}
-
-.dx-item-media[data-variant="image"] img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Item Content */
-.dx-item-content {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.dx-item-content + .dx-item-content {
-  flex: none;
-}
-
-/* Item Title */
-.dx-item-title {
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  font-size: var(--cn-fs-small);
-  font-weight: 500;
-  gap: 0.5rem;
-  line-height: 1.375;
-}
-
-/* Item Description */
-.dx-item-description {
-  display: -webkit-box;
-  overflow: hidden;
-  margin: 0;
-  -webkit-box-orient: vertical;
-  color: var(--cn-text);
-  font-size: var(--cn-fs-small);
-  font-weight: 400;
-  -webkit-line-clamp: 2;
-  line-height: 1.5;
-  text-align: left;
-  text-wrap: balance;
-}
-
-.dx-item-description a {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.dx-item-description a:hover {
-  color: var(--cn-text);
-}
-
-/* Item Actions */
-.dx-item-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Item Header & Footer */
-.dx-item-header,
-.dx-item-footer {
-  display: flex;
-  flex-basis: 100%;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
+@layer components {
+  .cn-ui-item {
+    border-radius: calc(var(--radius) - 4px);
+    border: 1px solid #0000;
+    outline: none;
+    transition: color .1s, background-color .1s, border-color .1s;
+  }
+  .cn-ui-item:focus-visible {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px
+    var(--ring);
+  }
+  @supports (color: color-mix(in lab, red, red)) {
+    .cn-ui-item:focus-visible {
+      box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--ring) 50%, transparent);
+    }
+  }
+  a.cn-ui-item {
+    cursor: pointer;
+    color: inherit;
+    text-decoration-line: none;
+  }
+  a.cn-ui-item:hover {
+    background-color: var(--muted);
+  }
+  .cn-ui-item[data-variant="default"] {
+    border-color: #0000;
+  }
+  .cn-ui-item[data-variant="outline"] {
+    border-color: var(--border);
+  }
+  .cn-ui-item[data-variant="muted"] {
+    background-color: var(--muted);
+    border-color: #0000;
+  }
+  @supports (color: color-mix(in lab, red, red)) {
+    .cn-ui-item[data-variant="muted"] {
+      background-color: color-mix(in srgb, var(--muted) 50%, transparent);
+    }
+  }
+  .cn-ui-item[data-size="default"] {
+    gap: calc(var(--spacing, .25rem) * 4);
+    padding: calc(var(--spacing, .25rem) * 4);
+  }
+  .cn-ui-item[data-size="sm"] {
+    gap: calc(var(--spacing, .25rem) * 2.5);
+    padding: .75rem 1rem;
+  }
+  .cn-ui-item:has([data-slot="item-description"]) .cn-ui-item-media {
+    align-self: flex-start;
+    transform: translateY(.125rem);
+  }
+  .cn-ui-item-media svg {
+    pointer-events: none;
+  }
+  .cn-ui-item-media[data-variant="default"] {
+    background-color: #0000;
+  }
+  .cn-ui-item-media[data-variant="icon"] {
+    height: calc(var(--spacing, .25rem) * 8);
+    width: calc(var(--spacing, .25rem) * 8);
+    border-radius: calc(var(--radius) - 6px);
+  }
+  .cn-ui-item-media[data-variant="icon"] svg {
+    height: calc(var(--spacing, .25rem) * 4);
+    width: calc(var(--spacing, .25rem) * 4);
+  }
+  .cn-ui-item-media[data-variant="image"] {
+    height: calc(var(--spacing, .25rem) * 10);
+    width: calc(var(--spacing, .25rem) * 10);
+    border-radius: calc(var(--radius) - 6px);
+    overflow: hidden;
+  }
+  .cn-ui-item-media[data-variant="image"] img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  .cn-ui-item-content {
+    flex: 1;
+  }
+  .cn-ui-item-content + .cn-ui-item-content {
+    flex: none;
+  }
+  .cn-ui-item-title {
+    font-size: var(--cn-fs-small);
+    font-weight: var(--cn-fw-medium);
+    line-height: 1.375;
+  }
+  .cn-ui-item-description {
+    font-size: var(--cn-fs-small);
+    font-weight: var(--cn-fw-regular);
+    color: var(--foreground);
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.5;
+    display: -webkit-box;
+  }
+  .cn-ui-item-description a {
+    text-underline-offset: 4px;
+    text-decoration-line: underline;
+  }
+  .cn-ui-item-description a:hover {
+    color: var(--foreground);
+  }
+  .cn-ui-item-header, .cn-ui-item-footer {
+    justify-content: space-between;
+    align-items: center;
+    gap: calc(var(--spacing, .25rem) * 2);
+    flex-basis: 100%;
+    display: flex;
+  }
 }

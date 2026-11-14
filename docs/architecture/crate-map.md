@@ -22,7 +22,7 @@ Do not add all planned packages in one change.
 | `conctr-web-dioxus` — `apps/web-dioxus` | Placeholder App | Web/server launch and renderer configuration; share product pages through app crate |
 | `conctr-desktop-dioxus` — `apps/desktop-dioxus` | Placeholder App | Native bootstrap, window/menu/deep-link adapters; no duplicated product app |
 | `conctr-mobile-dioxus` — `apps/mobile-dioxus` | Placeholder App | Mobile bootstrap and native capability adapters; shared responsive product UI |
-| `conctr-design-system` — `apps/conctr-design-system` | Implemented 62-entry catalog, foundation pages and examples | Design system documentation/showcase; demos do not prove production connector support |
+| `conctr-design-system` — `apps/conctr-design-system` | Implemented 66-entry catalog, foundation pages and examples | Design system documentation/showcase; demos do not prove production connector support |
 
 `conctr-api-dioxus` is the actual package name. Some earlier prose used
 `conctr-dioxus-api`; use the existing Cargo name in new documentation and code.

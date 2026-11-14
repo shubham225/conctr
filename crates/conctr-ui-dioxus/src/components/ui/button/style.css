@@ -1,6 +1,95 @@
 /* CSS module source: /src/components/ui/button/style.css */
-/* Primitive-specific geometry; appearance and states use .cn-btn. */
-.dx-button { width: fit-content; flex-shrink: 0; }
-.dx-button svg, .dx-button img { width: var(--cn-space-5); height: var(--cn-space-5); flex-shrink: 0; pointer-events: none; }
-.dx-button[data-size="sm"] svg, .dx-button[data-size="xs"] svg, .dx-button[data-size="icon-sm"] svg, .dx-button[data-size="icon-xs"] svg { width: var(--cn-space-4); height: var(--cn-space-4); }
-@media (pointer: coarse) { .dx-button { min-width: var(--cn-control-lg); min-height: var(--cn-control-lg); } }
+@layer components {
+  .cn-btn {
+    height: var(--control-height);
+    padding-inline: var(--control-padding);
+    border: var(--cn-border-1) solid transparent;
+    border-radius: var(--radius);
+    font: var(--cn-font-control);
+    cursor: pointer;
+    transition: background-color var(--cn-motion-control), border-color var(--cn-motion-control);
+    padding-block: 0;
+    text-decoration-line: none;
+  }
+  :global(.cn-btn--sm), .cn-btn[data-size="xs"], .cn-btn[data-size="sm"] {
+    height: var(--cn-control-sm);
+    padding-inline: calc(var(--spacing, .25rem) * 3);
+    font-size: var(--cn-fs-caption);
+    line-height: var(--cn-lh-caption);
+  }
+  :global(.cn-btn--lg), .cn-btn[data-size="lg"] {
+    height: var(--cn-control-lg);
+    padding-inline: calc(var(--spacing, .25rem) * 6);
+    font-size: var(--cn-fs-body);
+    line-height: var(--cn-lh-body);
+  }
+  :global(.cn-btn--icon), .cn-btn[data-size^="icon"] {
+    width: var(--control-height);
+    padding: 0;
+  }
+  :global(.cn-btn--icon):global(.cn-btn--sm), .cn-btn[data-size="icon-xs"], .cn-btn[data-size="icon-sm"] {
+    height: var(--cn-control-sm);
+    width: var(--cn-control-sm);
+  }
+  .cn-btn[data-size="icon-lg"] {
+    height: var(--cn-control-lg);
+    width: var(--cn-control-lg);
+  }
+  .cn-btn:is(:global(.cn-btn--primary), [data-style="primary"]) {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .cn-btn:is(:global(.cn-btn--primary), [data-style="primary"]):hover:not(:disabled, [aria-disabled="true"]) {
+    background-color: var(--primary-hover);
+  }
+  .cn-btn:is(:global(.cn-btn--secondary), [data-style="secondary"], [data-style="outline"]) {
+    border-color: var(--input);
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+  }
+  .cn-btn:is(:global(.cn-btn--secondary), [data-style="secondary"], [data-style="outline"]):hover:not(:disabled, [aria-disabled="true"]) {
+    background-color: var(--muted);
+  }
+  .cn-btn:is(:global(.cn-btn--ghost), [data-style="ghost"], [data-style="link"]) {
+    color: var(--primary);
+    background-color: #0000;
+  }
+  .cn-btn:is(:global(.cn-btn--ghost), [data-style="ghost"]):hover:not(:disabled, [aria-disabled="true"]) {
+    background-color: var(--accent);
+  }
+  .cn-btn[data-style="link"]:hover:not(:disabled) {
+    text-underline-offset: var(--cn-space-1);
+    text-decoration-line: underline;
+  }
+  .cn-btn:is(:global(.cn-btn--danger), [data-style="destructive"]) {
+    background-color: var(--destructive);
+    color: var(--destructive-foreground);
+  }
+  .cn-btn:is(:global(.cn-btn--danger), [data-style="destructive"]):hover:not(:disabled, [aria-disabled="true"]) {
+    filter: brightness(.92);
+  }
+  .cn-btn:is(:disabled, [aria-disabled="true"]) {
+    opacity: var(--cn-opacity-disabled);
+    cursor: not-allowed;
+  }
+  .cn-ui-button {
+    flex-shrink: 0;
+    width: fit-content;
+  }
+  .cn-ui-button svg, .cn-ui-button img {
+    pointer-events: none;
+    height: calc(var(--spacing, .25rem) * 5);
+    width: calc(var(--spacing, .25rem) * 5);
+    flex-shrink: 0;
+  }
+  .cn-ui-button[data-size="sm"] svg, .cn-ui-button[data-size="xs"] svg, .cn-ui-button[data-size="icon-sm"] svg, .cn-ui-button[data-size="icon-xs"] svg {
+    height: calc(var(--spacing, .25rem) * 4);
+    width: calc(var(--spacing, .25rem) * 4);
+  }
+  @media (pointer: coarse) {
+    .cn-ui-button {
+      min-height: var(--cn-control-lg);
+      min-width: var(--cn-control-lg);
+    }
+  }
+}

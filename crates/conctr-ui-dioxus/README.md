@@ -7,9 +7,24 @@ or dependency on Conctr's application/API crates.
 
 ## Usage
 
+Add the library alongside your application's Dioxus dependency:
+
+```toml
+[dependencies]
+conctr-ui-dioxus = { workspace = true }
+```
+
+For an application outside this workspace, use a Cargo `path` dependency pointing
+to `crates/conctr-ui-dioxus`. Keep the Dioxus renderer features in your launcher.
+Mount a provider at the root and import components from the prelude:
+
 ```rust
 use conctr_ui_dioxus::prelude::*;
 use dioxus::prelude::*;
+
+fn main() {
+    dioxus::launch(App);
+}
 
 #[component]
 fn App() -> Element {
@@ -35,12 +50,41 @@ fn App() -> Element {
 }
 ```
 
-`ThemeProvider` loads bundled fonts, canonical kit CSS, tokens and the registry
-compatibility aliases and explicit CSS-module links on every server-rendered
-document. Choose `Light`, `Dark`, or `System` (default). Explicit
-nested providers override inherited colors. `ConctrStyles` can be mounted directly
-if an application already supplies its own `cn-body` shell. Fonts are bundled as
-a directory so their relative WOFF2 URLs survive asset hashing.
+`ThemeProvider` loads bundled fonts, tokens, shadcn-style themes and precompiled
+Tailwind utilities. Components use utility classes in Rust and adjacent CSS modules
+for specialized styling. Choose `Light`, `Dark`, or `System` (default); nested
+providers reset their own defaults. No Tailwind setup or CSS build step is needed
+in the consuming application.
+
+Use typed props for component variants, sizes and state; native attributes,
+`class`, `style` and event handlers pass through to the rendered control:
+
+```rust,ignore
+Button {
+    variant: ButtonVariant::Secondary,
+    size: ButtonSize::Sm,
+    style: "--radius: 999px;",
+    onclick: move |_| { /* application action */ },
+    "Test connection"
+}
+```
+
+To customize a whole subtree, set shadcn variables on its `ThemeProvider`, such as
+`style: "--radius: 12px; --control-height: 32px;"`. Palette and scale defaults live
+in `assets/colors/tokens.css`; semantic theme roles include `--background`,
+`--foreground`, `--primary`, `--primary-foreground`, `--border` and `--ring`.
+The UI crate compiles utilities from its own sources and workspace apps, including
+`conctr-app-dioxus`. No app CSS build is needed. Standalone consumers receive the
+shipped bundle; new external utility names require compilation. See [theming](../../docs/development/theming.md).
+
+Browse complete, runnable usage examples with:
+
+```sh
+dx serve --package conctr-design-system --platform web
+```
+
+Each gallery page shows the exact source from
+[`apps/conctr-design-system/src/examples`](../../apps/conctr-design-system/src/examples).
 
 ## Source ownership
 
@@ -73,12 +117,15 @@ Edit a control in `components/ui/<name>/component.rs` and its adjacent
 product-specific pages, fetching and state belong in the product application.
 Composed components may use UI controls and primitives; lower layers must not
 import compositions. There is no runtime registry lookup or code generator.
-Shared recipes and semantic theme properties live in `assets/styles/main.css`;
-CSS modules retain component structure and behavior. See the
-[theming guide](../../docs/development/theming.md) for custom brands, density,
-scoped providers and the stylesheet contract. `MAIN_CSS` is the main asset;
-`CONCTR_UI_CSS` remains a compatibility alias. See [UPSTREAM.md](UPSTREAM.md) for provenance
-and [presentation architecture](../../docs/architecture/dioxus-presentation.md)
+Tailwind 4.1 uses shadcn-style variables (`--background`, `--primary`, `--ring`,
+`--radius`, and standard surface/foreground pairs) with Conctr kit defaults.
+Generic runtime CSS and Tailwind mappings live in `assets/styles/`. Component
+utility classes stay in Rust; specialized CSS modules stay in adjacent
+`style.css` files. See the [theming guide](../../docs/development/theming.md) for
+consumer usage, scoped palettes, density, library tooling and new components.
+`MAIN_CSS` is the plain runtime theme; `CONCTR_UI_CSS` remains an alias.
+See [UPSTREAM.md](UPSTREAM.md) for provenance and
+[presentation architecture](../../docs/architecture/dioxus-presentation.md)
 for boundaries and the proposed shared multi-platform application structure.
 
 ## Component catalog
@@ -101,15 +148,16 @@ Kit coverage:
 | --- | --- |
 | Typography | `Heading`, `HeadingLevel`; kit classes `cn-display`, `cn-body-lg`, `cn-small`, `cn-caption`, `cn-mono` |
 | Layout primitives | `primitives::Box` (`LayoutBox` in the prelude), `Flex`, `Grid`, `Stack`, `Inline`, `Space`, `Align`, `Justify`, `Direction`; also `Container`, `Cluster`, `Divider` |
+| Panel layouts | `ResizablePanelGroup`, `ResizablePanel`, `ResizableHandle`, `ResizableOrientation` |
 | Actions | `Button`, `ButtonVariant`, `ButtonSize`; `loading` disables the action and exposes busy state |
-| Forms | `Form`, `Field`, `Label`, `Input`, `Textarea`, `Select`, `Hint`, `FieldError` |
+| Forms | `Form`, `Field`, `Label`, `Input`, `Textarea`, `Select`, `Hint`, `FieldError`, `FileUploader` |
 | Choices | `Checkbox`, `CheckboxState`, `RadioGroup`, `RadioItem`, `Switch`; native `Radio` also available |
 | Badges/shapes | `Badge`, `BadgeVariant` (neutral, success, warning, info, error), `StatusBadge` (compatibility adapter), `Status`, `ProtocolBadge`, `Protocol`, `Shape` |
-| Surfaces/messages | `Card` and its parts, `StatusAlert`, `Alert`, `ToastProvider`, `use_toast`, `ToastOptions` |
+| Surfaces/messages | `Card` and its parts, `Alert` (`status: Status::…`), `ToastProvider`, `use_toast`, `ToastOptions` |
 | Navigation | `Tabs`, `TabList`, `TabTrigger`, `TabContent`, `Breadcrumb`, `Pagination`, `Navigation`, `NavItem`, `NavGroup`, `Sidebar` |
-| Data | `TableContainer`, `Table`, `CodeBlock`, `Stat`, `Avatar` and its parts, `KeyboardKey` |
+| Data | `TableContainer`, `Table`, `CodeBlock`, `Stat`, `Avatar` and its parts, `Kbd`, `KbdGroup` |
 | Feedback | `Progress`, `Spinner`, `Skeleton` |
-| Overlays | `DropdownMenu` and its parts, `Menu`, `MenuItem`, `Tooltip` and its parts, `Dialog`, `Modal`, `ModalFooter` |
+| Overlays | `DropdownMenu` and its parts, `Menu`, `MenuItem`, `Tooltip` and its parts, `Dialog`, `Modal`, `ModalFooter`, `Command`, `CommandDialog` |
 | Connection flow | `ConnectionFlow`, `ConnectionNode`, `FlowState` (healthy, paused, failing) |
 | Empty state | `EmptyState` with caller-supplied action/icon |
 | Branding | `Logo`, `Icon`, `UiIcon`, `IconName`, provided logo/icon assets |
@@ -118,6 +166,70 @@ Kit coverage:
 primitive-backed `DropdownMenu` family when you need menu keyboard behavior.
 `Modal` is a convenience wrapper around `Dialog`, rather than a second dialog
 implementation. Mount it conditionally and provide an explicit close action.
+
+## New controls
+
+`Alert { status: Status::Warning, ... }` is the semantic message API. It uses a
+polite status announcement for neutral/info/success/warning and an alert for danger.
+`StatusAlert` remains a compatibility adapter. `Kbd` renders a native `kbd` element;
+`KbdGroup` groups shortcut hints. `KeyboardKey` remains an alias of `Kbd`.
+
+```rust,ignore
+KbdGroup { aria_label: "Control K", Kbd { "Ctrl" } Kbd { "K" } }
+Alert { status: Status::Warning, "Review the connection configuration." }
+FileUploader {
+    id: "attachments", accept: ".json,.yaml,.csv", max_files: 3,
+    max_file_size: 5 * 1024 * 1024,
+    on_files_change: move |files: Vec<dioxus::html::FileData>| {
+        // Full current selection. The app can read/stream files and upload them.
+    },
+}
+```
+
+The uploader supports native browsing and drag/drop, case-insensitive extension
+and MIME filters, size/count limits, duplicate suppression, removal, disabled
+state and accessible rejection messages. `on_reject` exposes structured reasons.
+It retains renderer file handles without eagerly reading file contents. Transport,
+server-side validation, upload progress and cancellation belong to the application.
+
+```rust,ignore
+ResizablePanelGroup {
+    id: "workspace", default_sizes: vec![30.0, 70.0], min_sizes: vec![20.0, 30.0],
+    style: "height: 280px;",
+    ResizablePanel { index: 0, "Connections" }
+    ResizableHandle { index: 0, with_handle: true }
+    ResizablePanel { index: 1, "Details" }
+}
+```
+
+Panel sizes are percentages, initialized when the group mounts. Use consecutive
+panel indices and a handle between each pair. Groups support horizontal/vertical
+orientation, nesting, RTL, pointer capture and `on_layout_change`. Focus a handle
+and use arrows (1%), Shift+arrows (10%) or Home/End (bounds). Minimums clamp dragging
+and keyboard updates. Give each group a stable, unique ID for SSR and ARIA.
+
+```rust,ignore
+Command { id: "actions", on_select: move |value: String| { /* run action */ },
+    CommandInput {}
+    CommandList { CommandEmpty { "No matching commands." }
+        CommandGroup { heading: "Navigate",
+            CommandItem { index: 0, value: "Connections", "Connections" }
+            CommandItem { index: 1, value: "Runs", keywords: vec!["history".into()], "Runs" }
+        }
+    }
+}
+```
+
+Command item indices are unique across groups and define keyboard order. Search
+matches all query words against values/keywords, ignoring case. Arrows wrap among
+matching enabled options, Home/End choose endpoints and Enter selects. Focus stays
+in the combobox, linked to the active option with ARIA. `CommandSeparator` and
+`CommandShortcut` complete the composition. `CommandDialog` accepts `open` and
+`on_open_change`, using the shared focus trap, Escape handling and a visible close action;
+applications own global shortcuts. See the gallery's [command](../../apps/conctr-design-system/src/examples/command.rs),
+[resizable](../../apps/conctr-design-system/src/examples/resizable.rs),
+[uploader](../../apps/conctr-design-system/src/examples/file_uploader.rs) and
+[kbd](../../apps/conctr-design-system/src/examples/kbd.rs) examples.
 
 ## Controlled primitives
 
@@ -138,6 +250,39 @@ hydration, rather than relying on the time-dependent upstream defaults.
 For toast messages, mount `ToastProvider` and call `use_toast()` from a descendant.
 The default duration is five seconds; primitive behavior handles hover/focus
 pausing. Use caller-owned values for all statistics and connection state.
+
+## Styling ownership
+
+Mount `ThemeProvider` (as above), or mount `ConctrStyles {}` once if you manage
+scopes yourself. This loads bundled fonts, `tokens.css`, shadcn-style variables
+and precompiled Tailwind 4.1.18 utilities. Importing a component loads its adjacent
+CSS module and required visual dependencies. No app Tailwind configuration,
+source scanning, npm install or copied assets are required.
+
+All styling tools live here. For **library development only**, run `npm ci` once
+in this directory. Cargo rebuilds then refresh the shared utility bundle
+using the crate's `build.rs`; consumers without Node use the checked-in bundle.
+For utility-only DX hot reload without a Rust rebuild, run `npm run watch:css`.
+Before release, run `npm run check:css` and commit the updated bundle. Local
+`style.css` modules need no separate compiler or generated companion file.
+See the [theming guide](../../docs/development/theming.md) for token overrides
+and the CSS-module pattern.
+
+## SSR stylesheet workaround
+
+Keep the `STYLES` asset declaration and local `document::Stylesheet` in components
+with adjacent CSS. The locked Dioxus/Manganis **0.7.10** CSS-module macro uses a
+process-wide `OnceLock`: automatic loading emits a link for the first SSR document
+but misses later requests. Styles can appear only after browser hydration.
+Upstream tracks the fix in [Dioxus #5707](https://github.com/DioxusLabs/dioxus/pull/5707).
+
+Our components use `Styles::class_name.inner` for scoped class names and register
+the CSS-module asset explicitly for each document. The constant is shared within
+its component family; links are deduplicated per document. Utility-only components
+need no local stylesheet. Applications need no additional workaround code.
+
+See the [SSR guide](../../docs/development/theming.md#ssr-css-module-workaround)
+for the implementation pattern, regression check and criteria for removing it.
 
 ## Development and distribution
 
@@ -164,12 +309,6 @@ release or publish an appropriately licensed primitive package. The upstream
 project currently distributes primitives through Git. Keep the provenance and
 licenses when distributing modified sources. This is a source-owned design
 system crate, not a new `dx components` registry distribution.
-
-The gallery includes every registry family plus Conctr kit examples, with
-searchable navigation, foundation pages, light/dark previews and copyable source.
-Run `dx serve --package conctr-design-system --platform web`.
-When adding a new CSS module, register its asset in
-`src/assets/registry_styles.rs` so later SSR requests also include its stylesheet.
 
 ## Component layers
 

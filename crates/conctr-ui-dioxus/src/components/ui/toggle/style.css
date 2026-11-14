@@ -1,3 +1,29 @@
 /* CSS module source: /src/components/ui/toggle/style.css */
-/* Shared sizing, surface and states: .cn-toggle. */
-.dx-toggle { gap: var(--cn-space-2); }
+@layer components {
+  .cn-toggle {
+    height: var(--control-height);
+    padding-inline: var(--control-padding);
+    border: var(--cn-border-1) solid transparent;
+    border-radius: var(--radius);
+    font: var(--cn-font-control);
+    cursor: pointer;
+    transition: background-color var(--cn-motion-control), border-color var(--cn-motion-control);
+    min-width: var(--control-height);
+    border-color: var(--input);
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+    padding-block: 0;
+  }
+  .cn-toggle:hover:not(:disabled) {
+    background-color: var(--muted);
+  }
+  .cn-toggle[data-state="on"], .cn-toggle[data-state="on"]:hover:not(:disabled) {
+    border-color: var(--primary);
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+  .cn-toggle:is(:disabled, [data-disabled="true"]) {
+    opacity: var(--cn-opacity-disabled);
+    cursor: not-allowed;
+  }
+}

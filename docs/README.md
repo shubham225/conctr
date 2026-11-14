@@ -25,6 +25,8 @@ planning work.
 9. [Decision records](architecture/decisions/README.md) — review and accept deliberately.
 10. [UI themes](development/theming.md) — shared CSS properties, custom brands and density.
 
+See [development setup](development/setup.md) for tool installation and Zed Tailwind configuration.
+
 ## Document map
 
 | Folder | Purpose |

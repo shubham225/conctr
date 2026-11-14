@@ -9,7 +9,11 @@ pub fn Field(
     attributes: Vec<Attribute>,
     children: Element,
 ) -> Element {
-    let base = attributes!(div { class: "cn-field" });
+    let base = attributes!(div {
+        class: "cn-field grid gap-1.5"
+    });
     let merged = merge_attributes(vec![base, attributes]);
-    rsx! { div { ..merged, {children} } }
+    rsx! {
+        div { ..merged,{children} }
+    }
 }

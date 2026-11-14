@@ -35,8 +35,10 @@ Then verify served selectors:
 python3 apps/conctr-design-system/scripts/check-component-styles.py http://127.0.0.1:8080
 ```
 
-CSS modules use path-derived selectors; preserve each stylesheet's source-path
-marker when moving it. A successful build/file copy alone cannot prove selectors
-match rendered markup. Use actual browser checks for geometry, focus and hover.
+The UI crate ships its Tailwind utility bundle; apps have no Tailwind setup.
+With UI development dependencies installed, Cargo rebuilds refresh the bundle.
+Run `npm run check:css` in the UI crate before release to check freshness.
+Local CSS modules have per-document registration tests. Check the served bundle
+and scoped selectors, then check geometry, focus, keyboard and themes in a browser.
 Native platform builds need their SDKs and explicit renderer features; do not
 claim those were validated by a default `cargo test --workspace` run.

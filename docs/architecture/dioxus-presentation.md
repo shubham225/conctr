@@ -16,7 +16,7 @@ crates/conctr-ui-dioxus/
         button/
           mod.rs
           component.rs
-          style.css
+          style.css            # Optional component CSS module
         dialog/
         sidebar/
         table/

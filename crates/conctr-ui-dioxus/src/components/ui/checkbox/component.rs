@@ -5,11 +5,19 @@ use dioxus_primitives::checkbox::{self, CheckboxProps};
 #[css_module("/src/components/ui/checkbox/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/checkbox/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 #[component]
 pub fn Checkbox(props: CheckboxProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         checkbox::Checkbox {
-            class: format!("{} cn-check", Styles::dx_checkbox),
+            class: "cn-ui-checkbox {Styles::cn_ui_checkbox.inner} cn-check {Styles::cn_check.inner} p-0 flex-none m-0 appearance-none",
             checked: props.checked,
             default_checked: props.default_checked,
             required: props.required,
@@ -18,7 +26,7 @@ pub fn Checkbox(props: CheckboxProps) -> Element {
             value: props.value,
             on_checked_change: props.on_checked_change,
             attributes: props.attributes,
-            checkbox::CheckboxIndicator { class: Styles::dx_checkbox_indicator,
+            checkbox::CheckboxIndicator { class: "cn-ui-checkbox-indicator flex items-center justify-center",
                 Check { size: "1rem" }
             }
         }

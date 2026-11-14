@@ -14,6 +14,12 @@ use time::{Date, Month, UtcDateTime, Weekday};
 #[css_module("/src/components/ui/calendar/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/calendar/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 fn fixed_date(year: i32, month: Month, day: u8) -> Date {
     Date::from_calendar_date(year, month, day).expect("valid fixed date")
 }
@@ -153,6 +159,8 @@ pub fn Calendar(props: CalendarProps) -> Element {
     let month_count = props.month_count.max(1);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         CalendarRoot {
             selected_date: props.selected_date,
             on_date_change: props.on_date_change,
@@ -179,6 +187,8 @@ pub fn RangeCalendar(props: RangeCalendarProps) -> Element {
     let month_count = props.month_count.max(1);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         RangeCalendarRoot {
             selected_range: props.selected_range,
             on_range_change: props.on_range_change,
@@ -203,11 +213,13 @@ pub fn RangeCalendar(props: RangeCalendarProps) -> Element {
 #[component]
 pub(crate) fn CalendarRoot(props: calendar::CalendarProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_calendar
+        class: "cn-ui-calendar {Styles::cn_ui_calendar.inner} flex bg-card border border-solid border-border rounded-md box-border flex-row w-fit max-w-full font-sans"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         calendar::Calendar {
             selected_date: props.selected_date,
             on_date_change: props.on_date_change,
@@ -230,11 +242,13 @@ pub(crate) fn CalendarRoot(props: calendar::CalendarProps) -> Element {
 #[component]
 pub(crate) fn RangeCalendarRoot(props: calendar::RangeCalendarProps) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_calendar
+        class: "cn-ui-calendar {Styles::cn_ui_calendar.inner} flex bg-card border border-solid border-border rounded-md box-border flex-row w-fit max-w-full font-sans"
     });
     let merged = merge_attributes(vec![base, props.attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         calendar::RangeCalendar {
             selected_range: props.selected_range,
             on_range_change: props.on_range_change,
@@ -260,6 +274,8 @@ pub(crate) fn CalendarMonthView(offset: u8, month_count: u8) -> Element {
     let show_next = offset.saturating_add(1) == month_count;
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         CalendarView { offset,
             CalendarHeader {
                 CalendarNavigation {
@@ -281,8 +297,10 @@ pub(crate) fn CalendarMonthView(offset: u8, month_count: u8) -> Element {
 #[component]
 fn CalendarView(props: CalendarViewProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         calendar::CalendarView {
-            class: Styles::dx_calendar_view,
+            class: "cn-ui-calendar-view flex flex-col w-full",
             offset: props.offset,
             attributes: props.attributes,
             {props.children}
@@ -293,6 +311,8 @@ fn CalendarView(props: CalendarViewProps) -> Element {
 #[component]
 fn CalendarHeader(props: CalendarHeaderProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         calendar::CalendarHeader { id: props.id, attributes: props.attributes, {props.children} }
     }
 }
@@ -300,7 +320,9 @@ fn CalendarHeader(props: CalendarHeaderProps) -> Element {
 #[component]
 fn CalendarNavigation(props: CalendarNavigationProps) -> Element {
     rsx! {
-        calendar::CalendarNavigation { class: Styles::dx_calendar_navigation, attributes: props.attributes, {props.children} }
+        document::Stylesheet { href: STYLES }
+
+        calendar::CalendarNavigation { class: "cn-ui-calendar-navigation {Styles::cn_ui_calendar_navigation.inner} flex items-center relative gap-2 justify-center", attributes: props.attributes, {props.children} }
     }
 }
 
@@ -309,7 +331,9 @@ fn CalendarPreviousMonthButton(
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     rsx! {
-        calendar::CalendarPreviousMonthButton { class: Styles::dx_calendar_nav_prev, attributes,
+        document::Stylesheet { href: STYLES }
+
+        calendar::CalendarPreviousMonthButton { class: "cn-ui-calendar-nav-prev {Styles::cn_ui_calendar_nav_prev.inner} left-3", attributes,
             ChevronLeft { size: "20px" }
         }
     }
@@ -320,7 +344,9 @@ fn CalendarNextMonthButton(
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     rsx! {
-        calendar::CalendarNextMonthButton { class: Styles::dx_calendar_nav_next, attributes,
+        document::Stylesheet { href: STYLES }
+
+        calendar::CalendarNextMonthButton { class: "cn-ui-calendar-nav-next {Styles::cn_ui_calendar_nav_next.inner} right-3", attributes,
             ChevronRight { size: "20px" }
         }
     }
@@ -329,12 +355,14 @@ fn CalendarNextMonthButton(
 #[component]
 fn CalendarSelectMonth(props: CalendarSelectMonthProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         calendar::CalendarSelectMonth {
             attributes: props.attributes,
-            class: Styles::dx_calendar_month_select_container,
+            class: "cn-ui-calendar-month-select-container {Styles::cn_ui_calendar_month_select_container.inner}",
             CalendarSelectMonthSelect {}
             CalendarSelectMonthValue {
-                DropDownIcon { }
+                DropDownIcon {}
                 {props.children}
             }
         }
@@ -344,8 +372,10 @@ fn CalendarSelectMonth(props: CalendarSelectMonthProps) -> Element {
 #[component]
 fn CalendarSelectMonthSelect(props: CalendarSelectMonthSelectProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         calendar::CalendarSelectMonthSelect {
-            class: Styles::dx_calendar_month_select,
+            class: "cn-ui-calendar-month-select {Styles::cn_ui_calendar_month_select.inner}",
             attributes: props.attributes,
         }
     }
@@ -354,8 +384,10 @@ fn CalendarSelectMonthSelect(props: CalendarSelectMonthSelectProps) -> Element {
 #[component]
 fn CalendarSelectMonthValue(props: CalendarSelectMonthValueProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         calendar::CalendarSelectMonthValue {
-            class: Styles::dx_calendar_month_select_value,
+            class: "cn-ui-calendar-month-select-value {Styles::cn_ui_calendar_month_select_value.inner}",
             attributes: props.attributes,
             {props.children}
         }
@@ -365,12 +397,14 @@ fn CalendarSelectMonthValue(props: CalendarSelectMonthValueProps) -> Element {
 #[component]
 fn CalendarSelectYear(props: CalendarSelectYearProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         calendar::CalendarSelectYear {
             attributes: props.attributes,
-            class: Styles::dx_calendar_year_select_container,
+            class: "cn-ui-calendar-year-select-container {Styles::cn_ui_calendar_year_select_container.inner}",
             CalendarSelectYearSelect {}
             CalendarSelectYearValue {
-                DropDownIcon { }
+                DropDownIcon {}
                 {props.children}
             }
         }
@@ -380,18 +414,19 @@ fn CalendarSelectYear(props: CalendarSelectYearProps) -> Element {
 #[component]
 fn CalendarSelectYearSelect(props: CalendarSelectYearSelectProps) -> Element {
     rsx! {
-        calendar::CalendarSelectYearSelect {
-            class: Styles::dx_calendar_year_select,
-            attributes: props.attributes,
-        }
+        document::Stylesheet { href: STYLES }
+
+        calendar::CalendarSelectYearSelect { class: "cn-ui-calendar-year-select {Styles::cn_ui_calendar_year_select.inner}", attributes: props.attributes }
     }
 }
 
 #[component]
 fn CalendarSelectYearValue(props: CalendarSelectYearValueProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         calendar::CalendarSelectYearValue {
-            class: Styles::dx_calendar_year_select_value,
+            class: "cn-ui-calendar-year-select-value {Styles::cn_ui_calendar_year_select_value.inner}",
             attributes: props.attributes,
             {props.children}
         }
@@ -406,6 +441,8 @@ fn CalendarGrid(
     let grid = calendar::use_calendar_grid();
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         CalendarGridRoot { id, attributes,
             CalendarGridHead {
                 CalendarGridHeaderRow {
@@ -422,8 +459,7 @@ fn CalendarGrid(
                 for week in grid.weeks() {
                     CalendarGridWeek {
                         for date in week.iter().copied() {
-                            CalendarGridCell {
-                                key: "{date}",
+                            CalendarGridCell { key: "{date}",
                                 CalendarDay { date }
                             }
                         }
@@ -437,8 +473,10 @@ fn CalendarGrid(
 #[component]
 fn CalendarGridRoot(props: CalendarGridRootProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         calendar::CalendarGridRoot {
-            class: Styles::dx_calendar_grid,
+            class: "cn-ui-calendar-grid w-full p-2",
             id: props.id,
             attributes: props.attributes,
             {props.children}
@@ -449,29 +487,28 @@ fn CalendarGridRoot(props: CalendarGridRootProps) -> Element {
 #[component]
 fn CalendarGridHead(props: CalendarGridHeadProps) -> Element {
     rsx! {
-        calendar::CalendarGridHead {
-            attributes: props.attributes,
-            {props.children}
-        }
+        document::Stylesheet { href: STYLES }
+
+        calendar::CalendarGridHead { attributes: props.attributes, {props.children} }
     }
 }
 
 #[component]
 fn CalendarGridHeaderRow(props: CalendarGridHeaderRowProps) -> Element {
     rsx! {
-        calendar::CalendarGridHeaderRow {
-            class: Styles::dx_calendar_grid_header,
-            attributes: props.attributes,
-            {props.children}
-        }
+        document::Stylesheet { href: STYLES }
+
+        calendar::CalendarGridHeaderRow { class: "cn-ui-calendar-grid-header flex flex-row mb-2", attributes: props.attributes, {props.children} }
     }
 }
 
 #[component]
 fn CalendarGridDayHeader(props: CalendarGridDayHeaderProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         calendar::CalendarGridDayHeader {
-            class: Styles::dx_calendar_grid_day_header,
+            class: "cn-ui-calendar-grid-day-header {Styles::cn_ui_calendar_grid_day_header.inner} text-center text-muted-foreground flex-1",
             weekday: props.weekday,
             attributes: props.attributes,
             {props.children}
@@ -482,40 +519,37 @@ fn CalendarGridDayHeader(props: CalendarGridDayHeaderProps) -> Element {
 #[component]
 fn CalendarGridBody(props: CalendarGridBodyProps) -> Element {
     rsx! {
-        calendar::CalendarGridBody {
-            class: Styles::dx_calendar_grid_body,
-            attributes: props.attributes,
-            {props.children}
-        }
+        document::Stylesheet { href: STYLES }
+
+        calendar::CalendarGridBody { class: "cn-ui-calendar-grid-body flex gap-1 flex-col w-full", attributes: props.attributes, {props.children} }
     }
 }
 
 #[component]
 fn CalendarGridWeek(props: CalendarGridWeekProps) -> Element {
     rsx! {
-        calendar::CalendarGridWeek {
-            class: Styles::dx_calendar_grid_week,
-            attributes: props.attributes,
-            {props.children}
-        }
+        document::Stylesheet { href: STYLES }
+
+        calendar::CalendarGridWeek { class: "cn-ui-calendar-grid-week {Styles::cn_ui_calendar_grid_week.inner} flex w-full flex-row justify-between", attributes: props.attributes, {props.children} }
     }
 }
 
 #[component]
 fn CalendarGridCell(props: CalendarGridCellProps) -> Element {
     rsx! {
-        calendar::CalendarGridCell {
-            attributes: props.attributes,
-            {props.children}
-        }
+        document::Stylesheet { href: STYLES }
+
+        calendar::CalendarGridCell { attributes: props.attributes, {props.children} }
     }
 }
 
 #[component]
 fn CalendarDay(props: CalendarDayProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         calendar::CalendarDay {
-            class: Styles::dx_calendar_grid_cell,
+            class: "cn-ui-calendar-grid-cell {Styles::cn_ui_calendar_grid_cell.inner} aspect-square w-8",
             date: props.date,
             attributes: props.attributes,
             children: props.children,
@@ -526,10 +560,9 @@ fn CalendarDay(props: CalendarDayProps) -> Element {
 #[component]
 fn DropDownIcon() -> Element {
     rsx! {
-        ChevronDown {
-            size: "20px",
-            stroke: "var(--cn-text)",
-        }
+        document::Stylesheet { href: STYLES }
+
+        ChevronDown { size: "20px", stroke: "var(--cn-text)" }
     }
 }
 
@@ -540,19 +573,14 @@ mod tests {
     #[component]
     fn CalendarWithDefaultView() -> Element {
         rsx! {
-            Calendar {
-                view_date: fixed_date(2026, Month::May, 15),
-            }
+            Calendar { view_date: fixed_date(2026, Month::May, 15) }
         }
     }
 
     #[component]
     fn CalendarWithDefaultMonthCount() -> Element {
         rsx! {
-            Calendar {
-                view_date: fixed_date(2026, Month::May, 15),
-                month_count: 3,
-            }
+            Calendar { view_date: fixed_date(2026, Month::May, 15), month_count: 3 }
         }
     }
 

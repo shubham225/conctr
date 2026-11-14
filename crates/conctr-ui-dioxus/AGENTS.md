@@ -8,18 +8,23 @@ Read the [theming contract](../../docs/development/theming.md),
 - `src/components/primitives/` owns layout; `ui/` owns base controls/interactions;
   `composed/` combines them into reusable patterns. Preserve compatibility exports.
   Product pages, fetching, permissions and business rules belong outside this crate.
-- Use `ThemeProvider`/`ConctrStyles` to load the complete style bundle. `MAIN_CSS`
-  alone does not load fonts, palette or component modules. `CONCTR_UI_CSS` remains
-  a compatibility alias; the kit's separate reference stylesheet keeps its name.
-- Put shared recipes and semantic theme defaults in `assets/styles/main.css`.
-  Keep placement, responsive structure and primitive-specific states in adjacent
-  CSS modules. Reuse existing `cn-*` recipes and meaningful `--cn-*` properties.
-  `registry.css` retains legacy aliases; new components must not use those aliases.
-- Scope brand/density role overrides to the provider itself. Verify nested providers,
-  both modes and System mode; custom properties follow DOM inheritance.
-- Keep CSS-module source-path comments synchronized after moves. Register new styled
-  modules in `src/assets/registry_styles.rs`; do not add empty stylesheets for
-  components that need no styling. Check served selectors after structural changes.
+- `ThemeProvider`/`ConctrStyles` loads fonts, tokens, runtime styles and bundled
+  Tailwind utilities. Consuming apps require no Tailwind setup or asset copies.
+- Keep complete Tailwind 4.1 class literals in Rust. The crate owns its npm dev
+  dependencies and compiler inputs. Run `npm ci` once for library development;
+  Cargo rebuilds refresh `assets/styles/tailwind.css`. Commit that bundle for
+  consumers without Node. Use `npm run watch:css` for immediate utility-only edits.
+- Use adjacent `style.css` for specialized rules in `@layer components`, with
+  `#[css_module("/src/components/.../style.css")] struct Styles;` and `Styles::...`
+  classes. Explicitly register the matching CSS-module asset per component for
+  SSR. Keep source-path markers and intentional `:global` compatibility hooks.
+- Palette and scales live in `assets/colors/tokens.css`, shadcn aliases and shared
+  interactions in `assets/styles/main.css`, compiler mappings in `theme.css`.
+  Preserve standard names and Conctr protocol/font/spacing extensions. Never send
+  compiler directives to the browser in local CSS-module assets.
+- Avoid empty stylesheets, a central registry and duplicated shared styling.
+  Scope brand/density overrides to providers; verify nested and System modes.
+  Preserve caller classes, and document explicit atomic utility overrides.
 - Preserve primitive keyboard/focus/ARIA contracts, controlled/uncontrolled behavior,
   caller attributes and SSR/hydration consistency. Use current Dioxus 0.7 APIs.
 - Update the matching gallery example/source when public behavior changes. Cover

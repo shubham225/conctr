@@ -1,5 +1,6 @@
 /* CSS module source: /src/components/ui/toggle_group/style.css */
-/* Shared item sizing, surface and states: .cn-toggle. */
-.dx-toggle-group { display: inline-flex; flex-wrap: wrap; gap: var(--cn-space-1); width: fit-content; }
-.dx-toggle-group[data-orientation="vertical"] { flex-direction: column; }
-.dx-toggle-item { flex-shrink: 0; }
+@layer components {
+  .cn-ui-toggle-group[data-orientation="vertical"] {
+    flex-direction: column;
+  }
+}

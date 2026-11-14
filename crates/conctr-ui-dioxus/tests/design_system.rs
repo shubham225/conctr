@@ -10,6 +10,81 @@ fn render(app: fn() -> Element) -> String {
 }
 
 #[test]
+fn alerts_share_one_semantic_api_and_keep_the_compatibility_adapter() {
+    let html = render(|| {
+        rsx! {
+            Alert { status: Status::Danger, id: "alert-danger", "Connection failed" }
+            Alert { status: Status::Success, "Connection saved" }
+            StatusAlert { status: Status::Warning, "Review configuration" }
+        }
+    });
+    assert!(html.contains("data-status=\"danger\""));
+    assert!(html.contains("data-status=\"success\""));
+    assert!(html.contains("data-status=\"warning\""));
+    assert_eq!(html.matches("role=\"alert\"").count(), 1);
+    assert_eq!(html.matches("role=\"status\"").count(), 2);
+}
+
+#[test]
+fn command_and_splitter_markup_has_stable_keyboard_and_aria_contracts() {
+    let html = render(|| {
+        rsx! {
+            Command { id: "test-command",
+                CommandInput {}
+                CommandList { CommandEmpty { "No commands" }
+                    CommandGroup { heading: "Actions",
+                        CommandItem { index: 0, value: "Save", "Save" }
+                        CommandItem { index: 1, value: "Delete", disabled: true, "Delete" }
+                    }
+                }
+            }
+            ResizablePanelGroup { id: "test-panels", default_sizes: vec![30.0, 70.0],
+                ResizablePanel { index: 0, "Sidebar" }
+                ResizableHandle { index: 0, with_handle: true }
+                ResizablePanel { index: 1, "Workspace" }
+            }
+        }
+    });
+    for expected in [
+        "role=\"combobox\"",
+        "role=\"listbox\"",
+        "role=\"option\"",
+        "aria-controls=\"test-command-list\"",
+        "id=\"test-command-item-0\"",
+        "aria-disabled=true",
+        "role=\"separator\"",
+        "aria-orientation=\"vertical\"",
+        "aria-controls=\"test-panels-panel-0\"",
+        "aria-valuenow=30",
+    ] {
+        assert!(html.contains(expected), "Missing {expected} in {html}");
+    }
+    assert!(!html.contains("{Styles::"));
+}
+
+#[test]
+fn uploaders_are_native_labeled_inputs_and_keyboard_keys_share_the_new_api() {
+    let html = render(|| {
+        rsx! {
+            FileUploader { id: "files", accept: ".json", disabled: true }
+            KbdGroup { aria_label: "Control K", Kbd { "Ctrl" } Kbd { "K" } }
+            KeyboardKey { "Esc" }
+        }
+    });
+    for expected in [
+        "type=\"file\"",
+        "id=\"files\"",
+        "for=\"files\"",
+        "accept=\".json\"",
+        "aria-describedby=\"files-hint\"",
+        "disabled",
+    ] {
+        assert!(html.contains(expected), "Missing {expected}");
+    }
+    assert_eq!(html.matches("<kbd").count(), 3);
+}
+
+#[test]
 fn button_loading_disables_submission_and_preserves_custom_attributes() {
     let html = render(|| {
         rsx! {

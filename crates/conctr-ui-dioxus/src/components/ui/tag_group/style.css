@@ -1,93 +1,71 @@
 /* CSS module source: /src/components/ui/tag_group/style.css */
-.dx-tag-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+@layer components {
+  .cn-ui-tag-group-label {
+    padding: 4px 12px;
+  }
+  .cn-ui-tag {
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--border);
+    cursor: default;
+    padding-inline: calc(var(--spacing, .25rem) * 3);
+    padding-block: calc(var(--spacing, .25rem) * .5);
+    font-size: var(--cn-fs-caption);
+    line-height: var(--cn-lh-caption);
+    border-radius: 2147483647px;
+  }
+  .cn-ui-tag[data-selected="true"] {
+    border-color: var(--ring);
+    background-color: var(--ring);
+  }
+  .cn-ui-tag[data-disabled="true"] {
+    pointer-events: none;
+    opacity: .5;
+  }
+  .cn-ui-tag:focus-visible {
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+  .cn-ui-remove-button {
+    color: var(--subtle-foreground);
+    background-color: #0000;
+    border-style: none;
+    border-radius: 6px;
+    transition: background-color .12s, color .12s, transform 80ms;
+  }
+  .cn-ui-remove-button:hover {
+    background-color: var(--muted);
+    color: var(--foreground);
+  }
+  .cn-ui-remove-button:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .cn-ui-tag-group-empty {
+    padding: 4px 0;
+  }
+  .cn-ui-tag-group {
+    font: var(--cn-font-small);
+  }
+  .cn-ui-tag-group-label {
+    padding: 0;
+  }
+  .cn-ui-tag {
+    padding: var(--cn-space-1) var(--cn-space-2);
+    border-radius: calc(var(--radius) - 4px);
+    border-color: var(--border);
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+    font: var(--cn-font-badge);
+  }
+  .cn-ui-tag[data-selected="true"] {
+    border-color: var(--primary);
+    background-color: var(--accent);
+    color: var(--primary);
+  }
+  .cn-ui-remove-button {
+    color: inherit;
+  }
+  .cn-ui-remove-button:active {
+    transform: none;
+  }
 }
-
-.dx-tag-group-label {
-  padding: 4px 12px;
-  font-size: var(--cn-fs-small);
-  font-weight: 500;
-}
-
-.dx-tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-}
-
-.dx-tag {
-  display: flex;
-  max-width: fit-content;
-  align-items: center;
-  border: 1px solid var(--cn-border);
-  border-radius: var(--cn-radius-pill);
-  cursor: default;
-  font-size: var(--cn-fs-caption);
-  gap: 0.25rem;
-  padding-block: 0.125rem;
-  padding-inline: 0.75rem;
-}
-
-.dx-tag[data-selected="true"] {
-  border-color: var(--cn-focus);
-  background-color: var(--cn-focus);
-}
-
-.dx-tag[data-disabled="true"] {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.dx-tag:focus-visible {
-  box-shadow: 0 0 0 2px var(--cn-focus);
-}
-
-.dx-remove-button {
-  display: flex;
-  overflow: visible;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border-style: none;
-  border-radius: 6px;
-  margin-left: 0.25rem;
-  background-color: transparent;
-  color: var(--cn-text-subtle);
-  cursor: pointer;
-  transition:
-    background-color 120ms ease,
-    color 120ms ease,
-    transform 80ms ease;
-}
-
-.dx-remove-button:hover {
-  background-color: var(--cn-sunken);
-  color: var(--cn-text);
-}
-
-.dx-remove-button:active {
-  transform: scale(0.92);
-}
-
-.dx-remove-button:focus-visible {
-  outline: 2px solid var(--cn-focus);
-  outline-offset: 2px;
-}
-
-.dx-tag-group-empty {
-  padding: 4px 0;
-  font-size: var(--cn-fs-small);
-  text-align: center;
-}
-/* Component-specific adaptations of the shared main.css recipes. */
-
-.dx-tag-group { gap: var(--cn-space-3); font: var(--cn-font-small); }
-.dx-tag-group-label { padding: 0; color: var(--cn-text); font-weight: var(--cn-fw-medium); }
-.dx-tag-list { gap: var(--cn-space-2); }
-.dx-tag { min-height: var(--cn-control-sm); padding: var(--cn-space-1) var(--cn-space-2); border-radius: var(--cn-radius-sm); border-color: var(--cn-border); background: var(--cn-sunken); color: var(--cn-text-muted); font: var(--cn-font-badge); gap: var(--cn-space-2); }
-.dx-tag[data-selected="true"] { background: var(--cn-primary-soft); color: var(--cn-primary); border-color: var(--cn-primary); }
-.dx-remove-button { min-width: var(--cn-space-6); min-height: var(--cn-space-6); margin: 0; color: inherit; }
-.dx-remove-button:active { transform: none; }

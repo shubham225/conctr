@@ -9,7 +9,11 @@ pub fn FieldError(
     attributes: Vec<Attribute>,
     children: Element,
 ) -> Element {
-    let base = attributes!(span { class: "cn-error" });
+    let base = attributes!(span {
+        class: "cn-error text-xs text-destructive"
+    });
     let merged = merge_attributes(vec![base, attributes]);
-    rsx! { span { ..merged, {children} } }
+    rsx! {
+        span { ..merged,{children} }
+    }
 }

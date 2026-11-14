@@ -4,6 +4,11 @@ pub mod assets;
 pub mod components;
 /// Common components and types for application imports.
 pub mod prelude {
+    pub use crate::components::ui::command::*;
+    pub use crate::components::ui::file_uploader::*;
+    pub use crate::components::ui::kbd::*;
+    pub use crate::components::ui::resizable::*;
+
     pub use crate::assets::styles::ConctrStyles;
     pub use crate::components::composed::connection_flow::*;
     pub use crate::components::composed::connection_node::*;

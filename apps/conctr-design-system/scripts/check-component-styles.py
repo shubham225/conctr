@@ -18,16 +18,26 @@ class Page(HTMLParser):
         super().__init__()
         self.stylesheets = []
         self.classes = set()
+        self.stack = []
         self.feed(html)
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if tag == "link" and attrs.get("rel") == "stylesheet":
             self.stylesheets.append(attrs["href"])
-        self.classes.update(
-            cls for cls in attrs.get("class", "").split()
-            if re.fullmatch(r"dx-[\w-]+-[a-f0-9]{8}", cls)
-        )
+        classes = attrs.get("class", "").split()
+        inside = "cn-body" in classes or any(scoped for _, scoped in self.stack)
+        if inside:
+            self.classes.update(classes)
+        if tag not in {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}:
+            self.stack.append((tag, inside))
+
+    def handle_endtag(self, tag):
+        for index in range(len(self.stack) - 1, -1, -1):
+            if self.stack[index][0] == tag:
+                del self.stack[index:]
+                break
+
 
 
 def check(base_url):
@@ -36,12 +46,18 @@ def check(base_url):
     cache = {}
     failures = []
     checked = set()
+    utilities = set()
+    library = catalog.parents[3] / "crates/conctr-ui-dioxus"
+    css_sources = [library / "assets/styles/main.css", *library.glob("src/components/**/style.css")]
+    markers = set()
+    for source in css_sources:
+        markers.update(re.findall(r"\.((?:cn|dx)-[\w-]+)", source.read_text()))
     for slug in slugs:
         url = urljoin(base_url.rstrip("/") + "/", f"components/{slug}")
         with urlopen(url, timeout=30) as response:
             page = Page(response.read().decode())
         if not page.classes:
-            failures.append(f"{slug}: no server-rendered CSS module classes found")
+            failures.append(f"{slug}: no server-rendered component classes found")
             continue
         sheets = []
         for href in page.stylesheets:
@@ -51,14 +67,34 @@ def check(base_url):
                     cache[stylesheet_url] = response.read().decode()
             sheets.append(cache[stylesheet_url])
         css = "\n".join(sheets)
+        if not any(re.search(r"/tailwind(?:-dxh[0-9a-f]+)?\.css$", href) for href in page.stylesheets):
+            failures.append(f"{slug}: missing library Tailwind stylesheet")
+        if "tailwindcss v4.1." not in css:
+            failures.append(f"{slug}: missing compiled Tailwind 4.1 output")
+        for directive in ("@apply ", "@reference ", "@theme "):
+            if directive in css:
+                failures.append(f"{slug}: uncompiled {directive.strip()} in served CSS")
         for cls in page.classes:
-            checked.add(cls)
-            if not re.search(r"\." + re.escape(cls) + r"(?![\w-])", css):
+            if cls.startswith(("cn-", "dx-", "ds-")):
+                if re.search(r"-[0-9a-f]{8}$", cls):
+                    checked.add(cls)  # Manganis-scoped component selector.
+                elif cls in markers:
+                    # Unscoped hooks accompany hashed module classes. Only
+                    # intentionally global selectors must match literally.
+                    if not re.search(r"\." + re.escape(cls) + r"(?![\w-])", css):
+                        continue
+                    checked.add(cls)
+                else:
+                    continue
+            else:
+                utilities.add(cls)
+            escaped = "".join(char if char.isalnum() or char in "_-" else "\\" + char for char in cls)
+            if not re.search(r"\." + re.escape(escaped) + r"(?![\w-])", css):
                 failures.append(f"{slug}: no served selector for .{cls}")
     if failures:
         raise SystemExit("\n".join(failures))
     print(f"Passed: {len(slugs)} pages, {len(checked)} component classes, "
-          f"{len(cache)} stylesheets fetched and matched.")
+          f"{len(utilities)} utility classes, {len(cache)} stylesheets fetched and matched.")
 
 
 if __name__ == "__main__":

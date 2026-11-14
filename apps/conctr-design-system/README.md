@@ -42,7 +42,7 @@ sh apps/conctr-design-system/scripts/sync-reference.sh
 ```
 
 The reference copy preserves relative font/image URLs. Tests check that its HTML
-and CSS, and the shared crate's canonical CSS/tokens, match `design/`.
+and CSS match `design/`, and that library token values preserve the canonical kit.
 
 ```sh
 cargo test -p conctr-design-system -p conctr-ui-dioxus
@@ -68,7 +68,12 @@ and reference examples. Shared source is organized under
 import snippets and source guidance point to these canonical modules. See the
 [presentation architecture](../../docs/architecture/dioxus-presentation.md).
 
-To catch CSS module selectors that no longer match rendered markup, run the
+`ThemeProvider` loads the UI library's bundled Tailwind 4.1 utilities and theme.
+This app has no Tailwind dependency, input, config or build step. Component-specific
+CSS modules stay in the UI library and load with their components.
+See the library's [usage guide](../../crates/conctr-ui-dioxus/README.md#usage)
+and [SSR workaround](../../docs/development/theming.md#ssr-css-module-workaround).
+To catch styles that no longer match rendered markup, run the
 served-styles regression check against the fullstack gallery:
 
 ```sh

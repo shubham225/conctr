@@ -15,6 +15,12 @@ use dioxus_primitives::use_controlled;
 #[css_module("/src/components/ui/sidebar/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/sidebar/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 // constants
 const SIDEBAR_WIDTH: &str = "240px";
 const SIDEBAR_WIDTH_MOBILE: &str = "18rem";
@@ -238,14 +244,16 @@ pub fn SidebarProvider(
     );
 
     let base = attributes!(div {
-        class: Styles::dx_sidebar_wrapper,
+        class: "cn-ui-sidebar-wrapper {Styles::cn_ui_sidebar_wrapper.inner} flex w-full overflow-hidden h-svh min-h-svh",
         "data-slot": "sidebar-wrapper",
         style: sidebar_style,
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        div { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        div { ..merged,{children} }
     }
 }
 
@@ -269,13 +277,15 @@ pub fn Sidebar(
 
     if collapsible == SidebarCollapsible::None {
         let base = attributes!(div {
-            class: Styles::dx_sidebar_static,
+            class: "cn-ui-sidebar-static flex flex-col h-full bg-sidebar text-sidebar-foreground w-(--dx-sidebar-width)",
             "data-slot": "sidebar",
         });
         let merged = merge_attributes(vec![base, attributes]);
 
         return rsx! {
-            div { ..merged, {children} }
+            document::Stylesheet { href: STYLES }
+
+            div { ..merged,{children} }
         };
     }
 
@@ -286,20 +296,22 @@ pub fn Sidebar(
         };
 
         return rsx! {
+            document::Stylesheet { href: STYLES }
+
             Sheet {
                 open: open_mobile(),
                 on_open_change: move |v| ctx.set_open_mobile(v),
                 "data-side": sheet_side.as_str(),
-                class: Styles::dx_sidebar_sheet.to_string(),
+                class: format!("cn-ui-sidebar-sheet {} bg-sidebar", Styles::cn_ui_sidebar_sheet.inner),
                 "data-sidebar": "sidebar",
                 "data-slot": "sidebar",
                 "data-mobile": "true",
-                SheetContentClose { class: Styles::dx_sidebar_sheet_close }
-                SheetHeader { class: Styles::dx_sr_only,
+                SheetContentClose { class: "cn-ui-sidebar-sheet-close {Styles::cn_ui_sidebar_sheet_close.inner}" }
+                SheetHeader { class: "sr-only",
                     SheetTitle { "Sidebar" }
                     SheetDescription { "Displays the mobile sidebar." }
                 }
-                div { class: Styles::dx_sidebar_mobile_inner, {children} }
+                div { class: "cn-ui-sidebar-mobile-inner flex flex-col w-full h-full", {children} }
             }
         };
     }
@@ -311,24 +323,25 @@ pub fn Sidebar(
     };
 
     let container_base = attributes!(div {
-        class: Styles::dx_sidebar_container,
+        class: "cn-ui-sidebar-container {Styles::cn_ui_sidebar_container.inner} box-border top-0 fixed bottom-0 h-svh",
         "data-slot": "sidebar-container",
     });
     let container_attrs = merge_attributes(vec![container_base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         div {
-            class: Styles::dx_sidebar_desktop,
+            class: "cn-ui-sidebar-desktop {Styles::cn_ui_sidebar_desktop.inner} text-sidebar-foreground",
             "data-state": state().as_str(),
             "data-collapsible": collapsible_str,
             "data-variant": variant.as_str(),
             "data-side": side.as_str(),
             "data-slot": "sidebar",
-            div { class: Styles::dx_sidebar_gap, "data-slot": "sidebar-gap" }
-            div {
-                ..container_attrs,
+            div { class: "cn-ui-sidebar-gap {Styles::cn_ui_sidebar_gap.inner} relative bg-transparent", "data-slot": "sidebar-gap" }
+            div {..container_attrs,
                 div {
-                    class: Styles::dx_sidebar_inner,
+                    class: "cn-ui-sidebar-inner {Styles::cn_ui_sidebar_inner.inner} flex flex-col w-full box-border h-full bg-sidebar",
                     "data-sidebar": "sidebar",
                     "data-slot": "sidebar-inner",
                     {children}
@@ -348,7 +361,7 @@ pub fn SidebarTrigger(
     let ctx = use_sidebar();
 
     let base = attributes!(button {
-        class: Styles::dx_sidebar_trigger,
+        class: "cn-ui-sidebar-trigger {Styles::cn_ui_sidebar_trigger.inner} items-center inline-flex justify-center w-7 h-7 w-(--cn-control-sm) h-(--cn-control-sm)",
         "data-sidebar": "trigger",
         "data-slot": "sidebar-trigger",
         aria_expanded: if (ctx.is_mobile)() { (ctx.open_mobile)() } else { ctx.open() },
@@ -356,6 +369,8 @@ pub fn SidebarTrigger(
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         Button {
             variant: ButtonVariant::Ghost,
             size: ButtonSize::IconSm,
@@ -366,11 +381,8 @@ pub fn SidebarTrigger(
                 ctx.toggle();
             },
             attributes: merged,
-            PanelLeft {
-                class: Styles::dx_sidebar_trigger_icon,
-                size: "1rem",
-            }
-            span { class: Styles::dx_sr_only, "Toggle sidebar" }
+            PanelLeft { class: "cn-ui-sidebar-trigger-icon w-4 h-4", size: "1rem" }
+            span { class: "sr-only", "Toggle sidebar" }
         }
     }
 }
@@ -380,13 +392,15 @@ pub fn SidebarRail(#[props(extends = GlobalAttributes)] attributes: Vec<Attribut
     let ctx = use_sidebar();
 
     let base = attributes!(button {
-        class: Styles::dx_sidebar_rail,
+        class: "cn-ui-sidebar-rail {Styles::cn_ui_sidebar_rail.inner} border-0 p-0",
         "data-sidebar": "rail",
         "data-slot": "sidebar-rail",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         button {
             aria_label: "Toggle sidebar",
             tabindex: -1,
@@ -403,13 +417,15 @@ pub fn SidebarInset(
     children: Element,
 ) -> Element {
     let base = attributes!(main {
-        class: Styles::dx_sidebar_inset,
+        class: "cn-ui-sidebar-inset {Styles::cn_ui_sidebar_inset.inner} flex relative flex-col w-full flex-1 bg-background min-w-0",
         "data-slot": "sidebar-inset",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        main { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        main { ..merged,{children} }
     }
 }
 
@@ -419,14 +435,16 @@ pub fn SidebarHeader(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_sidebar_header,
+        class: "cn-ui-sidebar-header {Styles::cn_ui_sidebar_header.inner} flex gap-2 flex-col shrink-0 justify-center",
         "data-slot": "sidebar-header",
         "data-sidebar": "header",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        div { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        div { ..merged,{children} }
     }
 }
 
@@ -436,14 +454,16 @@ pub fn SidebarContent(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_sidebar_content,
+        class: "cn-ui-sidebar-content {Styles::cn_ui_sidebar_content.inner} flex gap-2 flex-col min-h-0 flex-1",
         "data-slot": "sidebar-content",
         "data-sidebar": "content",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        div { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        div { ..merged,{children} }
     }
 }
 
@@ -453,14 +473,16 @@ pub fn SidebarFooter(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_sidebar_footer,
+        class: "cn-ui-sidebar-footer {Styles::cn_ui_sidebar_footer.inner} flex gap-2 flex-col",
         "data-slot": "sidebar-footer",
         "data-sidebar": "footer",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        div { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        div { ..merged,{children} }
     }
 }
 
@@ -471,13 +493,15 @@ pub fn SidebarSeparator(
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_sidebar_separator,
+        class: "cn-ui-sidebar-separator {Styles::cn_ui_sidebar_separator.inner}",
         "data-slot": "sidebar-separator",
         "data-sidebar": "separator",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         Separator { horizontal, decorative, attributes: merged }
     }
 }
@@ -488,14 +512,16 @@ pub fn SidebarGroup(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_sidebar_group,
+        class: "cn-ui-sidebar-group min-w-0 flex relative flex-col p-2 gap-2",
         "data-slot": "sidebar-group",
         "data-sidebar": "group",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        div { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        div { ..merged,{children} }
     }
 }
 
@@ -506,7 +532,7 @@ pub fn SidebarGroupLabel(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_sidebar_group_label,
+        class: "cn-ui-sidebar-group-label {Styles::cn_ui_sidebar_group_label.inner} flex items-center rounded-sm text-sidebar-foreground text-subtle-foreground",
         "data-slot": "sidebar-group-label",
         "data-sidebar": "group-label",
     });
@@ -516,6 +542,8 @@ pub fn SidebarGroupLabel(
         dynamic.call(merged)
     } else {
         rsx! {
+            document::Stylesheet { href: STYLES }
+
             div { ..merged,{children} }
         }
     }
@@ -528,7 +556,7 @@ pub fn SidebarGroupAction(
     children: Element,
 ) -> Element {
     let base = attributes!(button {
-        class: Styles::dx_sidebar_group_action,
+        class: "cn-ui-sidebar-group-action {Styles::cn_ui_sidebar_group_action.inner} items-center border-0 p-0 cursor-pointer justify-center aspect-square right-3 rounded-sm top-3.5",
         "data-slot": "sidebar-group-action",
         "data-sidebar": "group-action",
     });
@@ -538,6 +566,8 @@ pub fn SidebarGroupAction(
         dynamic.call(merged)
     } else {
         rsx! {
+            document::Stylesheet { href: STYLES }
+
             button { ..merged,{children} }
         }
     }
@@ -549,14 +579,16 @@ pub fn SidebarGroupContent(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_sidebar_group_content,
+        class: "cn-ui-sidebar-group-content text-sm w-full",
         "data-slot": "sidebar-group-content",
         "data-sidebar": "group-content",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        div { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        div { ..merged,{children} }
     }
 }
 
@@ -566,14 +598,16 @@ pub fn SidebarMenu(
     children: Element,
 ) -> Element {
     let base = attributes!(ul {
-        class: Styles::dx_sidebar_menu,
+        class: "cn-ui-sidebar-menu {Styles::cn_ui_sidebar_menu.inner} min-w-0 gap-1 flex-col p-0 m-0 list-none",
         "data-slot": "sidebar-menu",
         "data-sidebar": "menu",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        ul { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        ul { ..merged,{children} }
     }
 }
 
@@ -583,14 +617,16 @@ pub fn SidebarMenuItem(
     children: Element,
 ) -> Element {
     let base = attributes!(li {
-        class: Styles::dx_sidebar_menu_item,
+        class: "cn-ui-sidebar-menu-item {Styles::cn_ui_sidebar_menu_item.inner}",
         "data-slot": "sidebar-menu-item",
         "data-sidebar": "menu-item",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        li { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        li { ..merged,{children} }
     }
 }
 
@@ -645,7 +681,7 @@ pub fn SidebarMenuButton(
     let state = ctx.state;
 
     let base = attributes!(button {
-        class: Styles::dx_sidebar_menu_button,
+        class: "cn-ui-sidebar-menu-button {Styles::cn_ui_sidebar_menu_button.inner}",
         "data-slot": "sidebar-menu-button",
         "data-sidebar": "menu-button",
         "data-size": size.as_str(),
@@ -659,7 +695,10 @@ pub fn SidebarMenuButton(
         return if let Some(dynamic) = r#as {
             dynamic.call(merged)
         } else {
-            rsx! { button { ..merged, {children} } }
+            rsx! {
+                document::Stylesheet { href: STYLES }
+                button { ..merged,{children} }
+            }
         };
     };
 
@@ -667,17 +706,20 @@ pub fn SidebarMenuButton(
     let sidebar_side = ctx.side;
 
     rsx! {
-        Tooltip {
-            class: Styles::dx_sidebar_tooltip,
-            disabled: hidden,
+        document::Stylesheet { href: STYLES }
+
+        Tooltip { class: "cn-ui-sidebar-tooltip {Styles::cn_ui_sidebar_tooltip.inner} w-full! block!", disabled: hidden,
             TooltipTrigger {
-                as: move |tooltip_attrs: Vec<Attribute>| {
+                r#as: move |tooltip_attrs: Vec<Attribute>| {
                     let final_attrs = merge_attributes(vec![tooltip_attrs, merged.clone()]);
                     let children = children.clone();
                     if let Some(dynamic) = &r#as {
                         dynamic.call(final_attrs)
                     } else {
-                        rsx! { button { ..final_attrs, {children} } }
+                        rsx! {
+                            document::Stylesheet { href: STYLES }
+                            button { ..final_attrs,{children} }
+                        }
                     }
                 },
             }
@@ -700,7 +742,7 @@ pub fn SidebarMenuAction(
     children: Element,
 ) -> Element {
     let base = attributes!(button {
-        class: Styles::dx_sidebar_menu_action,
+        class: "cn-ui-sidebar-menu-action {Styles::cn_ui_sidebar_menu_action.inner}",
         "data-slot": "sidebar-menu-action",
         "data-sidebar": "menu-action",
         "data-show-on-hover": if show_on_hover { "true" } else { "false" },
@@ -711,6 +753,8 @@ pub fn SidebarMenuAction(
         dynamic.call(merged)
     } else {
         rsx! {
+            document::Stylesheet { href: STYLES }
+
             button { ..merged,{children} }
         }
     }
@@ -722,14 +766,16 @@ pub fn SidebarMenuBadge(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_sidebar_menu_badge,
+        class: "cn-ui-sidebar-menu-badge {Styles::cn_ui_sidebar_menu_badge.inner} flex items-center absolute text-xs justify-center font-medium h-5 rounded-sm select-none right-1 min-w-5 tabular-nums",
         "data-slot": "sidebar-menu-badge",
         "data-sidebar": "menu-badge",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        div { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        div { ..merged,{children} }
     }
 }
 
@@ -739,19 +785,20 @@ pub fn SidebarMenuSkeleton(
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     let base = attributes!(div {
-        class: Styles::dx_sidebar_menu_skeleton,
+        class: "cn-ui-sidebar-menu-skeleton {Styles::cn_ui_sidebar_menu_skeleton.inner} flex items-center gap-2 h-8 rounded-sm",
         "data-slot": "sidebar-menu-skeleton",
         "data-sidebar": "menu-skeleton",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        div {
-            ..merged,
+        document::Stylesheet { href: STYLES }
+
+        div {..merged,
             if show_icon {
-                Skeleton { class: Styles::dx_sidebar_menu_skeleton_icon }
+                Skeleton { class: "cn-ui-sidebar-menu-skeleton-icon w-4 h-4 rounded-sm" }
             }
-            Skeleton { class: Styles::dx_sidebar_menu_skeleton_text, width: "70%" }
+            Skeleton { class: "cn-ui-sidebar-menu-skeleton-text h-4 flex-1", width: "70%" }
         }
     }
 }
@@ -762,14 +809,16 @@ pub fn SidebarMenuSub(
     children: Element,
 ) -> Element {
     let base = attributes!(ul {
-        class: Styles::dx_sidebar_menu_sub,
+        class: "cn-ui-sidebar-menu-sub {Styles::cn_ui_sidebar_menu_sub.inner} flex gap-1 flex-col list-none",
         "data-slot": "sidebar-menu-sub",
         "data-sidebar": "menu-sub",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        ul { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        ul { ..merged,{children} }
     }
 }
 
@@ -779,14 +828,16 @@ pub fn SidebarMenuSubItem(
     children: Element,
 ) -> Element {
     let base = attributes!(li {
-        class: Styles::dx_sidebar_menu_sub_item,
+        class: "cn-ui-sidebar-menu-sub-item relative",
         "data-slot": "sidebar-menu-sub-item",
         "data-sidebar": "menu-sub-item",
     });
     let merged = merge_attributes(vec![base, attributes]);
 
     rsx! {
-        li { ..merged, {children} }
+        document::Stylesheet { href: STYLES }
+
+        li { ..merged,{children} }
     }
 }
 
@@ -816,7 +867,7 @@ pub fn SidebarMenuSubButton(
     children: Element,
 ) -> Element {
     let base = attributes!(a {
-        class: Styles::dx_sidebar_menu_sub_button,
+        class: "cn-ui-sidebar-menu-sub-button {Styles::cn_ui_sidebar_menu_sub_button.inner} min-w-0 flex items-center gap-2 box-border cursor-pointer no-underline",
         "data-slot": "sidebar-menu-sub-button",
         "data-sidebar": "menu-sub-button",
         "data-size": size.as_str(),
@@ -829,7 +880,9 @@ pub fn SidebarMenuSubButton(
         dynamic.call(merged)
     } else {
         rsx! {
-            a { ..merged, {children} }
+            document::Stylesheet { href: STYLES }
+
+            a { ..merged,{children} }
         }
     }
 }

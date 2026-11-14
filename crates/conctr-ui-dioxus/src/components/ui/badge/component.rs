@@ -4,6 +4,12 @@ use dioxus_icons::lucide::BadgeCheck;
 #[css_module("/src/components/ui/badge/style.css")]
 struct Styles;
 
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/badge/style.css",
+    manganis::AssetOptions::css_module()
+);
+
 #[derive(Copy, Clone, PartialEq, Default)]
 #[non_exhaustive]
 pub enum BadgeVariant {
@@ -55,6 +61,8 @@ pub struct BadgeProps {
 #[component]
 pub fn Badge(props: BadgeProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         BadgeElement {
             "padding": true,
             variant: props.variant,
@@ -67,8 +75,10 @@ pub fn Badge(props: BadgeProps) -> Element {
 #[component]
 fn BadgeElement(props: BadgeProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         span {
-            class: format!("{} cn-badge", Styles::dx_badge),
+            class: "cn-ui-badge {Styles::cn_ui_badge.inner} cn-badge {Styles::cn_badge.inner} w-fit items-center h-6 inline-flex py-0 px-2 whitespace-nowrap",
             "data-style": props.variant.class(),
             ..props.attributes,
             {props.children}
@@ -79,9 +89,8 @@ fn BadgeElement(props: BadgeProps) -> Element {
 #[component]
 pub fn VerifiedIcon() -> Element {
     rsx! {
-        BadgeCheck {
-            size: "12px",
-            stroke: "var(--cn-text)",
-        }
+        document::Stylesheet { href: STYLES }
+
+        BadgeCheck { size: "12px", stroke: "var(--cn-text)" }
     }
 }

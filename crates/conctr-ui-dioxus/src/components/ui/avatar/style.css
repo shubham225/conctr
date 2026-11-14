@@ -1,116 +1,132 @@
 /* CSS module source: /src/components/ui/avatar/style.css */
-.dx-avatar-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.dx-avatar-label {
-    margin: 0;
-    color: var(--cn-text);
+@layer components {
+  :global(.cn-avatar) {
+    height: var(--cn-control-md);
+    width: var(--cn-control-md);
+    font: var(--cn-fw-semibold) var(--cn-fs-small)/1 var(--cn-font-ui);
+  }
+  :global(.cn-avatar--sm) {
+    height: calc(var(--spacing, .25rem) * 6);
+    width: calc(var(--spacing, .25rem) * 6);
+    font-size: var(--cn-fs-caption);
+    line-height: var(--cn-lh-caption);
+  }
+  :global(.cn-avatar--md) {
+    height: var(--cn-control-sm);
+    width: var(--cn-control-sm);
+    font-size: var(--cn-fs-caption);
+    line-height: var(--cn-lh-caption);
+  }
+  :global(.cn-avatar--lg) {
+    height: var(--cn-control-lg);
+    width: var(--cn-control-lg);
+    font-size: var(--cn-fs-body);
+    line-height: var(--cn-lh-body);
+  }
+  .cn-ui-avatar {
+    height: calc(var(--spacing, .25rem) * 16);
+    width: calc(var(--spacing, .25rem) * 16);
+    font-weight: var(--cn-fw-medium);
+    color: var(--foreground);
+  }
+  .cn-ui-avatar-sm {
+    height: calc(var(--spacing, .25rem) * 8);
+    width: calc(var(--spacing, .25rem) * 8);
     font-size: var(--cn-fs-small);
-}
-
-/* Avatar Component Styles */
-.dx-avatar {
-    position: relative;
-    display: inline-flex;
-    overflow: hidden;
-    width: 64px;
-    height: 64px;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    color: var(--cn-text);
-    font-weight: 500;
-}
-
-.dx-avatar-image {
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 1;
-}
-
-/* Avatar sizes */
-.dx-avatar-sm {
-    width: 2rem;
-    height: 2rem;
-    font-size: var(--cn-fs-small);
-}
-
-.dx-avatar-md {
-    width: 3rem;
-    height: 3rem;
+    line-height: var(--cn-lh-small);
+  }
+  .cn-ui-avatar-md {
+    height: calc(var(--spacing, .25rem) * 12);
+    width: calc(var(--spacing, .25rem) * 12);
     font-size: var(--cn-fs-h4);
-}
-
-.dx-avatar-lg {
-    width: 4rem;
-    height: 4rem;
+    line-height: var(--cn-lh-h4);
+  }
+  .cn-ui-avatar-lg {
+    height: calc(var(--spacing, .25rem) * 16);
+    width: calc(var(--spacing, .25rem) * 16);
     font-size: var(--cn-fs-h2);
-}
-
-/* Avatar shape */
-.dx-avatar-circle {
-    border-radius: 50%;
-}
-
-.dx-avatar-rounded {
-    border-radius: var(--cn-radius-md);
-}
-
-.dx-avatar[data-state="loading"] {
-    animation: dx-pulse 1.5s infinite ease-in-out;
-    background: var(--cn-sunken);
-}
-
-.dx-avatar[data-state="empty"] {
-    background: var(--cn-border-strong);
-}
-
-@keyframes dx-pulse {
+  }
+  .cn-ui-avatar[data-state="loading"] {
+    background-color: var(--muted);
+    animation: 1.5s ease-in-out infinite dx-pulse;
+  }
+  .cn-ui-avatar[data-state="empty"] {
+    background-color: var(--input);
+  }
+  @keyframes dx-pulse {
     0% {
-        opacity: 1;
+      opacity: 1;
     }
-
     50% {
-        opacity: 0.7;
+      opacity: .7;
     }
-
     100% {
-        opacity: 1;
+      opacity: 1;
     }
-}
-
-.dx-avatar-fallback {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    background: var(--cn-surface);
-    color: var(--cn-text);
+  }
+  .cn-ui-avatar-fallback {
+    background-color: var(--card);
+    color: var(--foreground);
     font-size: var(--cn-fs-h3);
+  }
+  .cn-ui-avatar[data-state="error"] .cn-ui-avatar-fallback {
+    background-color: var(--muted);
+    color: var(--foreground);
+  }
+  .cn-ui-avatar {
+    height: var(--cn-control-md);
+    width: var(--cn-control-md);
+    background-color: var(--accent);
+    color: var(--primary);
+    font: var(--cn-fw-semibold) var(--cn-fs-small)/1 var(--cn-font-ui);
+  }
+  :global(.cn-ui-avatar--sm) {
+    height: calc(var(--spacing, .25rem) * 6);
+    width: calc(var(--spacing, .25rem) * 6);
+    font-size: var(--cn-fs-caption);
+    line-height: var(--cn-lh-caption);
+  }
+  :global(.cn-ui-avatar--md) {
+    height: var(--cn-control-sm);
+    width: var(--cn-control-sm);
+    font-size: var(--cn-fs-caption);
+    line-height: var(--cn-lh-caption);
+  }
+  :global(.cn-ui-avatar--lg) {
+    height: var(--cn-control-lg);
+    width: var(--cn-control-lg);
+    font-size: var(--cn-fs-body);
+    line-height: var(--cn-lh-body);
+  }
+  .cn-ui-avatar.cn-ui-avatar-sm {
+    height: calc(var(--spacing, .25rem) * 6);
+    width: calc(var(--spacing, .25rem) * 6);
+  }
+  .cn-ui-avatar.cn-ui-avatar-md {
+    height: var(--cn-control-sm);
+    width: var(--cn-control-sm);
+  }
+  .cn-ui-avatar.cn-ui-avatar-lg {
+    height: var(--cn-control-lg);
+    width: var(--cn-control-lg);
+  }
+  .cn-ui-avatar.cn-ui-avatar-default {
+    height: var(--cn-control-md);
+    width: var(--cn-control-md);
+    font-size: var(--cn-fs-small);
+    line-height: var(--cn-lh-small);
+  }
+  .cn-ui-avatar.cn-ui-avatar-sm, .cn-ui-avatar.cn-ui-avatar-md {
+    font-size: var(--cn-fs-caption);
+    line-height: var(--cn-lh-caption);
+  }
+  .cn-ui-avatar.cn-ui-avatar-lg {
+    font-size: var(--cn-fs-body);
+    line-height: var(--cn-lh-body);
+  }
+  .cn-ui-avatar .cn-ui-avatar-fallback, .cn-ui-avatar[data-state="error"] .cn-ui-avatar-fallback {
+    background-color: inherit;
+    color: inherit;
+    font: inherit;
+  }
 }
-
-.dx-avatar[data-state="error"] .dx-avatar-fallback {
-    background: var(--cn-sunken);
-    color: var(--cn-text);
-}
-
-/* Component-specific adaptations of the shared main.css recipes. */
-.dx-avatar { display: inline-grid; place-items: center; width: var(--cn-control-md); height: var(--cn-control-md); border-radius: 50%; background: var(--cn-primary-soft); color: var(--cn-primary); font: var(--cn-fw-semibold) var(--cn-fs-small)/1 var(--cn-font-ui); flex: none; }
-.dx-avatar--sm { width: 24px; height: 24px; font-size: var(--cn-fs-caption); }
-.dx-avatar--md { width: var(--cn-control-sm); height: var(--cn-control-sm); font-size: var(--cn-fs-caption); }
-.dx-avatar--lg { width: var(--cn-control-lg); height: var(--cn-control-lg); font-size: var(--cn-fs-body); }
-
-.dx-avatar.dx-avatar-sm { width: 24px; height: 24px; }
-.dx-avatar.dx-avatar-md { width: var(--cn-control-sm); height: var(--cn-control-sm); }
-.dx-avatar.dx-avatar-lg { width: var(--cn-control-lg); height: var(--cn-control-lg); }
-
-/* Preserve the kit's initials treatment through the primitive fallback node. */
-.dx-avatar.dx-avatar-default { width: var(--cn-control-md); height: var(--cn-control-md); font-size: var(--cn-fs-small); }
-.dx-avatar.dx-avatar-sm, .dx-avatar.dx-avatar-md { font-size: var(--cn-fs-caption); }
-.dx-avatar.dx-avatar-lg { font-size: var(--cn-fs-body); }
-.dx-avatar .dx-avatar-fallback, .dx-avatar[data-state="error"] .dx-avatar-fallback { background: inherit; color: inherit; font: inherit; }

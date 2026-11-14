@@ -13,9 +13,11 @@ pub fn Stack(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: "cn-stack",
+        class: "cn-stack min-w-0 flex flex-col gap-4",
         style: format!("gap: {}; align-items: {};", gap.token(), align.css())
     });
     let merged = merge_attributes(vec![base, attributes]);
-    rsx! { div { ..merged, {children} } }
+    rsx! {
+        div { ..merged,{children} }
+    }
 }

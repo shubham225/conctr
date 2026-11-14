@@ -3,14 +3,23 @@ use dioxus_icons::lucide::ChevronDown;
 use dioxus_primitives::navbar::{
     self, NavbarContentProps, NavbarItemProps, NavbarNavProps, NavbarProps, NavbarTriggerProps,
 };
+
 #[css_module("/src/components/ui/navbar/style.css")]
 struct Styles;
+
+// Register for every document, including repeated SSR requests.
+const STYLES: Asset = asset!(
+    "/src/components/ui/navbar/style.css",
+    manganis::AssetOptions::css_module()
+);
 
 #[component]
 pub fn Navbar(props: NavbarProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         navbar::Navbar {
-            class: Styles::dx_navbar,
+            class: "cn-ui-navbar {Styles::cn_ui_navbar.inner} gap-1 box-border",
             disabled: props.disabled,
             roving_loop: props.roving_loop,
             attributes: props.attributes,
@@ -22,8 +31,10 @@ pub fn Navbar(props: NavbarProps) -> Element {
 #[component]
 pub fn NavbarNav(props: NavbarNavProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         navbar::NavbarNav {
-            class: Styles::dx_navbar_nav,
+            class: "cn-ui-navbar-nav {Styles::cn_ui_navbar_nav.inner} relative",
             index: props.index,
             disabled: props.disabled,
             attributes: props.attributes,
@@ -35,10 +46,12 @@ pub fn NavbarNav(props: NavbarNavProps) -> Element {
 #[component]
 pub fn NavbarTrigger(props: NavbarTriggerProps) -> Element {
     rsx! {
-        navbar::NavbarTrigger { class: Styles::dx_navbar_trigger, attributes: props.attributes,
+        document::Stylesheet { href: STYLES }
+
+        navbar::NavbarTrigger { class: "cn-ui-navbar-trigger {Styles::cn_ui_navbar_trigger.inner}", attributes: props.attributes,
             {props.children}
             ChevronDown {
-                class: Styles::dx_navbar_expand_icon,
+                class: "cn-ui-navbar-expand-icon {Styles::cn_ui_navbar_expand_icon.inner}",
                 size: "20px",
                 stroke: "var(--cn-text)",
             }
@@ -49,8 +62,10 @@ pub fn NavbarTrigger(props: NavbarTriggerProps) -> Element {
 #[component]
 pub fn NavbarContent(props: NavbarContentProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         navbar::NavbarContent {
-            class: Styles::dx_navbar_content,
+            class: "cn-ui-navbar-content {Styles::cn_ui_navbar_content.inner} bg-card rounded-md p-1 min-w-50",
             id: props.id,
             attributes: props.attributes,
             {props.children}
@@ -61,8 +76,10 @@ pub fn NavbarContent(props: NavbarContentProps) -> Element {
 #[component]
 pub fn NavbarItem(props: NavbarItemProps) -> Element {
     rsx! {
+        document::Stylesheet { href: STYLES }
+
         navbar::NavbarItem {
-            class: Styles::dx_navbar_item.to_string(),
+            class: format!("cn-ui-navbar-item {} text-sm no-underline", Styles::cn_ui_navbar_item.inner),
             index: props.index,
             value: props.value,
             disabled: props.disabled,

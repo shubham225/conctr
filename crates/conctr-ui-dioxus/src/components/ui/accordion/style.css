@@ -1,105 +1,78 @@
 /* CSS module source: /src/components/ui/accordion/style.css */
-.dx-accordion-trigger {
-  display: flex;
-  width: 100%;
-  box-sizing: border-box;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  border: none;
-  background-color: transparent;
-  color: var(--cn-text);
-  outline: none;
-  text-align: left;
-}
-
-.dx-accordion-trigger:focus-visible {
-  border: none;
-  box-shadow: inset 0 0 0 2px var(--cn-focus);
-}
-
-.dx-accordion-trigger:hover:not(:disabled) {
-  cursor: pointer;
-  text-decoration-line: underline;
-}
-
-.dx-accordion-trigger:disabled {
-  color: var(--cn-text-muted);
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.dx-accordion-content {
-  display: grid;
-}
-
-.dx-accordion-content > * {
-  overflow: hidden;
-  min-height: 0;
-}
-
-.dx-accordion-content[data-open="false"] {
-	animation: dx-accordion-slide-down 300ms cubic-bezier(0.87, 0, 0.13, 1) forwards;
-}
-
-.dx-accordion-content[data-open="true"] {
-  animation: dx-accordion-slide-up 300ms cubic-bezier(0.87, 0, 0.13, 1) forwards;
-}
-
-@keyframes dx-accordion-slide-down {
-	from {
-    height: var(--collapsible-content-width);
-	}
-
-  to {
-    grid-template-rows: 0fr;
+@layer components {
+  .cn-ui-accordion-trigger {
+    border-style: solid;
+    color: var(--foreground);
+    border-width: 0;
+    outline: none;
+  }
+  .cn-ui-accordion-trigger:focus-visible {
+    border-style: solid;
+    box-shadow: inset 0 0 0 2px var(--ring);
+    border-width: 0;
+  }
+  .cn-ui-accordion-trigger:hover:not(:disabled) {
+    cursor: pointer;
+    text-decoration-line: underline;
+  }
+  .cn-ui-accordion-trigger:disabled {
+    cursor: not-allowed;
+    color: var(--muted-foreground);
+    opacity: .5;
+  }
+  .cn-ui-accordion-content > * {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .cn-ui-accordion-content[data-open="false"] {
+    animation: .3s cubic-bezier(.87, 0, .13, 1) forwards dx-accordion-slide-down;
+  }
+  .cn-ui-accordion-content[data-open="true"] {
+    animation: .3s cubic-bezier(.87, 0, .13, 1) forwards dx-accordion-slide-up;
+  }
+  @keyframes dx-accordion-slide-down {
+    from {
+      height: var(--collapsible-content-width);
+    }
+    to {
+      grid-template-rows: 0fr;
+    }
+  }
+  @keyframes dx-accordion-slide-up {
+    from {
+      height: 0;
+    }
+    to {
+      grid-template-rows: 1fr;
+    }
+  }
+  .cn-ui-accordion {
+    contain: inline-size;
+  }
+  .cn-ui-accordion-item {
+    border-bottom: 1px solid var(--border);
+    margin-top: 1px;
+  }
+  .cn-ui-accordion-item:first-child {
+    margin-top: 0;
+  }
+  .cn-ui-accordion-item:last-child {
+    border-bottom: none;
+  }
+  .cn-ui-accordion-expand-icon {
+    transition: rotate .3s cubic-bezier(.4, 0, .2, 1);
+  }
+  .cn-ui-accordion-item[data-open="true"] .cn-ui-accordion-expand-icon {
+    rotate: 180deg;
+  }
+  .cn-ui-accordion {
+    font: var(--cn-font-small);
+  }
+  .cn-ui-accordion-trigger {
+    font: var(--cn-font-label);
+  }
+  .cn-ui-accordion-trigger:focus-visible {
+    outline: var(--cn-border-2) solid var(--ring);
+    outline-offset: calc(-1 * var(--cn-border-2));
   }
 }
-
-@keyframes dx-accordion-slide-up {
-	from {
-    height: 0;
-	}
-
-  to {
-    grid-template-rows: 1fr;
-  }
-}
-
-.dx-accordion {
-  contain: inline-size;
-}
-
-.dx-accordion-item {
-  overflow: hidden;
-  box-sizing: border-box;
-  border-bottom: 1px solid var(--cn-border);
-  margin-top: 1px;
-}
-
-.dx-accordion-item:first-child {
-  margin-top: 0;
-}
-
-.dx-accordion-item:last-child {
-  border-bottom: none;
-}
-
-.dx-accordion-expand-icon {
-  transition: rotate 300ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.dx-accordion-item[data-open="true"] .dx-accordion-expand-icon {
-  rotate: 180deg;
-}
-
-/* Component-specific adaptations of the shared main.css recipes. */
-
-/* Inter for interface labels; Sora is reserved for headings. */
-.dx-accordion { font: var(--cn-font-small); }
-.dx-accordion-trigger { font: var(--cn-font-label); padding-block: var(--cn-space-4); }
-.dx-accordion-trigger:focus-visible { outline: var(--cn-border-2) solid var(--cn-focus); outline-offset: calc(-1 * var(--cn-border-2)); }
-.dx-accordion-content { color: var(--cn-text-muted); }

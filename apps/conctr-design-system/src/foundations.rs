@@ -25,9 +25,9 @@ pub fn Colors() -> Element {
         document::Title { "Color palette · Conctr design system" }
         div { class: "ds-page-head", span { class: "ds-eyebrow", "Foundations" } h1 { "Color palette" } p { "Switch the theme to inspect the semantic token values. Protocols are identified by both shape and label." } }
         h2 { "Surfaces & text" }
-        div { class: "ds-token-grid", for token in ["bg", "surface", "raised", "sunken", "border", "border-strong", "text", "text-muted", "text-subtle"] { ColorToken { token: token.to_string() } } }
+        div { class: "ds-token-grid", for token in ["background", "foreground", "card", "card-foreground", "popover", "popover-foreground", "muted", "muted-foreground", "border", "input"] { ColorToken { token: token.to_string() } } }
         h2 { "Brand & feedback" }
-        div { class: "ds-token-grid", for token in ["primary", "primary-hover", "primary-soft", "teal", "teal-text", "coral", "coral-text", "amber", "amber-text", "success", "success-soft", "warning", "warning-soft", "danger", "danger-soft", "info", "info-soft", "focus"] { ColorToken { token: token.to_string() } } }
+        div { class: "ds-token-grid", for token in ["primary", "primary-foreground", "secondary", "secondary-foreground", "accent", "accent-foreground", "destructive", "ring", "sidebar", "sidebar-foreground", "sidebar-accent", "sidebar-border", "success", "warning", "cn-teal-text", "cn-coral-text", "cn-amber-text"] { ColorToken { token: token.to_string() } } }
         h2 { "Protocol language" }
         Cluster { class: "ds-foundation-stage", for protocol in [Protocol::Rest, Protocol::Soap, Protocol::OData, Protocol::GraphQl, Protocol::Grpc, Protocol::Webhook] { ProtocolBadge { protocol } } }
         p { class: "ds-guidance", "Use semantic tokens for UI. The -text accent tokens provide readable colored text on light backgrounds." }
@@ -36,7 +36,7 @@ pub fn Colors() -> Element {
 
 #[component]
 fn ColorToken(token: String) -> Element {
-    rsx! { div { class: "ds-token", div { class: "ds-color-swatch", style: "background: var(--cn-{token});" } code { "--cn-{token}" } } }
+    rsx! { div { class: "ds-token", div { class: "ds-color-swatch", style: "background: var(--{token});" } code { "--{token}" } } }
 }
 
 #[component]

@@ -1,14 +1,11 @@
 /* CSS module source: /src/components/ui/separator/style.css */
-.dx-separator {
-  background-color: var(--cn-border);
-}
-
-.dx-separator[data-orientation="horizontal"] {
-  width: 100%;
-  height: 1px;
-}
-
-.dx-separator[data-orientation="vertical"] {
-  width: 1px;
-  height: 100%;
+@layer components {
+  .cn-ui-separator[data-orientation="horizontal"] {
+    width: 100%;
+    height: 1px;
+  }
+  .cn-ui-separator[data-orientation="vertical"] {
+    width: 1px;
+    height: 100%;
+  }
 }

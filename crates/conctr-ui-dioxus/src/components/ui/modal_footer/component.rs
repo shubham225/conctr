@@ -10,8 +10,10 @@ pub fn ModalFooter(
     children: Element,
 ) -> Element {
     let base = attributes!(div {
-        class: "cn-modal__footer"
+        class: "cn-modal__footer flex flex-wrap gap-3 justify-end mt-2 mt-6"
     });
     let merged = merge_attributes(vec![base, attributes]);
-    rsx! { div { ..merged, {children} } }
+    rsx! {
+        div { ..merged,{children} }
+    }
 }
