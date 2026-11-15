@@ -2,6 +2,8 @@
 
 - Status: Accepted
 
+Component-source and styling specifics superseded by [ADR 0013](0013-rust-ui-facade.md).
+
 ## Context
 
 The UI crate mixed base controls, layout helpers and composed components at one

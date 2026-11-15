@@ -1,11 +1,5 @@
 use crate::Route;
-use conctr_ui_dioxus::components::{
-    composed::empty_state::EmptyState,
-    ui::{
-        card::Card,
-        icon::{IconName, UiIcon},
-    },
-};
+use conctr_ui_dioxus::{composed::EmptyState, ui::card::Card};
 use dioxus::prelude::*;
 
 #[component]
@@ -17,7 +11,6 @@ pub fn Connections() -> Element {
                 EmptyState {
                     title: "A place for your connections",
                     description: "Your workspace is ready for its first connection. Connection creation will be available when the platform services are connected.",
-                    icon: rsx! { UiIcon { name: IconName::Connections } },
                 }
             }
             div { class: "grid gap-6 md:grid-cols-3",
@@ -36,7 +29,6 @@ pub fn Runs() -> Element {
             PageHeading { title: "Runs", description: "Follow the work moving through your connections." }
             Card {
                 EmptyState { title: "No run history yet", description: "Execution services are not connected. Run history and results will appear here when available.",
-                    icon: rsx! { UiIcon { name: IconName::Runs } },
                 }
             }
         }
@@ -50,7 +42,7 @@ pub fn Settings() -> Element {
             PageHeading { title: "Settings", description: "Make this workspace your own." }
             Card {
                 div { class: "grid gap-3 p-6",
-                    h2 { class: "cn-h4", "Appearance" }
+                    h2 { class: "text-lg", "Appearance" }
                     p { class: "text-sm text-muted-foreground", "Use the theme button in the header to switch between light and dark. Your selection applies to this session." }
                 }
             }
@@ -70,15 +62,15 @@ pub fn NotFound(segments: Vec<String>) -> Element {
 
 #[component]
 fn PageHeading(title: String, description: String) -> Element {
-    rsx! { div { class: "grid gap-2", h1 { class: "cn-h2", "{title}" } p { class: "text-muted-foreground", "{description}" } } }
+    rsx! { div { class: "grid gap-2", h1 { class: "text-2xl", "{title}" } p { class: "text-muted-foreground", "{description}" } } }
 }
 
 #[component]
 fn Guide(number: String, title: String, description: String) -> Element {
     rsx! {
         div { class: "grid content-start gap-3",
-            span { class: "cn-mono text-sm text-primary", "{number}" }
-            h2 { class: "cn-h4", "{title}" }
+            span { class: "font-mono text-sm text-primary", "{number}" }
+            h2 { class: "text-lg", "{title}" }
             p { class: "text-sm text-muted-foreground", "{description}" }
         }
     }

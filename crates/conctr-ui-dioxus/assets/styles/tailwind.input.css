@@ -1,8 +1,8 @@
-/* Library-only compiler input. Consumers load the bundled tailwind.css. */
 @import "tailwindcss" source(none);
+@import "tw-animate-css";
 @import "./theme.css";
+@import "../../src/rust-ui/style/Animate.css";
+@import "../../src/rust-ui/style/slider.css";
+@import "./utilities.css";
 @source "../../src";
-
-/* Workspace consumers share this compiler; no application Tailwind setup. */
-@source "../../../../apps";
-@source "../../../conctr-app-dioxus/src";
+@source "./shell-utilities.html";

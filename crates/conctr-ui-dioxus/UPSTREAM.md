@@ -1,46 +1,29 @@
-# Dioxus component sources
+# Rust UI provenance
 
-Source: https://github.com/DioxusLabs/components
-Revision: `9a758255ea26e2b20c8cecf4c1c946feb9e71da7`
-Catalog: all 45 entries returned by `dx components list`.
-License: MIT OR Apache-2.0 (included alongside this file).
+Repository: https://github.com/rust-ui/ui
+Revision: `4f5a516e76d75a15a587ab2169352cf34fd318d0`
+Source: `app_crates/registry/src/{ui,hooks,demos,workflows}`
+License: MIT, copyright 2026 Max Wells; full notice at [src/rust-ui/LICENSE](src/rust-ui/LICENSE).
 
-The CLI bulk-add failed during dependency resolution. Sources were copied from
-its local registry cache, excluding examples, and module/CSS paths were adjusted.
-Registry-derived implementations are owned, editable source under
-`src/components/ui/<family>/`, alongside their CSS. They are not generated at
-build time. Their CSS is customized with Conctr tokens and kit recipes. The
-former separate registry and facade directories have been consolidated; the old
-public module paths remain compatibility re-exports. Layout primitives live in
-`components/primitives/` and reusable combinations in `components/composed/`.
-Pagination keeps its composable registry implementation in `ui/pagination/parts.rs`
-alongside the one-based convenience component.
+All Rust files in these four directories are byte-for-byte copies. The integration
+`src/rust-ui/mod.rs` and hash manifest are Conctr-owned. `ui` and `hooks` absolute
+imports resolve through crate-root facades without editing upstream imports.
+Demos and workflows are exposed for the showcase; applications use `ui` and `composed`.
 
-When updating, diff the upstream revision against these local sources; do not
-run `dx components add --force` over customized files. Review primitive API
-changes and preserve Conctr CSS, accessibility behavior and local fixes.
+Run `python3 scripts/check-upstream.py` after every change. For an update, download
+an immutable upstream commit, inspect its license and dependency changes, replace
+the four source directories, regenerate the manifest, and review wrapper/API
+compatibility. Rebuild CSS and run Rust/browser checks. Do not run a CLI force-update
+over the facade or reformat vendored files. Upstream files are exempt from local
+format/lint corrections; isolate allowances at the module boundary where necessary.
 
-## Tailwind customization
+Brand fonts include their supplied SIL OFL notices in `assets/fonts/`. Keep these
+and the Rust UI MIT notice in source and distributed artifacts. Dependency licenses
+remain separate; the workspace's MIT/Apache declaration does not relicense Rust UI.
 
-Components use Tailwind 4.1.18 utility classes in Rust with shadcn-style variables.
-All tooling and the shipped utility bundle belong to this crate; applications
-only mount `ThemeProvider` or `ConctrStyles`. Palette/scales come from `tokens.css`.
-`main.css` maps semantic roles and shared interactions; `theme.css` supplies
-compiler mappings. Adjacent `style.css` files use Manganis CSS modules, with
-explicit per-component `document::Stylesheet` registration for repeated SSR.
-There are no per-component generated files or central stylesheet registry.
-Keep ownership comments accurate and preserve primitive behavior and licenses.
-
-The explicit CSS-module registrations work around the resolved Dioxus/Manganis
-0.7.10 SSR bug described in [Dioxus #5707](https://github.com/DioxusLabs/dioxus/pull/5707).
-Preserve them when refreshing upstream sources. Removal criteria and regression
-checks are in the [SSR guide](../../docs/development/theming.md#ssr-css-module-workaround).
-
-## Locally implemented controls
-
-`file_uploader`, `resizable`, `kbd` and `command` are local Rust implementations.
-The [resizable](https://ui.shadcn.com/docs/components/base/resizable),
-[kbd](https://ui.shadcn.com/docs/components/base/kbd) and
-[command](https://ui.shadcn.com/docs/components/base/command) compositions informed
-the public surface; no React runtime or JavaScript component package is required.
-`KeyboardKey` aliases `Kbd`; `StatusAlert` forwards to the canonical `Alert` API.
+The Conctr-owned `src/hooks/use_click_outside.rs` overrides the root hook seam.
+It owns and removes its document listener on component disposal instead of
+forgetting the JS closure. The unchanged upstream data-grid hook resolves
+`crate::hooks::use_click_outside` through this adapter. Styling compatibility
+corrections for border defaults, command selection and table/grid roles live
+in `assets/styles/main.css`, outside the source snapshot.

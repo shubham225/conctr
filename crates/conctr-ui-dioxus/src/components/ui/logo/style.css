@@ -1,9 +1,0 @@
-/* CSS module source: /src/components/ui/logo/style.css */
-@layer components {
-  :global(.cn-logo--light) {
-    display: var(--logo-light-display);
-  }
-  :global(.cn-logo--dark) {
-    display: var(--logo-dark-display);
-  }
-}

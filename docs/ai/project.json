@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "audit_date": "2026-11-13",
+  "audit_date": "2026-11-15",
   "name": "Conctr",
   "tagline": "Where systems meet.",
   "documentation_status": "reviewable-proposal",
-  "current_state": "UI/design-system foundation and shared product shell; backend services remain scaffolds",
+  "current_state": "Rust UI based brand facade and fresh showcase; shared product shell; backend services remain scaffolds",
   "existing_packages": [
     {
       "name": "conctr-api",

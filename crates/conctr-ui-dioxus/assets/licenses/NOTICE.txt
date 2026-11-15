@@ -1,0 +1,1 @@
+Conctr uses Rust UI (MIT, copyright 2026 Max Wells) and icons (MIT, copyright 2025 Max Wells). Full notices accompany this file. Sora, Inter and JetBrains Mono use SIL OFL 1.1; notices are bundled in ../fonts/licenses/. Other Rust dependencies retain their individual licenses.

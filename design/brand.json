@@ -181,10 +181,18 @@
       "docs/BRAND-GUIDELINES.md",
       "docs/DESIGN-TOKENS.md",
       "docs/COMPONENTS.md",
+      "docs/COMPONENT-COVERAGE.md",
       "docs/AI-INSTRUCTIONS.md"
+    ],
+    "ui_pages": [
+      "ui-kit/index.html",
+      "ui-kit/forms.html",
+      "ui-kit/navigation.html",
+      "ui-kit/overlays.html",
+      "ui-kit/data.html"
     ]
   },
-  "version": "1.1",
+  "version": "1.2",
   "typography": {
     "display": {
       "size_px": 48,
@@ -327,5 +335,10 @@
       "xl": 1280,
       "2xl": 1536
     }
+  },
+  "component_count": {
+    "v1.1": 30,
+    "v1.2_added": 60,
+    "coverage_rows": 88
   }
 }

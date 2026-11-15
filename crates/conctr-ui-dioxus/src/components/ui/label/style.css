@@ -1,8 +1,0 @@
-/* CSS module source: /src/components/ui/label/style.css */
-@layer components {
-  .cn-ui-label {
-    font-size: var(--cn-fs-small);
-    font-weight: var(--cn-fw-medium);
-    line-height: inherit;
-  }
-}

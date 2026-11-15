@@ -1,10 +1,11 @@
+/* Scoped selectors for Conctr providers; values from design/colors/tokens.css. */
 /* CONCTR design tokens v1.1
    Load fonts first: <link rel="stylesheet" href="../fonts/fonts.css">
-   Adapted from design/colors/tokens.css without changing token values.
-   Palette scopes reset at each ThemeProvider, including nested/System scopes.
+   Light is default. Dark applies via [data-theme="dark"] on <html>,
+   or automatically when the OS prefers dark and no theme is forced.
    Breakpoints cannot be CSS variables. Use these in media queries:
    sm 640px, md 768px, lg 1024px, xl 1280px, 2xl 1536px (min-width). */
-:root {
+:root, [data-theme="light"] {
   --cn-font-display: "Sora", "Inter", system-ui, sans-serif;
   --cn-font-ui: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --cn-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -94,15 +95,14 @@
   --cn-container-content: 1200px;
   --cn-container-wide: 1440px;
   --cn-opacity-disabled: .45;
-  --cn-switch-thumb: #FFFFFF;
 }
 
 /* Responsive type: display, h1 and h2 step down on small screens */
 @media (max-width: 640px) {
-  :root { --cn-fs-display: 2.25rem; --cn-lh-display: 2.75rem; --cn-fs-h1: 1.875rem; --cn-lh-h1: 2.375rem; --cn-fs-h2: 1.5rem; --cn-lh-h2: 2rem; }
+  :root, [data-theme="light"] { --cn-fs-display: 2.25rem; --cn-lh-display: 2.75rem; --cn-fs-h1: 1.875rem; --cn-lh-h1: 2.375rem; --cn-fs-h2: 1.5rem; --cn-lh-h2: 2rem; }
 }
 
-:root, .cn-body, .light, [data-theme="light"] {
+:root, [data-theme="light"] {
   --cn-bg: #F7F8FC;
   --cn-surface: #FFFFFF;
   --cn-raised: #FFFFFF;
@@ -141,12 +141,9 @@
   --cn-shadow-4: 0 8px 16px rgba(18,25,51,.08), 0 24px 64px rgba(18,25,51,.18);
   --cn-focus-ring: 0 0 0 3px rgba(79,70,229,.28);
   --cn-scrim: rgba(11,16,32,.5);
-  color-scheme: light;
-  --logo-light-display: inline;
-  --logo-dark-display: none;
 }
 
-.dark, [data-theme="dark"] {
+[data-theme="dark"] {
   --cn-bg: #0B1020;
   --cn-surface: #121933;
   --cn-raised: #1A2244;
@@ -185,14 +182,10 @@
   --cn-shadow-4: 0 0 0 1px rgba(255,255,255,.08), 0 24px 64px rgba(0,0,0,.65);
   --cn-focus-ring: 0 0 0 3px rgba(165,176,255,.35);
   --cn-scrim: rgba(0,0,0,.6);
-    color-scheme: dark;
-    --logo-light-display: none;
-    --logo-dark-display: inline;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not(.light):not([data-theme="light"]),
-  .cn-body:not(.light):not([data-theme="light"]):not([data-theme="dark"]) {
+  :root:not([data-theme="light"]) {
     --cn-bg: #0B1020;
     --cn-surface: #121933;
     --cn-raised: #1A2244;
@@ -231,8 +224,5 @@
     --cn-shadow-4: 0 0 0 1px rgba(255,255,255,.08), 0 24px 64px rgba(0,0,0,.65);
     --cn-focus-ring: 0 0 0 3px rgba(165,176,255,.35);
     --cn-scrim: rgba(0,0,0,.6);
-    color-scheme: dark;
-    --logo-light-display: none;
-    --logo-dark-display: inline;
   }
 }

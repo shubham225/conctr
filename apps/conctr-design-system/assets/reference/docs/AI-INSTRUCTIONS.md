@@ -1,6 +1,6 @@
 # Conctr brand instructions for AI assistants
 
-Use this file as system or project context whenever you create anything for Conctr: UI, copy, slides, docs, emails, diagrams, code. Machine-readable data is in `brand.json`. Detail is in `BRAND-GUIDELINES.md`, `DESIGN-TOKENS.md` (typography, spacing, radius, shadow, motion, sizing) and `COMPONENTS.md` (every component spec).
+Use this file as system or project context whenever you create anything for Conctr: UI, copy, slides, docs, emails, diagrams, code. Machine-readable data is in `brand.json`. Detail is in `BRAND-GUIDELINES.md`, `DESIGN-TOKENS.md` (typography, spacing, radius, shadow, motion, sizing) and `COMPONENTS.md` (every component spec) and `COMPONENT-COVERAGE.md` (what exists, mapped to shadcn/ui, Atlassian and Dioxus Components).
 
 ## Who Conctr is
 Conctr is an integration platform. It connects systems that use different protocols (REST, SOAP, OData and more) and different authentication methods. Tagline: **Where systems meet.** Audience: developers, integration engineers and IT teams. Personality: clear, precise, calm, engineer to engineer.
@@ -63,6 +63,21 @@ Use the kit classes, do not restyle them. Full specs in `COMPONENTS.md`.
 - Feedback: `cn-progress`, `cn-spinner` (with text), `cn-skeleton`.
 - Overlays: `cn-menu`, `cn-tip[data-tip]`, `cn-scrim > cn-modal` (title = question, destructive button repeats the verb).
 - Connection summary: `cn-flow` with `cn-node`, `cn-link`, `cn-hub`.
+
+## v1.2 component recipes (more in `COMPONENTS.md`)
+- Button group: `div.cn-btn-group > button.cn-btn`. Toggle: `button.cn-toggle[aria-pressed]`. Segmented: `div.cn-segmented[role=radiogroup] > label > input[type=radio] + span`.
+- Input group: `div.cn-input-group > span.cn-input-group__icon|__addon + input.cn-input + button.cn-btn`. Search = icon + input. Endpoint = `select.cn-select.cn-select--bare` + input + button.
+- Slider: `input.cn-slider[type=range]` (set `--p` for the fill). OTP: `div.cn-otp > input*N`. Calendar: `div.cn-calendar` with `button.cn-calendar__day`.
+- Combobox: `input[role=combobox]` + `ul.cn-listbox > li.cn-listbox__option[aria-selected]`. Tags: `span.cn-tag` (+ `.cn-tag__remove`), `div.cn-tag-group`, `div.cn-taginput`.
+- Choice cards: `div.cn-choice-group > label.cn-choice > input[type=radio] + b + span`.
+- Forms: `form.cn-form > div.cn-form-section (title + fields)`, `div.cn-form-row`, `div.cn-form-actions`. Key-value: `div.cn-kv > div.cn-kv__row`. Mapping: `div.cn-mapping`. Upload: `label.cn-dropzone`, `div.cn-file`.
+- Identity: `cn-count`, `cn-dot`, `cn-date-label`, `cn-tile`, `cn-avatar-group`, `div.cn-item-group > div.cn-item`, `dl.cn-dl`.
+- Layout: `div.cn-accordion > details > summary`, `details.cn-collapsible`, `cn-grid`, `cn-aspect`, `cn-scroll`, `cn-with-panel > aside.cn-panel`, `cn-split`.
+- Navigation: `nav.cn-navbar`, `cn-menubar`, `cn-anchor`, `cn-tabs--vertical`, `ol.cn-stepper > li.cn-stepper__step[data-state=complete|current|upcoming|error]`, `ul.cn-tree`.
+- Messaging and overlays: `cn-banner`, `cn-inline-message`, `cn-popover`, `cn-hover`, `cn-spotlight`, `cn-modal--alert`, `cn-command`, `cn-scrim--end > aside.cn-drawer`.
+- Data: `th[aria-sort]`, `tr[aria-selected]`, `cn-toolbar`, `cn-bulkbar`, `cn-table-footer`, `cn-timeline`, `cn-metric` + `cn-delta`, `cn-bars`, `cn-hbar`, `cn-sparkline`, `cn-legend`.
+- Developer views: `div.cn-log > div.cn-log__line[data-level]`, `div.cn-json`, `div.cn-diff`, `div.cn-trace`, `div.cn-results`.
+- Status shown with a shape plus a word, never color alone. Keep one primary action per view.
 
 ## Building UI
 - Reuse classes from `ui-kit/conctr-ui.css`: `cn-btn cn-btn--primary|secondary|ghost|danger`, `cn-input`, `cn-select`, `cn-switch`, `cn-badge`, `cn-shape[data-s=circle|square|triangle|diamond|hex|ring]`, `cn-card`, `cn-alert`, `cn-tabs`, `cn-table`, `cn-code`, `cn-flow` with `cn-node`, `cn-link`, `cn-hub`.

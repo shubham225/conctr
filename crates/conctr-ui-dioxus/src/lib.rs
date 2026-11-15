@@ -1,98 +1,20 @@
-//! Shared Dioxus components for the Conctr design system.
-//! Mount [`components::ThemeProvider`] once to load fonts, tokens and styles.
+//! Conctr's themed presentation facade over a pinned, unmodified Rust UI snapshot.
 pub mod assets;
-pub mod components;
-/// Common components and types for application imports.
+pub mod composed;
+pub mod ui;
+#[doc(hidden)]
+#[rustfmt::skip]
+#[allow(clippy::all, dead_code)]
+#[path = "rust-ui/mod.rs"]
+mod rust_ui;
+// Upstream absolute imports resolve through these integration seams.
+#[doc(hidden)]
+pub mod hooks;
+#[cfg(feature = "showcase")]
+pub use rust_ui::{demos, workflows};
+/// Common app imports. Component families are available under `ui`.
 pub mod prelude {
-    pub use crate::components::ui::command::*;
-    pub use crate::components::ui::file_uploader::*;
-    pub use crate::components::ui::kbd::*;
-    pub use crate::components::ui::resizable::*;
-
     pub use crate::assets::styles::ConctrStyles;
-    pub use crate::components::composed::connection_flow::*;
-    pub use crate::components::composed::connection_node::*;
-    pub use crate::components::composed::empty_state::*;
-    pub use crate::components::composed::modal::*;
-    pub use crate::components::composed::stat::*;
-    pub use crate::components::primitives::cluster::*;
-    pub use crate::components::primitives::container::*;
-    pub use crate::components::primitives::divider::*;
-    pub use crate::components::primitives::stack::*;
-    pub use crate::components::primitives::{
-        Align, Direction, Flex, Grid, Inline, Justify, LayoutBox, Space,
-    };
-    pub use crate::components::ui::accordion::*;
-    pub use crate::components::ui::alert::*;
-    pub use crate::components::ui::alert_dialog::*;
-    pub use crate::components::ui::aspect_ratio::*;
-    pub use crate::components::ui::avatar::*;
-    pub use crate::components::ui::badge::*;
-    pub use crate::components::ui::breadcrumb::*;
-    pub use crate::components::ui::button::*;
-    pub use crate::components::ui::calendar::*;
-    pub use crate::components::ui::card::*;
-    pub use crate::components::ui::checkbox::*;
-    pub use crate::components::ui::code_block::*;
-    pub use crate::components::ui::collapsible::*;
-    pub use crate::components::ui::color_picker::*;
-    pub use crate::components::ui::combobox::*;
-    pub use crate::components::ui::context_menu::*;
-    pub use crate::components::ui::date_picker::*;
-    pub use crate::components::ui::dialog::*;
-    pub use crate::components::ui::dropdown::*;
-    pub use crate::components::ui::dropdown_menu::*;
-    pub use crate::components::ui::field::*;
-    pub use crate::components::ui::field_error::*;
-    pub use crate::components::ui::form::*;
-    pub use crate::components::ui::heading::*;
-    pub use crate::components::ui::hint::*;
-    pub use crate::components::ui::hover_card::*;
-    pub use crate::components::ui::icon::*;
-    pub use crate::components::ui::input::*;
-    pub use crate::components::ui::item::*;
-    pub use crate::components::ui::keyboard_key::*;
-    pub use crate::components::ui::label::*;
-    pub use crate::components::ui::logo::*;
-    pub use crate::components::ui::menu::*;
-    pub use crate::components::ui::menu_item::*;
-    pub use crate::components::ui::menubar::*;
-    pub use crate::components::ui::modal_footer::*;
-    pub use crate::components::ui::nav_group::*;
-    pub use crate::components::ui::nav_item::*;
-    pub use crate::components::ui::navbar::*;
-    pub use crate::components::ui::navigation::*;
-    pub use crate::components::ui::pagination::*;
-    pub use crate::components::ui::popover::*;
-    pub use crate::components::ui::progress::*;
-    pub use crate::components::ui::protocol::*;
-    pub use crate::components::ui::protocol_badge::*;
-    pub use crate::components::ui::radio::*;
-    pub use crate::components::ui::radio_group::*;
-    pub use crate::components::ui::scroll_area::*;
-    pub use crate::components::ui::select::*;
-    pub use crate::components::ui::separator::*;
-    pub use crate::components::ui::shape::*;
-    pub use crate::components::ui::sheet::*;
-    pub use crate::components::ui::sidebar::*;
-    pub use crate::components::ui::skeleton::*;
-    pub use crate::components::ui::slider::*;
-    pub use crate::components::ui::spinner::*;
-    pub use crate::components::ui::status::*;
-    pub use crate::components::ui::status_alert::*;
-    pub use crate::components::ui::status_badge::*;
-    pub use crate::components::ui::switch::*;
-    pub use crate::components::ui::table::*;
-    pub use crate::components::ui::table_container::*;
-    pub use crate::components::ui::tabs::*;
-    pub use crate::components::ui::textarea::*;
-    pub use crate::components::ui::theme::*;
-    pub use crate::components::ui::theme_provider::*;
-    pub use crate::components::ui::theme_toggle::*;
-    pub use crate::components::ui::toast::*;
-    pub use crate::components::ui::toggle::*;
-    pub use crate::components::ui::toggle_group::*;
-    pub use crate::components::ui::toolbar::*;
-    pub use crate::components::ui::tooltip::*;
-    pub use crate::components::ui::virtual_list::*;
+    pub use crate::composed::*;
+    pub use crate::ui::{button::*, theme::*, theme_toggle::*};
 }

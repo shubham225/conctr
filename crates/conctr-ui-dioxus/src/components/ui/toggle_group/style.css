@@ -1,6 +1,0 @@
-/* CSS module source: /src/components/ui/toggle_group/style.css */
-@layer components {
-  .cn-ui-toggle-group[data-orientation="vertical"] {
-    flex-direction: column;
-  }
-}

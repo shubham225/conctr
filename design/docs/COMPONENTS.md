@@ -1,6 +1,6 @@
 # Conctr component specifications
 
-Version 1.1. For designers, developers and AI tools. Live examples: `ui-kit/index.html`. Styles: `ui-kit/conctr-ui.css`. Token values: `DESIGN-TOKENS.md`.
+Version 1.2. For designers, developers and AI tools. Live examples: `ui-kit/index.html`. Styles: `ui-kit/conctr-ui.css`. Token values: `DESIGN-TOKENS.md`.
 
 **How to read each entry:** purpose, variants, spec (sizes and tokens), states, accessibility, do and don't, a code example. Class names use the `cn-` prefix; modifiers use `--` (BEM style): `cn-btn cn-btn--primary`.
 
@@ -198,23 +198,712 @@ Sidebar 240 px (from `lg`), top bar 56 px with breadcrumb and a user menu, conte
 - Always produce a light and dark friendly result by using `var(--cn-*)` tokens only.
 - Keep copy short, in sentence case, with consistent verbs between buttons, modals and toasts.
 
-## Dioxus layout primitives
 
-The Dioxus adapters extend the existing Stack/Cluster layout helpers with Box,
-Flex, Grid and Inline. They reuse the spacing scale and add no colors or type
-styles. Box is a neutral div with token-based padding. Stack is a vertical flex
-layout; Inline is a wrapping horizontal layout. Flex exposes row/column,
-alignment, distribution and wrapping. Grid lays out up to twelve equal columns
-and reduces the column count when the available width cannot fit the configured
-minimum item width. Use gap for siblings; avoid padding on both parent and
-children unless both levels need it. All accept native attributes and semantic
-labels as needed. Layout containers have no implicit interactive semantics.
+---
 
-The gallery groups these as Primitives, individual controls as Core, and Stats,
-connection flows, empty states and composed Modal as Composed. This organization
-leaves a home for future dashboard, data-table and flow-editor compositions.
+# Components added in v1.2
 
-General interface action icons are supplied by the existing Lucide dependency
-in the Dioxus adapter. The branded kit currently contains protocol and
-authentication artwork only. Keep its six protocol shape meanings unchanged;
-new protocol shapes require an explicit design specification.
+Live examples: `ui-kit/forms.html`, `navigation.html`, `overlays.html`, `data.html`. All of these follow the global rules at the top of this document (tokens only, both themes, states, accessibility). The Dioxus crate `conctr-ui-dioxus` wraps the same classes.
+
+## Buttons and toggles
+
+### Button group
+**Classes:** `cn-btn-group`
+
+**Use for:** Join 2 to 4 related actions, or a primary action with its menu (split button).
+
+**Spec:** Buttons share edges (1 px overlap); only the outer corners are rounded (`md`). Same size across the group.
+
+**Accessibility:** Wrap in `role="group"` with a label when the buttons act on the same object.
+
+**Do not:** Mix primary and secondary styles except in a split button.
+
+### Toggle
+**Classes:** `cn-toggle`
+
+**Use for:** A button with an on/off state (mask values, wrap lines, bold).
+
+**Spec:** 40 px high (use `cn-btn--sm` sizing via your layout for 32). On state: `primary-soft` background, `primary` text and border. Toggle `aria-pressed`.
+
+**Accessibility:** `aria-pressed="true|false"`; the label never changes with state.
+
+**Do not:** Use for one-time actions (that is a button), or for choosing between views (use segmented).
+
+### Segmented control (toggle group)
+**Classes:** `cn-segmented`
+
+**Use for:** Choose one of 2 to 4 views or modes (Table, Cards, Graph).
+
+**Spec:** Radio inputs hidden inside labels, sunken track, selected segment on `surface` with shadow-1. Segment height 28 px.
+
+**Accessibility:** Use `role="radiogroup"` with a label. Arrow keys move the selection (native radios).
+
+**Do not:** Use more than 4 segments (use tabs or a select), or use it for navigation between pages.
+
+## Text input
+
+### Input group
+**Classes:** `cn-input-group`, `__addon`, `__icon`
+
+**Use for:** Add a prefix, suffix, icon or button to an input: search, URL parts, units, copy and reveal.
+
+**Spec:** One 1 px border and radius `md` around everything. Focus ring on the whole group. Addons use `sunken` background. Invalid: `cn-input-group--invalid` plus `aria-invalid` on the input.
+
+**Accessibility:** Every input still needs a label (visible or `aria-label`). Icon-only buttons need `aria-label`.
+
+**Do not:** Put long text in an addon, or stack more than two addons.
+
+### Search input
+**Classes:** `cn-input-group` with `__icon`
+
+**Use for:** Filter a list or find an object. Include the shortcut hint (`cn-kbd`) when one exists.
+
+**Spec:** Search icon at the start, placeholder says what is searched ("Search connections"). Clear button appears when there is text.
+
+**Accessibility:** `role="search"` on the surrounding form, `aria-label` on the input.
+
+**Do not:** Search on every keystroke without a debounce (200 to 300 ms).
+
+### Secret input
+**Classes:** `cn-input-group` with buttons
+
+**Use for:** Credentials, API keys, client secrets.
+
+**Spec:** Type `password` by default. Ghost icon buttons: show and copy. Never log or echo the value; show only the last 4 characters after saving.
+
+**Accessibility:** Show/hide buttons use `aria-pressed` or change their `aria-label`.
+
+**Do not:** Show a saved secret in full again.
+
+### Endpoint input
+**Classes:** `cn-input-group` with `cn-select--bare`
+
+**Use for:** Integration pattern: method, URL and send in one control.
+
+**Spec:** Method select (bold, `sunken`) then a mono URL input then a primary button. URL uses `cn-mono`.
+
+**Accessibility:** Label the select ("Method") and the input ("URL").
+
+**Do not:** Hide the method; people need it to read the request.
+
+### Slider
+**Classes:** `cn-slider`, `cn-slider-field`
+
+**Use for:** Pick an approximate value in a range (timeout, batch size, retries).
+
+**Spec:** 6 px track, filled part `primary`, 18 px thumb with a 2 px `primary` border. Set `--p` (percent) on the element for the fill in WebKit browsers (the kit script does it on input). Show the value next to the label.
+
+**Accessibility:** Native `input[type=range]`: arrow keys, Home, End. Always show the current value as text.
+
+**Do not:** Use for exact values (use a number input) or ranges where the exact number matters.
+
+### One-time code (OTP)
+**Classes:** `cn-otp`
+
+**Use for:** Enter a 4 to 8 character verification code.
+
+**Spec:** One 44 x 52 px box per character, mono 22 px, optional separator. Auto-advance, backspace-back and paste-split come from your framework.
+
+**Accessibility:** `role="group"` with a label; each box has `aria-label="Digit n"`; `autocomplete="one-time-code"` on the first box.
+
+**Do not:** Use for non-code input.
+
+### Inline edit
+**Classes:** `cn-inline-edit`
+
+**Use for:** Edit a name or value in place without leaving the page.
+
+**Spec:** Read mode is a button that looks like text with a hover background. Edit mode is a small input with Save (check) and Cancel (x) icon buttons. Enter saves, Escape cancels.
+
+**Accessibility:** Read mode is a real `button` with the value as its name. Move focus to the input on edit and back on finish.
+
+**Do not:** Use for long or multi-field edits (use a form or drawer).
+
+## Choosing
+
+### Combobox and listbox
+**Classes:** `cn-combobox`, `cn-listbox`, `__option`, `__group`
+
+**Use for:** Search and pick from many options (more than 7) such as systems, entities and fields.
+
+**Spec:** Input plus a listbox panel (shadow-3, radius `md`, max 240 px). Active option `sunken`, selected option `primary` with a check. Show an empty message ("No systems found").
+
+**Accessibility:** `role="combobox"` on the input with `aria-expanded`, `aria-controls`, `aria-activedescendant`; options `role="option"` with `aria-selected`. Up/Down move, Enter selects, Escape closes.
+
+**Do not:** Use for fewer than 7 options (use a select or radios).
+
+### Tag and tag group
+**Classes:** `cn-tag`, `cn-tag-group`, `cn-tag--primary|success|warning|danger`
+
+**Use for:** Label an object with a category or environment (production, beta). Tags can be removable.
+
+**Spec:** 24 px high, radius `sm` (squarer than a badge, which is a pill), caption 500. Removable tags end with a `cn-tag__remove` button.
+
+**Accessibility:** The remove button needs `aria-label="Remove <name>"`.
+
+**Do not:** Use a tag for status (use a status badge) or make the tag itself a button.
+
+### Tag input
+**Classes:** `cn-taginput`
+
+**Use for:** Enter several free-text values: scopes, allowed IPs, event names.
+
+**Spec:** Border box with tags and a flexible input. Enter or comma adds, Backspace on empty input removes the last. Focus ring on the whole box.
+
+**Accessibility:** Announce additions and removals with a polite live region.
+
+**Do not:** Allow duplicates unless they mean something.
+
+### Choice card
+**Classes:** `cn-choice-group`, `cn-choice`
+
+**Use for:** Pick one option that needs a title and a sentence of help: protocol, auth method, plan.
+
+**Spec:** Radio input covers the card. Selected: `primary` border and `primary-soft` background. Disabled: opacity .45 with a reason in the text.
+
+**Accessibility:** Wrap in `role="radiogroup"` with a label. Focus ring shows on the card.
+
+**Do not:** Use for more than 6 options.
+
+## Dates
+
+### Calendar and date picker
+**Classes:** `cn-calendar`, `__day`, `__dow`
+
+**Use for:** Pick a date or a range. Use the native date input for simple dates and the calendar (in a popover) for ranges and rich states.
+
+**Spec:** 7 columns of 36 px. Today: 1 px `primary` outline. Selected: filled `primary`. Range: `primary-soft`. Outside month: `text-subtle`. Disabled: .45.
+
+**Accessibility:** Grid with `role="grid"`; days are buttons with full date as `aria-label`. Arrow keys move by day and week, PageUp/PageDown by month.
+
+**Do not:** Use for birth dates and far-away dates without a year picker.
+
+## Forms
+
+### Form layout
+**Classes:** `cn-form`, `cn-form-row`, `cn-form-section`, `cn-form-actions`
+
+**Use for:** Lay out long forms in sections with a title and explanation on the left.
+
+**Spec:** Max width 720 px. Section: 1/3 title column, 2/3 fields, 24 px padding, top border. Actions at the bottom, left aligned with the fields. Single column below 768 px.
+
+**Accessibility:** Group related controls in `fieldset` with `legend`. Mark required fields with `cn-required` and say so at the top.
+
+**Do not:** Spread labels beside fields on mobile, or use more than two columns of fields.
+
+### Key-value editor
+**Classes:** `cn-kv`, `cn-kv__row`, `cn-kv__head`
+
+**Use for:** Edit headers, query parameters, environment variables.
+
+**Spec:** Grid of key (1fr), value (2fr), remove button (40 px). Mono text. A blank row sits at the end; "Add row" below. Validate duplicate keys inline.
+
+**Accessibility:** Each input needs a name ("Key 1"). The remove button names the row.
+
+**Do not:** Hide values that are secrets without a reveal button.
+
+### Mapping row
+**Classes:** `cn-mapping`, `cn-mapping--error`
+
+**Use for:** Link a source field to a target field with the transform between them.
+
+**Spec:** Three columns: source field (path in mono, type below), arrow with transform name, target field. Error state: `danger` border and an inline message that says how to fix it.
+
+**Accessibility:** The row is a group; the transform control has a label.
+
+**Do not:** Show only the field names; the type is what prevents mismatches.
+
+### File upload (dropzone)
+**Classes:** `cn-dropzone`, `cn-file`
+
+**Use for:** Upload WSDL, OpenAPI, OData `$metadata`, CSV.
+
+**Spec:** Dashed 2 px border, hover and drag state `primary-soft`. Say what is accepted and the size limit. After a file is chosen show a `cn-file` row with name, size, progress and cancel.
+
+**Accessibility:** Real `input type=file` inside the label (visually hidden, not `display:none`) so keyboard and screen readers work.
+
+**Do not:** Rely on drag and drop only.
+
+## Identity
+
+### Count badge
+**Classes:** `cn-count`, `--muted`, `--danger`
+
+**Use for:** Show a number next to a label (alerts, items).
+
+**Spec:** 20 px high pill, tabular numbers, cap display at 99+. Muted for totals, danger only for items that need action.
+
+**Accessibility:** Add visible or hidden text ("3 alerts").
+
+**Do not:** Use for statuses or as the only signal.
+
+### Status dot
+**Classes:** `cn-dot`, `--success|warning|danger|info`
+
+**Use for:** A tiny status marker beside a label or in dense lists.
+
+**Spec:** 8 px circle. Always next to the status word. For product status prefer the status badge.
+
+**Accessibility:** Never the only indicator; include text.
+
+**Do not:** Use a dot alone in a table cell.
+
+### Date label
+**Classes:** `cn-date-label`, `--soon`, `--overdue`
+
+**Use for:** Show a date with its urgency (due dates, expiry, next run).
+
+**Spec:** 24 px, calendar icon, caption 500. Soon uses warning tones, overdue uses danger tones. Say "Due tomorrow", "3 days overdue" rather than only a date.
+
+**Accessibility:** Use `<time datetime>`.
+
+**Do not:** Color a date without saying why.
+
+### Tile
+**Classes:** `cn-tile`, `--sm`, `--lg`
+
+**Use for:** Put an icon in a rounded square for list rows and cards.
+
+**Spec:** 32 / 40 / 48 px, radius = 25% of size, `primary-soft` background and `primary` icon. Protocol icons can replace the glyph.
+
+**Accessibility:** Decorative: `aria-hidden` icon.
+
+**Do not:** Use as a button.
+
+### Avatar group
+**Classes:** `cn-avatar-group`, `cn-avatar-group__more`
+
+**Use for:** Show owners or members compactly.
+
+**Spec:** Avatars overlap by 8 px with a 2 px `surface` ring. Show 3 to 5 then a "+N" avatar.
+
+**Accessibility:** Give the group an accessible name ("Owners: Asha, Ravi and 4 more").
+
+**Do not:** Overlap more than 8 px.
+
+### Item and item group
+**Classes:** `cn-item-group`, `cn-item`, `__body`, `__title`, `__desc`, `__meta`, `__actions`
+
+**Use for:** A list row with media, title, description, status and actions. Use it for settings lists, connection lists and search results.
+
+**Spec:** Padding 12 x 16, 1 px dividers, group radius `lg`. `--interactive` adds a hover background and a pointer; make the row a link or button.
+
+**Accessibility:** If the row is clickable, the title is the link or the row has `role="link"`; one tab stop per row plus one per action.
+
+**Do not:** Put more than two actions in a row (use a menu).
+
+### Description list
+**Classes:** `cn-dl`
+
+**Use for:** Labeled facts about one object (owner, source, last run).
+
+**Spec:** Two columns: label (`text-muted`, up to 200 px) and value. Mono for IDs and URLs. Stacks below 640 px.
+
+**Accessibility:** Use real `dl`, `dt`, `dd`.
+
+**Do not:** Use a table for a single object.
+
+## Layout
+
+### Accordion and collapsible
+**Classes:** `cn-accordion`, `cn-collapsible`
+
+**Use for:** Show and hide sections of content. Accordion for related sections, collapsible for one optional block.
+
+**Spec:** Native `details` and `summary`: no script. 16 px padding, chevron rotates 180 degrees over 200 ms. First item can start open.
+
+**Accessibility:** Native semantics give keyboard (Enter, Space) and screen reader support.
+
+**Do not:** Hide required information or error messages inside.
+
+### Grid
+**Classes:** `cn-grid`, `--3`, `--4`, `--auto`
+
+**Use for:** Equal columns of cards or stats.
+
+**Spec:** Gap 16 px. Fixed column counts collapse to one column below 768 px; `--auto` fits columns of at least 240 px.
+
+**Accessibility:** n/a
+
+**Do not:** Nest grids more than once.
+
+### Separator (vertical)
+**Classes:** `cn-divider--vertical`, `cn-divider`
+
+**Use for:** Divide groups in a row or a page.
+
+**Spec:** 1 px `border` color, 12 px side margin when vertical.
+
+**Accessibility:** Decorative: `role="separator"` only when it divides interactive groups.
+
+**Do not:** Use as a heading underline.
+
+### Aspect ratio
+**Classes:** `cn-aspect`
+
+**Use for:** Keep media (images, video, embeds) at a fixed ratio.
+
+**Spec:** Set `--r` (for example `16/9`). Radius `md`, background `sunken`, content `object-fit: cover`.
+
+**Accessibility:** Images need `alt`.
+
+**Do not:** Stretch images.
+
+### Scroll area
+**Classes:** `cn-scroll`
+
+**Use for:** Scroll inside a fixed-height container (logs, payloads, long lists) with a thin themed scrollbar.
+
+**Spec:** Set a height. Thin 10 px scrollbar in `border-strong`. Make the container focusable (`tabindex="0"`) when it only scrolls.
+
+**Accessibility:** Keyboard users must be able to scroll it.
+
+**Do not:** Nest scroll areas.
+
+### Panel (side panel)
+**Classes:** `cn-with-panel`, `cn-panel`
+
+**Use for:** Show details next to a list without covering it (non-modal).
+
+**Spec:** Panel 360 px wide, left border. Below 768 px it moves under the list.
+
+**Accessibility:** `aside` with a label. Do not trap focus; it is not a dialog.
+
+**Do not:** Use for tasks that need full attention (use a drawer or page).
+
+### Split view (resizable)
+**Classes:** `cn-split`, `__pane`, `__handle`
+
+**Use for:** Compare two areas (request and response) with a draggable divider.
+
+**Spec:** Set `--left` for the first pane width. Handle is 6 px, `col-resize`, `primary` on hover and focus. Dragging needs script.
+
+**Accessibility:** Handle has `role="separator"`, `aria-orientation`, `tabindex="0"`; arrow keys resize in 5% steps.
+
+**Do not:** Allow panes to shrink below 200 px.
+
+## Navigation
+
+### Navbar
+**Classes:** `cn-navbar`, `__links`, `__link`, `__actions`
+
+**Use for:** Top navigation for marketing, docs and public pages.
+
+**Spec:** 64 px high, `surface` with a bottom border. Logo, links, actions (Sign in secondary, Start free primary). Current link: `aria-current="page"` on `primary-soft`.
+
+**Accessibility:** `nav` with `aria-label`. Collapse to a menu button below 768 px.
+
+**Do not:** Use for the app console (use the sidebar shell).
+
+### Menubar
+**Classes:** `cn-menubar`, `__trigger`
+
+**Use for:** Desktop-app style menus (File, Edit, View).
+
+**Spec:** 32 px triggers in a bordered bar. Open trigger has `aria-expanded="true"` and `sunken`. Menus use `cn-menu`.
+
+**Accessibility:** `role="menubar"` and `menuitem`; Left/Right move between menus, Down opens, Escape closes.
+
+**Do not:** Use on the web unless the app is desktop-like.
+
+### Link
+**Classes:** `cn-anchor`, `--subtle`, `--external`
+
+**Use for:** Links inside text and standalone.
+
+**Spec:** `primary` text, underline with 3 px offset. External links get an arrow glyph.
+
+**Accessibility:** Link text says where it goes ("connector guide", not "click here").
+
+**Do not:** Style a button as a link or a link as a button.
+
+### Vertical tabs
+**Classes:** `cn-tabs--vertical`
+
+**Use for:** Settings with many sections.
+
+**Spec:** Same tab markup, 200 px wide, selected indicator on the right edge.
+
+**Accessibility:** `aria-orientation="vertical"`; Up/Down move.
+
+**Do not:** Use more than 8.
+
+### Stepper (progress tracker)
+**Classes:** `cn-stepper`, `--vertical`, `cn-dots`
+
+**Use for:** Show progress through a multi-step flow (create connection, onboarding).
+
+**Spec:** Steps: complete (filled `primary` with a check), current (`primary` ring), upcoming (outline), error (`danger`). Connectors fill as steps complete. On mobile only the current title shows. Dots for compact carousels.
+
+**Accessibility:** `ol` with `aria-label`; current step has `aria-current="step"`. State must be readable, not color alone (check, number, "!").
+
+**Do not:** Use more than 6 steps, or for non-linear navigation (use tabs).
+
+### Tree view
+**Classes:** `cn-tree`, `__leaf`
+
+**Use for:** Hierarchies: API resources, OData entity sets, folders.
+
+**Spec:** Rows 32 px, chevron rotates, children indented 12 px with a guide line. Selected row `primary-soft`.
+
+**Accessibility:** `role="tree"`, `treeitem`, `aria-expanded`; arrow keys navigate, Right expands, Left collapses.
+
+**Do not:** Nest deeper than 5 levels.
+
+## Messaging
+
+### Banner
+**Classes:** `cn-banner`, `--warning|danger|success`, `__actions`
+
+**Use for:** Page-wide message about something that affects everything: maintenance, billing, outage.
+
+**Spec:** Full width, tinted background, icon, one sentence, optional action and dismiss. One banner at a time, at the very top.
+
+**Accessibility:** `role="status"`, or `role="alert"` for urgent ones.
+
+**Do not:** Stack banners or use them for page-specific messages (use an alert).
+
+### Inline message
+**Classes:** `cn-inline-message`, `--info|success|warning|danger`
+
+**Use for:** A short hint or validation next to a field or value.
+
+**Spec:** Icon plus one line of `small` text in the semantic color.
+
+**Accessibility:** Link to the field with `aria-describedby`.
+
+**Do not:** Write more than one sentence.
+
+### Spotlight (tour step)
+**Classes:** `cn-spotlight`
+
+**Use for:** Introduce one new feature or step of a tour.
+
+**Spec:** `primary` background, 320 px max, title, one sentence, step count, Skip and Next. Show once per person.
+
+**Accessibility:** `role="dialog"` with a label; Escape skips; do not trap focus.
+
+**Do not:** Block the interface or show more than 5 steps.
+
+## Overlays
+
+### Alert dialog
+**Classes:** `cn-modal--alert`
+
+**Use for:** Interrupt to confirm a risky action. Needs an answer.
+
+**Spec:** 420 px wide. Icon tile, question title, consequence sentence, Cancel and a verb-and-object confirm button. No close icon, no backdrop dismiss.
+
+**Accessibility:** `role="alertdialog"`, `aria-labelledby`, `aria-describedby`. Focus starts on Cancel for destructive actions.
+
+**Do not:** Use for information (use a toast or alert).
+
+### Popover
+**Classes:** `cn-popover`, `cn-popover-wrap`
+
+**Use for:** Small interactive content opened by a click: filters, quick settings, date picker.
+
+**Spec:** Radius `lg`, shadow-3, 240 to 360 px, 8 px from the trigger. Closes on Escape and outside click.
+
+**Accessibility:** Trigger has `aria-expanded` and `aria-controls`. Focus moves in and returns on close.
+
+**Do not:** Put long forms or required decisions in it.
+
+### Hover card
+**Classes:** `cn-hover`
+
+**Use for:** Preview an item (a person, a connection) on hover or focus.
+
+**Spec:** Popover that opens on `:hover` and `:focus-within`. Read-only content.
+
+**Accessibility:** Content must also be reachable another way (a hover card is a convenience). Not available on touch.
+
+**Do not:** Put required actions or links in it.
+
+### Command palette
+**Classes:** `cn-command`, `__input`, `__list`, `__group`, `__item`, `__foot`
+
+**Use for:** Keyboard-first search for pages, objects and actions (Ctrl K).
+
+**Spec:** 560 px dialog, radius `xl`, shadow-4. Grouped results, selected row `sunken`, shortcuts as `cn-kbd`, footer with key hints.
+
+**Accessibility:** `role="dialog"` with a combobox and listbox inside; Up/Down, Enter, Escape. Open with Ctrl or Cmd + K.
+
+**Do not:** Make it the only way to reach something.
+
+### Drawer and sheet
+**Classes:** `cn-scrim--end|start|bottom`, `cn-drawer`, `__head`, `__body`, `__foot`
+
+**Use for:** Create or edit without leaving the page (side drawer), or a mobile bottom sheet.
+
+**Spec:** 420 px wide, full height, shadow-4. Header with title and close, scrolling body, footer with actions. Sheet: full width, radius `xl` on top, max height 85%.
+
+**Accessibility:** `role="dialog"`, `aria-labelledby`, focus trap, Escape closes, focus returns to the trigger.
+
+**Do not:** Stack drawers.
+
+### Context menu
+**Classes:** `cn-menu--context`
+
+**Use for:** Right-click actions on rows and nodes.
+
+**Spec:** The standard `cn-menu` positioned at the pointer, kept inside the viewport.
+
+**Accessibility:** Always provide the same actions through a visible button or keyboard shortcut (Shift+F10 or the menu key).
+
+**Do not:** Make it the only way to do something.
+
+## Data
+
+### Sortable and selectable table
+**Classes:** `th[aria-sort]`, `tr[aria-selected]`, `cn-table--selectable|--sticky`, `cn-num`, `cn-table__check`, `cn-table__actions`
+
+**Use for:** Tables where people sort, select and act on rows.
+
+**Spec:** Clicking a header cycles `aria-sort` (ascending, descending). Selected rows `primary-soft`. Numbers right-aligned with tabular figures. Sticky header with `--sticky`. First column checkbox, last column row actions.
+
+**Accessibility:** Header cells are buttons or have `aria-sort`; checkboxes have row-specific labels; announce selection count.
+
+**Do not:** Hide the row actions menu behind hover only.
+
+### Toolbar and bulk bar
+**Classes:** `cn-toolbar`, `cn-bulkbar`, `cn-table-footer`
+
+**Use for:** Filters above a table; actions on the selected rows; footer with count and pagination.
+
+**Spec:** Toolbar: search, filters, spacer, actions. Bulk bar replaces the toolbar actions when rows are selected (inverse colors). Footer: count left, pagination right.
+
+**Accessibility:** Bulk bar has `role="status"` and announces "2 selected".
+
+**Do not:** Put destructive bulk actions first, or without confirmation.
+
+### Table tree and empty table
+**Classes:** `cn-tree-cell`, `cn-tree-toggle`, `cn-table__empty`
+
+**Use for:** Nested rows, and a clear message when there are no rows.
+
+**Spec:** Indent = `--depth` x 24 px. Toggle has `aria-expanded`. Empty table row spans all columns and offers a way out ("Clear filters").
+
+**Accessibility:** Toggle names the row it expands.
+
+**Do not:** Show an empty table without a message.
+
+### Timeline (activity feed)
+**Classes:** `cn-timeline`
+
+**Use for:** Run history, audit log, comments over time.
+
+**Spec:** Vertical line, 20 px marker column using a brand shape, title, time, optional detail. Newest first.
+
+**Accessibility:** `ol` with `time` elements.
+
+**Do not:** Use for tabular data (use a table).
+
+### Metric and delta
+**Classes:** `cn-metric`, `cn-delta`
+
+**Use for:** One headline number with a change.
+
+**Spec:** Label above, display-size value (tabular), delta in success or danger with text ("+8.2% vs last week"). Optional sparkline.
+
+**Accessibility:** Delta includes a text description, not only color or an arrow.
+
+**Do not:** Show more than one number per metric.
+
+### Charts (bars, hbar, sparkline, legend)
+**Classes:** `cn-chart`, `cn-bars`, `cn-hbar`, `cn-sparkline`, `cn-legend`
+
+**Use for:** Simple built-in charts. Use a charting library for anything complex and take colors from the tokens.
+
+**Spec:** Series order: indigo, teal, coral, amber. Axis baseline 1 px `border`. Always give a title, a legend or labels, and a text alternative.
+
+**Accessibility:** `role="img"` with a summary `aria-label`, or a data table alternative.
+
+**Do not:** Use color as the only difference between series (use shapes and labels).
+
+## Developer views
+
+### Log viewer
+**Classes:** `cn-log`, `__line[data-level]`
+
+**Use for:** Run logs and live tails.
+
+**Spec:** Mono 13 / 20, time, level word, message. Error lines tinted `danger-soft`. Max height 320 px, scrolls. Provide search, level filter and copy.
+
+**Accessibility:** `role="log"` with an accessible name. Levels are words, not just color.
+
+**Do not:** Truncate messages without a way to expand.
+
+### JSON payload viewer
+**Classes:** `cn-json`, `.k .s .n .b .z`
+
+**Use for:** Show request and response payloads.
+
+**Spec:** Keys `primary`, strings `teal-text`, numbers `amber-text`, booleans `coral-text`, null `text-subtle`. Collapsible objects (`details`). Add copy and "mask secrets".
+
+**Accessibility:** Collapsible nodes are native `details`.
+
+**Do not:** Show secrets unmasked by default.
+
+### Diff viewer
+**Classes:** `cn-diff`, `[data-op=add|del]`
+
+**Use for:** Compare two versions of a mapping or request.
+
+**Spec:** Line numbers, an op column (+, -), tinted backgrounds, mono text.
+
+**Accessibility:** The +/- sign carries the meaning, color reinforces it.
+
+**Do not:** Rely on color alone.
+
+### Request trace (waterfall)
+**Classes:** `cn-trace`, `__row`, `__track`, `__span`
+
+**Use for:** Show where time went in one run.
+
+**Spec:** Rows: name (indent by `--depth`), track with a span at `--start` and `--w`, duration. Span colors follow the protocol shape colors.
+
+**Accessibility:** `role="table"`; durations are text.
+
+**Do not:** Draw spans without a text duration.
+
+### Test results
+**Classes:** `cn-results`, `__summary`, `__item[data-state=fail]`
+
+**Use for:** Outcome of "Test connection" or mapping checks.
+
+**Spec:** Summary counts (passed, failed, total time), then a list. Failed items use a `danger` border and say what failed and how to fix it. Shapes: circle (pass), square (fail).
+
+**Accessibility:** Each item states its result in text.
+
+**Do not:** Show only a pass/fail count.
+
+## Content
+
+### Long-form text (prose)
+**Classes:** `cn-prose-content`
+
+**Use for:** Docs, release notes, help articles.
+
+**Spec:** Max 720 px, heading margins 32 px above, lists and quotes styled with `primary` rule.
+
+**Accessibility:** Real headings in order.
+
+**Do not:** Use outside long-form content.
+
+## Patterns added in v1.2
+
+### Table with filters and bulk actions
+Toolbar above (search, filter buttons, spacer), table with a checkbox column and row-actions column, footer with count and pagination. When rows are selected, a bulk bar replaces the toolbar actions. Always confirm destructive bulk actions in an alert dialog that names the count ("Delete 2 connections?").
+
+### Create connection flow
+Stepper (Source, Target, Mapping, Review) above a form or choice cards. One decision per step, Back and Next at the bottom, errors at the step where they happen, a test step before activation. Save as a draft automatically.
+
+### Debugging a run
+Run header (status badge, duration), trace waterfall, then tabs for Request, Response, Log. Payloads in the JSON viewer with secrets masked, failed step expanded by default, test results for the last test.
+
+### Settings page
+Vertical tabs on the left, form sections on the right, one save bar at the bottom. Switches apply immediately; everything else saves with a button.
+
+### Empty, loading and error states for each data view
+Empty: icon, one sentence, one action. Loading: skeleton of the final layout. Error: alert with cause and fix, and a retry button.

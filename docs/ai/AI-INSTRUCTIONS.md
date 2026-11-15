@@ -47,16 +47,14 @@ remain proposals. Do not copy all contracts into every always-loaded file.
 7. Application services own administrative transaction ports; engine owns runtime
    ports; storage implements them. Do not create a storage/engine/app cycle.
 8. Shared product pages go in `conctr-app-dioxus`; generic presentation goes in
-   `conctr-ui-dioxus`. Preserve the primitives/ui/composed direction. Keep actual
+   `conctr-ui-dioxus`. Use the ui facade over the immutable Rust UI snapshot and composed controls. Keep actual
    OS behavior in launchers/adapters and screen-width behavior responsive.
 9. The UI library owns Tailwind 4.1 tooling, input and the shipped utility bundle.
    Apps import components and `ThemeProvider`/`ConctrStyles`; no app Tailwind setup
-   or build step. Adjacent CSS modules load per component, with explicit document
-   registration for SSR. No global registry or per-component generated files.
+   or build step. Rust UI sources stay immutable under src/rust-ui; brand wrappers live in src/ui.
 10. Palette/scales live in UI `assets/colors/tokens.css`; generic shadcn aliases
     and interactions in `assets/styles/main.css`; compiler mappings in `theme.css`.
-    Keep local CSS in the components layer. Verify scoped themes, served module
-    selectors, utility coverage and browser states. See the theming contract.
+    Keep custom CSS with its Conctr wrapper. Verify scoped themes, utility coverage and browser states. See the theming contract.
 11. Use actual Cargo names: `conctr-api-dioxus` is the existing Dioxus transport
     package. Do not introduce `conctr-dioxus-api` as a second package to match old prose.
 

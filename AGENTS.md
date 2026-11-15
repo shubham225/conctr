@@ -89,7 +89,7 @@ generic API contracts remain framework-independent.
 Read [design instructions](design/docs/AI-INSTRUCTIONS.md),
 [presentation ownership](docs/architecture/dioxus-presentation.md) and, for CSS,
 [theming](docs/development/theming.md). Reuse the UI library before adding markup
-or CSS. Preserve the `primitives → ui → composed` dependency direction: composed
+or CSS. Preserve the `upstream primitives → ui facade → composed` dependency direction: composed
 components may depend on the lower layers; lower layers do not import compositions.
 
 Use Tailwind 4.1 utility classes directly in component Rust. All Tailwind tooling,

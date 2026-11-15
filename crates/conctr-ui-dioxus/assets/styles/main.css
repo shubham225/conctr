@@ -1,248 +1,135 @@
-/* Generic runtime styles. Palette and design scales are defined in tokens.css. */
+/* Runtime brand bridge; palette/scales are copied from design/colors/tokens.css. */
 @layer theme, base, components, utilities;
 @layer theme {
-  :root, .cn-body, .light, .dark, [data-theme] {
-    --background: var(--cn-bg);
-    --foreground: var(--cn-text);
-    --card: var(--cn-surface);
-    --card-foreground: var(--cn-text);
-    --popover: var(--cn-raised);
-    --popover-foreground: var(--cn-text);
-    --primary: var(--cn-primary);
-    --primary-foreground: var(--cn-on-primary);
-    --secondary: var(--cn-surface);
-    --secondary-foreground: var(--cn-text);
-    --muted: var(--cn-sunken);
-    --muted-foreground: var(--cn-text-muted);
-    --accent: var(--cn-primary-soft);
-    --accent-foreground: var(--cn-primary);
-    --destructive: var(--cn-danger);
-    --destructive-foreground: var(--cn-on-danger);
-    --border: var(--cn-border);
-    --input: var(--cn-border-strong);
-    --ring: var(--cn-focus);
-    --sidebar: var(--cn-surface);
-    --sidebar-foreground: var(--cn-text);
-    --sidebar-primary: var(--cn-primary);
-    --sidebar-primary-foreground: var(--cn-on-primary);
-    --sidebar-accent: var(--cn-primary-soft);
-    --sidebar-accent-foreground: var(--cn-primary);
-    --sidebar-border: var(--cn-border);
-    --sidebar-ring: var(--cn-focus);
-    --chart-1: var(--cn-primary);
-    --chart-2: var(--cn-teal-text);
-    --chart-3: var(--cn-coral-text);
-    --chart-4: var(--cn-amber-text);
-    --chart-5: var(--cn-text-muted);
-    --primary-hover: var(--cn-primary-hover);
-    --subtle-foreground: var(--cn-text-subtle);
-    --destructive-soft: var(--cn-danger-soft);
-    --success: var(--cn-success);
-    --success-soft: var(--cn-success-soft);
-    --warning: var(--cn-warning);
-    --warning-soft: var(--cn-warning-soft);
-    --overlay: var(--cn-scrim);
-    --elevation-1: var(--cn-shadow-1);
-    --elevation-2: var(--cn-shadow-2);
-    --elevation-3: var(--cn-shadow-3);
-    --elevation-4: var(--cn-shadow-4);
-  }
-  :root, .cn-body {
-    --radius: var(--cn-radius-md);
-    --control-height: var(--cn-control-md);
-    --control-padding: var(--cn-space-4);
-    --field-padding: var(--cn-space-3);
-    --card-padding: var(--cn-space-6);
-    --dialog-padding: var(--cn-space-6);
-    --dialog-gap: var(--cn-space-4);
-    --dialog-width: 480px;
-    --dialog-viewport-gap: var(--cn-space-8);
-    --choice-size: 18px;
-    --switch-width: 40px;
-    --switch-height: 24px;
-    --switch-thumb-size: 18px;
-    --switch-thumb-inset: 3px;
-    --switch-thumb: var(--cn-switch-thumb);
-    --cn-font-body: var(--cn-fw-body) var(--cn-fs-body)/var(--cn-lh-body) var(--cn-font-ui);
-    --cn-font-small: var(--cn-fw-regular) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui);
-    --cn-font-label: var(--cn-fw-medium) var(--cn-fs-small)/var(--cn-lh-small) var(--cn-font-ui);
-    --cn-font-control: var(--cn-fw-medium) var(--cn-fs-small)/1 var(--cn-font-ui);
-    --cn-font-field: var(--cn-fw-regular) var(--cn-fs-body)/1.25 var(--cn-font-ui);
-    --cn-font-badge: var(--cn-fw-medium) var(--cn-fs-caption)/var(--cn-lh-caption) var(--cn-font-ui);
-    --cn-font-title: var(--cn-fw-h4) var(--cn-fs-h4)/var(--cn-lh-h4) var(--cn-font-display);
-    --cn-motion-control: var(--cn-dur-fast) var(--cn-ease);
-    --cn-motion-overlay: var(--cn-dur-fast) var(--cn-ease);
-    --cn-focus-outline: 2px solid var(--ring);
-    --cn-focus-outline-offset: 2px;
-    --cn-textarea-min-height: 96px;
-    --radius-xs: calc(var(--radius) - 6px);
-    --radius-sm: calc(var(--radius) - 4px);
-    --radius-md: var(--radius);
-    --radius-lg: calc(var(--radius) + 4px);
-    --radius-xl: calc(var(--radius) + 10px);
-  }
+ :root, .cn-body, [data-theme] {
+  --background: var(--cn-bg);
+  --foreground: var(--cn-text);
+  --card: var(--cn-surface);
+  --card-foreground: var(--cn-text);
+  --popover: var(--cn-raised);
+  --popover-foreground: var(--cn-text);
+  --primary: var(--cn-primary);
+  --primary-foreground: var(--cn-on-primary);
+  --secondary: var(--cn-sunken);
+  --secondary-foreground: var(--cn-text);
+  --muted: var(--cn-sunken);
+  --muted-foreground: var(--cn-text-muted);
+  --accent: var(--cn-primary-soft);
+  --accent-foreground: var(--cn-primary);
+  --destructive: var(--cn-danger);
+  --destructive-foreground: var(--cn-on-danger);
+  --border: var(--cn-border);
+  --input: var(--cn-border-strong);
+  --ring: var(--cn-focus);
+  --success: var(--cn-success);
+  --success-foreground: var(--cn-on-primary);
+  --warning: var(--cn-warning);
+  --warning-foreground: var(--cn-on-primary);
+  --sidebar: var(--cn-surface);
+  --sidebar-foreground: var(--cn-text);
+  --sidebar-primary: var(--cn-primary);
+  --sidebar-primary-foreground: var(--cn-on-primary);
+  --sidebar-accent: var(--cn-primary-soft);
+  --sidebar-accent-foreground: var(--cn-primary);
+  --sidebar-border: var(--cn-border);
+  --sidebar-ring: var(--cn-focus);
+  --sidenav: var(--cn-surface);
+  --sidenav-foreground: var(--cn-text);
+  --sidenav-primary: var(--cn-primary);
+  --sidenav-primary-foreground: var(--cn-on-primary);
+  --sidenav-accent: var(--cn-primary-soft);
+  --sidenav-accent-foreground: var(--cn-primary);
+  --sidenav-border: var(--cn-border);
+  --sidenav-ring: var(--cn-focus);
+  --primary-light: var(--cn-primary-soft);
+  --primary-dark: var(--cn-primary);
+  --destructive-light: var(--cn-danger-soft);
+  --destructive-dark: var(--cn-danger);
+  --success-light: var(--cn-success-soft);
+  --success-dark: var(--cn-success);
+  --warning-light: var(--cn-warning-soft);
+  --warning-dark: var(--cn-warning);
+  --info: var(--cn-info);
+  --info-foreground: var(--cn-on-primary);
+  --info-light: var(--cn-info-soft);
+  --info-dark: var(--cn-info);
+  --selection: var(--cn-primary-soft);
+  --selection-foreground: var(--cn-text);
+  --surface: var(--cn-surface);
+  --surface-foreground: var(--cn-text-muted);
+  --chart-primary: var(--cn-primary);
+  --chart-muted: var(--cn-text-muted);
+  --chart-grid: var(--cn-border);
+  --slider-track: var(--cn-border);
+  --scrollbar-thumb: var(--cn-border-strong);
+  --bottom__nav__height: 64px;
+  --radius: var(--cn-radius-md);
+  --sidenav-width-icon: 48px;
+  --chart-1: var(--cn-primary); --chart-2: var(--cn-teal-text); --chart-3: var(--cn-coral-text); --chart-4: var(--cn-amber-text); --chart-5: var(--cn-text-muted);
+ }
 }
-/* Tailwind Preflight is supplied by tailwind.css; keep only kit rules here. */
 @layer base {
-  .cn-body {
-    background-color: var(--background);
-    color: var(--foreground);
-    font: var(--cn-font-body);
-    -webkit-font-smoothing: antialiased;
-    margin: 0;
-  }
-  .cn-display, .cn-h1, .cn-h2, .cn-h3, .cn-h4, .cn-body h1, .cn-body h2, .cn-body h3, .cn-body h4 {
-    font-family: var(--cn-font-display);
-    margin: 0 0 var(--cn-space-3);
-    color: var(--foreground);
-  }
-  .cn-display {
-    font-size: var(--cn-fs-display);
-    line-height: var(--cn-lh-display);
-    font-weight: var(--cn-fw-display);
-    letter-spacing: var(--cn-ls-display);
-  }
-  .cn-h1, .cn-body h1 {
-    font-size: var(--cn-fs-h1);
-    line-height: var(--cn-lh-h1);
-    font-weight: var(--cn-fw-h1);
-    letter-spacing: var(--cn-ls-h1);
-  }
-  .cn-h2, .cn-body h2 {
-    font-size: var(--cn-fs-h2);
-    line-height: var(--cn-lh-h2);
-    font-weight: var(--cn-fw-h2);
-    letter-spacing: var(--cn-ls-h2);
-  }
-  .cn-h3, .cn-body h3 {
-    font-size: var(--cn-fs-h3);
-    line-height: var(--cn-lh-h3);
-    font-weight: var(--cn-fw-h3);
-    letter-spacing: var(--cn-ls-h3);
-  }
-  .cn-h4, .cn-body h4 {
-    font-size: var(--cn-fs-h4);
-    line-height: var(--cn-lh-h4);
-    font-weight: var(--cn-fw-h4);
-    letter-spacing: var(--cn-ls-h4);
-  }
-  .cn-body-lg {
-    font-size: var(--cn-fs-body-lg);
-    line-height: var(--cn-lh-body-lg);
-  }
-  .cn-small {
-    font-size: var(--cn-fs-small);
-    line-height: var(--cn-lh-small);
-  }
-  .cn-caption {
-    font-size: var(--cn-fs-caption);
-    line-height: var(--cn-lh-caption);
-    letter-spacing: var(--cn-ls-caption);
-    color: var(--subtle-foreground);
-  }
-  .cn-body p {
-    margin: 0 0 var(--cn-space-4);
-    color: var(--muted-foreground);
-    max-width: 68ch;
-  }
-  .cn-body a:not([class]) {
-    color: var(--primary);
-    text-underline-offset: 3px;
-  }
-  .cn-body code, .cn-mono {
-    font-family: var(--cn-font-mono);
-    font-size: var(--cn-fs-code);
-    line-height: var(--cn-lh-code);
-  }
-  .cn-body :not(pre) > code {
-    border-radius: calc(var(--radius) - 6px);
-    background-color: var(--muted);
-    padding: 1px 6px;
-  }
-  .cn-muted {
-    color: var(--muted-foreground);
-  }
-  .cn-subtle {
-    color: var(--subtle-foreground);
-  }
-  :focus-visible {
-    outline: var(--cn-focus-outline);
-    outline-offset: var(--cn-focus-outline-offset);
-  }
-  .cn-prose {
-    max-width: var(--cn-container-prose);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    *, :before, :after {
-      transition: none !important;
-      animation: none !important;
-    }
-  }
-  .cn-body {
-    min-height: 100vh;
-  }
-  @keyframes cn-overlay-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  @keyframes cn-overlay-out {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
+ .cn-body, .cn-body *, .cn-body ::before, .cn-body ::after { border-color: var(--cn-border); }
+ body { margin: 0; }
+ .cn-body { font-family: var(--cn-font-ui); font-size: var(--cn-fs-body); line-height: var(--cn-lh-body); }
+ h1, h2, h3, h4 { font-family: var(--cn-font-display); font-weight: 600; }
+ h1 { font-size: var(--cn-fs-h2); line-height: var(--cn-lh-h2); }
+ h2 { font-size: var(--cn-fs-h3); line-height: var(--cn-lh-h3); }
+ code, pre { font-family: var(--cn-font-mono); }
+ :focus-visible { outline: 2px solid var(--cn-focus); outline-offset: 2px; }
+ @media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+ }
 }
-/* Shared field interaction states; component layout utilities stay in Rust. */
-@layer components{
-  .cn-field-control {
-    height: var(--control-height);
-    border-radius: var(--radius);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--input);
-    background-color: var(--card);
-    padding-inline: var(--field-padding);
-    color: var(--foreground);
-    font: var(--cn-font-field);
-    transition: border-color var(--cn-motion-control), box-shadow var(--cn-motion-control);
-    padding-block: 0;
-  }
-  .cn-field-control:hover:not(:disabled) {
-    border-color: var(--subtle-foreground);
-  }
-  .cn-field-control:focus-visible {
-    outline: 2px solid color-mix(in srgb, var(--ring) 24%, transparent);
-    outline-offset: 0;
-    border-color: color-mix(in srgb, var(--ring) 70%, var(--input));
-    box-shadow: none;
-  }
-  @supports (color: color-mix(in lab, red, red)){
-    .cn-field-control:focus-visible {
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 10%, transparent);
-    }
-  }
-  .cn-field-control[aria-invalid="true"] {
-    border-color: var(--destructive);
-  }
-  .cn-field-control[aria-invalid="true"]:is(:hover, :focus, :focus-visible) {
-    outline: 2px solid color-mix(in srgb, var(--destructive) 24%, transparent);
-    outline-offset: 0;
-    border-color: var(--destructive);
-    box-shadow: 0 0 0 4px var(--destructive-soft);
-  }
-  .cn-field-control:disabled {
-    cursor: not-allowed;
-    background-color: var(--muted);
-    color: var(--subtle-foreground);
-    opacity: var(--cn-opacity-disabled);
-  }
-  .cn-field-control::placeholder {
-    color: var(--subtle-foreground);
-  }
+
+/* Conctr compatibility skins outside the immutable registry. These selectors
+   intentionally override upstream inline styles and preserve caller utilities. */
+ .cn-body :is(table, [data-name="DataGrid"]) { font-size: var(--cn-fs-small); color: var(--cn-text); background: var(--cn-surface); }
+ .cn-body :is([data-name="TableWrapper"], [data-name="DataGrid"]) { border: 1px solid var(--cn-border); border-radius: var(--cn-radius-lg); overflow: auto; }
+ .cn-body table { border-collapse: collapse; width: 100%; }
+ .cn-body :is(th, [role="columnheader"]) { background: var(--cn-sunken); color: var(--cn-text-subtle); font-weight: 500; padding: 10px var(--cn-space-4); border-color: var(--cn-border); }
+ .cn-body :is(td, [role="gridcell"]) { padding: 14px var(--cn-space-4); border-color: var(--cn-border); color: var(--cn-text); }
+ .cn-body tbody tr:hover td { background: var(--cn-sunken); }
+ .cn-body :is(tr[aria-selected="true"],tr[data-state="selected"]) td { background: var(--cn-primary-soft); }
+/* Upstream Command injects unlayered selected-item CSS. Keep the override
+   unlayered too, with greater specificity and both selection attributes. */
+.cn-body :is([data-name="CommandItem"], [data-name="CommandItemLink"]):is([aria-selected="true"], [data-selected="true"]) {
+ background: var(--cn-primary-soft); color: var(--cn-primary);
+ border-color: var(--cn-primary);
 }
+.cn-body :is([data-name="CommandItem"], [data-name="CommandItemLink"]):is([aria-selected="true"], [data-selected="true"]) * { color: inherit; }
+::selection { background: var(--cn-primary-soft); color: var(--cn-text); }
+/* Brand compositions and registry presentation adapters. */
+.cn-flow-link { position: relative; }
+.cn-flow-packet { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--cn-amber); left: -3px; top: 0; animation: cn-packet-vertical 2.2s var(--cn-ease) infinite; }
+@keyframes cn-packet-vertical { from { transform: translateY(0); } to { transform: translateY(24px); } }
+@keyframes cn-packet-horizontal { from { transform: translateX(0); } to { transform: translateX(40px); } }
+@media(min-width:640px) { .cn-flow-packet { top:-3px; left:0; animation-name: cn-packet-horizontal; } }
+@media(prefers-reduced-motion:reduce) { .cn-flow-packet { animation: none; } }
+.cn-body [data-name="Command"] { background:var(--cn-raised); color:var(--cn-text); border-radius:var(--cn-radius-xl); overflow:hidden; box-shadow:var(--cn-shadow-4); }
+.cn-body [data-name="CommandInput"] { height:52px; padding-inline:var(--cn-space-4); font-size:var(--cn-fs-body); }
+.cn-body [data-name="CommandList"] { padding:var(--cn-space-2); }
+.cn-body :is([data-name="CommandItem"],[data-name="CommandItemLink"]) { min-height:40px; border-radius:var(--cn-radius-sm); padding:var(--cn-space-2) var(--cn-space-3); }
+.cn-body [data-name="Menubar"] { padding:var(--cn-space-1); border:1px solid var(--cn-border); background:var(--cn-surface); border-radius:var(--cn-radius-md); box-shadow:none; }
+.cn-body [data-name="MenubarTrigger"] { min-height:32px; padding-inline:var(--cn-space-3); border-radius:var(--cn-radius-sm); color:var(--cn-text); }
+.cn-body [data-name="MenubarContent"] { background:var(--cn-raised); border:1px solid var(--cn-border); border-radius:var(--cn-radius-md); box-shadow:var(--cn-shadow-3); }
+.cn-body [data-name="TabsList"] { border-bottom:1px solid var(--cn-border); border-radius:0; background:transparent; padding:0; gap:var(--cn-space-1); }
+.cn-body [data-name="TabsTrigger"] { border:0; border-bottom:2px solid transparent; border-radius:0; padding:var(--cn-space-3) var(--cn-space-4); background:transparent; box-shadow:none; color:var(--cn-text-muted); }
+.cn-body [data-name="TabsTrigger"][data-state="Active"] { border-bottom-color:var(--cn-primary); color:var(--cn-primary); background:transparent; }
+.cn-body :is(table,[data-name="DataGrid"]) { font-variant-numeric:tabular-nums; }
+.cn-body [role="gridcell"] { padding:0; background:var(--cn-surface); }
+.cn-body [data-name="GridCellContent"] { padding:12px 16px; line-height:var(--cn-lh-small); }
+.cn-body [data-name="GridRow"]:hover [role="gridcell"] { background:var(--cn-sunken); }
+.cn-body [data-name="DataGrid"] { box-shadow:var(--cn-shadow-1); }
+.cn-body [data-name="DatePicker"] button { font-variant-numeric:tabular-nums; min-width:32px; min-height:32px; border-radius:var(--cn-radius-sm); }
+.cn-composed-input-group > input { flex:1; min-width:0; border:0; border-radius:0; box-shadow:none; }
+/* Calendar tables are controls, not data tables; keep their day geometry local. */
+.cn-body [data-name="DatePicker"] :is(th,td) { width:36px; height:36px; padding:0; border:0; text-align:center; background:transparent; }
+.cn-body [data-name="DatePicker"] td button { width:36px; height:36px; padding:0; font-size:var(--cn-fs-small); line-height:1; }
+.cn-body [data-name="DatePicker"] th { color:var(--cn-text-subtle); font-size:var(--cn-fs-caption); }
+.cn-body [data-name="InputPhoneWrapper"] { align-items:stretch; min-width:0; border-radius:var(--cn-radius-md); }
+.cn-body [data-name="InputPhoneWrapper"] input { min-width:0; flex:1; height:40px; border-top-left-radius:0; border-bottom-left-radius:0; }
+.cn-body [data-name="InputPhoneWrapper"] > :first-child { flex-shrink:0; }
+.cn-body [data-name="InputPhoneWrapper"] > :first-child button { height:40px; white-space:nowrap; }
+
+.cn-body [data-name="DataGrid"] [aria-selected="true"] > * { background:var(--cn-primary-soft); color:var(--cn-text); }

@@ -4,6 +4,8 @@
 - Date: 2026-11-14
 - Supersedes: [0011](0011-dx-managed-tailwind.md)
 
+Component-source and styling specifics superseded by [ADR 0013](0013-rust-ui-facade.md).
+
 ## Context
 
 The UI crate must be reusable without Tailwind setup in each consuming app.
