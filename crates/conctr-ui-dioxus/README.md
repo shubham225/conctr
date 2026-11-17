@@ -87,3 +87,33 @@ ToastTrigger renders semantic Alert content; the connection summary's amber
 packet moves along its links and stops with reduced motion. Table skins exclude
 calendar day geometry; styling adapters for Command, phone inputs, menus and tabs
 remain outside the vendored registry.
+
+`ui::sidebar::{SidebarProvider, Sidebar, SidebarTrigger, SidebarGroup, SidebarItem}`
+provides grouped navigation with a 56 px desktop icon rail. Wrap Sidebar and main
+content together in SidebarProvider, and place SidebarTrigger in the main-content
+header. Below 768 px, that trigger opens a native modal drawer supporting Escape,
+contained focus and focus restoration. Providers own independent state. The
+[gallery example](../../apps/conctr-design-system/src/examples/sidebar.rs) shows the
+layout and disabled items. Navigation visibility is not authorization.
+
+## Visual field mapping
+
+`composed::{FieldMappingEditor, MappingField, MappingLink, MappingTransform}`
+provides a controlled editor for source → optional transform → target links.
+Supply source/target field schemas, system labels, optional transform choices and
+`mappings`; accept the updated `Vec<MappingLink>` through `on_change`. Stable link
+IDs preserve rows while editing. Field IDs are unique per schema; transform IDs
+are unique and nonempty. Each target can be selected once, while sources may feed
+multiple targets. Add uses the first source and next free target. `read_only`
+disables editing and hides add/remove controls. Unknown references display missing
+selections. Callers validate type compatibility and own persistence/execution;
+this UI does not evaluate transforms or establish a runtime mapping contract.
+
+The request and response [usage examples](src/composed/demos/field_mapping.rs)
+show caller-owned state. Connectors, field types/paths, transform choices and
+keyboard-accessible controls use shared theme tokens. The board scrolls within
+its container on narrow screens.
+
+The interactive [VisualFieldMapper](src/composed/visual_mapping/README.md) adds
+side-by-side schema fields, click-to-connect links, transform inspection, read-only
+review and versioned YAML download. The classic FieldMappingEditor remains available.

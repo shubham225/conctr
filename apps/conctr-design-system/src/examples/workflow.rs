@@ -53,13 +53,24 @@ pub fn ConctrWorkflow() -> Element {
     let state = use_workflow(nodes, edges);
     rsx! {
         div { class: "grid gap-4",
-            p { class: "text-sm text-muted-foreground", "Drag nodes, connect handles, pan, zoom, and undo canvas edits. This example does not run a connection." }
+            p { class: "text-sm text-muted-foreground",
+                "Drag nodes, connect handles, pan, zoom, and undo canvas edits. This example does not run a connection."
+            }
             WorkflowBuilder { state,
                 for (idx, node) in state.nodes.read().iter().cloned().enumerate() {
                     WorkflowNodeWrapper { key: "{node.id}", state, idx,
                         WfNode { target: node.has_target, source: node.has_source,
                             WfNodeHeader {
-                                img { src: match node.id.as_str() { "source" => images::REST, "target" => images::SOAP, _ => images::HUB }, alt: "", width: 24, height: 24 }
+                                img {
+                                    src: match node.id.as_str() {
+                                        "source" => images::REST,
+                                        "target" => images::SOAP,
+                                        _ => images::HUB,
+                                    },
+                                    alt: "",
+                                    width: 24,
+                                    height: 24,
+                                }
                                 WfNodeTitle { "{node.label}" }
                             }
                             p { class: "p-3 text-sm text-muted-foreground", "{node.description}" }

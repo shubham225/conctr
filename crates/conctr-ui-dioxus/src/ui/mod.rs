@@ -69,6 +69,7 @@ pub mod select;
 pub mod separator;
 pub mod sheet;
 pub mod shimmer;
+pub mod sidebar;
 pub mod sidenav;
 pub mod skeleton;
 pub mod slider;
@@ -86,3 +87,5 @@ pub mod toggle_group;
 pub mod toolbar;
 pub mod tooltip;
 pub mod workflow;
+
+pub mod feedback_message;

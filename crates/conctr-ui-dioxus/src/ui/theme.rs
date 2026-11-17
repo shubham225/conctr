@@ -11,6 +11,6 @@ pub enum Theme {
 pub fn ThemeProvider(#[props(default)] theme: Theme, children: Element) -> Element {
     rsx! {
         crate::assets::styles::ConctrStyles {}
-        div { class: "cn-body min-h-full bg-background text-foreground font-sans", "data-theme": if theme == Theme::Dark { "dark" } else { "light" }, {children} }
+        div { class: "cn-body min-h-full bg-background text-foreground font-sans", "data-theme": if theme == Theme::Dark { "dark" } else { "light" }, crate::ui::toast::ToastProvider { {children} } }
     }
 }

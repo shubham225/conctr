@@ -6,9 +6,15 @@ use dioxus::prelude::*;
 #[component]
 pub fn WorkflowBuilder(state: WorkflowState, children: Element) -> Element {
     rsx! {
-        section { "aria-label": "Workflow builder", class: "overflow-hidden rounded-lg border border-border bg-background",
-            WorkflowCanvas { state,
-                overlay: rsx! { WorkflowControls { state } WorkflowMinimap { state } },
+        section {
+            "aria-label": "Workflow builder",
+            class: "overflow-hidden rounded-lg border border-border bg-background",
+            WorkflowCanvas {
+                state,
+                overlay: rsx! {
+                    WorkflowControls { state }
+                    WorkflowMinimap { state }
+                },
                 {children}
             }
         }

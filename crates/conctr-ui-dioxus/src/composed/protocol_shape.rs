@@ -1,5 +1,6 @@
 use super::Protocol;
 use dioxus::prelude::*;
+/// Keep protocol identity recognizable without relying on color alone.
 #[component]
 pub fn ProtocolShape(protocol: Protocol) -> Element {
     let (shape, color) = match protocol {
@@ -19,5 +20,11 @@ pub fn ProtocolShape(protocol: Protocol) -> Element {
         ),
         Protocol::Webhook => ("rounded-full border-2", "var(--cn-coral)"),
     };
-    rsx! { i { "aria-hidden":"true", class:"inline-block size-[10px] shrink-0 {shape}", style: if protocol == Protocol::Webhook { format!("border-color:{color}") } else { format!("background:{color}") } } }
+    rsx! {
+        i {
+            "aria-hidden": "true",
+            class: "inline-block size-[10px] shrink-0 {shape}",
+            style: if protocol == Protocol::Webhook { format!("border-color:{color}") } else { format!("background:{color}") },
+        }
+    }
 }

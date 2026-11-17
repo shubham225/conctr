@@ -9,6 +9,7 @@ publish = false
 [dependencies]
 dioxus = { workspace = true, features = ["router", "fullstack"] }
 conctr-ui-dioxus = { workspace = true, features = ["showcase"] }
+icons = { version = "0.19", features = ["dioxus"] }
 [features]
 default = ["web"]
 web = ["dioxus/web"]

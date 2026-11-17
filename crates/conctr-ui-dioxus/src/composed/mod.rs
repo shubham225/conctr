@@ -8,8 +8,6 @@ pub mod protocol_shape;
 pub use protocol_shape::*;
 pub mod protocol_badge;
 pub use protocol_badge::*;
-pub mod badges_and_shapes;
-pub use badges_and_shapes::*;
 pub mod feedback_message;
 pub use feedback_message::*;
 pub mod feedback;
@@ -27,8 +25,24 @@ pub use calendar::Calendar;
 pub mod date_picker;
 pub use date_picker::DatePicker;
 pub mod tags;
-pub use tags::Tags;
+pub use tags::{TagVariant, Tags};
 pub mod tag_input;
 pub use tag_input::TagInput;
 pub mod input_group;
 pub use input_group::InputGroup;
+
+pub mod time_picker;
+pub use time_picker::TimePicker;
+pub mod date_time_picker;
+pub use date_time_picker::DateTimePicker;
+#[cfg(feature = "showcase")]
+pub mod demos;
+
+pub mod field_mapping;
+pub use field_mapping::{FieldMappingEditor, MappingField, MappingLink, MappingTransform};
+
+pub mod visual_mapping;
+pub use visual_mapping::{
+    FieldLink, FieldTransform, MappingSchema, PayloadFormat, SchemaField, VisualFieldMapper,
+    mapping_yaml, schema_from_json,
+};
