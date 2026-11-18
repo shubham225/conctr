@@ -11,11 +11,17 @@ crates/conctr-ui-dioxus/src/
   assets/        # Dioxus asset handles and stylesheet loader
 ```
 
-Dependencies go from compositions to facade controls to upstream primitives/hooks.
-Upstream absolute imports are resolved through root facade re-exports, without
-rewriting source. Neither layer imports product pages, services or platform logic.
-Apps import `conctr_ui_dioxus::ui::<family>`; the former `components::*` namespace
-was removed during the user-directed replacement. The shared app was migrated.
+Product apps depend on `conctr-ui-dioxus`. They import base controls from
+`conctr_ui_dioxus::ui::<family>` and reusable combinations from
+`conctr_ui_dioxus::composed`. Each base family has its own Conctr-owned module,
+even when it forwards all upstream defaults. Add Conctr behavior to that module
+so callers can keep their import paths.
+
+For example, `composed::InputGroup` assembles the controls from `ui::input_group`
+and accepts a field such as `ui::input::Input` as its child. The private
+`rust_ui` module supplies the pinned implementation. Its internal absolute
+imports resolve through the library facade. Product pages, services and business
+rules stay in their owning app or platform crate.
 
 `apps/conctr-design-system` is the fresh runnable showcase with 78 component demos
 and eight workflow examples. `design/` remains the canonical design kit; the

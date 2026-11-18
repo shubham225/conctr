@@ -11,7 +11,7 @@ CSS modules. See [Rust UI adoption](rust-ui-adoption.md).
 | `assets/fonts`, `logo`, `icons` | Supplied brand assets and license notices |
 | `assets/styles/main.css` | Semantic role bridge, typography, focus and reduced motion |
 | `assets/styles/theme.css` | Tailwind compiler mappings |
-| `assets/styles/tailwind.input.css` | Library-only scanning and explicit supported shell utilities |
+| `assets/styles/tailwind.input.css` | Library-owned consumer scan paths, compatibility skin imports and shell utilities |
 | `assets/styles/tailwind.css` | Shipped compiled stylesheet |
 | `src/rust-ui/` | Immutable MIT upstream snapshot |
 | `src/ui/` | App-facing facade and theme wrappers |
@@ -41,11 +41,17 @@ verify actual computed tokens, controls, keyboard interactions and workflow canv
 
 ## Component CSS and SSR
 
-Mapping, resizable and pipeline workspace folders own their component-specific
-`style.css`. Use `#[css_module]`, `asset!(..., AssetOptions::css_module())` and
-explicit `document::Stylesheet` registration. Do not use a process-global registry:
-each SSR document needs its own stylesheet links. The mapper SSR test covers both
-mapping and resizable styles. Keep generic colors and interactions in shared tokens.
+Put component-specific selectors in `src/ui/<family>/style.css` or
+`src/composed/<component>/style.css` beside the owning Rust module. Use
+`#[css_module]` for scoped classes and register the asset with
+`document::Stylesheet` so each SSR document receives the link. The
+[resizable component](../../crates/conctr-ui-dioxus/src/composed/resizable/component.rs)
+shows both declarations.
+
+Existing facade skins that target upstream DOM classes or data attributes live
+beside their wrappers and are imported by `assets/styles/tailwind.input.css`.
+The generated bundle ships those rules to consumers. Keep gallery layout and
+demo-only selectors in the showcase stylesheet.
 
 When CSS-module class mappings and served assets become inconsistent during
 `dx serve` hot reload, restart the server and reload before judging the layout.

@@ -1,41 +1,91 @@
-//! App-facing component families. Conctr owns this facade; upstream stays untouched.
-
-// Families that inherit upstream behavior and shared theme defaults.
-pub use crate::rust_ui::ui::{
-    accordion, alert_dialog, animate, aspect_ratio, attachment, auto_form, avatar, bottom_nav,
-    breadcrumb, bubble, button_action, button_group, callout, card_carousel, carousel, charts,
-    collapsible, context_menu, data_table, date_picker_dual_state, date_picker_state, dialog,
-    direction_provider, drag_and_drop, dropdown_menu, dropzone, empty, field, footer, form, header,
-    hover_card, image, input_group, input_prompt, item, kbd, label, link, marker, marquee, mask,
-    message, multi_select, navigation_menu, pagination, popover, pressable, progress, radio_button,
-    radio_button_group, scroll_area, select, separator, sheet, sidenav, skeleton, slider, spinner,
-    status, stepper, switch, toggle_group, toolbar, tooltip,
-};
-
-// Families with Conctr behavior or component-owned styles.
+//! App-facing component families owned by Conctr.
+pub mod accordion;
 pub mod alert;
+pub mod alert_dialog;
+pub mod animate;
+pub mod aspect_ratio;
+pub mod attachment;
+pub mod auto_form;
+pub mod avatar;
 pub mod badge;
+pub mod bottom_nav;
+pub mod breadcrumb;
+pub mod bubble;
 pub mod button;
+pub mod button_action;
+pub mod button_group;
+pub mod callout;
 pub mod card;
+pub mod card_carousel;
+pub mod carousel;
+pub mod charts;
 pub mod checkbox;
 pub mod chips;
 pub mod code_block;
+pub mod collapsible;
 pub mod command;
+pub mod context_menu;
 pub mod data_grid;
+pub mod data_table;
 pub mod date_picker;
+pub mod date_picker_dual_state;
+pub mod date_picker_state;
+pub mod dialog;
+pub mod direction_provider;
+pub mod drag_and_drop;
 pub mod drawer;
+pub mod dropdown_menu;
+pub mod dropzone;
+pub mod empty;
+pub mod feedback_message;
+pub mod field;
+pub mod footer;
+pub mod form;
+pub mod header;
+pub mod hover_card;
+pub mod image;
 pub mod input;
+pub mod input_group;
 pub mod input_otp;
 pub mod input_phone;
+pub mod input_prompt;
+pub mod item;
+pub mod kbd;
+pub mod label;
+pub mod link;
+pub mod marker;
+pub mod marquee;
+pub mod mask;
 pub mod menubar;
+pub mod message;
+pub mod multi_select;
+pub mod navigation_menu;
+pub mod pagination;
+pub mod popover;
+pub mod pressable;
+pub mod progress;
+pub mod radio_button;
+pub mod radio_button_group;
+pub mod scroll_area;
+pub mod select;
+pub mod separator;
+pub mod sheet;
 pub mod shimmer;
 pub mod sidebar;
+pub mod sidenav;
+pub mod skeleton;
+pub mod slider;
+pub mod spinner;
+pub mod status;
+pub mod stepper;
+pub mod switch;
 pub mod table;
 pub mod tabs;
 pub mod textarea;
 pub mod theme;
 pub mod theme_toggle;
 pub mod toast;
+pub mod toggle_group;
+pub mod toolbar;
+pub mod tooltip;
 pub mod workflow;
-
-pub mod feedback_message;

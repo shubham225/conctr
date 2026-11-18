@@ -1,26 +1,33 @@
 # Conctr UI for Dioxus
 
-Fresh Rust UI based design system. This replaces the former DioxusLabs-based
-implementation. The historical migration backup is not present in this checkout.
-Old `components::*` APIs have been removed. The shared product app uses the new facade.
+Use `conctr-ui-dioxus` as the UI dependency in product apps. Import individual
+controls from `ui::<family>` and reusable combinations from `composed`.
+The library owns the pinned Rust UI implementation.
 
 ## Usage
 
 ```rust,ignore
-use conctr_ui_dioxus::{prelude::*, ui::input::Input};
+use conctr_ui_dioxus::{
+    composed::InputGroup,
+    ui::{input::Input, theme::{Theme, ThemeProvider}},
+};
 use dioxus::prelude::*;
+
 #[component]
 fn App() -> Element {
-    rsx! { ThemeProvider { theme: Theme::Light,
-        Input { placeholder: "Connection name" }
-        Button { "Test connection" }
-    } }
+    rsx! {
+        ThemeProvider { theme: Theme::Light,
+            InputGroup { prefix: rsx! { "https://" },
+                Input { placeholder: "api.example.test" }
+            }
+        }
+    }
 }
 ```
 
-Use `conctr_ui_dioxus::ui::<family>` in applications. Families with shared defaults are re-exported in `src/ui/mod.rs`. A family
-with custom behavior or styles has its own module. All 86 upstream UI modules
-are exposed through this facade; Button, Input, Textarea and Card add Conctr defaults.
+Each base family has a Conctr-owned wrapper module under `src/ui/`, including
+families that forward upstream defaults. All 86 upstream UI modules are exposed
+through this facade. Button, Input, Textarea and Card add Conctr defaults.
 InputOTP uses native editing over upstream slots because the upstream root references
 a missing fixed-path JavaScript file. No app script setup is required.
 `BrandThemeToggle` is controlled by the application. The upstream ThemeToggle

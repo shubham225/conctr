@@ -46,15 +46,17 @@ remain proposals. Do not copy all contracts into every always-loaded file.
    put secrets in flow JSON, app state, traces, exports or documentation fixtures.
 7. Application services own administrative transaction ports; engine owns runtime
    ports; storage implements them. Do not create a storage/engine/app cycle.
-8. Shared product pages go in `conctr-app-dioxus`; generic presentation goes in
-   `conctr-ui-dioxus`. Use the ui facade over the immutable Rust UI snapshot and composed controls. Keep actual
-   OS behavior in launchers/adapters and screen-width behavior responsive.
-9. The UI library owns Tailwind 4.1 tooling, input and the shipped utility bundle.
-   Apps import components and `ThemeProvider`/`ConctrStyles`; no app Tailwind setup
-   or build step. Rust UI sources stay immutable under src/rust-ui; brand wrappers live in src/ui.
-10. Palette/scales live in UI `assets/colors/tokens.css`; generic shadcn aliases
-    and interactions in `assets/styles/main.css`; compiler mappings in `theme.css`.
-    Keep custom CSS with its Conctr wrapper. Verify scoped themes, utility coverage and browser states. See the theming contract.
+8. Shared product pages belong in `conctr-app-dioxus`. Import base controls from
+   `conctr_ui_dioxus::ui::<family>` and reusable combinations from
+   `conctr_ui_dioxus::composed`. Keep OS behavior in launcher adapters.
+9. Preserve a Conctr-owned wrapper module in `src/ui/` for every base family,
+   including families that only re-export upstream defaults. Build compositions
+   from those wrappers. Keep the Rust UI snapshot private and immutable.
+   See the [UI crate instructions](../../crates/conctr-ui-dioxus/AGENTS.md).
+10. The UI library owns Tailwind and the shipped utility bundle. Apps mount
+    `ThemeProvider` or `ConctrStyles`. Put component-specific CSS beside its
+    wrapper or composition and gallery-only styles in the showcase. Follow the
+    [theming guide](../development/theming.md) for shared assets and SSR registration.
 11. Use actual Cargo names: `conctr-api-dioxus` is the existing Dioxus transport
     package. Do not introduce `conctr-dioxus-api` as a second package to match old prose.
 
