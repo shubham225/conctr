@@ -1,0 +1,20 @@
+/* WorkflowCanvas owns gestures and edges; this frame owns responsive panel geometry. */
+.workspace {display:grid;grid-template-columns:192px minmax(0,1fr) 8px var(--pipeline-inspector);border:1px solid var(--cn-border);border-radius:var(--cn-radius-lg);overflow:hidden;background:var(--cn-surface);min-width:0;}
+.library {padding:var(--cn-space-3);border-right:1px solid var(--cn-border);background:var(--cn-bg);}
+.canvas {min-width:0;background:var(--cn-bg);}
+.canvas>div:first-child>div {height:600px!important;border:0;border-radius:0;}
+.resize {grid-column:3;grid-row:1;}
+.inspector {grid-column:4;grid-row:1;min-width:0;max-height:660px;overflow:auto;border-left:1px solid var(--cn-border);}
+.workspace[data-panel-mode="minimized"] {grid-template-columns:192px minmax(0,1fr) 0 80px;}
+.workspace[data-panel-mode="maximized"] {grid-template-columns:0 0 0 minmax(0,1fr);}
+.workspace[data-panel-mode="maximized"]>.library,.workspace[data-panel-mode="maximized"]>.canvas {display:none;}
+@media(max-width:1100px) {.workspace {grid-template-columns:144px minmax(0,1fr) 8px var(--pipeline-inspector);}}
+@media(max-width:767px) {.workspace,.workspace[data-panel-mode="minimized"] {display:flex;flex-direction:column;}.library {border-right:0;border-bottom:1px solid var(--cn-border);}.resize {display:none;}.inspector {max-height:none;border-left:0;border-top:1px solid var(--cn-border);}.canvas>div:first-child>div {height:440px!important;}}
+
+/* The upstream minimap uses hsl() around full-color aliases. Override locally. */
+.minimap svg>rect:first-child {fill:color-mix(in srgb,var(--cn-primary) 6%,transparent);stroke:var(--cn-primary);}
+.minimap svg>rect:not(:first-child) {fill:color-mix(in srgb,var(--cn-text-muted) 30%,transparent);stroke:var(--cn-text-muted);}
+.minimap svg>path {stroke:var(--cn-border-strong);}
+.canvas svg path[stroke^="hsl("] {stroke:var(--cn-primary);}
+.canvas svg text[stroke^="hsl("] {stroke:var(--cn-bg);}
+@media(prefers-reduced-motion:reduce) {.canvas svg path {animation:none!important;}}

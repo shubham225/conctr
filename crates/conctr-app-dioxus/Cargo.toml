@@ -10,6 +10,7 @@ repository.workspace = true
 [dependencies]
 dioxus = { workspace = true, features = ["router"] }
 conctr-ui-dioxus = { workspace = true }
+icons = { version = "0.19", features = ["dioxus"] }
 
 [features]
 server = ["conctr-ui-dioxus/server"]

@@ -44,6 +44,7 @@ async function navigate(path, selector) {
  errors.length = 0;
  await call('Page.navigate', {url: base + path});
  await ready(selector);
+ await ready('header button[data-dioxus-id]');
  await delay(300);
 }
 await call('Page.enable'); await call('Runtime.enable');
@@ -62,19 +63,19 @@ await call('Emulation.setDeviceMetricsOverride', {width: 1280, height: 900, devi
 await navigate('/components/input-otp', '[data-slot="input-otp"] input');
 await evaluate(`document.querySelector('[data-slot="input-otp"] input').focus()`);
 await call('Input.insertText', {text:'123456'}); await delay(200);
-await check('native OTP editing updates Rust UI slot overlays', `[...document.querySelectorAll('[data-slot="input-otp"] span.pointer-events-none')].map(e=>e.textContent).join('')==='123456'`);
+await check('native OTP editing updates Rust UI slot overlays', `[...document.querySelector('[data-slot="input-otp"]').querySelectorAll('span.pointer-events-none')].map(e=>e.textContent).join('')==='123456'`);
 await check('OTP requires no missing fixed-path script', `!document.querySelector('script[src="/components/otp.js"]')`);
 await navigate('/components/conctr-workflow', 'section[aria-label="Workflow builder"]');
 await check('Conctr workflow uses provided source hub target artwork', `['REST source','Conctr mapping','SOAP target'].every(text=>document.querySelector('main').textContent.includes(text)) && document.querySelectorAll('main img').length===3`);
 const zoom = await evaluate(`document.querySelector('section[aria-label="Workflow builder"]').textContent.match(/\d+%/)?.[0]`);
-await evaluate(`([...document.querySelectorAll('section[aria-label="Workflow builder"] button')].find(b=>b.textContent.trim()==='+')).click()`); await delay(200);
+await evaluate(`([...document.querySelectorAll('section[aria-label="Workflow builder"] button')].find(b=>b.textContent.trim()==='+' && b.title!=='Add node')).click()`); await delay(200);
 await check('workflow zoom changes canvas state', `!document.querySelector('section[aria-label="Workflow builder"]').textContent.includes(${JSON.stringify(zoom)})`);
 await call('Emulation.setEmulatedMedia', {features:[{name:'prefers-reduced-motion',value:'reduce'}]});
 await check('reduced motion is respected', `getComputedStyle(document.querySelector('button')).transitionDuration.split(',').every(t=>parseFloat(t)<0.001)`);
 const slugs = await evaluate(`[...document.querySelectorAll('nav a[href^="/components/"]')].map(a=>a.getAttribute('href'))`);
 for (const path of slugs) {
  await navigate(path, 'main h1');
- await check(`render ${path}`, `document.querySelector('main').textContent.includes('View example source')`);
+ await check(`render ${path}`, `!!document.querySelector('main details code.language-rust')`);
  if (errors.length) upstreamIssues.push({path, errors: [...errors]});
 }
 await navigate('/components/conctr-workflow', 'section[aria-label="Workflow builder"]');

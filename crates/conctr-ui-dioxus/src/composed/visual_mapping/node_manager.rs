@@ -1,5 +1,5 @@
 use super::{FieldEdit, NODE_TYPES, SchemaField, Styles};
-use crate::ui::button::{Button, ButtonVariant};
+use crate::ui::button::{Button, ButtonSize, ButtonVariant};
 use dioxus::prelude::*;
 
 /// A native modal supplies focus trapping, Escape dismissal and a typed node form.
@@ -36,22 +36,36 @@ pub(super) fn NodeDialog(
                         error.set("Name and path are required.".into()); return;
                     }
                     if paths.iter().any(|p| p == &next.path && original.as_ref().is_none_or(|f| &f.path != p)) {
-                        error.set("A node with this path already exists.".into()); return;
+                        error.set("A field with this path already exists.".into()); return;
                     }
                     on_save.call(if let Some(ref old) = original { FieldEdit::Update { path:old.path.clone(), field:next } } else { FieldEdit::Add(next) });
                     on_close.call(());
                 },
-                h3 { if field.is_some() { "Edit node" } else { "New node" } }
-                p { if source { "Source column" } else { "Target column" } }
-                label { "Name" input { autofocus:true, required:true, value:name(), oninput:move |e|name.set(e.value()), "aria-label":"Node name" } }
-                label { "Path" input { required:true, value:path(), oninput:move |e|path.set(e.value()), placeholder:"JSONPath, XPath or adapter-defined path", "aria-label":"Node path" } }
-                label { "Datatype" select { value:kind(), onchange:move |e|kind.set(e.value()), "aria-label":"Node datatype",
-                    for datatype in NODE_TYPES { option { value:*datatype, "{datatype}" } }
-                } }
-                if !error().is_empty() { p { role:"alert", "{error}" } }
-                div { class:Styles::actions.inner,
-                    Button { button_type:"button", variant:ButtonVariant::Outline, onclick:move |_|on_close.call(()), "Cancel" }
-                    Button { button_type:"submit", "Save node" }
+                header {class:Styles::dialog_header.inner,
+                    span {class:Styles::dialog_icon.inner, icons::Braces {class:"size-5"}}
+                    div {
+                        span {class:Styles::dialog_eyebrow.inner, if source {"Source schema"} else {"Target schema"}}
+                        h3 { if field.is_some() { "Edit field" } else { "Create field" } }
+                        p {"Define how this field appears in your mapping."}
+                    }
+                    Button {button_type:"button",variant:ButtonVariant::Ghost,size:ButtonSize::IconSm,aria_label:"Close field dialog",onclick:move |_|on_close.call(()),icons::X {class:"size-4"}}
+                }
+                div {class:Styles::dialog_fields.inner,
+                    label { span {"Field name"} input { autofocus:true, required:true, value:name(), oninput:move |e|name.set(e.value()), "aria-label":"Node name", placeholder:"e.g. Customer email" } }
+                    label { span {"Field path"} input { class:Styles::path_input.inner, required:true, value:path(), oninput:move |e|path.set(e.value()), placeholder:"e.g. $['customer']['email']", "aria-label":"Node path" }
+                        small {"Use the path syntax of your source or target schema."}
+                    }
+                    label { span {"Data type"} select { value:kind(), onchange:move |e|kind.set(e.value()), "aria-label":"Node datatype",
+                        for datatype in NODE_TYPES { option { value:*datatype, selected:*datatype==kind(), "{datatype}" } }
+                    } }
+                    if !error().is_empty() { div {class:Styles::dialog_error.inner,role:"alert",icons::CircleAlert {class:"size-4"} p {"{error}"}} }
+                }
+                footer {class:Styles::dialog_footer.inner,
+                    span {class:Styles::dialog_note.inner, icons::GitBranch {class:"size-4"} "Mapping draft"}
+                    div {class:Styles::actions.inner,
+                        Button { button_type:"button", variant:ButtonVariant::Outline, onclick:move |_|on_close.call(()), "Cancel" }
+                        Button { button_type:"submit", if field.is_some() { "Save changes" } else { "Create field" } }
+                    }
                 }
             }
         }

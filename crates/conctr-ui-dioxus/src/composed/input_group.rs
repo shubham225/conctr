@@ -1,3 +1,4 @@
+use crate::ui::input_group::{InputGroup as BaseInputGroup, InputGroupAddon, InputGroupAddonAlign};
 use dioxus::prelude::*;
 /// Kit input group; slots accept icons, text addons or action controls.
 #[component]
@@ -7,15 +8,15 @@ pub fn InputGroup(
     #[props(default)] suffix: Option<Element>,
 ) -> Element {
     rsx! {
-        div { class: "cn-composed-input-group flex min-h-10 items-center overflow-hidden rounded-md border border-input bg-card focus-within:ring-2 focus-within:ring-ring",
+        BaseInputGroup { class: "cn-composed-input-group h-auto min-h-10 overflow-hidden bg-card shadow-none focus-within:ring-2 focus-within:ring-ring [&>input]:flex-1 [&>input]:min-w-0 [&>input]:border-0 [&>input]:rounded-none [&>input]:shadow-none",
             if let Some(prefix) = prefix {
-                span { class: "flex self-stretch items-center border-r border-border bg-muted px-3 text-sm text-muted-foreground",
+                InputGroupAddon { class: "self-stretch border-r border-border bg-muted px-3 text-sm text-muted-foreground",
                     {prefix}
                 }
             }
             {children}
             if let Some(suffix) = suffix {
-                span { class: "flex self-stretch items-center border-l border-border px-3 text-sm text-muted-foreground",
+                InputGroupAddon { align: InputGroupAddonAlign::InlineEnd, class: "self-stretch border-l border-border px-3 text-sm text-muted-foreground",
                     {suffix}
                 }
             }

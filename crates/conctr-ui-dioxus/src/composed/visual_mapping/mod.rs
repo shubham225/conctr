@@ -20,3 +20,7 @@ mod node_manager;
 mod transform_picker;
 
 mod drag;
+
+mod connections;
+
+mod field_actions;

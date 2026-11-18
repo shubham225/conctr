@@ -1,0 +1,5 @@
+.time_picker { display:flex; align-items:center; gap:var(--cn-space-2); width:fit-content; height:40px; padding:0 var(--cn-space-3); border:1px solid var(--cn-border-strong); border-radius:var(--cn-radius-md); background:var(--cn-surface); color:var(--cn-text-muted); }
+.time_picker:focus-within { outline:2px solid var(--cn-focus); outline-offset:2px; }
+.time_picker input { border:0; outline:0; background:transparent; color:var(--cn-text); font-size:var(--cn-fs-small); color-scheme:light; }
+[data-theme="dark"] .time_picker input { color-scheme:dark; }
+.time_picker:has(input:disabled) { opacity:.45; }

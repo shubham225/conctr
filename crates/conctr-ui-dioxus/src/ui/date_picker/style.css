@@ -1,0 +1,8 @@
+.cn-body [data-name="DatePicker"] button { font-variant-numeric:tabular-nums; min-width:32px; min-height:32px; border-radius:var(--cn-radius-sm); }
+/* Calendar tables are controls, not data tables; keep their day geometry local. */
+.cn-body [data-name="DatePicker"] :is(th,td) { width:36px; height:36px; padding:0; border:0; text-align:center; background:transparent; }
+.cn-body [data-name="DatePicker"] td button { width:36px; height:36px; padding:0; font-size:var(--cn-fs-small); line-height:1; }
+.cn-body [data-name="DatePicker"] th { color:var(--cn-text-subtle); font-size:var(--cn-fs-caption); }
+/* Calendar selection must win over the data-table surface reset. */
+.cn-body [data-name="DatePicker"] [data-name="DatePickerCell"][aria-current="true"] { background:var(--cn-primary); color:var(--cn-on-primary); }
+.cn-body [data-name="DatePickerCell"]:focus-visible { position:relative; z-index:1; }

@@ -1,0 +1,15 @@
+.cn-body [role="gridcell"] { padding:0; background:var(--cn-surface); }
+.cn-body [data-name="GridCellContent"] { padding:12px 16px; line-height:var(--cn-lh-small); }
+.cn-body [data-name="GridRow"]:hover [role="gridcell"] { background:var(--cn-sunken); }
+.cn-body [data-name="DataGrid"] { box-shadow:var(--cn-shadow-1); }
+.cn-body [data-name="DataGrid"] [aria-selected="true"] > * { background:var(--cn-primary-soft); color:var(--cn-text); }
+.cn-body [data-name="GridCell"] { border-right-color:transparent; border-bottom:1px solid var(--cn-border); }
+.cn-body [data-name="GridCell"][aria-current="true"] > * { background:var(--cn-primary-soft); }
+.cn-body [data-name="GridHeaderCell"] { border-right-color:transparent; }
+/* Virtual rows have a fixed runtime height; keep padding inside that geometry. */
+.cn-body [data-name="GridCellContent"] { display:flex; align-items:center; height:100%; min-width:0; padding:0 var(--cn-space-4); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.cn-body [data-name="DataGrid"] a { color:var(--cn-primary); text-underline-offset:4px; }
+/* Advanced virtual grid retains selection/editing without doubled row rules. */
+.cn-body [data-name="GridRow"] { border-bottom:0; }
+.cn-body [data-name="GridHeaderCell"] > * { background:transparent; box-shadow:none; }
+.cn-body [data-name="GridCellWrapper"] { display:flex; align-items:center; padding:0; }

@@ -2,8 +2,8 @@
 
 Conctr is an enterprise integration platform inspired by Apache Camel's integration
 patterns and n8n's visual authoring. Its platform core is independent of UI
-frameworks; frontends are replaceable adapters. Most backend packages and the shared
-product app are scaffolds. A package name or showcase example is not a working feature.
+frameworks; frontends are replaceable adapters. Most backend packages are scaffolds; the shared product app includes local
+mapping and pipeline authoring previews. A package name or showcase example is not a working feature.
 
 ## Start here
 
@@ -40,7 +40,7 @@ product app are scaffolds. A package name or showcase example is not a working f
 | `conctr-api` | Server composition root; currently under `crates/conctr-api` |
 | `conctr-api-dioxus` | Dioxus-specific server-function adapter; this is the actual Cargo name |
 | `conctr-ui-dioxus` | Reusable layout primitives, UI controls and generic compositions |
-| `conctr-app-dioxus` | Shared product App, routes, pages and presentation state; currently scaffolded |
+| `conctr-app-dioxus` | Shared product App, routes, pages and presentation state; local authoring previews |
 
 These are ownership boundaries, not claims of implementation. Add proposed crates
 only when the selected feature needs their boundary. Prefer focused modules first.
@@ -99,7 +99,7 @@ or generated assets. Library development dependencies refresh the
 bundle during Cargo rebuilds; consumers use the shipped CSS without Node.
 Keep palettes and design scales in `assets/colors/tokens.css`, semantic shadcn
 aliases/shared interactions in `assets/styles/main.css`, and Tailwind compiler
-mappings in `theme.css`. Adjacent `style.css` files use CSS modules and explicit
+mappings in `theme.css`. Component-specific selectors belong beside the owning base or composed component. Keep gallery-only styles in the showcase. Adjacent `style.css` files use CSS modules and explicit
 per-component `document::Stylesheet` registration for repeated SSR documents.
 Keep ownership comments accurate; no global stylesheet registry or per-component
 generated CSS. Preserve supplied assets, type/spacing scales, protocol meanings,
@@ -124,10 +124,13 @@ For UI changes, serve the gallery and check actual browser behavior and served C
 
 ```sh
 dx serve --package conctr-design-system --platform web
-python3 apps/conctr-design-system/scripts/check-component-styles.py http://127.0.0.1:8080
+node apps/conctr-design-system/scripts/check-browser.mjs http://127.0.0.1:8080 http://127.0.0.1:9225
 ```
 
-Use the actual server URL/port. Product launchers are `conctr-web-dioxus`,
+Browser scripts require Node 22+ and Chrome started with
+`--remote-debugging-port=9225`. Use the actual server URL/port. For product UI,
+serve `conctr-web-dioxus` and use the focused scripts documented in
+[the app README](crates/conctr-app-dioxus/README.md). Product launchers are `conctr-web-dioxus`,
 `conctr-desktop-dioxus` and `conctr-mobile-dioxus`. Default workspace checks do not
 prove native SDK builds, browser geometry or external integrations work.
 

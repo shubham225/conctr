@@ -24,6 +24,5 @@ remain separate; the workspace's MIT/Apache declaration does not relicense Rust 
 The Conctr-owned `src/hooks/use_click_outside.rs` overrides the root hook seam.
 It owns and removes its document listener on component disposal instead of
 forgetting the JS closure. The unchanged upstream data-grid hook resolves
-`crate::hooks::use_click_outside` through this adapter. Styling compatibility
-corrections for border defaults, command selection and table/grid roles live
-in `assets/styles/main.css`, outside the source snapshot.
+`crate::hooks::use_click_outside` through this adapter. Shared border defaults live in `assets/styles/main.css`. Command and table/grid
+compatibility selectors live alongside their facade modules in `src/ui/`.

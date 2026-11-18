@@ -2,8 +2,8 @@
 
 The fresh `conctr-ui-dioxus` owns Tailwind 4.1.18 tooling, input and shipped CSS.
 Apps use `ui::<family>` and mount `ui::theme::ThemeProvider`; no app Node setup.
-The old component CSS-module implementation was backed up and removed at the
-user's request. See [Rust UI adoption](rust-ui-adoption.md).
+The facade uses shared utilities; specialized compositions also use adjacent
+CSS modules. See [Rust UI adoption](rust-ui-adoption.md).
 
 | Library file | Ownership |
 | --- | --- |
@@ -31,7 +31,7 @@ Providers scope explicit light/dark palettes. Use application-controlled
 and storage behavior. Explicit initial theme state preserves SSR markup agreement.
 Use full Tailwind literals; caller classes merge after wrapper defaults with
 `tw_merge`. New customizations belong in wrappers or shared theme files, never
-upstream. Future specialized CSS may live beside its Conctr wrapper.
+upstream. Specialized CSS lives beside its Conctr wrapper.
 
 For library development run `npm ci` and `npm run build:css`. Cargo also refreshes
 the bundle when the local compiler is installed; consumers use committed CSS
@@ -39,9 +39,13 @@ without Node. Run `python3 scripts/check-upstream.py` from the library directory
 Serve the gallery with `dx serve --package conctr-design-system --platform web` and
 verify actual computed tokens, controls, keyboard interactions and workflow canvas.
 
-## SSR CSS-module workaround
+## Component CSS and SSR
 
-The former Manganis CSS-module workaround is historical: the fresh Rust UI snapshot
-uses shared Tailwind classes and has no adjacent component CSS modules. Archived
-source retains the earlier tests. Reassess per-document stylesheet registration
-if introducing CSS modules in Conctr wrappers.
+Mapping, resizable and pipeline workspace folders own their component-specific
+`style.css`. Use `#[css_module]`, `asset!(..., AssetOptions::css_module())` and
+explicit `document::Stylesheet` registration. Do not use a process-global registry:
+each SSR document needs its own stylesheet links. The mapper SSR test covers both
+mapping and resizable styles. Keep generic colors and interactions in shared tokens.
+
+When CSS-module class mappings and served assets become inconsistent during
+`dx serve` hot reload, restart the server and reload before judging the layout.

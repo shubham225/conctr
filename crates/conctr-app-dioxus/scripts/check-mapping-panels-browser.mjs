@@ -1,0 +1,68 @@
+// Node 22+, with Chrome running with a remote debugging port.
+const base = process.argv[2] || "http://127.0.0.1:8092";
+const debug = process.argv[3] || "http://127.0.0.1:9225";
+const tabs=await (await fetch(`${debug}/json`)).json();
+const ws=new WebSocket(tabs[0].webSocketDebuggerUrl); await new Promise(r=>ws.onopen=r);
+let id=0;const pending=new Map();ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id){pending.get(m.id)?.(m);pending.delete(m.id)}};
+const call=(method,params={})=>new Promise(r=>{const n=++id;pending.set(n,r);ws.send(JSON.stringify({id:n,method,params}))});
+
+const evaluate=async expression=>(await call('Runtime.evaluate',{expression,returnByValue:true})).result.result.value;
+const pause=()=>new Promise(r=>setTimeout(r,350));
+const click=async text=>{await evaluate(`Array.from(document.querySelectorAll('button')).find(b=>b.textContent.trim()===${JSON.stringify(text)})?.click()`);await pause()};
+const assert=async (expression,label)=>{if(!await evaluate(expression))throw Error(label);console.log('PASS',label)};
+
+await call('Emulation.setDeviceMetricsOverride',{width:1600,height:1100,deviceScaleFactor:1,mobile:false});
+await call('Page.navigate',{url:`${base}/mappings`});
+for(let n=0;n<120;n++){if(await evaluate('!!document.querySelector("[data-resize-ready]")'))break;await new Promise(r=>setTimeout(r,500));}
+const size=async label=>evaluate(`(()=>{const r=document.querySelector('[aria-label="${label}"]').getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}})()`);
+const byLabel=async label=>{await evaluate(`document.querySelector('[aria-label="${label}"]').click()`);await pause()};
+async function dragHandle(label,dx,dy){const p=await size(label),x=p.x+p.width/2,y=p.y+p.height/2;await call('Input.dispatchMouseEvent',{type:'mousePressed',button:'left',clickCount:1,x,y});await call('Input.dispatchMouseEvent',{type:'mouseMoved',button:'left',buttons:1,x:x+dx,y:y+dy});await call('Input.dispatchMouseEvent',{type:'mouseReleased',button:'left',clickCount:1,x:x+dx,y:y+dy});await pause()}
+await assert('document.querySelectorAll("[data-resize-ready]").length===2','Both panel split handles mount');
+await assert(`![...document.querySelector('[aria-label="Mapping editor actions"]').querySelectorAll('button')].some(b=>/Edit|Ignore|Restore|Remove|Move/.test(b.textContent))`,'Field actions removed from toolbar');
+let before=await size('Connection inspector');
+await dragHandle('Resize mapping tools',-100,0);
+let after=await size('Connection inspector');if(after.width<before.width+80)throw Error('Sidebar pointer resize');console.log('PASS Sidebar pointer resize');
+await assert(`document.activeElement?.getAttribute('aria-label')==='Resize mapping tools'`,'Pointer resizing focuses the splitter');
+const dragged=after.width;
+await evaluate(`document.querySelector('[aria-label="Resize mapping tools"]').dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true}))`);await pause();
+await assert(`document.querySelector('[aria-label="Connection inspector"]').getBoundingClientRect().width>${dragged}`,'Separator supports keyboard resizing');
+await byLabel('Minimize mapping tools');await assert(`document.querySelector('[aria-label="Connection inspector"]').getBoundingClientRect().width===48`,'Sidebar minimizes');
+await byLabel('Restore mapping tools');await assert(`document.querySelector('[aria-label="Connection inspector"]').getBoundingClientRect().width>${dragged}`,'Sidebar restore retains dragged width');
+await byLabel('Maximize mapping tools');await assert(`document.querySelector('[aria-label="Connection inspector"]').getBoundingClientRect().width>1100`,'Sidebar maximizes');await byLabel('Restore mapping tools');
+before=await size('Payload panels');await dragHandle('Resize payload panels',0,-80);after=await size('Payload panels');if(after.height<before.height+60)throw Error('Preview pointer resize');console.log('PASS Payload pointer resize');
+const draggedHeight=after.height;
+await byLabel('Minimize payload panels');await assert(`document.querySelector('[aria-label="Payload panels"]').getBoundingClientRect().height===40`,'Payload minimizes');
+await byLabel('Restore payload panels');await assert(`Math.abs(document.querySelector('[aria-label="Payload panels"]').getBoundingClientRect().height-${draggedHeight})<2`,'Payload restore retains dragged height');
+await byLabel('Maximize payload panels');await assert(`document.querySelector('[aria-label="Payload panels"]').getBoundingClientRect().width>1100`,'Payload maximizes across workspace');await byLabel('Restore payload panels');
+await dragHandle('Resize mapping tools',-1100,0);
+await assert(`document.querySelector('[aria-label="Connection inspector"]').getBoundingClientRect().width<=document.querySelector('[data-resizable-group]').getBoundingClientRect().width*0.65+2`,'Dragging outside group clamps size');
+await assert(`!document.querySelector('[data-resize-overlay]')`,'Pointer release outside group clears drag shield');
+await evaluate(`document.querySelector('[aria-label="Resize mapping tools"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Home',bubbles:true,cancelable:true}))`);await pause();
+await assert(`document.querySelector('[aria-label="Connection inspector"]').getBoundingClientRect().width===240`,'Home uses minimum panel size');
+await evaluate(`document.querySelector('[aria-label="Resize payload panels"]').dispatchEvent(new PointerEvent('pointerdown',{pointerId:77,button:0,bubbles:true,cancelable:true}))`);await pause();
+await evaluate(`document.querySelector('[aria-label="Resize payload panels"]').dispatchEvent(new PointerEvent('pointercancel',{pointerId:77,bubbles:true}))`);await pause();
+await assert(`!document.querySelector('[data-resize-overlay]')`,'Pointer cancellation clears drag shield');
+await evaluate(`document.querySelector('[data-field-actions]').click()`);await pause();
+await assert(`!!document.querySelector('[data-field-menu]:popover-open')`,'Field action button opens context menu');
+await assert(`document.activeElement?.textContent.includes('Edit field')`,'Context menu receives keyboard focus');
+await call('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});await call('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});await pause();
+const point=await evaluate(`(()=>{const r=document.querySelector('[data-field-path][data-side="source"]').getBoundingClientRect();return {x:r.x,y:r.y}})()`);
+await call('Input.dispatchMouseEvent',{type:'mousePressed',button:'right',clickCount:1,x:point.x+80,y:point.y+20});await call('Input.dispatchMouseEvent',{type:'mouseReleased',button:'right',clickCount:1,x:point.x+80,y:point.y+20});await pause();
+await assert(`!!document.querySelector('[data-field-menu]:popover-open')`,'Right-click opens field menu');
+await evaluate(`[...document.querySelector('[data-field-menu]:popover-open').querySelectorAll('button')].find(b=>b.textContent.includes('Ignore field')).click()`);await pause();
+await assert(`document.querySelector('[data-node-path]').dataset.ignored==='true'`,'Context ignore updates field');
+await evaluate(`document.querySelector('[data-field-actions]').click()`);await pause();
+await evaluate(`[...document.querySelector('[data-field-menu]:popover-open').querySelectorAll('button')].find(b=>b.textContent.includes('Restore field')).click()`);await pause();
+await assert(`document.querySelector('[data-node-path]').dataset.ignored==='false'`,'Context restore updates field');
+await evaluate(`document.querySelector('[data-field-actions]').click()`);await pause();
+await evaluate(`[...document.querySelector('[data-field-menu]:popover-open').querySelectorAll('button')].find(b=>b.textContent.includes('Edit field')).click()`);await pause();
+await assert(`document.querySelector('[data-node-dialog]')?.open`,'Context edit opens node dialog');
+await call('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});await call('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});await pause();
+await evaluate(`document.querySelector('[data-field-path][data-side="source"]').focus();document.activeElement.dispatchEvent(new KeyboardEvent('keydown',{key:'F10',shiftKey:true,bubbles:true,cancelable:true}))`);await pause();
+await assert(`!!document.querySelector('[data-field-menu]:popover-open')`,'Shift+F10 opens context menu');
+await evaluate(`document.activeElement.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true}))`);
+await assert(`document.activeElement.textContent.includes('Ignore field')`,'Menu arrow keys move focus');
+await evaluate(`[...document.querySelector('[data-field-menu]:popover-open').querySelectorAll('button')].find(b=>b.textContent.includes('Delete field')).click()`);await pause();
+await assert(`document.querySelectorAll('[data-node-path][data-side="source"]').length===9`,'Context delete removes field');
+await click('Undo');await assert(`document.querySelectorAll('[data-node-path][data-side="source"]').length===10`,'Undo restores deleted field');
+ws.close();

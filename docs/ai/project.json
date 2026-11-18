@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "audit_date": "2026-11-15",
+  "audit_date": "2026-11-17",
   "name": "Conctr",
   "tagline": "Where systems meet.",
   "documentation_status": "reviewable-proposal",
-  "current_state": "Rust UI based brand facade and fresh showcase; shared product shell; backend services remain scaffolds",
+  "current_state": "Rust UI brand facade and showcase; shared app with local mapping and pipeline authoring previews; backend services remain scaffolds",
   "existing_packages": [
     {
       "name": "conctr-api",
@@ -25,7 +25,7 @@
     {
       "name": "conctr-app-dioxus",
       "path": "crates/conctr-app-dioxus",
-      "status": "implemented-ui-shell",
+      "status": "implemented-local-authoring-preview",
       "targets": [
         "lib"
       ]
@@ -201,6 +201,7 @@
     "docs/AGENTS.md",
     "CLAUDE.md",
     "GEMINI.md",
-    ".github/copilot-instructions.md"
+    ".github/copilot-instructions.md",
+    "crates/conctr-app-dioxus/AGENTS.md"
   ]
 }

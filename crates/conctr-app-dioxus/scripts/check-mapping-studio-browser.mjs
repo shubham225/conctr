@@ -1,0 +1,42 @@
+// Node 22+, with Chrome running with a remote debugging port.
+const base = process.argv[2] || "http://127.0.0.1:8092";
+const debug = process.argv[3] || "http://127.0.0.1:9225";
+const tabs=await (await fetch(`${debug}/json`)).json();
+const ws=new WebSocket(tabs[0].webSocketDebuggerUrl); await new Promise(r=>ws.onopen=r);
+let id=0;const pending=new Map();ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id){pending.get(m.id)?.(m);pending.delete(m.id)}};
+const call=(method,params={})=>new Promise(r=>{const n=++id;pending.set(n,r);ws.send(JSON.stringify({id:n,method,params}))});
+
+const evaluate=async expression=>(await call('Runtime.evaluate',{expression,returnByValue:true})).result.result.value;
+const pause=()=>new Promise(r=>setTimeout(r,350));
+const click=async text=>{await evaluate(`Array.from(document.querySelectorAll('button')).find(b=>b.textContent.trim()===${JSON.stringify(text)})?.click()`);await pause()};
+const assert=async (expression,label)=>{if(!await evaluate(expression))throw Error(label);console.log('PASS',label)};
+await call('Emulation.setDeviceMetricsOverride',{width:1600,height:1100,deviceScaleFactor:1,mobile:false});
+await call('Page.navigate',{url:`${base}/mappings`});for(let n=0;n<120;n++){if(await evaluate('!!document.querySelector("[data-editor-ready]")'))break;await new Promise(r=>setTimeout(r,500));}
+await assert('!!document.querySelector("[data-editor-ready]")','Mapper mounted');
+await assert('!document.body.innerText.includes("Download YAML")','Studio hides export');
+const points=await evaluate(`['source','target'].map(side=>{const r=document.querySelector('[data-link-port][data-side="'+side+'"]').getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2}})`);
+await call('Input.dispatchMouseEvent',{type:'mouseMoved',...points[0]});await call('Input.dispatchMouseEvent',{type:'mousePressed',button:'left',clickCount:1,...points[0]});
+for(let i=1;i<=12;i++)await call('Input.dispatchMouseEvent',{type:'mouseMoved',buttons:1,x:points[0].x+(points[1].x-points[0].x)*i/12,y:points[0].y+(points[1].y-points[0].y)*i/12});
+await assert(`!!document.querySelector('[data-visual-mapper] > svg path[d]')`,'Curved wire follows pointer during connection');
+await call('Input.dispatchMouseEvent',{type:'mouseReleased',button:'left',clickCount:1,...points[1]});await pause();
+await assert('document.querySelectorAll("[data-connection]").length===1','Real pointer drag creates connection');
+await assert('document.body.innerText.includes("Selected connection")','Inspector selects dragged connection');
+await click('Undo');await assert('document.querySelectorAll("[data-connection]").length===0','Undo removes connection');
+await click('Redo');await assert('document.querySelectorAll("[data-connection]").length===1','Redo restores connection');
+await click('Response');await assert('document.querySelectorAll("[data-connection]").length===0','Response independent draft');
+await click('Request');await assert('document.querySelectorAll("[data-connection]").length===1','Request draft retained');
+await assert(`(()=>{const a=document.querySelector('[aria-label="Connection inspector"]').getBoundingClientRect();const b=document.querySelector('[aria-label="Side by side field mapping"]').getBoundingClientRect();return a.x>=b.right-2 && Math.abs(a.y-b.y)<2})()`,'Desktop right inspector');
+await assert('document.querySelector("[data-node-path]").getBoundingClientRect().height===40','Compact prototype field rows');
+await assert('document.body.innerText.includes("Source sample") && document.body.innerText.includes("Target mapping")','Bottom source and target panes');
+await evaluate(`var el=document.querySelector('[aria-label="Filter fields"]');Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(el,'currency');el.dispatchEvent(new Event('input',{bubbles:true}))`);await pause();
+await assert('document.querySelectorAll("[data-node-path]").length===2','Field filtering updates both lists');
+await evaluate(`var el=document.querySelector('[aria-label="Filter fields"]');Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(el,'');el.dispatchEvent(new Event('input',{bubbles:true}))`);await pause();
+await click('Auto-map');await assert('document.querySelectorAll("[data-connection]").length>1','Auto-map fills matching names');
+await click('Unmapped only');await assert(`!document.querySelector('[data-node-path][data-mapped="true"]')`,'Unmapped filter hides connected fields');
+await click('Unmapped only');
+await evaluate(`document.querySelector('[aria-label="Switch to dark theme"]').click()`);await pause();
+await assert(`getComputedStyle(document.querySelector('[data-visual-mapper]')).getPropertyValue('--cn-bg').trim().toLowerCase()==='#0b1020'`,'Dark theme tokens reach canvas');
+await call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});await pause();
+await assert('document.documentElement.scrollWidth<=390','Mobile page contained');
+await assert(`(()=>{const a=document.querySelector('[aria-label="Connection inspector"]').getBoundingClientRect();const b=document.querySelector('[aria-label="Side by side field mapping"]').getBoundingClientRect();return a.y>=b.bottom})()`,'Mobile inspector stacks');
+ws.close();

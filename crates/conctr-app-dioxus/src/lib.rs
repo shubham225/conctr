@@ -1,5 +1,8 @@
 //! Shared product UI and routing for Conctr launchers.
+mod mapping_studio;
 mod pages;
+mod pipeline_studio;
+mod queues;
 mod routes;
 
 pub use routes::Route;
@@ -46,6 +49,9 @@ fn Shell() -> Element {
                                 SidenavGroupLabel { "Workspace" }
                                 SidenavMenu {
                                     NavigationItem { to: Route::Connections {}, label: "Connections" }
+                                    NavigationItem { to: Route::MappingStudio {}, label: "Mappings" }
+                                    NavigationItem { to: Route::PipelineStudio {}, label: "Pipelines" }
+                                    NavigationItem { to: Route::Queues {}, label: "Queues" }
                                     NavigationItem { to: Route::Runs {}, label: "Runs" }
                                 }
                             }

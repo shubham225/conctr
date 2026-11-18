@@ -1,8 +1,7 @@
 # Conctr UI for Dioxus
 
 Fresh Rust UI based design system. This replaces the former DioxusLabs-based
-implementation; the previous source and gallery are in
-[pre-migration backups](../../backups/pre-rust-ui-20261115T112238Z/README.md).
+implementation. The historical migration backup is not present in this checkout.
 Old `components::*` APIs have been removed. The shared product app uses the new facade.
 
 ## Usage
@@ -19,7 +18,8 @@ fn App() -> Element {
 }
 ```
 
-Use `conctr_ui_dioxus::ui::<family>` in applications. All 86 upstream UI modules
+Use `conctr_ui_dioxus::ui::<family>` in applications. Families with shared defaults are re-exported in `src/ui/mod.rs`. A family
+with custom behavior or styles has its own module. All 86 upstream UI modules
 are exposed through this facade; Button, Input, Textarea and Card add Conctr defaults.
 InputOTP uses native editing over upstream slots because the upstream root references
 a missing fixed-path JavaScript file. No app script setup is required.
@@ -34,15 +34,19 @@ bundled styles through ThemeProvider and need no Node or Tailwind setup.
 
 `src/rust-ui/` contains unchanged component, hook, demo and workflow files.
 `src/ui/` holds facade adapters; `src/composed/` holds Conctr combinations.
+Import `ui::input_group` for individual input-group controls, or use
+`composed::InputGroup` for a field with prefix and suffix slots. Keep custom CSS
+next to its component, as in `src/composed/resizable/`. Existing upstream skins
+are compiled from adjacent stylesheets into the shipped utility bundle.
 No customizations go into the upstream snapshot. See [provenance](UPSTREAM.md).
 
 ## Library development
 
 Run `npm ci`, then `npm run build:css`. Cargo refreshes CSS when the local compiler
 is installed. Commit `assets/styles/tailwind.css` so consumers need no Node.
-The compiler scans only this library and its explicit shell-utility inventory.
-There are no source paths into consuming apps. Additional application-specific
-Tailwind classes require application-owned CSS compilation or a shared library composition.
+The library compiler scans its own source, shell utilities and the shared app/gallery
+consumer paths declared in `tailwind.input.css`. Keep additional scan paths here;
+consuming apps do not own a Tailwind toolchain.
 Run `python3 scripts/check-upstream.py` to verify vendored source integrity.
 
 ## Coverage and limits
@@ -117,3 +121,18 @@ its container on narrow screens.
 The interactive [VisualFieldMapper](src/composed/visual_mapping/README.md) adds
 side-by-side schema fields, click-to-connect links, transform inspection, read-only
 review and versioned YAML download. The classic FieldMappingEditor remains available.
+
+## Authoring workspaces
+
+- [Mapping workspace](src/composed/mapping_workspace/README.md): controlled direction/history toolbar.
+- [Pipeline workspace](src/composed/pipeline_workspace/README.md): workflow frame, library and inspector slots.
+- [Resizable controls](src/composed/resizable/README.md): Rust pointer/keyboard resizing and panel modes.
+
+Component-specific geometry uses adjacent CSS modules and explicit per-document
+stylesheet registration. Product routes and drafts live in the
+[shared app](../conctr-app-dioxus/README.md).
+
+`ui::code_block::CodeBlock` renders read-only snippets. Pass a `CodeLanguage`
+of `Json`, `Yaml`, `Toml`, or `Xml` for syntax colors. The default is
+`PlainText`. Supply an optional label for the scrollable code region. The
+component displays the supplied text verbatim with lexical coloring.

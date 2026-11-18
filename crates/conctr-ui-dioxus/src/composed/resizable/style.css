@@ -1,0 +1,12 @@
+/* Component-owned split handles. The consuming layout positions the separator. */
+.group {min-width:0;}
+.controls {display:flex;align-items:center;gap:4px;}
+.controls button {display:grid;place-items:center;width:32px;height:32px;border-radius:var(--cn-radius-md);cursor:pointer;}
+.controls button:hover {background:var(--cn-primary-soft);color:var(--cn-primary);}
+.handle {position:relative;z-index:20;display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none;color:var(--cn-text-subtle);cursor:col-resize;}
+.handle[data-orientation="vertical"] {cursor:row-resize;}
+.handle:hover,.handle:focus-visible {background:var(--cn-primary-soft);color:var(--cn-primary);}
+.grip {display:grid;place-items:center;width:8px;height:24px;border:1px solid var(--cn-border-strong);border-radius:var(--cn-radius-xs);background:var(--cn-surface);font-size:var(--cn-fs-caption);pointer-events:none;}
+.handle[data-orientation="vertical"] .grip {width:24px;height:8px;line-height:4px;}
+.shield {position:fixed;inset:0;z-index:var(--cn-z-tooltip);cursor:inherit;touch-action:none;user-select:none;}
+@media(pointer:coarse) {.controls button {width:44px;height:44px;}}

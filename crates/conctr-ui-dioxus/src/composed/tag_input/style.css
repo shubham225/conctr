@@ -1,0 +1,4 @@
+.taginput { display:flex; flex-wrap:wrap; align-items:center; gap:var(--cn-space-2); min-height:40px; padding:var(--cn-space-2); border:1px solid var(--cn-border-strong); border-radius:var(--cn-radius-md); background:var(--cn-surface); }
+.taginput:focus-within { outline:2px solid var(--cn-focus); outline-offset:2px; }
+.taginput > input { flex:1; min-width:80px; height:24px; border:0; outline:none; background:transparent; color:var(--cn-text); font-size:var(--cn-fs-small); }
+.taginput[data-disabled="true"] { opacity:.45; cursor:not-allowed; }

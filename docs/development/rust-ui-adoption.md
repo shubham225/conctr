@@ -44,11 +44,10 @@ module names are exposed, not all are equivalent to the Leptos implementations.
 
 At the user's explicit direction, the old UI crate, Tailwind setup and gallery
 were deleted after source backup, then recreated. The original `design/` remains
-canonical and unchanged by this migration. [Backup inventory](../../backups/pre-rust-ui-20261115T112238Z/README.md)
-includes uncommitted/untracked UI, gallery and design files, plus the shared app
-before its API migration; build artifacts and Node dependencies are excluded.
-Extract outside the workspace before restoring, so duplicate Cargo packages do
-not become accidental members. Restore the shared app together with the old UI API.
+canonical and unchanged by this migration. The migration backup was recorded at
+`backups/pre-rust-ui-20261115T112238Z`, but the archive and inventory are not
+present in this checkout. Recovery instructions depend on obtaining that archive;
+do not assume it is available locally.
 
 ## Validation
 

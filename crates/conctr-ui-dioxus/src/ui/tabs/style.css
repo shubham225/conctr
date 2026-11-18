@@ -1,0 +1,3 @@
+.cn-body [data-name="TabsList"] { border-bottom:1px solid var(--cn-border); border-radius:0; background:transparent; padding:0; gap:var(--cn-space-1); }
+.cn-body [data-name="TabsTrigger"] { border:0; border-bottom:2px solid transparent; border-radius:0; padding:var(--cn-space-3) var(--cn-space-4); background:transparent; box-shadow:none; color:var(--cn-text-muted); }
+.cn-body [data-name="TabsTrigger"][data-state="Active"] { border-bottom-color:var(--cn-primary); color:var(--cn-primary); background:transparent; }

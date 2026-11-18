@@ -1,0 +1,12 @@
+.cn-body [data-name="InputPhoneWrapper"] { align-items:stretch; min-width:0; border-radius:var(--cn-radius-md); }
+.cn-body [data-name="InputPhoneWrapper"] input { min-width:0; flex:1; height:40px; border-top-left-radius:0; border-bottom-left-radius:0; }
+.cn-body [data-name="InputPhoneWrapper"] > :first-child { flex-shrink:0; }
+.cn-body [data-name="InputPhoneWrapper"] > :first-child button { height:40px; white-space:nowrap; }
+.cn-body [data-name="InputPhoneWrapper"] { border:1px solid var(--cn-border-strong); background:var(--cn-surface); }
+.cn-body [data-name="InputPhoneWrapper"]:focus-within { outline:2px solid var(--cn-focus); outline-offset:2px; }
+.cn-body [data-name="InputPhoneWrapper"] > div:last-child { min-width:0; }
+.cn-body [data-name="InputPhoneWrapper"] > div:last-child > input { border:0; box-shadow:none; border-radius:0 var(--cn-radius-md) var(--cn-radius-md) 0; }
+.cn-body [data-name="InputPhoneWrapper"] > :first-child button { border:0; border-right:1px solid var(--cn-border); border-radius:var(--cn-radius-md) 0 0 var(--cn-radius-md); box-shadow:none; }
+.cn-body [data-name="InputPhoneWrapper"] input:focus-visible { outline:none; }
+/* Popover emits its trigger directly beside style nodes, not inside a wrapper. */
+.cn-body [data-name="InputPhoneWrapper"] > [data-name="PopoverTrigger"] { height:40px; flex-shrink:0; border:0; border-right:1px solid var(--cn-border); border-radius:var(--cn-radius-md) 0 0 var(--cn-radius-md); box-shadow:none; }

@@ -4,6 +4,21 @@
 @import "../../src/rust-ui/style/Animate.css";
 @import "../../src/rust-ui/style/slider.css";
 @import "./utilities.css";
+
+/* Existing skins target stable DOM classes and upstream data attributes. */
+@import "../../src/ui/table/style.css";
+@import "../../src/ui/data_grid/style.css";
+@import "../../src/ui/command/style.css";
+@import "../../src/ui/menubar/style.css";
+@import "../../src/ui/tabs/style.css";
+@import "../../src/ui/date_picker/style.css";
+@import "../../src/ui/input_phone/style.css";
+@import "../../src/ui/input_otp/style.css";
+@import "../../src/ui/sidebar/style.css";
+@import "../../src/ui/shimmer/style.css";
+@import "../../src/ui/drawer/style.css";
+@import "../../src/ui/toast/style.css";
+
 @source "../../src";
 @source "./shell-utilities.html";
 

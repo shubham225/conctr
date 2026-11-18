@@ -1,0 +1,20 @@
+/* Conctr compatibility skins outside the immutable registry. These selectors
+   intentionally override upstream inline styles and preserve caller utilities. */
+ .cn-body :is(table, [data-name="DataGrid"]) { font-size: var(--cn-fs-small); color: var(--cn-text); background: var(--cn-surface); }
+ .cn-body :is([data-name="TableWrapper"], [data-name="DataGrid"]) { border: 1px solid var(--cn-border); border-radius: var(--cn-radius-lg); overflow: auto; }
+ .cn-body table { border-collapse: collapse; width: 100%; }
+ .cn-body :is(th, [role="columnheader"]) { background: var(--cn-sunken); color: var(--cn-text-subtle); font-weight: 500; padding: 10px var(--cn-space-4); border-color: var(--cn-border); }
+ .cn-body :is(td, [role="gridcell"]) { padding: 14px var(--cn-space-4); border-color: var(--cn-border); color: var(--cn-text); }
+ .cn-body tbody tr:hover td { background: var(--cn-sunken); }
+ .cn-body :is(tr[aria-selected="true"],tr[data-state="selected"]) td { background: var(--cn-primary-soft); }
+.cn-body :is(table,[data-name="DataGrid"]) { font-variant-numeric:tabular-nums; }
+/* Calm, dense data surfaces with clear row, header and selection hierarchy. */
+.cn-body [data-name="TableWrapper"], .cn-body [data-name="DataGrid"] { box-shadow:var(--cn-shadow-1); }
+.cn-body [data-name="TableWrapper"] th, .cn-body [role="columnheader"] { height:48px; padding:var(--cn-space-3) var(--cn-space-4); color:var(--cn-text-muted); font-size:var(--cn-fs-caption); font-weight:600; border-bottom:2px solid var(--cn-border); }
+.cn-body [data-name="TableWrapper"] td { height:48px; padding:var(--cn-space-3) var(--cn-space-4); border-bottom:1px solid var(--cn-border); }
+.cn-body [data-name="TableWrapper"] tbody tr:last-child td { border-bottom:0; }
+.cn-body .cn-table { font-variant-numeric:tabular-nums; }
+.cn-body .cn-table thead th { height:44px; border-bottom:1px solid var(--cn-border); font-size:var(--cn-fs-caption); font-weight:500; color:var(--cn-text-muted); }
+.cn-body .cn-table thead button { background:transparent; box-shadow:none; color:inherit; font:inherit; }
+.cn-body .cn-table tbody td { height:64px; border-bottom:1px solid color-mix(in srgb,var(--cn-border) 65%,transparent); }
+.cn-body .cn-table tfoot td { background:var(--cn-sunken); font-weight:600; border-top:1px solid var(--cn-border); }

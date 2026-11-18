@@ -58,3 +58,29 @@ fn standalone_facade_preserves_props_and_styles_in_each_document() {
         }
     }
 }
+
+#[test]
+fn code_block_highlights_configuration_and_escapes_xml() {
+    use conctr_ui_dioxus::ui::code_block::{CodeBlock, CodeLanguage};
+
+    #[component]
+    fn Snippets() -> Element {
+        rsx! {
+            CodeBlock { language: CodeLanguage::Json, code: r#"{{"enabled": true}}"# }
+            CodeBlock { language: CodeLanguage::Yaml, code: "count: 42 # sample" }
+            CodeBlock { language: CodeLanguage::Toml, code: "listen = \"localhost\"" }
+            CodeBlock { language: CodeLanguage::Xml, code: "<script>example & text</script>" }
+        }
+    }
+    let markup = dioxus_ssr::render_element(rsx! { Snippets {} });
+    assert!(
+        markup.contains("font-medium\">&#34;enabled&#34;"),
+        "{markup}"
+    );
+    assert!(markup.contains("text-info-dark\">true"));
+    assert!(markup.contains("font-medium\">count"));
+    assert!(markup.contains("font-medium\">listen"));
+    assert!(markup.contains("font-medium\">&#60;script&#62;"));
+    assert!(markup.contains("example &#38; text"));
+    assert!(!markup.contains("<script>"));
+}

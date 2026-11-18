@@ -1,0 +1,9 @@
+/* Canonical forms tags: compact rectangular labels, not large action buttons. */
+.tag_group { display:flex; flex-wrap:wrap; gap:var(--cn-space-2); }
+.tag { display:inline-flex; align-items:center; gap:var(--cn-space-1); height:24px; padding:0 var(--cn-space-2); border:1px solid var(--cn-border); border-radius:var(--cn-radius-sm); background:var(--cn-sunken); color:var(--cn-text); font:500 var(--cn-fs-caption)/1 var(--cn-font-ui); white-space:nowrap; }
+.tag[data-variant="primary"], .tag[data-variant="info"] { border-color:transparent; background:var(--cn-primary-soft); color:var(--cn-primary); }
+.tag[data-variant="success"] { border-color:transparent; background:var(--cn-success-soft); color:var(--cn-success); }
+.tag[data-variant="warning"] { border-color:transparent; background:var(--cn-warning-soft); color:var(--cn-amber-text); }
+.tag[data-variant="danger"] { border-color:transparent; background:var(--cn-danger-soft); color:var(--cn-danger); }
+.tag__remove { display:inline-grid; place-items:center; width:16px; height:16px; border:0; border-radius:var(--cn-radius-xs); background:none; color:inherit; opacity:.65; cursor:pointer; padding:0; }
+.tag__remove:hover { opacity:1; background:color-mix(in srgb,currentColor 14%,transparent); }

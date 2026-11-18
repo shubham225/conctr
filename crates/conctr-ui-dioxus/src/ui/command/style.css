@@ -1,0 +1,27 @@
+/* Upstream Command injects unlayered selected-item CSS. Keep the override
+   unlayered too, with greater specificity and both selection attributes. */
+.cn-body :is([data-name="CommandItem"], [data-name="CommandItemLink"]):is([aria-selected="true"], [data-selected="true"]) {
+ background: var(--cn-primary-soft); color: var(--cn-primary);
+ border-color: var(--cn-primary);
+}
+.cn-body :is([data-name="CommandItem"], [data-name="CommandItemLink"]):is([aria-selected="true"], [data-selected="true"]) * { color: inherit; }
+.cn-body [data-name="Command"] { background:var(--cn-raised); color:var(--cn-text); border-radius:var(--cn-radius-xl); overflow:hidden; box-shadow:var(--cn-shadow-4); }
+.cn-body [data-name="CommandInput"] { height:52px; padding-inline:var(--cn-space-4); font-size:var(--cn-fs-body); }
+.cn-body [data-name="CommandList"] { padding:var(--cn-space-2); }
+.cn-body :is([data-name="CommandItem"],[data-name="CommandItemLink"]) { min-height:40px; border-radius:var(--cn-radius-sm); padding:var(--cn-space-2) var(--cn-space-3); }
+.cn-body [data-name="Command"] { border:1px solid var(--cn-border); border-radius:var(--cn-radius-lg); box-shadow:var(--cn-shadow-1); }
+.cn-body [data-name="CommandHeader"] { padding:var(--cn-space-4); background:var(--cn-surface); border-bottom:1px solid var(--cn-border); }
+.cn-body [data-name="CommandTitle"] { font-size:var(--cn-fs-small); line-height:var(--cn-lh-small); }
+.cn-body [data-name="CommandGroupLabel"] { color:var(--cn-text-subtle); font-size:var(--cn-fs-caption); font-weight:600; }
+.cn-body [data-name="CommandFooter"] { padding:var(--cn-space-3) var(--cn-space-4); background:var(--cn-sunken); border-top:1px solid var(--cn-border); font-size:var(--cn-fs-caption); color:var(--cn-text-muted); }
+/* Command palette geometry and key hints from overlays.html. */
+.cn-body [data-name="Command"].cn-command { width:min(560px,100%); margin:auto; background:var(--cn-raised); border:1px solid var(--cn-border); border-radius:var(--cn-radius-xl); box-shadow:var(--cn-shadow-4); overflow:hidden; }
+.cn-command__input { display:flex; align-items:center; gap:var(--cn-space-3); padding:0 var(--cn-space-4); border-bottom:1px solid var(--cn-border); color:var(--cn-text-subtle); }
+.cn-body .cn-command__input [data-name="CommandInput"] { flex:1; min-width:0; height:52px; padding:0; border:0; border-radius:0; box-shadow:none; font-size:var(--cn-fs-body); }
+.cn-body .cn-command [data-name="CommandList"] { max-height:320px; padding:var(--cn-space-2); }
+.cn-body .cn-command [data-name="CommandGroupLabel"] { padding:var(--cn-space-2) var(--cn-space-3) var(--cn-space-1); font-weight:500; }
+.cn-body .cn-command [data-name="CommandItemLink"] { height:40px; min-height:40px; gap:var(--cn-space-3); padding:0 var(--cn-space-3); border:0; border-radius:var(--cn-radius-md); font-weight:400; }
+.cn-body .cn-command [data-name="CommandItemLink"][aria-selected="true"] { background:var(--cn-sunken); color:var(--cn-text); border:0; }
+.cn-command kbd { height:20px; min-width:20px; padding:0 var(--cn-space-1); border:1px solid var(--cn-border); border-radius:var(--cn-radius-xs); background:var(--cn-surface); font:400 var(--cn-fs-caption)/18px var(--cn-font-mono); color:var(--cn-text-subtle); }
+.cn-command [data-name="CommandItemLink"] kbd { margin-left:auto; }
+.cn-body .cn-command [data-name="CommandFooter"] { display:flex; align-items:center; gap:var(--cn-space-4); padding:var(--cn-space-2) var(--cn-space-4); background:transparent; font-size:var(--cn-fs-caption); }

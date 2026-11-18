@@ -29,10 +29,11 @@ cargo clippy --workspace --all-targets -- -D warnings
 
 Renderer validation is separate from default-feature workspace compilation.
 Build/serve the gallery with `dx serve --package conctr-design-system --platform web`.
-Then verify served selectors:
+Then run the gallery browser checks with Node 22+ and Chrome started with
+`--remote-debugging-port=9225`:
 
 ```sh
-python3 apps/conctr-design-system/scripts/check-component-styles.py http://127.0.0.1:8080
+node apps/conctr-design-system/scripts/check-browser.mjs http://127.0.0.1:8080 http://127.0.0.1:9225
 ```
 
 The UI crate ships its Tailwind utility bundle; apps have no Tailwind setup.
@@ -42,3 +43,7 @@ Local CSS modules have per-document registration tests. Check the served bundle
 and scoped selectors, then check geometry, focus, keyboard and themes in a browser.
 Native platform builds need their SDKs and explicit renderer features; do not
 claim those were validated by a default `cargo test --workspace` run.
+
+Focused mapping and pipeline scripts, server commands and limits are documented in
+the [shared app README](../../crates/conctr-app-dioxus/README.md). Run them
+sequentially because they use the same Chrome tab.

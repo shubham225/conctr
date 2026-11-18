@@ -24,7 +24,7 @@ implementation. See [current state](current-state.md) for the dated source audit
 - [ ] Create `conctr-contracts` for the first API; avoid leaking SQL/Dioxus types.
 - [x] Implement shared App, providers, Routable enum and initial product pages.
 - [x] Wire web/desktop/mobile launchers to the shared App.
-- [ ] Wire web/desktop/mobile launchers to the shared App and test renderer features.
+- [ ] Verify desktop/mobile renderer features with native SDK builds.
 
 ## M2 — Reliable execution slice
 
@@ -39,6 +39,11 @@ implementation. See [current state](current-state.md) for the dated source audit
 - [ ] Run the complete local synthetic integration demo.
 
 ## M3 — Authoring experience
+
+- [x] Local request/response Mapping Studio with draft history and field actions.
+- [x] Local Pipeline Studio using workflow components and a resizable inspector.
+- [x] Queue monitoring preview with sample request history, exchange details and pause/resume.
+- [x] Distinguish these authoring previews from execution and deployment.
 
 - [ ] Build product connection list/detail and credential references.
 - [ ] Implement command-based graph editing, undo/redo and separate layout persistence.

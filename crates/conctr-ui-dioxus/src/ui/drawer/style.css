@@ -1,0 +1,22 @@
+/* Native drawers: scoped dismissal and native focus restoration. */
+.cn-drawer-trigger { display:inline-flex; align-items:center; justify-content:center; gap:var(--cn-space-2); min-height:40px; padding:var(--cn-space-2) var(--cn-space-4); border:1px solid var(--cn-border); border-radius:var(--cn-radius-md); background:var(--cn-surface); color:var(--cn-text); font-size:var(--cn-fs-small); cursor:pointer; }
+.cn-drawer-trigger:hover { background:var(--cn-sunken); }
+.cn-drawer-surface { position:fixed; margin:0; padding:var(--cn-space-6); border:1px solid var(--cn-border); background:var(--cn-raised); color:var(--cn-text); box-shadow:var(--cn-shadow-4); max-height:90dvh; overflow:auto; }
+.cn-drawer-surface:not([open]) { display:none; }
+.cn-drawer-surface[open] { display:flex; flex-direction:column; gap:var(--cn-space-4); }
+.cn-drawer-surface::backdrop { background:var(--cn-scrim); }
+.cn-drawer-surface[data-position="bottom"] { inset:auto 0 0; width:100%; max-width:100%; border-radius:var(--cn-radius-xl) var(--cn-radius-xl) 0 0; }
+.cn-drawer-surface[data-position="top"] { inset:0 0 auto; width:100%; max-width:100%; border-radius:0 0 var(--cn-radius-xl) var(--cn-radius-xl); }
+.cn-drawer-surface:is([data-position="left"],[data-position="right"]) { top:0; bottom:0; width:min(420px,100vw); height:100dvh; max-height:100dvh; }
+.cn-drawer-surface[data-position="left"] { left:0; right:auto; border-radius:0 var(--cn-radius-lg) var(--cn-radius-lg) 0; }
+.cn-drawer-surface[data-position="right"] { right:0; left:auto; border-radius:var(--cn-radius-lg) 0 0 var(--cn-radius-lg); }
+.cn-drawer-surface[data-floating="true"] { margin:var(--cn-space-4); border-radius:var(--cn-radius-xl); max-width:calc(100vw - 32px); max-height:calc(100dvh - 32px); }
+.cn-drawer-title-row { display:flex; align-items:start; justify-content:space-between; gap:var(--cn-space-4); }
+.cn-drawer-icon-close { width:40px; padding:0; border:0; }
+body:has(.cn-drawer-surface[open]) { overflow:hidden; }
+.cn-drawer-trigger[data-variant="primary"] { background:var(--cn-primary); border-color:var(--cn-primary); color:var(--cn-on-primary); }
+.cn-drawer-trigger[data-variant="danger"] { background:var(--cn-danger); border-color:var(--cn-danger); color:var(--cn-on-danger); }
+.cn-drawer-trigger[data-variant="ghost"] { border-color:transparent; background:transparent; }
+.cn-drawer-trigger[data-size="small"] { min-height:32px; }
+.cn-drawer-trigger[data-size="extra-small"] { min-height:24px; }
+.cn-drawer-trigger[data-size="large"] { min-height:48px; }

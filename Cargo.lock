@@ -622,6 +622,7 @@ version = "0.1.0"
 dependencies = [
  "conctr-ui-dioxus",
  "dioxus",
+ "icons",
 ]
 
 [[package]]

@@ -120,7 +120,7 @@ pub fn VisualMappingDemo() -> Element {
             }
             div { class: "flex flex-wrap items-center justify-between gap-4",
                 p { class: "text-sm text-muted-foreground",
-                    "Drag cards to reorder. Drag a + handle to connect, or use New link. Select a node or link to edit."
+                    "Drag a dot to a target to connect, or activate a source dot and target field. Select a field or wire to open its tools."
                 }
                 Button {
                     size: ButtonSize::Sm,

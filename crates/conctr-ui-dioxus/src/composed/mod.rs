@@ -46,3 +46,11 @@ pub use visual_mapping::{
     FieldLink, FieldTransform, MappingSchema, PayloadFormat, SchemaField, VisualFieldMapper,
     mapping_yaml, schema_from_json,
 };
+
+pub mod mapping_workspace;
+
+pub mod resizable;
+
+pub mod pipeline_workspace;
+
+pub mod queue;

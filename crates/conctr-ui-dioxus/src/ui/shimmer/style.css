@@ -1,0 +1,9 @@
+/* Loading overlay moves on the compositor and keeps a static reduced-motion mask. */
+.cn-shimmer { border-radius:var(--shimmer-radius); overflow:hidden; }
+.cn-shimmer[data-shimmer-loading="true"] > div { visibility:hidden; }
+.cn-shimmer[data-shimmer-loading="true"]::before,
+.cn-shimmer[data-shimmer-loading="true"]::after { content:""; position:absolute; inset:0; pointer-events:none; }
+.cn-shimmer[data-shimmer-loading="true"]::before { background:var(--shimmer-bg); }
+.cn-shimmer[data-shimmer-loading="true"]::after { background:linear-gradient(90deg,transparent,var(--shimmer-highlight),transparent); animation:cn-shimmer-sweep var(--shimmer-duration) ease-in-out infinite; }
+@keyframes cn-shimmer-sweep { from { transform:translateX(-100%); } to { transform:translateX(100%); } }
+@media(prefers-reduced-motion:reduce) { .cn-shimmer[data-shimmer-loading="true"]::after { animation:none; opacity:.4; } }

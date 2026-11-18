@@ -1,0 +1,6 @@
+.flow_link { position: relative; }
+.flow_packet { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--cn-amber); left: -3px; top: 0; animation: cn-packet-vertical 2.2s var(--cn-ease) infinite; }
+@keyframes cn-packet-vertical { from { transform: translateY(0); } to { transform: translateY(24px); } }
+@keyframes cn-packet-horizontal { from { transform: translateX(0); } to { transform: translateX(40px); } }
+@media(min-width:640px) { .flow_packet { top:-3px; left:0; animation-name: cn-packet-horizontal; } }
+@media(prefers-reduced-motion:reduce) { .flow_packet { animation: none; } }

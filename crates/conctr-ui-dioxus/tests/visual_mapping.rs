@@ -100,7 +100,10 @@ fn css_registers_in_each_ssr_document_and_read_only_has_no_edit_controls() {
         dom.provide_root_context(document.clone() as Rc<dyn Document>);
         dom.rebuild_in_place();
         let html = dioxus_ssr::render(&dom);
-        assert_eq!(document.0.borrow().len(), 1);
+        // The mapper and resizable controls each register their scoped stylesheet.
+        let styles = document.0.borrow();
+        assert_eq!(styles.len(), 2);
+        assert_ne!(styles[0], styles[1]);
         assert!(html.contains("Download YAML"));
         assert!(!html.contains("New link"));
         assert!(!html.contains("Remove link"));

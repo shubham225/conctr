@@ -1,6 +1,7 @@
 # Current implementation evidence
 
-Audit: **2026-11-15**. Source evidence after user-directed Rust UI replacement.
+Baseline audit: **2026-11-15**. Authoring and cleanup updates: **2026-11-17**.
+Source evidence after user-directed Rust UI replacement.
 
 - `conctr-ui-dioxus` was backed up, deleted and rebuilt around 86 unmodified Rust UI
   component modules, hooks, demos and workflows at pinned MIT source revision
@@ -21,8 +22,8 @@ Audit: **2026-11-15**. Source evidence after user-directed Rust UI replacement.
 Evidence: [UI source](../../crates/conctr-ui-dioxus/src/lib.rs),
 [upstream inventory](../../crates/conctr-ui-dioxus/src/rust-ui/manifest.json),
 [gallery catalog](../../apps/conctr-design-system/src/catalog.rs),
-[assessment/validation](../development/rust-ui-adoption.md),
-[backups](../../backups/pre-rust-ui-20261115T112238Z/README.md).
+[assessment/validation](../development/rust-ui-adoption.md).
+The historical migration backup is not present in this checkout.
 Earlier test/browser counts belong to the removed implementation and do not
 validate this replacement. Current checks are recorded in the adoption assessment.
 
@@ -180,3 +181,155 @@ check, targeted UI Clippy, formatting and the 460-file upstream integrity check
 passed. The root-instruction served-style Python checker is absent from this
 checkout; browser checks verified actual served component CSS instead. Documentation
 validation still reports three existing missing backup README links.
+
+Mapping Studio is now available in the shared product app at `/mappings`. The app
+owns one local presentation document containing independent request and response
+schemas/links, with bounded undo/redo across both directions. Reusable direction,
+history toolbar chrome lives in `composed/mapping_workspace`; the existing
+visual mapper supplies drag connections, field edits and ordered transform drafts.
+Its optional studio layout provides a right inspector on wide screens and stacks
+it below the canvas on smaller screens, without export controls. Classic mapping
+rows and visual wires have focused modules; existing public editor APIs remain.
+These are editable synthetic fields and session-local drafts, with no persistence,
+transform execution or platform mapping contract implied.
+
+Validation for the studio: targeted app/UI Cargo check and Clippy (warnings denied),
+13 app/UI tests, workspace formatting and all 460 upstream hashes pass. The web
+launcher builds successfully. Twelve browser checks verify mounted styles/controls,
+hidden export, real pointer linking and selection, undo/redo, direction isolation,
+desktop inspector placement, dark token propagation and mobile containment/stacking. Documentation checks
+still report the three pre-existing missing backup README links.
+The existing visual mapper gallery also passes 24 browser regressions, using a
+temporary harness with `[data-editor-ready]` in place of its stale navigation
+hydration selector. The prescribed Python served-style checker remains absent.
+
+
+The subsequent Mapping Studio redesign replaces the visual mapper's former card
+canvas/ribbon presentation with the supplied Studio prototype's compact 40 px
+schema rows, dot ports, unified toolbar, persistent right tools/inspector and
+bottom source/target panels. Both standalone visual-mapper consumers and the app
+use this presentation. Dragging a connection renders a live cubic wire rather
+than a floating card. Filters, unmapped-only and conservative name/type auto-map
+update the controlled draft. The app supplies a synthetic source sample and an
+explicit target mapping draft; no transform execution or persistence is claimed.
+The classic row/select `FieldMappingEditor` remains a separate library control.
+
+Validation: 18 studio browser checks pass for real pointer linking, curved drag
+feedback, compact field geometry, inspector placement, bottom panes, filtering,
+auto-map, history/direction isolation, dark theme and mobile containment. The 13
+app/UI tests pass. Workspace check, targeted Clippy and formatting are checked
+separately; upstream integrity still verifies 460 unchanged files. Earlier browser
+counts describe earlier layouts, not this redesign.
+Three gallery smoke checks also confirm the replacement field geometry, toolbar
+and tools sidebar. Workspace compilation and targeted Clippy with warnings denied
+pass; formatting and upstream integrity pass. Documentation validation retains
+its three existing missing backup README links.
+
+Mapping field edit, ignore/restore and deletion now live in field context menus,
+opened by right-click, the row action button or Shift+F10. The menu uses native
+popover dismissal with shared facade item styles and arrow-key focus navigation.
+Read-only fields do not expose mutation menus. Source/target creation stays in
+the tools panel; field ordering remains available through dragging.
+
+Reusable `composed/resizable` handles provide pointer capture, bounded sidebar and
+bottom resizing, separator semantics, arrows/Shift+arrows and Home/End controls.
+The tools sidebar and payload panels have minimize, maximize and restore controls;
+restoring retains the last resized size. Narrow layouts stack the panels and keep
+mode controls available. These sizes are transient presentation state.
+
+Validation for field menus and panels: 21 browser checks pass for pointer and
+keyboard resizing, retained sizes, minimize/maximize/restore, right-click and
+button menus, focus/navigation, edit/ignore/restore/delete and undo. The existing
+18 Mapping Studio browser checks and 13 app/UI Rust tests pass. Workspace check,
+targeted Clippy with warnings denied, formatting and all 460 upstream hashes pass.
+Documentation validation retains the three existing missing backup README links.
+Three gallery browser checks also pass for handle mounting, field menus and
+keyboard resizing of the standalone payload panel.
+
+The mapping field dialog now explicitly centers in the viewport (`inset: 0` and
+`margin: auto`), correcting Tailwind reset margins that placed native dialogs in
+a corner. Its header, schema context, field hints, monospace path input, validation
+message and action footer follow the shared theme. The dialog has viewport-bounded
+height with internal scrolling for short screens, plus a labeled close button.
+Fourteen focused browser checks pass for desktop/mobile centering, validation,
+focus, type selection, save/close/Escape, dark tokens and short-screen containment.
+Nine mapper tests, targeted Cargo check/Clippy, formatting and upstream integrity
+pass. Documentation validation retains the existing missing backup README links.
+Two gallery checks also confirm centering within the usable viewport and the
+served modal styling. Visual inspection confirms the updated dark dialog layout.
+
+
+Resizable controls now follow the Rust component structure in the supplied
+`temp/resizable` reference: `mod.rs`, `component.rs` and scoped `style.css`.
+`resize.js` has been removed. The mapper owns pixel sizes in Rust signals and
+renders its CSS variables normally. A `ResizablePanelGroup` provides independent
+mounted-element measurement contexts; handles use Dioxus pointer/keyboard events
+and a temporary drag shield instead of JavaScript listeners or imperative DOM
+style writes. Generic handle/grip/control styling belongs to the resizable folder;
+the mapper retains only placement and panel layout rules. The per-document SSR
+stylesheet check now covers both mapping and resizable styles.
+
+Validation: 26 panel/menu browser checks pass, including pointer resizing, focus,
+overshoot bounds, release outside the group, cancellation, keyboard controls and
+retained sizes after restore. All 14 app/UI Rust tests, workspace Cargo check,
+targeted Clippy with warnings denied, formatting and diff whitespace checks pass.
+Documentation validation retains the three existing missing backup README links.
+
+### Pipeline Studio authoring preview
+
+The shared app now exposes `/pipelines` in its workspace navigation. It uses the
+existing workflow canvas, node wrappers, port connections, pan/zoom, minimap and
+context menus inside a reusable `composed/pipeline_workspace` frame. The frame
+owns scoped CSS, measured fit-to-canvas and a Rust-resizable inspector with
+minimize/maximize/restore. Narrow layouts stack the panels.
+
+Product-owned sample steps, palette filtering, inspector edits, duplicate/delete,
+connection labels and basic connection diagnostics live in
+`conctr-app-dioxus/src/pipeline_studio`. The sample follows the supplied studio
+HTML's trigger, signature verification, mapping, condition, approval/direct API,
+response and error-handler arrangement. Mapping steps link to `/mappings`.
+Draft configuration and layout are transient presentation state. These are not
+canonical executable flows: no requests, credential binding, expression execution,
+persistence, test runs or deployment are implemented by this page.
+
+Validation: 22 Pipeline Studio browser checks pass for node/port rendering,
+selection, drag movement, add/duplicate/delete, disconnected-step diagnostics,
+drag connections, inspector resizing and panel modes, step-name editing, palette
+search, edge selection/label editing, dark theme and mobile overflow. Three gallery
+checks confirm existing workflow ports and served positioning CSS. All 15 app/UI
+Rust tests, workspace check, targeted Clippy with warnings denied, formatting and
+460 upstream file hashes pass. Documentation validation still reports the three
+existing missing backup README links.
+
+### Authoring cleanup
+
+Removed the unused `MappingEndpoints` composition; the mapper already renders
+source/target summaries. The classic field mapper and workflow frame retain real
+gallery/test consumers. Supplied `temp/` references and immutable upstream sources
+remain intact. Root/UI/app instructions, presentation/theming docs and the AI
+inventory now describe local authoring ownership and component-scoped CSS.
+Historical backup references are plain provenance text because the archive is
+absent; no restore capability is implied by this checkout.
+
+Cleanup verification: documentation validation now passes (62 Markdown files,
+191 local links and 15 workspace packages), resolving the historical broken backup
+links. Workspace check, all 15 app/UI tests, formatting, whitespace and all 460
+upstream hashes pass. No rendered behavior changed in this cleanup.
+
+### Queue monitoring preview
+
+The shared app exposes `/queues` with sample async traffic. The reusable
+`composed::queue::QueueMonitor` displays snapshot totals, status-filtered history
+and four exchange stages per request. A missing target response stays distinct
+from a confirmed rejection. Display payloads come from the caller.
+
+Pause and resume update local page state. Pause represents a halt to new dispatch
+while existing requests retain their status. Connecting the monitor to live
+counts, retained payloads and authorized queue controls requires runtime services.
+
+### Workflow connection guide and code previews
+
+The workflow facade measures pointer coordinates relative to the canvas viewport
+during connection drags. Pipeline cards use the gallery's workflow node header.
+The shared CodeBlock component provides Rust lexical highlighting for JSON,
+YAML, TOML and XML. Queue exchanges and the Mapping Studio source sample use it.

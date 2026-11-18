@@ -21,6 +21,7 @@ fn App() -> Element {
     let dark = use_signal(|| false);
     use_context_provider(|| dark);
     rsx! {
+        document::Stylesheet { href: asset!("/src/style.css") }
         document::Title { "Conctr Showcase" }
         document::Link { rel: "icon", href: images::FAVICON }
         ThemeProvider { theme: if dark() { Theme::Dark } else { Theme::Light }, Router::<Route> {} }

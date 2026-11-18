@@ -13,6 +13,7 @@ instruction hierarchy.
 | [AGENTS.md](../../AGENTS.md) | Canonical repository policy for agents supporting this convention, including Cursor |
 | [apps/AGENTS.md](../../apps/AGENTS.md) | Launcher/shared-app ownership and showcase rules |
 | [UI library AGENTS.md](../../crates/conctr-ui-dioxus/AGENTS.md) | Component layers, shared styles, theming and browser verification |
+| [Shared app AGENTS.md](../../crates/conctr-app-dioxus/AGENTS.md) | Product routes, local authoring ownership and focused verification |
 | [docs/AGENTS.md](../AGENTS.md) | Documentation status, inventories and maintenance |
 | [CLAUDE.md](../../CLAUDE.md) | Claude Code compatibility entry importing root AGENTS.md |
 | [GEMINI.md](../../GEMINI.md) | Gemini CLI entry directing it to canonical and scoped instructions |

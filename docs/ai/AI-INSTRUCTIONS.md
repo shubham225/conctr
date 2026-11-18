@@ -79,3 +79,11 @@ Use [the glossary](../product/glossary.md). Conctr is inspired by Camel patterns
 and n8n authoring/operations concepts; it is not a compatible implementation or
 an unrestricted copy of their code. See [the source register](../product/inspiration.md).
 Never invent supported protocols, customers, performance results or certifications.
+
+## Authoring implementation pointers
+
+The app crate owns local `/mappings` and `/pipelines` pages and draft state.
+The UI crate owns reusable mapping/workflow workspace frames and Rust resizable
+controls. These previews do not establish backend execution or persistence.
+See the app's scoped [instructions](../../crates/conctr-app-dioxus/AGENTS.md) and
+[verification commands](../../crates/conctr-app-dioxus/README.md).

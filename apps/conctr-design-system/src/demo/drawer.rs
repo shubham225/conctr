@@ -11,7 +11,7 @@ pub fn DrawerDemo() -> Element {
                     DrawerDescription { "Update the name shown in your workspace." }
                 }
                 DrawerBody {
-                    label { class: "cn-picker-label", r#for: "drawer-connection", "Connection name" }
+                    conctr_ui_dioxus::ui::label::Label { class: "mb-2 block text-sm font-medium", html_for: "drawer-connection", "Connection name" }
                     Input { id: "drawer-connection", value: "Orders to ERP" }
                 }
                 DrawerFooter {
