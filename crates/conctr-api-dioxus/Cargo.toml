@@ -10,5 +10,14 @@ repository  = { workspace = true }
 [dependencies]
 dioxus = { workspace = true, features = ["fullstack"] }
 
+conctr-api.workspace = true
+subtle = { version = "2", optional = true }
+tokio = { version = "1", features = ["rt"], optional = true }
+dioxus-fullstack-core = { version = "0.7", optional = true }
+
+tempfile = { version = "3", optional = true }
+uuid = { version = "1", features = ["v4"], optional = true }
+http = { version = "1", optional = true }
+
 [features]
-server = ["dioxus/server"]
+server = ["dioxus/server", "conctr-api/storage", "dep:tempfile", "dep:uuid", "dep:http", "dep:subtle", "dep:tokio", "dep:dioxus-fullstack-core"]

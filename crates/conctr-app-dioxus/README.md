@@ -9,6 +9,7 @@ Product routes and presentation state shared by web, desktop and mobile launcher
 | `/pipelines` | Local workflow canvas, step library, editable inspector and branch labels |
 | `/queues` | Sample queue counts, status-filtered history, four exchange payloads and local pause/resume |
 | `/runs` | Run-history placeholder; execution unavailable |
+| `/credentials` | Persistent reference metadata CRUD through [authorized server functions](../conctr-api-dioxus/README.md) |
 | `/settings` | Session appearance guidance; service settings unavailable |
 
 Mapping drafts and pipeline state last for the mounted page session. No persistence,

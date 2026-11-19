@@ -46,7 +46,7 @@ pub fn Settings() -> Element {
                     p { class: "text-sm text-muted-foreground", "Use the theme button in the header to switch between light and dark. Your selection applies to this session." }
                 }
             }
-            p { class: "text-sm text-muted-foreground", "Workspace, account and credential settings will be available when platform services are connected." }
+            p { class: "text-sm text-muted-foreground", "Workspace and account settings will be available when platform services are connected." }
         }
     }
 }

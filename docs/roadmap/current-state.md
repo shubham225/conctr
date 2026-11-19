@@ -333,3 +333,9 @@ The workflow facade measures pointer coordinates relative to the canvas viewport
 during connection drags. Pipeline cards use the gallery's workflow node header.
 The shared CodeBlock component provides Rust lexical highlighting for JSON,
 YAML, TOML and XML. Queue exchanges and the Mapping Studio source sample use it.
+
+The shared product app includes a credential reference directory at
+`/credentials`. The Dioxus adapter invokes the framework-independent CRUD
+service in `conctr-api`. The service stores name, purpose and vault alias in
+a revision-checked, workspace-local metadata file. Configured deployments use administrator proxy authentication. An unconfigured
+debug launcher on localhost supports local code sign-in. See the [adapter setup](../../crates/conctr-api-dioxus/README.md).

@@ -1,4 +1,5 @@
 //! Shared product UI and routing for Conctr launchers.
+mod credentials;
 mod mapping_studio;
 mod pages;
 mod pipeline_studio;
@@ -58,6 +59,7 @@ fn Shell() -> Element {
                         }
                         SidenavFooter {
                             SidenavMenu {
+                                NavigationItem { to: Route::Credentials {}, label: "Credentials" }
                                 NavigationItem { to: Route::Settings {}, label: "Settings" }
                             }
                         }

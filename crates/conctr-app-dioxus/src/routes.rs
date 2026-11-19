@@ -1,4 +1,5 @@
 use crate::Shell;
+use crate::credentials::Credentials;
 use crate::mapping_studio::MappingStudio;
 use crate::pages::{Connections, NotFound, Runs, Settings};
 use crate::pipeline_studio::PipelineStudio;
@@ -19,6 +20,8 @@ pub enum Route {
     Queues {},
     #[route("/runs")]
     Runs {},
+    #[route("/credentials")]
+    Credentials {},
     #[route("/settings")]
     Settings {},
     #[route("/:..segments")]

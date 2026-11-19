@@ -8,9 +8,10 @@ publish.workspace = true
 repository.workspace = true
 
 [dependencies]
+conctr-api-dioxus.workspace = true
 dioxus = { workspace = true, features = ["router"] }
 conctr-ui-dioxus = { workspace = true }
 icons = { version = "0.19", features = ["dioxus"] }
 
 [features]
-server = ["conctr-ui-dioxus/server"]
+server = ["conctr-ui-dioxus/server", "conctr-api-dioxus/server"]
