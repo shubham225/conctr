@@ -9,6 +9,7 @@ implementation. See [current state](current-state.md) for the dated source audit
 - [x] Canonical design kit with fonts/tokens/branding.
 - [x] Shared component library and layered source ownership.
 - [x] Showcase catalog, source previews and theme switching.
+- [x] Grouped integration pattern icons in the workflow showcase.
 - [x] Component tests and served stylesheet regression check.
 - [x] Shared product-app package scaffold exists.
 - [x] Product/architecture/experience/roadmap/AI documentation package drafted.

@@ -1,13 +1,12 @@
 # Conctr documentation
 
-Conctr is a planned enterprise system integration platform with a visual flow
-designer. This documentation is a reviewable product and architecture proposal,
-not a claim that the platform capabilities already exist.
+Conctr is an enterprise integration platform in development. The shared product
+app has local mapping and pipeline editors, a queue preview and a credential
+reference directory. See [current implementation](roadmap/current-state.md)
+for evidence and [development setup](development/setup.md) to run it.
 
-**Repository audit:** 2026-11-13. [Current implementation](roadmap/current-state.md)
-is the evidence baseline. New ADRs are **Proposed** until reviewed; existing
-accepted decisions remain accepted. No proposed packages were created by this
-planning work.
+The product plans and architecture contracts describe intended capabilities.
+Each decision record carries its own review status.
 
 ## Start here
 
@@ -24,8 +23,6 @@ planning work.
    [documentation maintenance](development/documentation.md).
 9. [Decision records](architecture/decisions/README.md) — review and accept deliberately.
 10. [UI themes](development/theming.md) — shared CSS properties, custom brands and density.
-
-See [development setup](development/setup.md) for tool installation and Zed Tailwind configuration.
 
 ## Document map
 

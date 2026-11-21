@@ -1,7 +1,7 @@
 # Web, desktop, mobile and showcase
 
-Status: **Proposed product behavior**. Only the design-system showcase currently
-implements its stated documentation role.
+The table describes proposed product capabilities. Today the three product launchers
+share a routed application, and the showcase documents the reusable UI.
 
 | App | Primary job | Initial capability | Native-specific additions to consider |
 | --- | --- | --- | --- |
@@ -16,10 +16,10 @@ needs an explicit deployment, credential, egress and recovery decision.
 
 ## Shared structure
 
-Implement one `conctr-app-dioxus::App`, a route enum and feature-owned pages.
-Launchers configure renderer/native capabilities and backend origin/auth behavior.
-Keep platform choices at the edge. Use responsive CSS for layout rather than
-forking every page by platform. The scaffold exists but this integration is pending.
+The launchers mount the shared app from `conctr-app-dioxus`. It owns the routes,
+workspace navigation, mapping and pipeline previews, queue inspection and
+credential directory page. Desktop supplies its own window controls. Renderer
+configuration belongs in each launcher.
 
 ## Screen behavior by width
 

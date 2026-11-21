@@ -1,23 +1,24 @@
 {
   "schema_version": 1,
-  "audit_date": "2026-11-17",
+  "audit_date": "2026-11-21",
   "name": "Conctr",
   "tagline": "Where systems meet.",
   "documentation_status": "reviewable-proposal",
-  "current_state": "Rust UI brand facade and showcase; shared app with local mapping and pipeline authoring previews; backend services remain scaffolds",
+  "current_state": "Shared design system and showcase, local mapping and pipeline editors, queue preview and file-backed credential reference directory. The integration engine and connectors are scaffolds.",
   "existing_packages": [
     {
       "name": "conctr-api",
       "path": "crates/conctr-api",
-      "status": "scaffold",
+      "status": "credential-reference-directory",
       "targets": [
-        "bin"
+        "bin",
+        "lib"
       ]
     },
     {
       "name": "conctr-api-dioxus",
       "path": "crates/conctr-api-dioxus",
-      "status": "demo",
+      "status": "credential-directory-adapter",
       "targets": [
         "lib"
       ]
@@ -55,8 +56,8 @@
       ]
     },
     {
-      "name": "conctr-design-system",
-      "path": "apps/conctr-design-system",
+      "name": "conctr-component-showcase",
+      "path": "apps/conctr-component-showcase",
       "status": "implemented-showcase",
       "targets": [
         "bin"

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Message Translator icon">
+  <title>Message Translator icon</title>
+  <polygon points="32,6 54.5,19 54.5,45 32,58 9.5,45 9.5,19" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="#4F46E5" opacity=".5"/>
+  <g transform="translate(0 -0.5)">
+    <path d="M18 23h12v15H18zm3 4h6m-6 4h4" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="#4F46E5"/>
+  <path d="M34 29h12v13H34zm3 4h6m-6 4h6" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="#14B8A6"/>
+  </g>
+</svg>

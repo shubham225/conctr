@@ -1,17 +1,17 @@
 [package]
-name = "conctr-app-dioxus"
-version = "0.1.0"
-authors.workspace = true
-edition.workspace = true
-license.workspace = true
-publish.workspace = true
-repository.workspace = true
+name       = "conctr-app-dioxus"
+version    = { workspace = true }
+authors    = { workspace = true }
+edition    = { workspace = true }
+license    = { workspace = true }
+publish    = { workspace = true }
+repository = { workspace = true }
 
 [dependencies]
-conctr-api-dioxus.workspace = true
-dioxus = { workspace = true, features = ["router"] }
-conctr-ui-dioxus = { workspace = true }
-icons = { version = "0.19", features = ["dioxus"] }
+conctr-api-dioxus = { workspace = true }
+dioxus            = { workspace = true, features = ["router"] }
+conctr-ui-dioxus  = { workspace = true }
+icons             = { version = "0.19", features = ["dioxus"] }
 
 [features]
 server = ["conctr-ui-dioxus/server", "conctr-api-dioxus/server"]

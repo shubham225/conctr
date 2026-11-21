@@ -1,27 +1,28 @@
 # Current implementation evidence
 
-Baseline audit: **2026-11-15**. Authoring and cleanup updates: **2026-11-17**.
-Source evidence after user-directed Rust UI replacement.
+Baseline audit: **2026-11-15**. Package and asset inventory updated **2026-11-21**.
 
-- `conctr-ui-dioxus` was backed up, deleted and rebuilt around 86 unmodified Rust UI
+- `conctr-ui-dioxus` uses 86 unmodified Rust UI
   component modules, hooks, demos and workflows at pinned MIT source revision
   `4f5a516e76d75a15a587ab2169352cf34fd318d0`.
+- The workflow showcase renders 65 pattern icons from `assets::icons`
+  in eight families, plus six protocol and six authentication icons. Each has color and monochrome SVG assets. These are presentation assets for authoring.
 - `ui/` is the app-facing facade; selected controls apply Conctr defaults.
   `composed/` combines controls. The former `components::*` API is removed.
 - Palette/scales, fonts, logos and icons come from canonical `design/`.
   Library-owned Tailwind 4.1.18 ships compiled CSS; consumers mount ThemeProvider.
-- `conctr-design-system` was backed up, deleted and rebuilt with brand foundations,
+- `conctr-component-showcase` provides brand foundations,
   78 primary component demos, eight workflow examples and light/dark switching.
   Its reference kit is a fresh copy of `design/`.
 - Shared product App routes and unavailable-service pages remain presentation;
   their imports were migrated to the new facade. Native title-bar injection remains.
-- Backend platform crates remain scaffolds; demo echo functions are not integration
-  services. Workflow canvas state does not execute, persist or authorize flows.
+- The integration engine and connectors remain scaffolds. The credential reference
+  directory uses server functions and a file-backed store. Workflow canvas state does not execute, persist or authorize flows.
 - Upstream AutoForm is a shell, not automatic form generation. Rust UI is experimental.
 
 Evidence: [UI source](../../crates/conctr-ui-dioxus/src/lib.rs),
 [upstream inventory](../../crates/conctr-ui-dioxus/src/rust-ui/manifest.json),
-[gallery catalog](../../apps/conctr-design-system/src/catalog.rs),
+[gallery catalog](../../apps/conctr-component-showcase/src/catalog.rs),
 [assessment/validation](../development/rust-ui-adoption.md).
 The historical migration backup is not present in this checkout.
 Earlier test/browser counts belong to the removed implementation and do not
@@ -107,7 +108,7 @@ independently dismissible messages to a shared viewport inside ThemeProvider.
 Thirty-three focused browser checks pass for these behaviors, including dark mode
 and mobile containment. These are local presentation demos, not platform services.
 
-The gallery is now titled Conctr Showcase while keeping its Cargo package name.
+The gallery is now titled Conctr Component Showcase and ships from the `conctr-component-showcase` package.
 Its component explorer is a simple scrollable list, separate from the Sidebar
 component. SidebarProvider shares state with SidebarTrigger placed in adjacent
 main content; the Sidebar itself holds navigation and the mobile close control.

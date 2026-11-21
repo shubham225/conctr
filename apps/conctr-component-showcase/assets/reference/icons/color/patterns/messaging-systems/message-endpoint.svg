@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Message Endpoint icon">
+  <title>Message Endpoint icon</title>
+  <polygon points="32,6 54.5,19 54.5,45 32,58 9.5,45 9.5,19" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="#4F46E5" opacity=".5"/>
+  <g transform="translate(2 0)">
+    <path d="M31 21h12v22H31m5-17v12" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="#4F46E5"/>
+  <path d="M17 32h17m-5-5 5 5-5 5" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="#14B8A6"/>
+  </g>
+</svg>

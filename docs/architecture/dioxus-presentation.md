@@ -1,6 +1,6 @@
 # Dioxus presentation structure
 
-Conctr's fresh design system uses an immutable Rust UI source snapshot, a Conctr
+Conctr's design system uses an immutable Rust UI source snapshot, a Conctr
 facade, and reusable compositions. Product pages/state remain in `conctr-app-dioxus`.
 
 ```text
@@ -23,10 +23,10 @@ and accepts a field such as `ui::input::Input` as its child. The private
 imports resolve through the library facade. Product pages, services and business
 rules stay in their owning app or platform crate.
 
-`apps/conctr-design-system` is the fresh runnable showcase with 78 component demos
+`apps/conctr-component-showcase` is the runnable showcase with 78 component demos
 and eight workflow examples. `design/` remains the canonical design kit; the
-gallery's `assets/reference/` is its read-only snapshot. The previous gallery and
-crate were backed up during migration; that archive is not present in this checkout.
+gallery's `assets/reference/` is its read-only snapshot. Integration pattern SVGs are
+exported through `conctr_ui_dioxus::assets::icons`.
 Canvas coordinates and interaction state are presentation only and must never
 become the platform's executable flow semantics. Demos do not establish integration
 support. See [adoption assessment](../development/rust-ui-adoption.md),

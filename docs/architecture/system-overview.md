@@ -1,8 +1,9 @@
 # System overview
 
-Status: **Proposed target architecture**. Today only the component library and
-showcase are substantial implementations. Other package names are boundaries
-to develop, not already functioning services.
+This is the **proposed target architecture**. The current workspace includes the
+shared product app, UI library, showcase and credential reference directory.
+The runtime and deployment topology below are planned. See the
+[crate map](crate-map.md) for implementation evidence.
 
 ## First deployment
 

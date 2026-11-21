@@ -2,7 +2,7 @@
 
 ## Overview
 
-CONCTR uses a Cargo workspace to manage multiple applications and
+Conctr uses a Cargo workspace to manage multiple applications and
 reusable Rust libraries in a single repository.
 
 ## Directory Responsibilities
@@ -27,11 +27,14 @@ Application-specific assets remain inside their respective app directories.
 
 ## Package Naming
 
-Cargo package:
+The root manifest sets the workspace package version. Member manifests inherit
+it with an inline table. Align assignments within each table and indent long
+arrays by four spaces, with a trailing comma on the last item.
 
 ```toml
 [package]
-name = "conctr-core"
+name    = "conctr-core"
+version = { workspace = true }
 ```
 
 Rust import:

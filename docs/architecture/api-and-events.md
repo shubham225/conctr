@@ -1,7 +1,9 @@
 # API and event contracts
 
-Status: **Proposed**. No stable public API exists; the current Dioxus adapter only
-contains an echo demonstration.
+The public API and event contracts below are **Proposed**. The Dioxus adapter
+currently exposes credential reference CRUD and a demo echo function. See the
+[adapter setup](../../crates/conctr-api-dioxus/README.md) for its access and
+storage configuration.
 
 ## Boundary
 

@@ -7,7 +7,7 @@ pub fn ProtocolBadge(protocol: Protocol, #[props(default)] label: Option<String>
     rsx! {
         Badge { variant: BadgeVariant::Secondary,
             ProtocolShape { protocol }
-            {label.unwrap_or_else(|| protocol.label().into())}
+            {label.as_deref().unwrap_or(protocol.label())}
         }
     }
 }

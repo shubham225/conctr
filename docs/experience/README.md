@@ -1,7 +1,8 @@
 # Application experience design
 
-Status: **Proposed**, with an illustrative documentation prototype. These screens
-are not implemented product pages and make no backend capability claim.
+The screen blueprints and HTML wireframes describe proposed product behavior.
+For the implemented routes and local authoring previews, see the
+[shared application](../../crates/conctr-app-dioxus/README.md).
 
 - [Information architecture](information-architecture.md): navigation and routes.
 - [Application surfaces](application-surfaces.md): web, desktop, mobile and showcase.

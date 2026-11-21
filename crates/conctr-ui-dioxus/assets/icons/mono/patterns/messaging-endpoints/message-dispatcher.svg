@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Message Dispatcher icon">
+  <title>Message Dispatcher icon</title>
+  <polygon points="32,6 54.5,19 54.5,45 32,58 9.5,45 9.5,19" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" opacity=".5"/>
+  <path d="M19 25h12v14H19zm3 4h6m-6 5h4" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/>
+  <path d="M31 32h5V22h9m-9 10h9m-9 0v10h9" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/>
+</svg>

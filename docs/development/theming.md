@@ -36,7 +36,7 @@ upstream. Specialized CSS lives beside its Conctr wrapper.
 For library development run `npm ci` and `npm run build:css`. Cargo also refreshes
 the bundle when the local compiler is installed; consumers use committed CSS
 without Node. Run `python3 scripts/check-upstream.py` from the library directory.
-Serve the gallery with `dx serve --package conctr-design-system --platform web` and
+Serve the gallery with `dx serve --package conctr-component-showcase --platform web` and
 verify actual computed tokens, controls, keyboard interactions and workflow canvas.
 
 ## Component CSS and SSR

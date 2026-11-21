@@ -1,12 +1,12 @@
 [package]
-name = "conctr-ui-dioxus"
-version = "0.2.0"
-edition = { workspace = true }
-authors = { workspace = true }
-license = { workspace = true }
-repository = { workspace = true }
+name        = "conctr-ui-dioxus"
+version     = { workspace = true }
+edition     = { workspace = true }
+authors     = { workspace = true }
+license     = { workspace = true }
+repository  = { workspace = true }
 description = "Conctr brand system over an unchanged Rust UI snapshot"
-readme = "README.md"
+readme      = "README.md"
 
 # The immutable upstream contains a non-compilable VirtualFor documentation fragment.
 # Consumer behavior is checked by tests/facade.rs without rewriting upstream docs.
@@ -14,22 +14,72 @@ readme = "README.md"
 doctest = false
 
 [dependencies]
-dioxus = { workspace = true, features = ["router"] }
-dioxus-core = "0.7.1"
-icons = { version = "0.19", features = ["dioxus", "dioxus_animated"] }
-tw_merge = "0.1"
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
-strum = { version = "0.28", features = ["derive"] }
-js-sys = "0.3"
+dioxus       = { workspace = true, features = ["router"] }
+dioxus-core  = "0.7.1"
+icons        = { version = "0.19", features = ["dioxus", "dioxus_animated"] }
+tw_merge     = "0.1"
+serde        = { version = "1", features = ["derive"] }
+serde_json   = "1"
+strum        = { version = "0.28", features = ["derive"] }
+js-sys       = "0.3"
 wasm-bindgen = "0.2"
-time = { version = "0.3", features = ["formatting", "macros", "wasm-bindgen"] }
-gloo-timers = { version = "0.3", features = ["futures"] }
-web-sys = { version = "0.3", features = ["File", "FileList", "DataTransfer", "Attr", "Blob", "BlobPropertyBag", "Clipboard", "console", "CssStyleDeclaration", "Document", "DomRect", "DomTokenList", "DragEvent", "Element", "Event", "EventTarget", "Headers", "History", "HtmlAnchorElement", "HtmlDocument", "HtmlElement", "HtmlInputElement", "InputEvent", "KeyboardEvent", "Location", "MediaQueryList", "MouseEvent", "MutationObserver", "MutationObserverInit", "MutationRecord", "Navigator", "NamedNodeMap", "Node", "NodeList", "PointerEvent", "Request", "RequestInit", "RequestMode", "Response", "ScrollBehavior", "ScrollIntoViewOptions", "ScrollLogicalPosition", "ScrollToOptions", "Storage", "Url", "Window"] }
+time         = { version = "0.3", features = ["formatting", "macros", "wasm-bindgen"] }
+gloo-timers  = { version = "0.3", features = ["futures"] }
+
+[dependencies.web-sys]
+version  = "0.3"
+features = [
+    "File",
+    "FileList",
+    "DataTransfer",
+    "Attr",
+    "Blob",
+    "BlobPropertyBag",
+    "Clipboard",
+    "console",
+    "CssStyleDeclaration",
+    "Document",
+    "DomRect",
+    "DomTokenList",
+    "DragEvent",
+    "Element",
+    "Event",
+    "EventTarget",
+    "Headers",
+    "History",
+    "HtmlAnchorElement",
+    "HtmlDocument",
+    "HtmlElement",
+    "HtmlInputElement",
+    "InputEvent",
+    "KeyboardEvent",
+    "Location",
+    "MediaQueryList",
+    "MouseEvent",
+    "MutationObserver",
+    "MutationObserverInit",
+    "MutationRecord",
+    "Navigator",
+    "NamedNodeMap",
+    "Node",
+    "NodeList",
+    "PointerEvent",
+    "Request",
+    "RequestInit",
+    "RequestMode",
+    "Response",
+    "ScrollBehavior",
+    "ScrollIntoViewOptions",
+    "ScrollLogicalPosition",
+    "ScrollToOptions",
+    "Storage",
+    "Url",
+    "Window",
+]
 
 [features]
-default = []
-server = []
+default  = []
+server   = []
 showcase = ["dioxus/fullstack"]
 
 [dev-dependencies]

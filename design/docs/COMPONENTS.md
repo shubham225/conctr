@@ -1,8 +1,30 @@
 # Conctr component specifications
 
-Version 1.2. For designers, developers and AI tools. Live examples: `ui-kit/index.html`. Styles: `ui-kit/conctr-ui.css`. Token values: `DESIGN-TOKENS.md`.
+Live examples: `ui-kit/index.html`. Styles: `ui-kit/conctr-ui.css`. Token values: `DESIGN-TOKENS.md`.
 
 **How to read each entry:** purpose, variants, spec (sizes and tokens), states, accessibility, do and don't, a code example. Class names use the `cn-` prefix; modifiers use `--` (BEM style): `cn-btn cn-btn--primary`.
+
+## Dioxus application components
+
+Mount `ui::theme::ThemeProvider` around the app to load the scoped theme tokens
+and bundled utilities. Use the public Rust controls for application screens.
+The HTML recipes below illustrate the corresponding visual treatments.
+
+| Design need | Rust API | Usage |
+| --- | --- | --- |
+| Identify an endpoint protocol | `composed::ProtocolBadge` | Pairs its protocol shape with a name. |
+| Identify a messaging pattern | `assets::icons` | Use a named SVG asset beside a visible label. Iterate over `PATTERN_GROUPS` to build the palette. |
+| Edit a mapping | `composed::VisualFieldMapper` | Displays schema fields, links and transforms. Use `MappingWorkspaceToolbar` from `composed::mapping_workspace` for workspace actions. |
+| Arrange pipeline steps | `composed::pipeline_workspace::PipelineWorkspace` | Frames a step library, workflow canvas and resizable inspector. The caller supplies the step definitions. |
+| Inspect a queued request | `composed::queue::QueueMonitor` | Presents caller-supplied request history, status and safe exchange previews. |
+
+The workflow showcase presents 65 pattern icons across eight book chapters.
+Each uses the kit’s 64-unit hexagonal frame. Switch between the color and
+monochrome editions to see the same glyph in each. Use `dark:invert` for
+monochrome files displayed as images on dark surfaces.
+Pattern names follow Gregor Hohpe and Bobby Woolf’s
+[Enterprise Integration Patterns catalog](https://www.enterpriseintegrationpatterns.com/patterns/messaging/toc.html).
+The palette documents visual vocabulary for authoring previews.
 
 ## Index
 | Need | Use |
@@ -201,9 +223,9 @@ Sidebar 240 px (from `lg`), top bar 56 px with breadcrumb and a user menu, conte
 
 ---
 
-# Components added in v1.2
+## Form, navigation and data components
 
-Live examples: `ui-kit/forms.html`, `navigation.html`, `overlays.html`, `data.html`. All of these follow the global rules at the top of this document (tokens only, both themes, states, accessibility). The Dioxus crate `conctr-ui-dioxus` wraps the same classes.
+Live examples: `ui-kit/forms.html`, `navigation.html`, `overlays.html`, `data.html`. All of these follow the global rules at the top of this document (tokens only, both themes, states, accessibility).
 
 ## Buttons and toggles
 
@@ -891,7 +913,7 @@ Live examples: `ui-kit/forms.html`, `navigation.html`, `overlays.html`, `data.ht
 
 **Do not:** Use outside long-form content.
 
-## Patterns added in v1.2
+## Interaction patterns
 
 ### Table with filters and bulk actions
 Toolbar above (search, filter buttons, spacer), table with a checkbox column and row-actions column, footer with count and pagination. When rows are selected, a bulk bar replaces the toolbar actions. Always confirm destructive bulk actions in an alert dialog that names the count ("Delete 2 connections?").

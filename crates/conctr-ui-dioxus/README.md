@@ -58,7 +58,7 @@ Run `python3 scripts/check-upstream.py` to verify vendored source integrity.
 
 ## Coverage and limits
 
-The fresh [showcase](../../apps/conctr-design-system/README.md) includes 78 primary
+The fresh [showcase](../../apps/conctr-component-showcase/README.md) includes 78 primary
 component demos and eight workflow examples. This does not establish accessibility,
 native-platform or production readiness for every upstream module. Upstream marks
 Rust UI experimental. Dioxus AutoForm is only a form shell; it has no derive-driven
@@ -104,7 +104,7 @@ provides grouped navigation with a 56 px desktop icon rail. Wrap Sidebar and mai
 content together in SidebarProvider, and place SidebarTrigger in the main-content
 header. Below 768 px, that trigger opens a native modal drawer supporting Escape,
 contained focus and focus restoration. Providers own independent state. The
-[gallery example](../../apps/conctr-design-system/src/examples/sidebar.rs) shows the
+[gallery example](../../apps/conctr-component-showcase/src/examples/sidebar.rs) shows the
 layout and disabled items. Navigation visibility is not authorization.
 
 ## Visual field mapping
@@ -143,3 +143,27 @@ stylesheet registration. Product routes and drafts live in the
 of `Json`, `Yaml`, `Toml`, or `Xml` for syntax colors. The default is
 `PlainText`. Supply an optional label for the scrollable code region. The
 component displays the supplied text verbatim with lexical coloring.
+
+## Icon assets
+
+Import SVG assets from `assets::icons`. Each pattern has a named `Asset`
+constant. Use `icons::color::SPLITTER` or `icons::mono::SPLITTER` for a specific
+edition. The unqualified constants select monochrome. Both editions provide
+`PATTERN_GROUPS` with the same 65 entries in the book’s eight chapter groups.
+For protocols and authentication, use `BRAND_GROUPS` or named exports such as
+`icons::color::REST` and `icons::mono::JWT`. Use an empty alt attribute when adjacent text already names the pattern.
+
+```rust
+use conctr_ui_dioxus::assets::icons;
+use dioxus::prelude::*;
+
+#[component]
+fn SplitterLabel() -> Element {
+    rsx! {
+        span { class: "inline-flex items-center gap-2",
+            img { src: icons::SPLITTER, width: 24, height: 24, alt: "", class: "dark:invert" }
+            "Splitter"
+        }
+    }
+}
+```

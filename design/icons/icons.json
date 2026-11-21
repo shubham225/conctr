@@ -2,61 +2,540 @@
   {
     "id": "rest",
     "label": "REST / HTTP",
-    "file": "icons/color/rest.svg"
+    "file": "icons/color/protocols/rest.svg",
+    "group": "Protocols",
+    "mono": "icons/mono/protocols/rest.svg"
   },
   {
     "id": "soap",
     "label": "SOAP / XML",
-    "file": "icons/color/soap.svg"
+    "file": "icons/color/protocols/soap.svg",
+    "group": "Protocols",
+    "mono": "icons/mono/protocols/soap.svg"
   },
   {
     "id": "odata",
     "label": "OData",
-    "file": "icons/color/odata.svg"
+    "file": "icons/color/protocols/odata.svg",
+    "group": "Protocols",
+    "mono": "icons/mono/protocols/odata.svg"
   },
   {
     "id": "graphql",
     "label": "GraphQL",
-    "file": "icons/color/graphql.svg"
+    "file": "icons/color/protocols/graphql.svg",
+    "group": "Protocols",
+    "mono": "icons/mono/protocols/graphql.svg"
   },
   {
     "id": "grpc",
     "label": "gRPC",
-    "file": "icons/color/grpc.svg"
+    "file": "icons/color/protocols/grpc.svg",
+    "group": "Protocols",
+    "mono": "icons/mono/protocols/grpc.svg"
   },
   {
     "id": "webhook",
     "label": "Webhook / events",
-    "file": "icons/color/webhook.svg"
+    "file": "icons/color/protocols/webhook.svg",
+    "group": "Protocols",
+    "mono": "icons/mono/protocols/webhook.svg"
   },
   {
     "id": "oauth2",
     "label": "OAuth 2.0",
-    "file": "icons/color/oauth2.svg"
+    "file": "icons/color/authentication/oauth2.svg",
+    "group": "Authentication",
+    "mono": "icons/mono/authentication/oauth2.svg"
   },
   {
     "id": "apikey",
     "label": "API key",
-    "file": "icons/color/apikey.svg"
+    "file": "icons/color/authentication/apikey.svg",
+    "group": "Authentication",
+    "mono": "icons/mono/authentication/apikey.svg"
   },
   {
     "id": "basic",
     "label": "Basic auth",
-    "file": "icons/color/basic.svg"
+    "file": "icons/color/authentication/basic.svg",
+    "group": "Authentication",
+    "mono": "icons/mono/authentication/basic.svg"
   },
   {
     "id": "jwt",
     "label": "JWT / bearer",
-    "file": "icons/color/jwt.svg"
+    "file": "icons/color/authentication/jwt.svg",
+    "group": "Authentication",
+    "mono": "icons/mono/authentication/jwt.svg"
   },
   {
     "id": "mtls",
     "label": "mTLS",
-    "file": "icons/color/mtls.svg"
+    "file": "icons/color/authentication/mtls.svg",
+    "group": "Authentication",
+    "mono": "icons/mono/authentication/mtls.svg"
   },
   {
     "id": "saml",
     "label": "SAML / SSO",
-    "file": "icons/color/saml.svg"
+    "file": "icons/color/authentication/saml.svg",
+    "group": "Authentication",
+    "mono": "icons/mono/authentication/saml.svg"
+  },
+  {
+    "id": "file-transfer",
+    "label": "File Transfer",
+    "group": "Integration styles",
+    "file": "icons/color/patterns/integration-styles/file-transfer.svg",
+    "mono": "icons/mono/patterns/integration-styles/file-transfer.svg"
+  },
+  {
+    "id": "shared-database",
+    "label": "Shared Database",
+    "group": "Integration styles",
+    "file": "icons/color/patterns/integration-styles/shared-database.svg",
+    "mono": "icons/mono/patterns/integration-styles/shared-database.svg"
+  },
+  {
+    "id": "remote-procedure-invocation",
+    "label": "Remote Procedure Invocation",
+    "group": "Integration styles",
+    "file": "icons/color/patterns/integration-styles/remote-procedure-invocation.svg",
+    "mono": "icons/mono/patterns/integration-styles/remote-procedure-invocation.svg"
+  },
+  {
+    "id": "messaging",
+    "label": "Messaging",
+    "group": "Integration styles",
+    "file": "icons/color/patterns/integration-styles/messaging.svg",
+    "mono": "icons/mono/patterns/integration-styles/messaging.svg"
+  },
+  {
+    "id": "message-channel",
+    "label": "Message Channel",
+    "group": "Messaging systems",
+    "file": "icons/color/patterns/messaging-systems/message-channel.svg",
+    "mono": "icons/mono/patterns/messaging-systems/message-channel.svg"
+  },
+  {
+    "id": "message",
+    "label": "Message",
+    "group": "Messaging systems",
+    "file": "icons/color/patterns/messaging-systems/message.svg",
+    "mono": "icons/mono/patterns/messaging-systems/message.svg"
+  },
+  {
+    "id": "pipes-and-filters",
+    "label": "Pipes and Filters",
+    "group": "Messaging systems",
+    "file": "icons/color/patterns/messaging-systems/pipes-and-filters.svg",
+    "mono": "icons/mono/patterns/messaging-systems/pipes-and-filters.svg"
+  },
+  {
+    "id": "message-router",
+    "label": "Message Router",
+    "group": "Messaging systems",
+    "file": "icons/color/patterns/messaging-systems/message-router.svg",
+    "mono": "icons/mono/patterns/messaging-systems/message-router.svg"
+  },
+  {
+    "id": "message-translator",
+    "label": "Message Translator",
+    "group": "Messaging systems",
+    "file": "icons/color/patterns/messaging-systems/message-translator.svg",
+    "mono": "icons/mono/patterns/messaging-systems/message-translator.svg"
+  },
+  {
+    "id": "message-endpoint",
+    "label": "Message Endpoint",
+    "group": "Messaging systems",
+    "file": "icons/color/patterns/messaging-systems/message-endpoint.svg",
+    "mono": "icons/mono/patterns/messaging-systems/message-endpoint.svg"
+  },
+  {
+    "id": "point-to-point-channel",
+    "label": "Point-to-Point Channel",
+    "group": "Messaging channels",
+    "file": "icons/color/patterns/messaging-channels/point-to-point-channel.svg",
+    "mono": "icons/mono/patterns/messaging-channels/point-to-point-channel.svg"
+  },
+  {
+    "id": "publish-subscribe-channel",
+    "label": "Publish-Subscribe Channel",
+    "group": "Messaging channels",
+    "file": "icons/color/patterns/messaging-channels/publish-subscribe-channel.svg",
+    "mono": "icons/mono/patterns/messaging-channels/publish-subscribe-channel.svg"
+  },
+  {
+    "id": "datatype-channel",
+    "label": "Datatype Channel",
+    "group": "Messaging channels",
+    "file": "icons/color/patterns/messaging-channels/datatype-channel.svg",
+    "mono": "icons/mono/patterns/messaging-channels/datatype-channel.svg"
+  },
+  {
+    "id": "invalid-message-channel",
+    "label": "Invalid Message Channel",
+    "group": "Messaging channels",
+    "file": "icons/color/patterns/messaging-channels/invalid-message-channel.svg",
+    "mono": "icons/mono/patterns/messaging-channels/invalid-message-channel.svg"
+  },
+  {
+    "id": "dead-letter-channel",
+    "label": "Dead Letter Channel",
+    "group": "Messaging channels",
+    "file": "icons/color/patterns/messaging-channels/dead-letter-channel.svg",
+    "mono": "icons/mono/patterns/messaging-channels/dead-letter-channel.svg"
+  },
+  {
+    "id": "guaranteed-delivery",
+    "label": "Guaranteed Delivery",
+    "group": "Messaging channels",
+    "file": "icons/color/patterns/messaging-channels/guaranteed-delivery.svg",
+    "mono": "icons/mono/patterns/messaging-channels/guaranteed-delivery.svg"
+  },
+  {
+    "id": "channel-adapter",
+    "label": "Channel Adapter",
+    "group": "Messaging channels",
+    "file": "icons/color/patterns/messaging-channels/channel-adapter.svg",
+    "mono": "icons/mono/patterns/messaging-channels/channel-adapter.svg"
+  },
+  {
+    "id": "messaging-bridge",
+    "label": "Messaging Bridge",
+    "group": "Messaging channels",
+    "file": "icons/color/patterns/messaging-channels/messaging-bridge.svg",
+    "mono": "icons/mono/patterns/messaging-channels/messaging-bridge.svg"
+  },
+  {
+    "id": "message-bus",
+    "label": "Message Bus",
+    "group": "Messaging channels",
+    "file": "icons/color/patterns/messaging-channels/message-bus.svg",
+    "mono": "icons/mono/patterns/messaging-channels/message-bus.svg"
+  },
+  {
+    "id": "command-message",
+    "label": "Command Message",
+    "group": "Message construction",
+    "file": "icons/color/patterns/message-construction/command-message.svg",
+    "mono": "icons/mono/patterns/message-construction/command-message.svg"
+  },
+  {
+    "id": "document-message",
+    "label": "Document Message",
+    "group": "Message construction",
+    "file": "icons/color/patterns/message-construction/document-message.svg",
+    "mono": "icons/mono/patterns/message-construction/document-message.svg"
+  },
+  {
+    "id": "event-message",
+    "label": "Event Message",
+    "group": "Message construction",
+    "file": "icons/color/patterns/message-construction/event-message.svg",
+    "mono": "icons/mono/patterns/message-construction/event-message.svg"
+  },
+  {
+    "id": "request-reply",
+    "label": "Request-Reply",
+    "group": "Message construction",
+    "file": "icons/color/patterns/message-construction/request-reply.svg",
+    "mono": "icons/mono/patterns/message-construction/request-reply.svg"
+  },
+  {
+    "id": "return-address",
+    "label": "Return Address",
+    "group": "Message construction",
+    "file": "icons/color/patterns/message-construction/return-address.svg",
+    "mono": "icons/mono/patterns/message-construction/return-address.svg"
+  },
+  {
+    "id": "correlation-identifier",
+    "label": "Correlation Identifier",
+    "group": "Message construction",
+    "file": "icons/color/patterns/message-construction/correlation-identifier.svg",
+    "mono": "icons/mono/patterns/message-construction/correlation-identifier.svg"
+  },
+  {
+    "id": "message-sequence",
+    "label": "Message Sequence",
+    "group": "Message construction",
+    "file": "icons/color/patterns/message-construction/message-sequence.svg",
+    "mono": "icons/mono/patterns/message-construction/message-sequence.svg"
+  },
+  {
+    "id": "message-expiration",
+    "label": "Message Expiration",
+    "group": "Message construction",
+    "file": "icons/color/patterns/message-construction/message-expiration.svg",
+    "mono": "icons/mono/patterns/message-construction/message-expiration.svg"
+  },
+  {
+    "id": "format-indicator",
+    "label": "Format Indicator",
+    "group": "Message construction",
+    "file": "icons/color/patterns/message-construction/format-indicator.svg",
+    "mono": "icons/mono/patterns/message-construction/format-indicator.svg"
+  },
+  {
+    "id": "content-based-router",
+    "label": "Content-Based Router",
+    "group": "Message routing",
+    "file": "icons/color/patterns/message-routing/content-based-router.svg",
+    "mono": "icons/mono/patterns/message-routing/content-based-router.svg"
+  },
+  {
+    "id": "message-filter",
+    "label": "Message Filter",
+    "group": "Message routing",
+    "file": "icons/color/patterns/message-routing/message-filter.svg",
+    "mono": "icons/mono/patterns/message-routing/message-filter.svg"
+  },
+  {
+    "id": "dynamic-router",
+    "label": "Dynamic Router",
+    "group": "Message routing",
+    "file": "icons/color/patterns/message-routing/dynamic-router.svg",
+    "mono": "icons/mono/patterns/message-routing/dynamic-router.svg"
+  },
+  {
+    "id": "recipient-list",
+    "label": "Recipient List",
+    "group": "Message routing",
+    "file": "icons/color/patterns/message-routing/recipient-list.svg",
+    "mono": "icons/mono/patterns/message-routing/recipient-list.svg"
+  },
+  {
+    "id": "splitter",
+    "label": "Splitter",
+    "group": "Message routing",
+    "file": "icons/color/patterns/message-routing/splitter.svg",
+    "mono": "icons/mono/patterns/message-routing/splitter.svg"
+  },
+  {
+    "id": "aggregator",
+    "label": "Aggregator",
+    "group": "Message routing",
+    "file": "icons/color/patterns/message-routing/aggregator.svg",
+    "mono": "icons/mono/patterns/message-routing/aggregator.svg"
+  },
+  {
+    "id": "resequencer",
+    "label": "Resequencer",
+    "group": "Message routing",
+    "file": "icons/color/patterns/message-routing/resequencer.svg",
+    "mono": "icons/mono/patterns/message-routing/resequencer.svg"
+  },
+  {
+    "id": "composed-message-processor",
+    "label": "Composed Message Processor",
+    "group": "Message routing",
+    "file": "icons/color/patterns/message-routing/composed-message-processor.svg",
+    "mono": "icons/mono/patterns/message-routing/composed-message-processor.svg"
+  },
+  {
+    "id": "scatter-gather",
+    "label": "Scatter-Gather",
+    "group": "Message routing",
+    "file": "icons/color/patterns/message-routing/scatter-gather.svg",
+    "mono": "icons/mono/patterns/message-routing/scatter-gather.svg"
+  },
+  {
+    "id": "routing-slip",
+    "label": "Routing Slip",
+    "group": "Message routing",
+    "file": "icons/color/patterns/message-routing/routing-slip.svg",
+    "mono": "icons/mono/patterns/message-routing/routing-slip.svg"
+  },
+  {
+    "id": "process-manager",
+    "label": "Process Manager",
+    "group": "Message routing",
+    "file": "icons/color/patterns/message-routing/process-manager.svg",
+    "mono": "icons/mono/patterns/message-routing/process-manager.svg"
+  },
+  {
+    "id": "message-broker",
+    "label": "Message Broker",
+    "group": "Message routing",
+    "file": "icons/color/patterns/message-routing/message-broker.svg",
+    "mono": "icons/mono/patterns/message-routing/message-broker.svg"
+  },
+  {
+    "id": "envelope-wrapper",
+    "label": "Envelope Wrapper",
+    "group": "Message transformation",
+    "file": "icons/color/patterns/message-transformation/envelope-wrapper.svg",
+    "mono": "icons/mono/patterns/message-transformation/envelope-wrapper.svg"
+  },
+  {
+    "id": "content-enricher",
+    "label": "Content Enricher",
+    "group": "Message transformation",
+    "file": "icons/color/patterns/message-transformation/content-enricher.svg",
+    "mono": "icons/mono/patterns/message-transformation/content-enricher.svg"
+  },
+  {
+    "id": "content-filter",
+    "label": "Content Filter",
+    "group": "Message transformation",
+    "file": "icons/color/patterns/message-transformation/content-filter.svg",
+    "mono": "icons/mono/patterns/message-transformation/content-filter.svg"
+  },
+  {
+    "id": "claim-check",
+    "label": "Claim Check",
+    "group": "Message transformation",
+    "file": "icons/color/patterns/message-transformation/claim-check.svg",
+    "mono": "icons/mono/patterns/message-transformation/claim-check.svg"
+  },
+  {
+    "id": "normalizer",
+    "label": "Normalizer",
+    "group": "Message transformation",
+    "file": "icons/color/patterns/message-transformation/normalizer.svg",
+    "mono": "icons/mono/patterns/message-transformation/normalizer.svg"
+  },
+  {
+    "id": "canonical-data-model",
+    "label": "Canonical Data Model",
+    "group": "Message transformation",
+    "file": "icons/color/patterns/message-transformation/canonical-data-model.svg",
+    "mono": "icons/mono/patterns/message-transformation/canonical-data-model.svg"
+  },
+  {
+    "id": "messaging-gateway",
+    "label": "Messaging Gateway",
+    "group": "Messaging endpoints",
+    "file": "icons/color/patterns/messaging-endpoints/messaging-gateway.svg",
+    "mono": "icons/mono/patterns/messaging-endpoints/messaging-gateway.svg"
+  },
+  {
+    "id": "messaging-mapper",
+    "label": "Messaging Mapper",
+    "group": "Messaging endpoints",
+    "file": "icons/color/patterns/messaging-endpoints/messaging-mapper.svg",
+    "mono": "icons/mono/patterns/messaging-endpoints/messaging-mapper.svg"
+  },
+  {
+    "id": "transactional-client",
+    "label": "Transactional Client",
+    "group": "Messaging endpoints",
+    "file": "icons/color/patterns/messaging-endpoints/transactional-client.svg",
+    "mono": "icons/mono/patterns/messaging-endpoints/transactional-client.svg"
+  },
+  {
+    "id": "polling-consumer",
+    "label": "Polling Consumer",
+    "group": "Messaging endpoints",
+    "file": "icons/color/patterns/messaging-endpoints/polling-consumer.svg",
+    "mono": "icons/mono/patterns/messaging-endpoints/polling-consumer.svg"
+  },
+  {
+    "id": "event-driven-consumer",
+    "label": "Event-Driven Consumer",
+    "group": "Messaging endpoints",
+    "file": "icons/color/patterns/messaging-endpoints/event-driven-consumer.svg",
+    "mono": "icons/mono/patterns/messaging-endpoints/event-driven-consumer.svg"
+  },
+  {
+    "id": "competing-consumers",
+    "label": "Competing Consumers",
+    "group": "Messaging endpoints",
+    "file": "icons/color/patterns/messaging-endpoints/competing-consumers.svg",
+    "mono": "icons/mono/patterns/messaging-endpoints/competing-consumers.svg"
+  },
+  {
+    "id": "message-dispatcher",
+    "label": "Message Dispatcher",
+    "group": "Messaging endpoints",
+    "file": "icons/color/patterns/messaging-endpoints/message-dispatcher.svg",
+    "mono": "icons/mono/patterns/messaging-endpoints/message-dispatcher.svg"
+  },
+  {
+    "id": "selective-consumer",
+    "label": "Selective Consumer",
+    "group": "Messaging endpoints",
+    "file": "icons/color/patterns/messaging-endpoints/selective-consumer.svg",
+    "mono": "icons/mono/patterns/messaging-endpoints/selective-consumer.svg"
+  },
+  {
+    "id": "durable-subscriber",
+    "label": "Durable Subscriber",
+    "group": "Messaging endpoints",
+    "file": "icons/color/patterns/messaging-endpoints/durable-subscriber.svg",
+    "mono": "icons/mono/patterns/messaging-endpoints/durable-subscriber.svg"
+  },
+  {
+    "id": "idempotent-receiver",
+    "label": "Idempotent Receiver",
+    "group": "Messaging endpoints",
+    "file": "icons/color/patterns/messaging-endpoints/idempotent-receiver.svg",
+    "mono": "icons/mono/patterns/messaging-endpoints/idempotent-receiver.svg"
+  },
+  {
+    "id": "service-activator",
+    "label": "Service Activator",
+    "group": "Messaging endpoints",
+    "file": "icons/color/patterns/messaging-endpoints/service-activator.svg",
+    "mono": "icons/mono/patterns/messaging-endpoints/service-activator.svg"
+  },
+  {
+    "id": "control-bus",
+    "label": "Control Bus",
+    "group": "System management",
+    "file": "icons/color/patterns/system-management/control-bus.svg",
+    "mono": "icons/mono/patterns/system-management/control-bus.svg"
+  },
+  {
+    "id": "detour",
+    "label": "Detour",
+    "group": "System management",
+    "file": "icons/color/patterns/system-management/detour.svg",
+    "mono": "icons/mono/patterns/system-management/detour.svg"
+  },
+  {
+    "id": "wire-tap",
+    "label": "Wire Tap",
+    "group": "System management",
+    "file": "icons/color/patterns/system-management/wire-tap.svg",
+    "mono": "icons/mono/patterns/system-management/wire-tap.svg"
+  },
+  {
+    "id": "message-history",
+    "label": "Message History",
+    "group": "System management",
+    "file": "icons/color/patterns/system-management/message-history.svg",
+    "mono": "icons/mono/patterns/system-management/message-history.svg"
+  },
+  {
+    "id": "message-store",
+    "label": "Message Store",
+    "group": "System management",
+    "file": "icons/color/patterns/system-management/message-store.svg",
+    "mono": "icons/mono/patterns/system-management/message-store.svg"
+  },
+  {
+    "id": "smart-proxy",
+    "label": "Smart Proxy",
+    "group": "System management",
+    "file": "icons/color/patterns/system-management/smart-proxy.svg",
+    "mono": "icons/mono/patterns/system-management/smart-proxy.svg"
+  },
+  {
+    "id": "test-message",
+    "label": "Test Message",
+    "group": "System management",
+    "file": "icons/color/patterns/system-management/test-message.svg",
+    "mono": "icons/mono/patterns/system-management/test-message.svg"
+  },
+  {
+    "id": "channel-purger",
+    "label": "Channel Purger",
+    "group": "System management",
+    "file": "icons/color/patterns/system-management/channel-purger.svg",
+    "mono": "icons/mono/patterns/system-management/channel-purger.svg"
   }
 ]

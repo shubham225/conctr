@@ -62,7 +62,7 @@ CONCTR/
 │   ├── web-dioxus/
 │   ├── desktop-dioxus/
 │   ├── mobile-dioxus/
-│   └── conctr-design-system/
+│   └── conctr-component-showcase/
 ├── crates/
 |   ├── conctr-api/
 │   ├── conctr-api-dioxus/
@@ -131,8 +131,8 @@ CONCTR is dual-licensed under your choice of:
 Inspect the reusable Conctr UI components, typography and design tokens:
 
 ```sh
-dx serve --package conctr-design-system --platform web
+dx serve --package conctr-component-showcase --platform web
 ```
 
-The [gallery](apps/conctr-design-system/README.md) includes live component examples
+The [gallery](apps/conctr-component-showcase/README.md) includes live component examples
 and copyable Rust usage. Applications consume [conctr-ui-dioxus](crates/conctr-ui-dioxus/README.md).

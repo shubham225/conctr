@@ -1,7 +1,8 @@
 # Architecture guide
 
 The implemented foundation is a Rust workspace and layered Dioxus design system.
-The integration runtime and product application remain largely scaffolds.
+The shared product app includes local mapping and pipeline editors, a queue
+preview and a credential reference directory. The execution engine is a scaffold.
 See [current-state evidence](../roadmap/current-state.md).
 
 The following designs are **Proposed** unless an ADR explicitly says Accepted.
@@ -17,7 +18,7 @@ The following designs are **Proposed** unless an ADR explicitly says Accepted.
 | API and event contracts | [API and events](api-and-events.md) |
 | Persistence and transactions | [Data and storage](data-and-storage.md) |
 | Trust, tenancy, credentials and egress | [Security](security.md) |
-| Implemented UI layers and proposed shared pages | [Dioxus presentation](dioxus-presentation.md) |
+| UI layers and shared product pages | [Dioxus presentation](dioxus-presentation.md) |
 | Decisions, alternatives and review status | [Decision records](decisions/README.md) |
 
 The documentation recommends a direction; it does not automatically authorize

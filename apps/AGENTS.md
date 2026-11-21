@@ -9,7 +9,7 @@ Read [presentation ownership](../docs/architecture/dioxus-presentation.md) and t
   That crate is currently a scaffold; inspect source before assuming an App exists.
 - Put actual OS capabilities in platform adapters; use responsive layouts for screen
   width differences. Do not create three copies of the product UI or business rules.
-- `conctr-design-system` is the interactive component showcase. Keep examples using
+- `conctr-component-showcase` is the interactive component showcase. Keep examples using
   the shared library and maintain catalog/source coverage when components change.
   Demo state and protocol artwork do not imply backend or connector support.
 - Keep shared styles/assets in their owning library; app assets hold only app-specific

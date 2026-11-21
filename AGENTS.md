@@ -123,8 +123,8 @@ python3 docs/development/scripts/check_docs.py
 For UI changes, serve the gallery and check actual browser behavior and served CSS:
 
 ```sh
-dx serve --package conctr-design-system --platform web
-node apps/conctr-design-system/scripts/check-browser.mjs http://127.0.0.1:8080 http://127.0.0.1:9225
+dx serve --package conctr-component-showcase --platform web
+node apps/conctr-component-showcase/scripts/check-browser.mjs http://127.0.0.1:8080 http://127.0.0.1:9225
 ```
 
 Browser scripts require Node 22+ and Chrome started with

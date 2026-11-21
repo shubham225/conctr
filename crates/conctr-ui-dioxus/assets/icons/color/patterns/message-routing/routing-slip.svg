@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Routing Slip icon">
+  <title>Routing Slip icon</title>
+  <polygon points="32,6 54.5,19 54.5,45 32,58 9.5,45 9.5,19" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="#4F46E5" opacity=".5"/>
+  <path d="M21 19h22v26H21z" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="#4F46E5"/>
+  <path d="M26 25h11l-11 7h11l-11 7m0-4v4h5" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="#F5A524"/>
+</svg>

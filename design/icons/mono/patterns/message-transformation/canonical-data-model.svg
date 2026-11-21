@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Canonical Data Model icon">
+  <title>Canonical Data Model icon</title>
+  <polygon points="32,6 54.5,19 54.5,45 32,58 9.5,45 9.5,19" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" opacity=".5"/>
+  <path d="M27 20h10v8H27zm5 8v5m-10 5v-5h20v5" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/>
+  <path d="M18 38h8v6h-8zm20 0h8v6h-8z" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/>
+</svg>

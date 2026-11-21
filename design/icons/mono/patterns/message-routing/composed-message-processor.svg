@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Composed Message Processor icon">
+  <title>Composed Message Processor icon</title>
+  <polygon points="32,6 54.5,19 54.5,45 32,58 9.5,45 9.5,19" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" opacity=".5"/>
+  <path d="M18 32l8-10h12l8 10-8 10H26zm0 0h8m12 0h8" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/>
+  <path d="M27 28h10v8H27z" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/>
+</svg>

@@ -144,12 +144,14 @@ The three nodes in the logo are a system. The same shapes and colors identify pr
 
 Auth icons (OAuth 2.0, API key, Basic, JWT, mTLS, SAML) use indigo as the base with small teal, coral or amber details.
 
-**Icon set** (`icons/`): 12 protocol and auth icons on a 64 px grid. Each sits inside a faint hexagon outline.
+**Icon set** (`icons/`): 12 protocol and authentication icons and 65 integration pattern icons on a 64 px grid. Each sits inside a faint hexagon outline.
 - `icons/color/` for marketing, docs and empty states.
 - `icons/mono/` use `currentColor`, for toolbars and inline UI.
 - Render sizes: 16, 20, 24, 32, 48 px. Below 20 px prefer the mono set.
 
-**Adding new icons.** Keep the 64 px grid, the faint hexagon outline, one central glyph, 2.5 px strokes with round caps, and only brand colors. Choose a shape that is not already assigned. Register it in `icons/icons.json`.
+**Adding protocol and authentication icons.** Keep the 64 px grid, the faint hexagon outline, one central glyph, 2.5 px strokes with round caps, and only brand colors. Choose a shape that is not already assigned. Register it in `icons/icons.json`.
+
+**Integration pattern icons.** Use the same 64-unit grid, faint hexagonal frame and rounded 2.5-unit strokes. The central drawing identifies the pattern in both editions. Use indigo for its structure and a brand accent for the distinguishing action. Mirror the geometry with `currentColor` in the monochrome edition. Group matching files under `icons/color/patterns/` and `icons/mono/patterns/` by book chapter.
 
 ## 6. UI principles
 
@@ -218,7 +220,7 @@ Auth icons (OAuth 2.0, API key, Basic, JWT, mTLS, SAML) use indigo as the base w
 
 ```
 logo/svg, logo/png, logo/favicon   Logos in every lockup and variant
-icons/color, icons/mono            12 protocol and auth icons
+icons/color, icons/mono            Protocol, authentication and integration pattern icons
 fonts/                             Sora, Inter, JetBrains Mono (WOFF2) + fonts.css + licenses
 colors/                            tokens.css, design-tokens.json, colors.json,
                                    tailwind.config.js, conctr_tokens.rs, palette preview

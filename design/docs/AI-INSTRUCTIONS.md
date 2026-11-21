@@ -1,6 +1,6 @@
 # Conctr brand instructions for AI assistants
 
-Use this file as system or project context whenever you create anything for Conctr: UI, copy, slides, docs, emails, diagrams, code. Machine-readable data is in `brand.json`. Detail is in `BRAND-GUIDELINES.md`, `DESIGN-TOKENS.md` (typography, spacing, radius, shadow, motion, sizing) and `COMPONENTS.md` (every component spec) and `COMPONENT-COVERAGE.md` (what exists, mapped to shadcn/ui, Atlassian and Dioxus Components).
+Use this file as system or project context whenever you create anything for Conctr: UI, copy, slides, docs, emails, diagrams, code. Machine-readable data is in `brand.json`. Detail is in `BRAND-GUIDELINES.md`, `DESIGN-TOKENS.md` (typography, spacing, radius, shadow, motion, sizing) and `COMPONENTS.md` (every component spec) and `COMPONENT-COVERAGE.md` (Conctr control families and integration authoring components).
 
 ## Who Conctr is
 Conctr is an integration platform. It connects systems that use different protocols (REST, SOAP, OData and more) and different authentication methods. Tagline: **Where systems meet.** Audience: developers, integration engineers and IT teams. Personality: clear, precise, calm, engineer to engineer.
@@ -64,7 +64,7 @@ Use the kit classes, do not restyle them. Full specs in `COMPONENTS.md`.
 - Overlays: `cn-menu`, `cn-tip[data-tip]`, `cn-scrim > cn-modal` (title = question, destructive button repeats the verb).
 - Connection summary: `cn-flow` with `cn-node`, `cn-link`, `cn-hub`.
 
-## v1.2 component recipes (more in `COMPONENTS.md`)
+## Additional component recipes (more in `COMPONENTS.md`)
 - Button group: `div.cn-btn-group > button.cn-btn`. Toggle: `button.cn-toggle[aria-pressed]`. Segmented: `div.cn-segmented[role=radiogroup] > label > input[type=radio] + span`.
 - Input group: `div.cn-input-group > span.cn-input-group__icon|__addon + input.cn-input + button.cn-btn`. Search = icon + input. Endpoint = `select.cn-select.cn-select--bare` + input + button.
 - Slider: `input.cn-slider[type=range]` (set `--p` for the fill). OTP: `div.cn-otp > input*N`. Calendar: `div.cn-calendar` with `button.cn-calendar__day`.
@@ -80,10 +80,12 @@ Use the kit classes, do not restyle them. Full specs in `COMPONENTS.md`.
 - Status shown with a shape plus a word, never color alone. Keep one primary action per view.
 
 ## Building UI
+
+For Dioxus screens, mount `ThemeProvider` and use the Rust facade and compositions in the [component guide](COMPONENTS.md#dioxus-application-components). The class recipes below apply to the standalone HTML kit.
 - Reuse classes from `ui-kit/conctr-ui.css`: `cn-btn cn-btn--primary|secondary|ghost|danger`, `cn-input`, `cn-select`, `cn-switch`, `cn-badge`, `cn-shape[data-s=circle|square|triangle|diamond|hex|ring]`, `cn-card`, `cn-alert`, `cn-tabs`, `cn-table`, `cn-code`, `cn-flow` with `cn-node`, `cn-link`, `cn-hub`.
 - One primary button per view. Radius: 10 px controls, 14 px cards. 4 px spacing grid.
 - Summarise a connection with the source, hub, target flow component.
-- Icons: `icons/color/*.svg` for marketing, `icons/mono/*.svg` (currentColor) for UI. Do not draw new protocol icons unless asked, and follow the icon rules in the guidelines if you must.
+- Icons: `icons/color/` for marketing, `icons/mono/` (currentColor) for UI. Do not draw new protocol icons unless asked, and follow the icon rules in the guidelines if you must.
 - Dark mode is a real theme, not an inversion. Use the dark token values, and `*-color-on-dark` logos.
 
 ## Writing copy

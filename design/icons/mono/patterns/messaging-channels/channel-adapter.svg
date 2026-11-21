@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Channel Adapter icon">
+  <title>Channel Adapter icon</title>
+  <polygon points="32,6 54.5,19 54.5,45 32,58 9.5,45 9.5,19" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" opacity=".5"/>
+  <g transform="translate(0 1.5)">
+    <path d="M19 27h10v10H19m4-15v5m4-5v5M29 32h6" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/>
+  <path d="M35 25v14m0-10h10m-10 6h10" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/>
+  </g>
+</svg>

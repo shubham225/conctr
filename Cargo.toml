@@ -1,10 +1,10 @@
 [workspace]
-resolver  = "2"
-members   = [
+resolver = "2"
+members  = [
     "apps/web-dioxus",
     "apps/desktop-dioxus",
     "apps/mobile-dioxus",
-    "apps/conctr-design-system",
+    "apps/conctr-component-showcase",
 
     "crates/conctr-ui-dioxus",
     "crates/conctr-api-dioxus",
@@ -17,7 +17,7 @@ members   = [
     "crates/conctr-storage",
     "crates/conctr-auth",
     "crates/conctr-gateway",
-    "crates/conctr-app-dioxus"
+    "crates/conctr-app-dioxus",
 ]
 
 [workspace.dependencies]
@@ -39,8 +39,9 @@ conctr-auth       = { path = "crates/conctr-auth" }
 conctr-gateway    = { path = "crates/conctr-gateway" }
 
 [workspace.package]
-authors     = ["Shubham Shinde <shubhamshinde225@gmail.com>"]
-edition     = "2024"
-license     = "MIT OR Apache-2.0"
-publish     = false
-repository  = "https://github.com/shubham225/conctr"
+version    = "0.1.0"
+authors    = ["Shubham Shinde <shubhamshinde225@gmail.com>"]
+edition    = "2024"
+license    = "MIT OR Apache-2.0"
+publish    = false
+repository = "https://github.com/shubham225/conctr"
