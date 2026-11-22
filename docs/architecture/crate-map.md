@@ -22,7 +22,7 @@ Do not add all planned packages in one change.
 | `conctr-web-dioxus` — `apps/web-dioxus` | Shared App launcher | Web/server launch and renderer configuration; share product pages through app crate |
 | `conctr-desktop-dioxus` — `apps/desktop-dioxus` | Shared App + custom window controls | Native bootstrap, window/menu/deep-link adapters; no duplicated product app |
 | `conctr-mobile-dioxus` — `apps/mobile-dioxus` | Shared App launcher | Mobile bootstrap and native capability adapters; shared responsive product UI |
-| `conctr-component-showcase` — `apps/conctr-component-showcase` | Fresh 78-component / eight-workflow Rust UI showcase | Design system documentation/showcase; demos do not prove production connector support |
+| `conctr-design-kit` — `apps/conctr-design-kit` | Fresh 78-component / eight-workflow Rust UI showcase | Design system documentation/showcase; demos do not prove production connector support |
 
 `conctr-api-dioxus` is the actual package name. Some earlier prose used
 `conctr-dioxus-api`; use the existing Cargo name in new documentation and code.

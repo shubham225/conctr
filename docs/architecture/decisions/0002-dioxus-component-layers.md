@@ -22,7 +22,7 @@ Composed components depend on UI controls and primitives. The lower layers do
 not depend on composed components. Product routes, pages, data fetching and
 business rules remain outside the component library.
 
-The original showcase package (since renamed to `conctr-component-showcase`) was named `conctr-design-system`; the assets and HTML
+The original showcase package (since renamed to `conctr-design-kit`) was named `conctr-design-system`; the assets and HTML
 reference under `design/` are its design kit.
 
 ## Consequences

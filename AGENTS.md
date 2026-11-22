@@ -64,6 +64,14 @@ Read the crate map before changing these relationships or adding dependencies.
   exactly-once effects or blindly retry unsafe operations. Read the execution,
   connector and security contracts before changing retries or external effects.
 
+## TOML formatting
+
+Align assignment operators within each TOML table and use a space after each
+`=`. Use inline tables with interior spacing for workspace inheritance,
+as in `version = { workspace = true }`. Keep short arrays on one line and
+format multiline arrays with four-space indentation, one item per line and
+a trailing comma. See the [workspace guide](docs/development/workspace.md).
+
 ## Rust and Dioxus
 
 Write clear, idiomatic Rust with strong types, explicit `Result`/`Option` handling,
@@ -99,12 +107,21 @@ or generated assets. Library development dependencies refresh the
 bundle during Cargo rebuilds; consumers use the shipped CSS without Node.
 Keep palettes and design scales in `assets/colors/tokens.css`, semantic shadcn
 aliases/shared interactions in `assets/styles/main.css`, and Tailwind compiler
-mappings in `theme.css`. Component-specific selectors belong beside the owning base or composed component. Keep gallery-only styles in the showcase. Adjacent `style.css` files use CSS modules and explicit
+mappings in `theme.css`. Put component-specific styling in `style.css` beside the owning component.
+Use existing Tailwind utilities in Rust for shared layout and keep new component-specific selectors out of the shared Tailwind bundle. Keep gallery-only styles in the showcase. Adjacent `style.css` files use CSS modules and explicit
 per-component `document::Stylesheet` registration for repeated SSR documents.
 Keep ownership comments accurate; no global stylesheet registry or per-component
 generated CSS. Preserve supplied assets, type/spacing scales, protocol meanings,
 light/dark themes, keyboard focus, disabled/error states and reduced motion.
 Reuse shared styles and avoid numbered palette aliases.
+
+Add each shared application icon as matching color and monochrome SVGs under
+`crates/conctr-ui-dioxus/assets/icons/{color,mono}/` in its family folder.
+Follow the design kit, keep the icon inventory and design assets synchronized,
+and export named handles through `conctr_ui_dioxus::assets::icons`. Reuse
+those handles in application UI and include both editions in the showcase
+icon library. Use monochrome for themed controls and color for brand artwork.
+Verify the icon against both light and dark backgrounds.
 
 ## Verification and documentation
 
@@ -123,8 +140,8 @@ python3 docs/development/scripts/check_docs.py
 For UI changes, serve the gallery and check actual browser behavior and served CSS:
 
 ```sh
-dx serve --package conctr-component-showcase --platform web
-node apps/conctr-component-showcase/scripts/check-browser.mjs http://127.0.0.1:8080 http://127.0.0.1:9225
+dx serve --package conctr-design-kit --platform web
+node apps/conctr-design-kit/scripts/check-browser.mjs http://127.0.0.1:8080 http://127.0.0.1:9225
 ```
 
 Browser scripts require Node 22+ and Chrome started with

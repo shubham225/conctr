@@ -71,7 +71,7 @@ await evaluate(`document.querySelector('.cn-taginput input:not(:disabled)').disp
 await check('tag input adds with Enter', `document.querySelector('.cn-taginput').textContent.includes('Finance')`);
 await check('disabled tag input also disables removal', `[...document.querySelectorAll('.cn-taginput[data-disabled="true"] button')].every(b=>b.disabled)`);
 await check('showcase uses a simple scrollable component explorer', `!document.querySelector('.cn-gallery-sidebar') && !document.querySelector('.cn-sidebar-provider') && !!document.querySelector('.cn-component-explorer') && getComputedStyle(document.querySelector('.cn-component-explorer')).overflowY==='auto'`);
-await check('showcase has its new name', `document.title==='Conctr Component Showcase' && document.querySelector('header').textContent.includes('Conctr Component Showcase')`);
+await check('showcase has its new name', `document.title==='Conctr Design Kit' && document.querySelector('header').textContent.includes('Conctr Design Kit')`);
 await navigate('/components/sidebar','main .cn-sidebar-provider[data-ready]');
 await check('sidebar desktop trigger lives in main content', `!!document.querySelector('main section .cn-sidebar-desktop-trigger') && !document.querySelector('main aside .cn-sidebar-desktop-trigger')`);
 await evaluate(`document.querySelector('main .cn-sidebar-desktop-trigger').click()`);await delay(150);

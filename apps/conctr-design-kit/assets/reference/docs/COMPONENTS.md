@@ -18,7 +18,7 @@ The HTML recipes below illustrate the corresponding visual treatments.
 | Arrange pipeline steps | `composed::pipeline_workspace::PipelineWorkspace` | Frames a step library, workflow canvas and resizable inspector. The caller supplies the step definitions. |
 | Inspect a queued request | `composed::queue::QueueMonitor` | Presents caller-supplied request history, status and safe exchange previews. |
 
-The workflow showcase presents 65 pattern icons across eight book chapters.
+The showcase’s Icons page presents 65 pattern icons across eight book chapters.
 Each uses the kit’s 64-unit hexagonal frame. Switch between the color and
 monochrome editions to see the same glyph in each. Use `dark:invert` for
 monochrome files displayed as images on dark surfaces.

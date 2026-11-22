@@ -1,6 +1,7 @@
 mod catalog;
 mod demo;
 mod examples;
+mod icon_library;
 use conctr_ui_dioxus::{assets::images, prelude::*};
 use dioxus::prelude::*;
 #[derive(Clone, PartialEq, Routable)]
@@ -8,6 +9,8 @@ enum Route {
     #[layout(Shell)]
     #[route("/")]
     Home {},
+    #[route("/icons")]
+    Icons {},
     #[route("/components/:slug")]
     ComponentPage { slug: String },
     #[route("/:..segments")]
@@ -22,7 +25,7 @@ fn App() -> Element {
     use_context_provider(|| dark);
     rsx! {
         document::Stylesheet { href: asset!("/src/style.css") }
-        document::Title { "Conctr Component Showcase" }
+        document::Title { "Conctr Design Kit" }
         document::Link { rel: "icon", href: images::FAVICON }
         ThemeProvider { theme: if dark() { Theme::Dark } else { Theme::Light }, Router::<Route> {} }
     }
@@ -41,7 +44,7 @@ fn Shell() -> Element {
                         height: 36,
                     }
                 }
-                span { class: "text-sm text-muted-foreground", "Conctr Component Showcase" }
+                span { class: "text-sm text-muted-foreground", "Conctr Design Kit" }
                 BrandThemeToggle { dark: dark(), on_change: move |value| dark.set(value) }
             }
             div { class: "cn-gallery-frame",
@@ -50,6 +53,7 @@ fn Shell() -> Element {
                     "aria-label": "Component explorer",
                     strong { class: "cn-explorer-title", "Explore the kit" }
                     Link { to: Route::Home {}, class: "cn-explorer-link", "Brand foundations" }
+                    Link { to: Route::Icons {}, class: "cn-explorer-link", "Icons" }
                     h2 { class: "cn-explorer-group", "Composed" }
                     for entry in catalog::COMPOSED {
                         Link {
@@ -73,6 +77,15 @@ fn Shell() -> Element {
                 }
                 main { class: "cn-gallery-main min-w-0", Outlet::<Route> {} }
             }
+        }
+    }
+}
+#[component]
+fn Icons() -> Element {
+    rsx! {
+        div { class: "grid gap-4",
+            h1 { "Icons" }
+            icon_library::IconPalette {}
         }
     }
 }

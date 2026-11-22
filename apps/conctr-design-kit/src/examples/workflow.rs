@@ -1,4 +1,3 @@
-use conctr_ui_dioxus::assets::icons;
 use conctr_ui_dioxus::{assets::images, composed::WorkflowBuilder, ui::workflow::*};
 use dioxus::prelude::*;
 
@@ -75,40 +74,6 @@ pub fn ConctrWorkflow() -> Element {
                                 WfNodeTitle { "{node.label}" }
                             }
                             p { class: "p-3 text-sm text-muted-foreground", "{node.description}" }
-                        }
-                    }
-                }
-            }
-            IconPalette {}
-        }
-    }
-}
-
-#[component]
-fn IconPalette() -> Element {
-    let mut monochrome = use_signal(|| false);
-    let (brand, patterns) = if monochrome() {
-        (icons::mono::BRAND_GROUPS, icons::mono::PATTERN_GROUPS)
-    } else {
-        (icons::color::BRAND_GROUPS, icons::color::PATTERN_GROUPS)
-    };
-    let image_class = if monochrome() { "dark:invert" } else { "" };
-    rsx! {
-        section { "aria-label": "Icon library",
-            h2 { class: "text-lg font-medium", "Icon library" }
-            label { class: "inline-flex items-center gap-2",
-                input { r#type: "checkbox", checked: monochrome(), onchange: move |event| monochrome.set(event.checked()) }
-                "Monochrome"
-            }
-            for &(group, glyphs) in brand.iter().chain(patterns) {
-                div { key: "{group}",
-                    h3 { class: "text-sm font-medium", "{group}" }
-                    ul { class: "flex flex-wrap gap-4 py-2",
-                        for &(label, icon) in glyphs {
-                            li { key: "{label}", class: "flex items-center gap-2 text-sm",
-                                img { src: icon, alt: "", width: 48, height: 48, class: image_class }
-                                "{label}"
-                            }
                         }
                     }
                 }

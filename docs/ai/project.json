@@ -56,8 +56,8 @@
       ]
     },
     {
-      "name": "conctr-component-showcase",
-      "path": "apps/conctr-component-showcase",
+      "name": "conctr-design-kit",
+      "path": "apps/conctr-design-kit",
       "status": "implemented-showcase",
       "targets": [
         "bin"

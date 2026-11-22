@@ -67,13 +67,26 @@ await check('native OTP editing updates Rust UI slot overlays', `[...document.qu
 await check('OTP requires no missing fixed-path script', `!document.querySelector('script[src="/components/otp.js"]')`);
 await navigate('/components/conctr-workflow', 'section[aria-label="Workflow builder"]');
 await check('Conctr workflow uses provided source hub target artwork', `['REST source','Conctr mapping','SOAP target'].every(text=>document.querySelector('main').textContent.includes(text)) && document.querySelectorAll('section[aria-label="Workflow builder"] img').length===3`);
+const zoom = await evaluate(`document.querySelector('section[aria-label="Workflow builder"]').textContent.match(/\d+%/)?.[0]`);
+await evaluate(`([...document.querySelectorAll('section[aria-label="Workflow builder"] button')].find(b=>b.textContent.trim()==='+' && b.title!=='Add node')).click()`); await delay(200);
+await check('workflow zoom changes canvas state', `!document.querySelector('section[aria-label="Workflow builder"]').textContent.includes(${JSON.stringify(zoom)})`);
+await call('Emulation.setEmulatedMedia', {features:[{name:'prefers-reduced-motion',value:'reduce'}]});
+await check('reduced motion is respected', `getComputedStyle(document.querySelector('button')).transitionDuration.split(',').every(t=>parseFloat(t)<0.001)`);
+await navigate('/icons', 'section[aria-label="Icon library"]');
+await check('icon library has a sidebar link', `!!document.querySelector('nav a[href="/icons"]')`);
 const paletteSelector = 'section[aria-label="Icon library"]';
+await check('icons are arranged in a card grid', `(() => {
+ const list = document.querySelector('${paletteSelector} ul');
+ return getComputedStyle(list).display === 'grid' && !!list.querySelector('li [data-name="Card"]');
+})()`);
 for (const variant of ['color', 'mono']) {
  if (variant === 'mono') {
-  await evaluate(`document.querySelector('${paletteSelector} input').click()`);
+  await evaluate(`document.querySelector('${paletteSelector} [role="switch"]').focus()`);
+  await call('Input.dispatchKeyEvent', {type: 'keyDown', key: ' ', code: 'Space', windowsVirtualKeyCode: 32});
+  await call('Input.dispatchKeyEvent', {type: 'keyUp', key: ' ', code: 'Space', windowsVirtualKeyCode: 32});
   await delay(200);
  }
- await check(`workflow palette loads 77 distinct ${variant} icons in ten groups`, `(async () => {
+ await check(`icon library loads 77 distinct ${variant} icons in ten groups`, `(async () => {
   const palette = document.querySelector('${paletteSelector}');
   const images = [...palette.querySelectorAll('li img[alt=""]')];
   await Promise.all(images.map(image => image.decode()));
@@ -83,11 +96,6 @@ for (const variant of ['color', 'mono']) {
        image.classList.contains('dark:invert') === ${variant === 'mono'});
  })()`);
 }
-const zoom = await evaluate(`document.querySelector('section[aria-label="Workflow builder"]').textContent.match(/\d+%/)?.[0]`);
-await evaluate(`([...document.querySelectorAll('section[aria-label="Workflow builder"] button')].find(b=>b.textContent.trim()==='+' && b.title!=='Add node')).click()`); await delay(200);
-await check('workflow zoom changes canvas state', `!document.querySelector('section[aria-label="Workflow builder"]').textContent.includes(${JSON.stringify(zoom)})`);
-await call('Emulation.setEmulatedMedia', {features:[{name:'prefers-reduced-motion',value:'reduce'}]});
-await check('reduced motion is respected', `getComputedStyle(document.querySelector('button')).transitionDuration.split(',').every(t=>parseFloat(t)<0.001)`);
 const slugs = await evaluate(`[...document.querySelectorAll('nav a[href^="/components/"]')].map(a=>a.getAttribute('href'))`);
 for (const path of slugs) {
  await navigate(path, 'main h1');

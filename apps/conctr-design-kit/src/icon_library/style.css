@@ -1,0 +1,71 @@
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-block-end: 0.75rem;
+    border-block-end: 1px solid var(--cn-border);
+}
+
+.switch-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--cn-fs-small);
+    cursor: pointer;
+}
+
+.toggle {
+    appearance: none;
+    position: relative;
+    inline-size: 2.75rem;
+    block-size: 1.5rem;
+    border: 1px solid var(--cn-text-muted);
+    border-radius: 999px;
+    background: var(--cn-bg);
+    cursor: pointer;
+}
+
+.toggle::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 0.1875rem;
+    inset-inline-start: 0.1875rem;
+    inline-size: 1rem;
+    block-size: 1rem;
+    border-radius: 50%;
+    background: var(--cn-text-muted);
+}
+
+.toggle:checked {
+    background: var(--cn-primary);
+    border-color: var(--cn-primary);
+}
+
+.toggle:checked::before {
+    inset-inline-start: 1.4375rem;
+    background: var(--cn-on-primary);
+}
+
+.toggle:focus-visible {
+    outline: 2px solid var(--cn-primary);
+    outline-offset: 3px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
+    gap: 0.75rem;
+}
+
+.tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    height: 100%;
+    padding: 0.75rem;
+    text-align: center;
+    overflow-wrap: anywhere;
+}

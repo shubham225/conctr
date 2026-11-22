@@ -28,12 +28,12 @@ cargo clippy --workspace --all-targets -- -D warnings
 ```
 
 Renderer validation is separate from default-feature workspace compilation.
-Build/serve the gallery with `dx serve --package conctr-component-showcase --platform web`.
+Build/serve the gallery with `dx serve --package conctr-design-kit --platform web`.
 Then run the gallery browser checks with Node 22+ and Chrome started with
 `--remote-debugging-port=9225`:
 
 ```sh
-node apps/conctr-component-showcase/scripts/check-browser.mjs http://127.0.0.1:8080 http://127.0.0.1:9225
+node apps/conctr-design-kit/scripts/check-browser.mjs http://127.0.0.1:8080 http://127.0.0.1:9225
 ```
 
 The UI crate ships its Tailwind utility bundle; apps have no Tailwind setup.

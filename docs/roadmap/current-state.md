@@ -5,13 +5,13 @@ Baseline audit: **2026-11-15**. Package and asset inventory updated **2026-11-21
 - `conctr-ui-dioxus` uses 86 unmodified Rust UI
   component modules, hooks, demos and workflows at pinned MIT source revision
   `4f5a516e76d75a15a587ab2169352cf34fd318d0`.
-- The workflow showcase renders 65 pattern icons from `assets::icons`
-  in eight families, plus six protocol and six authentication icons. Each has color and monochrome SVG assets. These are presentation assets for authoring.
+- The showcase exposes a dedicated `/icons` page and renders 65 pattern icons from `assets::icons`
+  in eight families, plus six protocol and six authentication icons. The page displays labeled cards in responsive grids with a keyboard-accessible switch between color and monochrome SVGs. These are presentation assets for authoring.
 - `ui/` is the app-facing facade; selected controls apply Conctr defaults.
   `composed/` combines controls. The former `components::*` API is removed.
 - Palette/scales, fonts, logos and icons come from canonical `design/`.
   Library-owned Tailwind 4.1.18 ships compiled CSS; consumers mount ThemeProvider.
-- `conctr-component-showcase` provides brand foundations,
+- `conctr-design-kit` provides brand foundations,
   78 primary component demos, eight workflow examples and light/dark switching.
   Its reference kit is a fresh copy of `design/`.
 - Shared product App routes and unavailable-service pages remain presentation;
@@ -22,7 +22,7 @@ Baseline audit: **2026-11-15**. Package and asset inventory updated **2026-11-21
 
 Evidence: [UI source](../../crates/conctr-ui-dioxus/src/lib.rs),
 [upstream inventory](../../crates/conctr-ui-dioxus/src/rust-ui/manifest.json),
-[gallery catalog](../../apps/conctr-component-showcase/src/catalog.rs),
+[gallery catalog](../../apps/conctr-design-kit/src/catalog.rs),
 [assessment/validation](../development/rust-ui-adoption.md).
 The historical migration backup is not present in this checkout.
 Earlier test/browser counts belong to the removed implementation and do not
@@ -108,7 +108,7 @@ independently dismissible messages to a shared viewport inside ThemeProvider.
 Thirty-three focused browser checks pass for these behaviors, including dark mode
 and mobile containment. These are local presentation demos, not platform services.
 
-The gallery is now titled Conctr Component Showcase and ships from the `conctr-component-showcase` package.
+The gallery is now titled Conctr Design Kit and ships from the `conctr-design-kit` package.
 Its component explorer is a simple scrollable list, separate from the Sidebar
 component. SidebarProvider shares state with SidebarTrigger placed in adjacent
 main content; the Sidebar itself holds navigation and the mobile close control.

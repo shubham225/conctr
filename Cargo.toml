@@ -4,7 +4,7 @@ members  = [
     "apps/web-dioxus",
     "apps/desktop-dioxus",
     "apps/mobile-dioxus",
-    "apps/conctr-component-showcase",
+    "apps/conctr-design-kit",
 
     "crates/conctr-ui-dioxus",
     "crates/conctr-api-dioxus",

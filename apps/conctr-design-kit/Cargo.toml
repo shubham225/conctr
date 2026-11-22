@@ -1,5 +1,5 @@
 [package]
-name       = "conctr-component-showcase"
+name       = "conctr-design-kit"
 version    = { workspace = true }
 edition    = { workspace = true }
 authors    = { workspace = true }

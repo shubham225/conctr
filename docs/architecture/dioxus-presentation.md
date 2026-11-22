@@ -23,7 +23,7 @@ and accepts a field such as `ui::input::Input` as its child. The private
 imports resolve through the library facade. Product pages, services and business
 rules stay in their owning app or platform crate.
 
-`apps/conctr-component-showcase` is the runnable showcase with 78 component demos
+`apps/conctr-design-kit` is the runnable showcase with 78 component demos
 and eight workflow examples. `design/` remains the canonical design kit; the
 gallery's `assets/reference/` is its read-only snapshot. Integration pattern SVGs are
 exported through `conctr_ui_dioxus::assets::icons`.

@@ -26,5 +26,5 @@
 @source inline("min-h-[480px] lg:flex-row mt-4");
 
 /* Consumer sources are scanned here; apps never own a Tailwind build. */
-@source "../../../../apps/conctr-component-showcase/src";
+@source "../../../../apps/conctr-design-kit/src";
 @source "../../../conctr-app-dioxus/src";
