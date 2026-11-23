@@ -1,9 +1,10 @@
-use crate::Shell;
+use crate::{Shell, dashboard::Dashboard};
 use dioxus::prelude::*;
 
 /// Workspace destinations shared by all launchers.
 #[derive(Clone, Debug, PartialEq, Routable)]
 pub enum Route {
+    #[redirect("/login", || Route::Dashboard {})]
     #[layout(Shell)]
     #[route("/")]
     Dashboard {},
@@ -54,11 +55,6 @@ impl Route {
             Self::NotFound { .. } => "Page not found",
         }
     }
-}
-
-#[component]
-fn Dashboard() -> Element {
-    rsx! { h1 { class: "text-2xl", "Dashboard" } }
 }
 
 #[component]

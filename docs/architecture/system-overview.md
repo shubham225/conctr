@@ -18,8 +18,7 @@ flowchart TB
     Web[Web client] --> Gateway[HTTP gateway]
     Desktop[Desktop client] --> Gateway
     Mobile[Mobile operations client] --> Gateway
-    BFF[Dioxus server functions] --> UseCases[Application use cases]
-    Gateway --> UseCases
+    Gateway --> UseCases[Application use cases]
     UseCases --> Auth[Authorization]
     UseCases --> Flow[Flow validation and compilation]
     UseCases --> Runtime[Execution engine]
@@ -36,8 +35,8 @@ flowchart TB
 Arrows here show calls/data paths, not Cargo dependencies. The server composition
 root constructs adapters and injects ports. In particular, the engine must not
 import the SQL storage crate, and the UI library must not import app services.
-The optional Dioxus server-function adapter uses the same authorization and use
-cases as the generic HTTP API.
+The Dioxus client calls the management HTTP API. The product server mounts
+the management router alongside the frontend.
 
 ## Control plane and execution plane
 

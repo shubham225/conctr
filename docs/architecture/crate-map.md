@@ -9,14 +9,14 @@ Do not add all planned packages in one change.
 | Package and current path | Current evidence | Intended responsibility / exclusions |
 | --- | --- | --- |
 | `conctr-core` — `crates/conctr-core` | Scaffold: starter add function/test | Small shared IDs and foundational values; not a dumping ground for every domain type |
-| `conctr-auth` — `crates/conctr-auth` | Scaffold | Principal, workspace grants and authorization policy; identity-provider adapters stay at a boundary; external connector credentials belong to secrets |
+| `conctr-auth` — `crates/conctr-auth` | `WorkspaceAuth` coordinates first login and password authentication, `LocalAccounts` provisions account files, and `Authority` issues and revokes sessions | Principal, workspace grants and authorization policy; identity-provider adapters stay at a boundary; external connector credentials belong to secrets |
 | `conctr-connectors` — `crates/conctr-connectors` | Scaffold | Connector descriptors, operation contracts, registry and initial HTTP implementation; no scheduler or UI logic |
 | `conctr-transform` — `crates/conctr-transform` | Scaffold | Declarative mapping AST, bounded evaluation and schema/format conversion; no network or arbitrary filesystem access |
 | `conctr-engine` — `crates/conctr-engine` | Scaffold | Plan execution, attempt/run states, retry/deadline policy, recovery and runtime persistence/clock ports; no SQL/HTTP framework dependency |
 | `conctr-storage` — `crates/conctr-storage` | Scaffold | PostgreSQL repositories, migrations, durable work claiming and blob adapters; implement ports rather than defining business decisions |
 | `conctr-gateway` — `crates/conctr-gateway` | Scaffold | HTTP routing, request identity, limits, API error mapping and webhook ingress; call use cases, not duplicate them |
-| `conctr-api` — `crates/conctr-api` | Starter binary and credential reference types with optional file-backed directory operations | Server composition root; config validation, wiring, lifecycle and health; later move directory to `apps/conctr-api` without changing package name |
-| `conctr-api-dioxus` — `crates/conctr-api-dioxus` | Echo and credential directory server functions | Optional Dioxus transport adapter over the same authorized application services; generic contracts remain independent of Dioxus |
+| `conctr-api` — `crates/conctr-api` | Management HTTP router, response contracts, server configuration and system details | Server composition root; config validation, wiring, lifecycle and health; later move directory to `apps/conctr-api` without changing package name |
+| `conctr-api-dioxus` — `crates/conctr-api-dioxus` | Typed Dioxus HTTP client for workspace sessions and system details | Optional Dioxus transport adapter over the same authorized application services; generic contracts remain independent of Dioxus |
 | `conctr-ui-dioxus` — `crates/conctr-ui-dioxus` | Implemented design-system components and tests | Reusable Rust UI snapshot, ui facade and composed components; no product pages, service calls or business rules |
 | `conctr-app-dioxus` — `crates/conctr-app-dioxus` | Shared product shell with grouped navigation and heading-only destinations | Shared root App, routes and presentation state |
 | `conctr-web-dioxus` — `apps/web-dioxus` | Shared App launcher | Web/server launch and renderer configuration; share product pages through app crate |
@@ -66,8 +66,8 @@ reuse or testing boundary justifies a package.
   implements them. Do not import storage back into engine.
 - `application` owns administrative transaction/repository ports; storage may
   depend on application to implement them. Avoid the opposite dependency.
-- Gateway and Dioxus server functions call application use cases. Neither owns
-  authorization policy or execution rules.
+- Management HTTP handlers call application use cases. The auth and engine
+  crates own authorization policy and execution rules.
 - Contracts do not import application implementations. Wire DTOs are not SQL rows.
 - App UI depends on UI components and transport/client contracts. UI never imports app.
 - Executables select concrete adapters. Feature flags do not excuse a dependency cycle.

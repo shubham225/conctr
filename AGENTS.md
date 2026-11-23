@@ -37,8 +37,8 @@ heading-only pages. A package name or showcase example is not a working feature.
 | `conctr-transform` | Bounded data transformation and mapping |
 | `conctr-storage` | Persistence adapters implementing owner-defined ports |
 | `conctr-gateway` | HTTP/API boundary and webhook ingress |
-| `conctr-api` | Server composition root; currently under `crates/conctr-api` |
-| `conctr-api-dioxus` | Dioxus-specific server-function adapter; this is the actual Cargo name |
+| `conctr-api` | Management HTTP router, request/response contracts and server configuration |
+| `conctr-api-dioxus` | Dioxus client for the management HTTP API |
 | `conctr-ui-dioxus` | Reusable layout primitives, UI controls and generic compositions |
 | `conctr-app-dioxus` | Shared product App, routes, pages and presentation state |
 
@@ -74,6 +74,12 @@ a trailing comma. See the [workspace guide](docs/development/workspace.md).
 
 ## Rust and Dioxus
 
+Group Rust modules by the responsibility they own. Keep crate roots focused on
+composition and public exports. Separate account policy, persistence, transport
+and presentation when they change for different reasons. Keep related types and
+their implementations together, with private helpers and tests in the owning
+module. Introduce traits when a caller needs a replaceable boundary.
+
 Write clear, idiomatic Rust with strong types, explicit `Result`/`Option` handling,
 focused functions and documented public APIs. Avoid unnecessary `unwrap`, `expect`,
 cloning, allocations, abstractions and dependencies. Preserve existing user changes.
@@ -108,7 +114,7 @@ bundle during Cargo rebuilds; consumers use the shipped CSS without Node.
 Keep palettes and design scales in `assets/colors/tokens.css`, semantic shadcn
 aliases/shared interactions in `assets/styles/main.css`, and Tailwind compiler
 mappings in `theme.css`. Put component-specific styling in `style.css` beside the owning component.
-Use existing Tailwind utilities in Rust for shared layout and keep new component-specific selectors out of the shared Tailwind bundle. Keep gallery-only styles in the showcase. Adjacent `style.css` files use CSS modules and explicit
+Use existing Tailwind utilities in Rust for shared layout and keep new component-specific selectors out of the shared Tailwind bundle. After a component-only style change, rebuild the utility CSS and inspect the generated diff for one-off rules. Keep gallery-only styles in the showcase. Adjacent `style.css` files use CSS modules and explicit
 per-component `document::Stylesheet` registration for repeated SSR documents.
 Keep ownership comments accurate; no global stylesheet registry or per-component
 generated CSS. Preserve supplied assets, type/spacing scales, protocol meanings,

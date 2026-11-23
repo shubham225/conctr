@@ -13,5 +13,5 @@ conctr-app-dioxus = { workspace = true }
 
 [features]
 default = []
-desktop = ["dioxus/desktop"]
+desktop = ["dioxus/desktop", "conctr-app-dioxus/native-client"]
 server  = ["dioxus/server", "conctr-app-dioxus/server"]

@@ -17,8 +17,8 @@ recommendations for review; superseded records link to the replacing decision.
 | [0010](0010-tailwind-component-styles.md) | Superseded by 0011 | Tailwind theme and component-local styles |
 | [0011](0011-dx-managed-tailwind.md) | Superseded by 0012 | DX-managed Tailwind 4.1 and plain local CSS |
 | [0012](0012-library-owned-tailwind.md) | Accepted | Library-owned Tailwind and component CSS modules |
-
 | [0013](0013-rust-ui-facade.md) | Accepted | Immutable Rust UI snapshot and Conctr facade |
+| [0014](0014-workspace-sessions.md) | Proposed | Workspace sessions for local and federated login |
 
 ## Record lifecycle
 

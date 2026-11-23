@@ -3,6 +3,13 @@
 Status: **Proposed requirements**, not a completed security assessment.
 Implement relevant controls with each vertical slice before exposing it.
 
+## Implemented workspace sign-in
+
+Local accounts use Argon2id password hashes. The server issues revocable JWT
+sessions and requires a valid login to read system details.
+The shared UI gates product routes. See [account setup, request checks and
+provider integration](../../crates/conctr-api-dioxus/README.md).
+
 ## Trust model
 
 Treat external messages, imported flows, endpoint URLs, node configuration and

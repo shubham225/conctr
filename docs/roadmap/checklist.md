@@ -60,6 +60,7 @@ implementation. See [current state](current-state.md) for the dated source audit
 - [ ] Environment binding validation and atomic deployment activation.
 - [ ] Authorized replay/cancellation with actor/reason evidence.
 - [ ] Retention/cleanup jobs, bounded queue/admission and health endpoints.
+- [x] Local password sign-in, expiring server-checked sessions and admin-only credential APIs.
 - [ ] Browser/native auth integration and mobile operations scope verified.
 
 ## M5/M6 — Enterprise and scale gates

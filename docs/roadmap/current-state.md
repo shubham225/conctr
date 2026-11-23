@@ -1,5 +1,20 @@
 # Current implementation evidence
 
+Dashboard loads server details from the authenticated `GET /api/v1/system/details` endpoint. The versioned management API replaces the credential demo and is a mountable Axum router in `conctr-api`. See its
+[wire contract](../architecture/api-and-events.md).
+
+**2026-11-23 authentication update.** Product routes require a local account.
+A fresh server prepares a private first-login password for `admin`. The login
+window lets the administrator replace it and enter the workspace. Local web
+startup creates a default `.env` and uses loopback origins and OS-specific user
+storage. First-run setup also handles a missing, explicitly configured account file.
+Signed-in access can be recovered using a server-generated, operator-delivered temporary password.
+The sign-in and first-time setup forms let users show or hide each visible password field.
+The API verifies Conctr JWT sessions. Browser checks cover incorrect passwords, direct links, all eleven
+sidebar destinations, refresh, sign-out and the narrow login layout. HTTP checks
+cover role enforcement, cookie flags, origin rejection and logout revocation.
+[Setup and single-process limits](../../crates/conctr-api-dioxus/README.md).
+
 **2026-11-22 product shell update.** The shared app now opens on Dashboard.
 All eleven destinations are heading-only pages with grouped navigation, a desktop
 border toggle, a compact Conctr mark, a mobile drawer and a theme toggle.
@@ -23,8 +38,7 @@ Baseline audit: **2026-11-15**. Package and asset inventory updated **2026-11-21
   Its reference kit is a fresh copy of `design/`.
 - Shared product App routes and unavailable-service pages remain presentation;
   their imports were migrated to the new facade. Native title-bar injection remains.
-- The integration engine and connectors remain scaffolds. The credential reference
-  directory uses server functions and a file-backed store. Workflow canvas state does not execute, persist or authorize flows.
+- The integration engine and connectors remain scaffolds. Dashboard reads system details over HTTP. Workflow canvas state does not execute, persist or authorize flows.
 - Upstream AutoForm is a shell, not automatic form generation. Rust UI is experimental.
 
 Evidence: [UI source](../../crates/conctr-ui-dioxus/src/lib.rs),
@@ -345,5 +359,4 @@ YAML, TOML and XML. Queue exchanges and the Mapping Studio source sample use it.
 The shared product app includes a credential reference directory at
 `/credentials`. The Dioxus adapter invokes the framework-independent CRUD
 service in `conctr-api`. The service stores name, purpose and vault alias in
-a revision-checked, workspace-local metadata file. Configured deployments use administrator proxy authentication. An unconfigured
-debug launcher on localhost supports local code sign-in. See the [adapter setup](../../crates/conctr-api-dioxus/README.md).
+a revision-checked, workspace-local metadata file. The authentication update above supersedes the earlier proxy and local-code setup.

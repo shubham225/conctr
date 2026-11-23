@@ -1,109 +1,93 @@
-//! This crate contains all shared fullstack server functions.
-use dioxus::prelude::*;
-
-/// Echo the user input on the server.
-#[post("/api/echo")]
-pub async fn echo(input: String) -> Result<String, ServerFnError> {
-    Ok(input)
-}
-
-pub use conctr_api::{Credential, CredentialDraft, Purpose};
-
-/// List credential references in the authorized workspace.
-#[post("/api/credentials/list")]
-pub async fn list_credentials() -> Result<Vec<Credential>, ServerFnError> {
-    dispatch(conctr_api::directory::Operation::List).await
-}
-
-/// Create credential references in the authorized workspace.
-#[post("/api/credentials/create")]
-pub async fn create_credentials(draft: CredentialDraft) -> Result<Vec<Credential>, ServerFnError> {
-    dispatch(conctr_api::directory::Operation::Create(draft)).await
-}
-
-/// Update credential references in the authorized workspace.
-#[post("/api/credentials/update")]
-pub async fn update_credentials(
-    id: u64,
-    revision: u64,
-    draft: CredentialDraft,
-) -> Result<Vec<Credential>, ServerFnError> {
-    dispatch(conctr_api::directory::Operation::Update(
-        id, revision, draft,
-    ))
-    .await
-}
-
-/// Delete credential references in the authorized workspace.
-#[post("/api/credentials/delete")]
-pub async fn delete_credentials(id: u64, revision: u64) -> Result<Vec<Credential>, ServerFnError> {
-    dispatch(conctr_api::directory::Operation::Delete(id, revision)).await
-}
+//! Dioxus HTTP client for the shared Conctr management API.
+use conctr_api::response::{ApiResponse, ProblemDetails};
+use conctr_api::{
+    api_path,
+    session::{FirstPassword, Login},
+};
+pub use conctr_api::{
+    session::{LoginOutcome, SessionInfo},
+    system::SystemDetails,
+};
+use dioxus::{
+    fullstack::{ClientRequest, ClientResponse},
+    prelude::ServerFnError,
+};
+use serde::Serialize;
+use serde::de::DeserializeOwned;
 
 #[cfg(feature = "server")]
-async fn dispatch(op: conctr_api::directory::Operation) -> Result<Vec<Credential>, ServerFnError> {
-    let directory = authorized_directory()?;
-    tokio::task::spawn_blocking(move || {
-        conctr_api::directory::execute(std::path::Path::new(&directory), op)
-    })
-    .await
-    .map_err(|_| ServerFnError::new("Directory unavailable."))?
-    .map_err(|error| match error {
-        conctr_api::directory::DirectoryError::Invalid(message) => response_error(422, message),
-        conctr_api::directory::DirectoryError::Conflict(message) => response_error(409, message),
-        conctr_api::directory::DirectoryError::Unavailable => {
-            response_error(503, "Credential directory unavailable.")
-        }
-    })
+pub use conctr_api::http::{initialize, router};
+
+async fn post(path: &str, body: impl Serialize) -> Result<ClientResponse, ServerFnError> {
+    let response = ClientRequest::new(http::Method::POST, api_path(path), &())
+        .send_json(&body)
+        .await?;
+    checked(response).await
 }
 
-#[cfg(feature = "server")]
-fn response_error(code: u16, message: &str) -> ServerFnError {
-    ServerFnError::ServerError {
+async fn checked(response: ClientResponse) -> Result<ClientResponse, ServerFnError> {
+    let code = response.status().as_u16();
+    if response.status().is_success() {
+        return Ok(response);
+    }
+    let problem: ProblemDetails = response.json().await?;
+    Err(ServerFnError::ServerError {
         code,
-        message: message.into(),
+        message: problem.detail,
         details: None,
-    }
+    })
 }
 
-#[cfg(feature = "server")]
-fn authorized_directory() -> Result<std::path::PathBuf, ServerFnError> {
-    use subtle::ConstantTimeEq;
-    let denied = || response_error(403, "Credential management access required.");
-    #[cfg(debug_assertions)]
-    if local::enabled() {
-        return local::directory();
-    }
-    let expected = std::env::var("CONCTR_CREDENTIAL_ADMIN_TOKEN").map_err(|_| denied())?;
-    let context = dioxus_fullstack_core::FullstackContext::current().ok_or_else(denied)?;
-    let authorized = context
-        .parts_mut()
-        .headers
-        .get("authorization")
-        .and_then(|v| v.to_str().ok())
-        .and_then(|v| v.strip_prefix("Bearer "))
-        .is_some_and(|value| {
-            !expected.is_empty() && bool::from(value.as_bytes().ct_eq(expected.as_bytes()))
-        });
-    if !authorized {
-        return Err(denied());
-    }
-    let directory = std::env::var_os("CONCTR_CREDENTIAL_DIRECTORY")
-        .filter(|v| !v.is_empty())
-        .ok_or_else(|| ServerFnError::new("Configure the workspace credential directory."))?;
-    Ok(directory.into())
+async fn data<T: DeserializeOwned>(path: &str, body: impl Serialize) -> Result<T, ServerFnError> {
+    Ok(post(path, body).await?.json::<ApiResponse<T>>().await?.data)
+}
+/// Exchange a local password for a session or a first-login challenge.
+pub async fn login(username: String, password: String) -> Result<LoginOutcome, ServerFnError> {
+    data("/auth/login", Login { username, password }).await
+}
+/// Redeem the installation invitation and start the admin session.
+pub async fn first_password(
+    username: String,
+    temporary: String,
+    password: String,
+) -> Result<(), ServerFnError> {
+    post(
+        "/auth/first-password",
+        FirstPassword {
+            username: Some(username),
+            temporary,
+            password,
+        },
+    )
+    .await
+    .map(drop)
+}
+/// Look up the current cookie-backed session.
+pub async fn current_session() -> Result<Option<SessionInfo>, ServerFnError> {
+    data("/auth/session", ()).await
+}
+/// Revoke the active session and clear its cookie.
+pub async fn logout() -> Result<(), ServerFnError> {
+    post("/auth/logout", ()).await.map(drop)
+}
+/// Retrieve build details from the signed-in workspace server.
+pub async fn system_details() -> Result<SystemDetails, ServerFnError> {
+    let response = ClientRequest::new(http::Method::GET, api_path("/system/details"), &())
+        .send_empty_body()
+        .await?;
+    Ok(checked(response)
+        .await?
+        .json::<ApiResponse<SystemDetails>>()
+        .await?
+        .data)
 }
 
-#[cfg(all(feature = "server", debug_assertions))]
-mod local;
-
-/// Authenticate a local development browser using the private launch code.
-#[post("/api/credentials/local-session")]
-pub async fn local_session(code: String) -> Result<(), ServerFnError> {
-    #[cfg(debug_assertions)]
-    if local::enabled() {
-        return local::sign_in(&code);
-    }
-    let _ = code;
-    Err(response_error(403, "Local sign-in is disabled."))
+/// Request private temporary credentials from the workspace operator.
+pub async fn forgot_password(username: String) -> Result<(), ServerFnError> {
+    post(
+        "/auth/forgot-password",
+        conctr_api::session::RecoveryRequest { username },
+    )
+    .await
+    .map(drop)
 }

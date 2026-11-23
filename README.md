@@ -101,11 +101,14 @@ Check the workspace:
 cargo check --workspace
 ```
 
-Run the web application:
+Start the fullstack app and open its login window:
 
-```bash
+```sh
 dx serve --package conctr-web-dioxus
 ```
+
+Startup creates a local `.env` with portable defaults. For your first login, use `admin` and the temporary password file named by the
+server. Choose your permanent password in the app. See the [workspace sign-in guide](crates/conctr-api-dioxus/README.md).
 
 ## Architecture Principles
 

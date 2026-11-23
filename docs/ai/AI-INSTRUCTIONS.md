@@ -32,7 +32,7 @@ remain proposals. Do not copy all contracts into every always-loaded file.
 ## Non-obvious project rules
 
 1. A package is not a feature. Most platform crates and the shared app are
-   scaffolds. The echo server function and showcase samples are demonstrations.
+   scaffolds. Showcase samples are demonstrations. The management HTTP router and response models live in `conctr-api`. Keep its Dioxus client thin.
 2. The canonical flow/compiler must not depend on Dioxus, canvas coordinates or
    a UI graph library. Layout and executable semantics are separate documents.
 3. Pin immutable version and binding/operation snapshots in runs. Draft edits,
@@ -57,6 +57,10 @@ remain proposals. Do not copy all contracts into every always-loaded file.
     `ThemeProvider` or `ConctrStyles`. Put component-specific CSS beside its
     wrapper or composition and gallery-only styles in the showcase. Follow the
     [theming guide](../development/theming.md) for shared assets and SSR registration.
+    Keep one-off styling for product pages and library controls in the owning
+    component folder's scoped `style.css`. Reuse shipped Tailwind utilities.
+    Rebuild and inspect the generated bundle for accidental component-only rules
+    as described in the [theming guide](../development/theming.md).
 11. Use actual Cargo names: `conctr-api-dioxus` is the existing Dioxus transport
     package. Do not introduce `conctr-dioxus-api` as a second package to match old prose.
 

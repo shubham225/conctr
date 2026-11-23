@@ -1,18 +1,43 @@
 # API and event contracts
 
-The public API and event contracts below are **Proposed**. The Dioxus adapter
-currently exposes credential reference CRUD and a demo echo function. See the
-[adapter setup](../../crates/conctr-api-dioxus/README.md) for its access and
-storage configuration.
+## Implemented management API
 
-## Boundary
+The server feature of `conctr-api` exposes an Axum router. A host mounts the
+router alongside its frontend. Authentication policy and account provisioning
+belong to `conctr-auth`. The Dioxus client uses the same HTTP contract as other
+clients. Send `X-Request-Client: conctr` on management requests. The built-in
+client sends `dioxus`, which is also accepted. Browser origin checks apply to both.
 
-`conctr-contracts` should contain serializable request/response models and safe
-errors independent of Dioxus or a specific server framework. The generic HTTP
-gateway and optional Dioxus server functions call the same application use cases.
-Transport code maps identity, input and errors; it does not duplicate business rules.
+| Endpoint | Successful response |
+| --- | --- |
+| `POST /api/v1/auth/login` | 200 with `{"data":"SignedIn"}` or `{"data":"SetPassword"}` |
+| `POST /api/v1/auth/forgot-password` | 204 for a recovery request with a username. The operator delivers the private temporary password. |
+| `POST /api/v1/auth/first-password` | 204 with a session cookie and empty body |
+| `POST /api/v1/auth/session` | 200 with a username and remaining lifetime in `data`, or `{"data":null}` |
+| `POST /api/v1/auth/logout` | 204 with an expired cookie and empty body |
+| `GET /api/v1/system/details` | 200 with server build version, operating system and architecture in `data`. Requires a workspace session. |
 
-## Resource sketch
+The root router mounts feature routers under a shared version prefix. Each feature
+registers its own HTTP methods and relative paths. The Rust client uses the same
+`conctr_api::API_VERSION` through `api_path`. Deploy the client and server together
+when migrating from unversioned paths. The credential demo API has been removed.
+
+Success bodies use `application/json`. Optional `meta.page` and `meta.warnings`
+are omitted when empty. Errors use `application/problem+json` with a relative
+problem type URI, stable application code, title, safe detail and matching HTTP
+status. Multiple invalid fields include `errors` with JSON Pointer locations.
+Clients can supply a request ID of 1–128 ASCII letters, digits, periods, hyphens
+or underscores. The server returns the accepted or generated ID in `X-Request-ID`
+and includes it in the request tracing span. Login limits return 429 and
+`Retry-After: 60`. See [Problem Details](https://www.rfc-editor.org/rfc/rfc9457.html)
+and [JSON Pointer](https://www.rfc-editor.org/rfc/rfc6901.html).
+
+This pre-release migration replaces the Dioxus RPC wire format. Deploy the
+client and server together. External clients must unwrap `data`, read Problem
+Details on errors and skip JSON parsing on 204. The demo echo route was removed.
+See the [setup guide](../../crates/conctr-api-dioxus/README.md).
+
+## Proposed resources and events
 
 | Proposed surface | Purpose / rule |
 | --- | --- |
@@ -30,7 +55,10 @@ Transport code maps identity, input and errors; it does not duplicate business r
 Paths are illustrative, not registered endpoints. A workspace path segment is
 validated against authenticated scope; it does not confer access.
 
-Admission returns an accepted run ID only after commit. Define idempotency-key
+Proposed run admission returns 202 after commit, with the queued run in `data`
+and its resource URL in `Location`. Retrieving a failed or partially successful
+run returns 200 with its execution state and record failures inside `data`.
+Define idempotency-key
 scope, expiry and request fingerprint conflict behavior for run admission and
 other externally repeatable mutations. Editing uses optimistic concurrency.
 Errors expose a stable code, safe message, optional node/config path and correlation

@@ -14,4 +14,14 @@ conctr-ui-dioxus  = { workspace = true }
 icons             = { version = "0.19", features = ["dioxus"] }
 
 [features]
-server = ["conctr-ui-dioxus/server", "conctr-api-dioxus/server"]
+native-client = ["dep:dotenvy"]
+server        = ["conctr-ui-dioxus/server", "conctr-api-dioxus/server"]
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+gloo-timers = { version = "0.3", features = ["futures"] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+tokio = { version = "1", features = ["time"] }
+
+[build-dependencies]
+dotenvy = { version = "0.15", optional = true }

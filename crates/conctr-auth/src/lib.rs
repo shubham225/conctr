@@ -1,14 +1,14 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+//! Local account authentication and revocable Conctr API sessions.
+//! HTTP cookies and Dioxus types belong in the transport adapter.
+mod account;
+mod attempts;
+mod authority;
+pub mod local_accounts;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+pub use account::{Account, Principal, Role};
+pub use attempts::LoginAttempts;
+pub use authority::{AuthError, Authority, SESSION_SECONDS};
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+mod recovery;
+mod workspace;
+pub use workspace::{PasswordLogin, WorkspaceAuth};

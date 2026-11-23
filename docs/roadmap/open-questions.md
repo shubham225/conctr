@@ -10,7 +10,7 @@ assumed. Record resolutions in ADRs and update affected contracts/checklists.
 | Q03 | What may native clients do offline? | No offline execution or production credential cache; mobile operations first | Offline authoring needs conflict/key/storage rules; embedded workers are a distinct product |
 | Q04 | Which protocols and patterns are commercially essential first? | HTTP JSON/manual/map; then webhook/schedule/choice | SOAP/XML or broker-first changes payload/acknowledgement and test scope |
 | Q05 | Retention, payload limits and sensitive-data policy? | Bounded previews; separate payload/run/audit retention; choose pilot limits explicitly | Impacts storage, exports, replay windows and capacity |
-| Q06 | Identity provider and bootstrap model? | Scoped bootstrap administration for local development; choose OIDC for pilot | Token/session/CSRF/native-login and group mapping need concrete design |
+| Q06 | Identity provider and bootstrap model? | Local accounts and JWT sessions implemented for a single workspace server | Choose OIDC provider configuration, account linking and group mapping for the pilot |
 | Q07 | Pilot load/SLO/RPO/RTO? | Measure a representative workload and agree targets before release | May justify independent workers, store changes or HA earlier |
 | Q08 | Distribution and third-party reuse policy? | Own implementation, retain Conctr licenses and review dependency terms | Embedding restricted code may change product rights/architecture |
 | Q09 | Need arbitrary scripting, loops or human approval in MVP? | No; bounded declarative nodes and DAG first | Requires sandboxing or new durable state/loop semantics |

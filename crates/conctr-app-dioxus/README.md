@@ -1,11 +1,11 @@
 # Shared Conctr app
 
 The web, desktop and mobile launchers share a responsive sidebar and session theme toggle.
+Dashboard loads server build details from `GET /api/v1/system/details`.
 The header breadcrumb links Workspace to Dashboard and shows the current page.
-On small screens, it shows only the current page. The sidebar footer uses the Studio
-demo identity with a DiceBear avatar. Its menu opens beside the desktop rail or above
-the mobile trigger and links to Profile and Notifications. Log out is disabled while
-the shell has no authenticated session.
+On small screens, it shows only the current page. The sidebar footer identifies the signed-in user and provides Profile,
+Notifications and Log out. The shared sign-in screen protects direct navigation
+to every product page. See [account setup and API security](../conctr-api-dioxus/README.md).
 
 | Navigation group | Destinations |
 | --- | --- |

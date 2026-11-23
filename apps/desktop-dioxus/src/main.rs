@@ -1,24 +1,35 @@
-#[cfg(not(feature = "desktop"))]
+#[cfg(not(any(feature = "desktop", feature = "server")))]
 use conctr_app_dioxus::App;
 #[cfg(feature = "desktop")]
 use dioxus::prelude::*;
 
-fn main() {
-    #[cfg(feature = "desktop")]
-    dioxus::LaunchBuilder::desktop()
-        .with_cfg(
-            dioxus::desktop::Config::new().with_menu(None).with_window(
-                dioxus::desktop::tao::window::WindowBuilder::new()
-                    .with_title("Conctr")
-                    .with_decorations(false)
-                    .with_inner_size(dioxus::desktop::tao::dpi::LogicalSize::new(1200.0, 800.0))
-                    .with_min_inner_size(dioxus::desktop::tao::dpi::LogicalSize::new(480.0, 400.0)),
-            ),
-        )
-        .launch(DesktopApp);
+fn main() -> Result<(), String> {
+    #[cfg(feature = "server")]
+    return conctr_app_dioxus::serve_workspace();
+    #[cfg(not(feature = "server"))]
+    {
+        #[cfg(all(feature = "desktop", not(feature = "server")))]
+        conctr_app_dioxus::configure_native_api()?;
 
-    #[cfg(not(feature = "desktop"))]
-    dioxus::launch(App);
+        #[cfg(feature = "desktop")]
+        dioxus::LaunchBuilder::desktop()
+            .with_cfg(
+                dioxus::desktop::Config::new().with_menu(None).with_window(
+                    dioxus::desktop::tao::window::WindowBuilder::new()
+                        .with_title("Conctr")
+                        .with_decorations(false)
+                        .with_inner_size(dioxus::desktop::tao::dpi::LogicalSize::new(1200.0, 800.0))
+                        .with_min_inner_size(dioxus::desktop::tao::dpi::LogicalSize::new(
+                            480.0, 400.0,
+                        )),
+                ),
+            )
+            .launch(DesktopApp);
+
+        #[cfg(not(any(feature = "desktop", feature = "server")))]
+        dioxus::launch(App);
+        Ok(())
+    }
 }
 
 #[cfg(feature = "desktop")]

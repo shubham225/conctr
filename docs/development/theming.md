@@ -48,6 +48,19 @@ Put component-specific selectors in `src/ui/<family>/style.css` or
 [resizable component](../../crates/conctr-ui-dioxus/src/composed/resizable/component.rs)
 shows both declarations.
 
+Product screens follow the same rule in their owning app crate. For example,
+the [sign-in component stylesheet](../../crates/conctr-app-dioxus/src/sign_in/style.css)
+owns the panel layout, brand artwork positioning and mobile breakpoint. Reuse
+already-shipped utilities for common layout. Put one-off dimensions, gradients
+and responsive treatments in the component's scoped `style.css`. Register it
+with `document::Stylesheet` and keep it out of the Tailwind compiler imports.
+
+For a component-only styling change, rebuild with
+`npm --prefix crates/conctr-ui-dioxus run build:css` and inspect
+`git diff -- crates/conctr-ui-dioxus/assets/styles/tailwind.css`. If the rebuild
+adds a utility solely for that component, move the declaration to its stylesheet
+and rebuild. Generate the bundle through the compiler.
+
 Existing facade skins that target upstream DOM classes or data attributes live
 beside their wrappers and are imported by `assets/styles/tailwind.input.css`.
 The generated bundle ships those rules to consumers. Keep gallery layout and

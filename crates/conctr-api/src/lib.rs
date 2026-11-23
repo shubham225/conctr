@@ -1,27 +1,16 @@
-//! Framework-independent credential reference directory.
-use serde::{Deserialize, Serialize};
+//! Management API contracts and optional HTTP server.
+/// Version segment shared by the management router and its clients.
+pub const API_VERSION: &str = "v1";
 
-/// Intended use of the referenced credential.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
-pub enum Purpose {
-    #[default]
-    InboundApiKey,
-    OutboundOAuth,
-    WebhookSigning,
+/// Absolute management API path for a feature-relative route beginning with a slash.
+pub fn api_path(route: &str) -> String {
+    format!("/api/{API_VERSION}{route}")
 }
-/// Editable metadata. The alias names a credential in an external store.
-#[derive(Clone, Default, Debug, PartialEq, Eq, Serialize, Deserialize)]
-pub struct CredentialDraft {
-    pub name: String,
-    pub purpose: Purpose,
-    pub alias: String,
-}
-/// Directory record with an optimistic concurrency token.
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
-pub struct Credential {
-    pub id: u64,
-    pub revision: u64,
-    pub metadata: CredentialDraft,
-}
-#[cfg(feature = "storage")]
-pub mod directory;
+
+#[cfg(feature = "server")]
+pub mod http;
+pub mod response;
+pub mod session;
+#[cfg(feature = "server")]
+mod settings;
+pub mod system;

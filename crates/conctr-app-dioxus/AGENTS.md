@@ -8,7 +8,10 @@ Read the [root instructions](../../AGENTS.md),
   Launchers supply renderer/OS behavior; do not duplicate pages in `apps/`.
 - Reuse `conctr-ui-dioxus::ui` controls and `composed` workspace components.
   Put reusable component geometry/CSS in the UI library, not an app CSS toolchain.
-- Product destinations currently contain page headings.
+- Keep product-page-specific styling in `src/<component>/style.css` beside its
+  Rust module. Use the sign-in component as the CSS module and stylesheet
+  registration example. Check the rebuilt shared Tailwind bundle for one-off utilities.
+- Dashboard loads authenticated system details. Other product destinations contain page headings.
 - Keep future executable flow contracts independent of Dioxus and layout state.
   Label local checks/previews accurately; never turn a simulated run into a claim
   of backend support. Credentials are symbolic references, never fixture secrets.
