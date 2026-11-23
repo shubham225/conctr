@@ -24,8 +24,8 @@
 body:has(.cn-sidebar-drawer[open]) { overflow: hidden; }
 /* Shadcn-style sidebar structure, expressed in Conctr tokens. */
 .cn-sidebar { flex-shrink:0; align-self:stretch; min-width:0; }
-.cn-sidebar-desktop { display:flex; flex-direction:column; width:240px; height:100%; min-height:480px; border-right:1px solid var(--cn-border); background:var(--cn-sunken); }
-.cn-sidebar-head { display:flex; align-items:center; justify-content:space-between; gap:var(--cn-space-2); min-height:64px; padding:var(--cn-space-3); }
+.cn-sidebar-desktop { display:flex; flex-direction:column; width:240px; height:100%; min-height:480px; border-right:1px solid var(--cn-border); background:var(--cn-surface); }
+.cn-sidebar-head { display:flex; align-items:center; justify-content:space-between; gap:var(--cn-space-2); min-height:64px; padding:20px 16px 8px; }
 .cn-sidebar-brand { min-width:0; overflow:hidden; }
 .cn-sidebar-toggle, .cn-sidebar-mobile-trigger { display:grid; place-items:center; flex-shrink:0; width:32px; height:32px; border-radius:var(--cn-radius-sm); color:var(--cn-text-muted); cursor:pointer; }
 .cn-sidebar-toggle:hover, .cn-sidebar-mobile-trigger:hover { background:var(--cn-primary-soft); color:var(--cn-primary); }
@@ -57,3 +57,11 @@ body:has(.cn-sidebar-drawer[open]) { overflow: hidden; }
 .cn-sidebar-provider { min-width:0; }
 .cn-sidebar-toggle { width:40px; height:40px; }
 .cn-sidebar-mobile-trigger { width:44px; height:44px; }
+
+.cn-sidebar-desktop { position:relative; min-height:0; }
+.cn-sidebar-provider:has(.cn-sidebar-border-trigger) .cn-sidebar-desktop-trigger { display:none; }
+.cn-sidebar-toggle.cn-sidebar-border-trigger {
+  position:absolute; top:64px; right:-1px; transform:translate(50%, -50%); z-index:1;
+  width:26px; height:26px; border:1px solid var(--cn-border); border-radius:50%;
+  background:var(--cn-surface);
+}

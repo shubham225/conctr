@@ -1,48 +1,20 @@
 # Shared Conctr app
 
-Product routes and presentation state shared by web, desktop and mobile launchers.
+The web, desktop and mobile launchers share a responsive sidebar and session theme toggle.
+The header breadcrumb links Workspace to Dashboard and shows the current page.
+On small screens, it shows only the current page. The sidebar footer uses the Studio
+demo identity with a DiceBear avatar. Its menu opens beside the desktop rail or above
+the mobile trigger and links to Profile and Notifications. Log out is disabled while
+the shell has no authenticated session.
 
-| Route | Current behavior |
+| Navigation group | Destinations |
 | --- | --- |
-| `/` | Connections placeholder; services unavailable |
-| `/mappings` | Local request/response drafts, field actions, transforms configuration and undo/redo |
-| `/pipelines` | Local workflow canvas, step library, editable inspector and branch labels |
-| `/queues` | Sample queue counts, status-filtered history, four exchange payloads and local pause/resume |
-| `/runs` | Run-history placeholder; execution unavailable |
-| `/credentials` | Persistent reference metadata CRUD through [authorized server functions](../conctr-api-dioxus/README.md) |
-| `/settings` | Session appearance guidance; service settings unavailable |
+| Workspace | Dashboard (`/`) |
+| Connectivity | Credentials (`/credentials`), Connections (`/connections`), Endpoints (`/endpoints`) |
+| Message Transformation | Field Mappings (`/mappings`), Transformers (`/transformers`) |
+| Channels & Routing | Channels/Queues (`/queues`), Workflow Pipeline (`/pipelines`) |
+| Operations | History (`/runs`) |
+| Administration | Settings (`/settings`), Help (`/help`) |
 
-Mapping drafts and pipeline state last for the mounted page session. No persistence,
-transform evaluation, external requests, credential binding or deployment is wired.
-Reusable controls and workspace frames live in `conctr-ui-dioxus`; its Tailwind
-compiler scans this crate. Do not add app Tailwind configs or generated styles.
-
-## Verification
-
-From the repository root:
-
-```sh
-cargo check --workspace
-cargo test -p conctr-app-dioxus -p conctr-ui-dioxus --lib --tests
-cargo clippy -p conctr-app-dioxus -p conctr-ui-dioxus --all-targets -- -D warnings
-cargo fmt --all --check
-```
-
-Serve the product app and start Chrome with a dedicated temporary profile:
-
-```sh
-dx serve --package conctr-web-dioxus --platform web --port 8092 --open false
-google-chrome --remote-debugging-port=9225 --user-data-dir=/tmp/conctr-browser-checks about:blank
-```
-
-With Node 22+, run scripts sequentially against those actual ports:
-
-```sh
-node crates/conctr-app-dioxus/scripts/check-mapping-studio-browser.mjs http://127.0.0.1:8092 http://127.0.0.1:9225
-node crates/conctr-app-dioxus/scripts/check-mapping-panels-browser.mjs http://127.0.0.1:8092 http://127.0.0.1:9225
-node crates/conctr-app-dioxus/scripts/check-mapping-dialog-browser.mjs http://127.0.0.1:8092 http://127.0.0.1:9225
-node crates/conctr-app-dioxus/scripts/check-pipeline-studio-browser.mjs http://127.0.0.1:8092 http://127.0.0.1:9225
-```
-
-Scripts exercise local browser behavior; they do not verify runtime integrations
-or native SDK builds. See [current evidence](../../docs/roadmap/current-state.md).
+The [pre-shell archive](../../backups/conctr-app-dioxus-before-shell.tar.gz) contains
+the previous app and its studio browser scripts. Those scripts target the earlier pages.

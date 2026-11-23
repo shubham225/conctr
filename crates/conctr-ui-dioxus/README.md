@@ -102,7 +102,9 @@ remain outside the vendored registry.
 `ui::sidebar::{SidebarProvider, Sidebar, SidebarTrigger, SidebarGroup, SidebarItem}`
 provides grouped navigation with a 56 px desktop icon rail. Wrap Sidebar and main
 content together in SidebarProvider, and place SidebarTrigger in the main-content
-header. Below 768 px, that trigger opens a native modal drawer supporting Escape,
+header. Set `border_trigger: true` on Sidebar to place its desktop toggle on the
+border. Supply a compact logo through `collapsed_header` for the icon rail.
+Below 768 px, that trigger opens a native modal drawer supporting Escape,
 contained focus and focus restoration. Providers own independent state. The
 [gallery example](../../apps/conctr-design-kit/src/examples/sidebar.rs) shows the
 layout and disabled items. Navigation visibility is not authorization.

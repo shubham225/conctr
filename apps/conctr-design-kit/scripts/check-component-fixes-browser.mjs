@@ -73,11 +73,13 @@ await check('disabled tag input also disables removal', `[...document.querySelec
 await check('showcase uses a simple scrollable component explorer', `!document.querySelector('.cn-gallery-sidebar') && !document.querySelector('.cn-sidebar-provider') && !!document.querySelector('.cn-component-explorer') && getComputedStyle(document.querySelector('.cn-component-explorer')).overflowY==='auto'`);
 await check('showcase has its new name', `document.title==='Conctr Design Kit' && document.querySelector('header').textContent.includes('Conctr Design Kit')`);
 await navigate('/components/sidebar','main .cn-sidebar-provider[data-ready]');
-await check('sidebar desktop trigger lives in main content', `!!document.querySelector('main section .cn-sidebar-desktop-trigger') && !document.querySelector('main aside .cn-sidebar-desktop-trigger')`);
-await evaluate(`document.querySelector('main .cn-sidebar-desktop-trigger').click()`);await delay(150);
-await check('external trigger collapses sidebar to icon rail', `document.querySelector('main .cn-sidebar-desktop').getBoundingClientRect().width===56`);
-await evaluate(`document.querySelector('main .cn-sidebar-desktop-trigger').click()`);await delay(150);
-await check('external trigger expands sidebar labels', `document.querySelector('main .cn-sidebar-desktop').getBoundingClientRect().width===240`);
+await check('desktop trigger straddles the sidebar border', `Math.abs(document.querySelector('main .cn-sidebar-border-trigger').getBoundingClientRect().x + document.querySelector('main .cn-sidebar-border-trigger').offsetWidth / 2 - document.querySelector('main .cn-sidebar-desktop').getBoundingClientRect().right) <= 1`);
+await evaluate(`document.querySelector('main .cn-sidebar-border-trigger').click()`);await delay(150);
+await check('collapsed rail shows the compact Conctr logo and expand chevron', `document.querySelector('main .cn-sidebar-head > img[alt="Conctr"]').getBoundingClientRect().width===32 && !!document.querySelector('main .cn-sidebar-border-trigger [data-name="ChevronRight"]')`);
+await check('border trigger collapses sidebar to icon rail', `document.querySelector('main .cn-sidebar-desktop').getBoundingClientRect().width===56`);
+await evaluate(`document.querySelector('main .cn-sidebar-border-trigger').click()`);await delay(150);
+await check('expanded sidebar shows the collapse chevron', `!!document.querySelector('main .cn-sidebar-border-trigger [data-name="ChevronLeft"]')`);
+await check('border trigger expands sidebar labels', `document.querySelector('main .cn-sidebar-desktop').getBoundingClientRect().width===240`);
 await call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
 await evaluate(`document.querySelector('main [data-sidebar-trigger]').focus();document.querySelector('main [data-sidebar-trigger]').click()`);await delay(100);
 await check('mobile sidebar contains focus', `document.querySelector('main .cn-sidebar-drawer').matches(':modal') && document.querySelector('main .cn-sidebar-drawer').contains(document.activeElement)`);

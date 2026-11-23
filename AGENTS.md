@@ -2,8 +2,8 @@
 
 Conctr is an enterprise integration platform inspired by Apache Camel's integration
 patterns and n8n's visual authoring. Its platform core is independent of UI
-frameworks; frontends are replaceable adapters. Most backend packages are scaffolds; the shared product app includes local
-mapping and pipeline authoring previews. A package name or showcase example is not a working feature.
+frameworks; frontends are replaceable adapters. Most backend packages are scaffolds; the shared product app provides navigation and
+heading-only pages. A package name or showcase example is not a working feature.
 
 ## Start here
 
@@ -40,7 +40,7 @@ mapping and pipeline authoring previews. A package name or showcase example is n
 | `conctr-api` | Server composition root; currently under `crates/conctr-api` |
 | `conctr-api-dioxus` | Dioxus-specific server-function adapter; this is the actual Cargo name |
 | `conctr-ui-dioxus` | Reusable layout primitives, UI controls and generic compositions |
-| `conctr-app-dioxus` | Shared product App, routes, pages and presentation state; local authoring previews |
+| `conctr-app-dioxus` | Shared product App, routes, pages and presentation state |
 
 These are ownership boundaries, not claims of implementation. Add proposed crates
 only when the selected feature needs their boundary. Prefer focused modules first.
@@ -123,6 +123,20 @@ those handles in application UI and include both editions in the showcase
 icon library. Use monochrome for themed controls and color for brand artwork.
 Verify the icon against both light and dark backgrounds.
 
+## Local verification on memory-constrained workstations
+
+- Start with the affected package and the smallest check that exercises the change.
+  Run memory-intensive steps sequentially. On this 14 GiB workstation, start Rust
+  builds with `CARGO_BUILD_JOBS=1`, including builds launched by `dx`.
+- Reuse a healthy local server when possible. Run one Dioxus server and one
+  dedicated verification browser at a time. Stop processes started for the task
+  after verification or before switching apps, including failed server attempts.
+  Preserve user-owned development sessions.
+- If the desktop stalls or swap use grows while available memory falls, stop the
+  agent-owned workload and inspect `free -h` and `/proc/pressure/memory` before
+  retrying. After a restart, inspect the previous boot journal. Report deferred
+  browser checks when rebuilding would put the session under pressure again.
+
 ## Verification and documentation
 
 Test business logic in its owning crate and external boundaries with deterministic
@@ -146,8 +160,8 @@ node apps/conctr-design-kit/scripts/check-browser.mjs http://127.0.0.1:8080 http
 
 Browser scripts require Node 22+ and Chrome started with
 `--remote-debugging-port=9225`. Use the actual server URL/port. For product UI,
-serve `conctr-web-dioxus` and use the focused scripts documented in
-[the app README](crates/conctr-app-dioxus/README.md). Product launchers are `conctr-web-dioxus`,
+serve `conctr-web-dioxus` and verify navigation against
+[the app route inventory](crates/conctr-app-dioxus/README.md). Product launchers are `conctr-web-dioxus`,
 `conctr-desktop-dioxus` and `conctr-mobile-dioxus`. Default workspace checks do not
 prove native SDK builds, browser geometry or external integrations work.
 

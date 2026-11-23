@@ -1,5 +1,12 @@
 # Current implementation evidence
 
+**2026-11-22 product shell update.** The shared app now opens on Dashboard.
+All eleven destinations are heading-only pages with grouped navigation, a desktop
+border toggle, a compact Conctr mark, a mobile drawer and a theme toggle.
+The mapping, pipeline, queue and credential screens described in the earlier
+entries below are preserved in the pre-shell backup. See the
+[active route inventory](../../crates/conctr-app-dioxus/README.md).
+
 Baseline audit: **2026-11-15**. Package and asset inventory updated **2026-11-21**.
 
 - `conctr-ui-dioxus` uses 86 unmodified Rust UI

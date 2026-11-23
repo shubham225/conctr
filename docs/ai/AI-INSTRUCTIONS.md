@@ -84,8 +84,8 @@ Never invent supported protocols, customers, performance results or certificatio
 
 ## Authoring implementation pointers
 
-The app crate owns local `/mappings` and `/pipelines` pages and draft state.
+The app crate owns the heading-only `/mappings` and `/pipelines` routes.
 The UI crate owns reusable mapping/workflow workspace frames and Rust resizable
-controls. These previews do not establish backend execution or persistence.
+controls.
 See the app's scoped [instructions](../../crates/conctr-app-dioxus/AGENTS.md) and
-[verification commands](../../crates/conctr-app-dioxus/README.md).
+[route inventory](../../crates/conctr-app-dioxus/README.md).

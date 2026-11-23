@@ -8,6 +8,8 @@ pub fn SidebarDemo() -> Element {
         SidebarProvider { class: "flex min-h-[480px] flex-col overflow-hidden rounded-lg border border-border bg-background md:flex-row",
             Sidebar {
                 label: "Example workspace",
+                border_trigger: true,
+                collapsed_header: rsx! { img { src: images::HUB, alt: "Conctr", width: 32, height: 32 } },
                 header: rsx! {
                     img {
                         class: "cn-sidebar-logo-light",

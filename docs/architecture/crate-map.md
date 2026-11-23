@@ -18,7 +18,7 @@ Do not add all planned packages in one change.
 | `conctr-api` — `crates/conctr-api` | Starter binary and credential reference types with optional file-backed directory operations | Server composition root; config validation, wiring, lifecycle and health; later move directory to `apps/conctr-api` without changing package name |
 | `conctr-api-dioxus` — `crates/conctr-api-dioxus` | Echo and credential directory server functions | Optional Dioxus transport adapter over the same authorized application services; generic contracts remain independent of Dioxus |
 | `conctr-ui-dioxus` — `crates/conctr-ui-dioxus` | Implemented design-system components and tests | Reusable Rust UI snapshot, ui facade and composed components; no product pages, service calls or business rules |
-| `conctr-app-dioxus` — `crates/conctr-app-dioxus` | Shared product shell, mapping and pipeline previews, queue inspection and credential directory | Shared root App, routes and presentation state |
+| `conctr-app-dioxus` — `crates/conctr-app-dioxus` | Shared product shell with grouped navigation and heading-only destinations | Shared root App, routes and presentation state |
 | `conctr-web-dioxus` — `apps/web-dioxus` | Shared App launcher | Web/server launch and renderer configuration; share product pages through app crate |
 | `conctr-desktop-dioxus` — `apps/desktop-dioxus` | Shared App + custom window controls | Native bootstrap, window/menu/deep-link adapters; no duplicated product app |
 | `conctr-mobile-dioxus` — `apps/mobile-dioxus` | Shared App launcher | Mobile bootstrap and native capability adapters; shared responsive product UI |

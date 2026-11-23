@@ -71,20 +71,35 @@ pub fn SidebarTrigger() -> Element {
 /// Use inside SidebarProvider alongside a main-content SidebarTrigger.
 #[component]
 pub fn Sidebar(
+    #[props(default)] border_trigger: bool,
+    #[props(default = VNode::empty())] collapsed_header: Element,
     #[props(default = "Main navigation".into())] label: String,
     #[props(default = VNode::empty())] header: Element,
     #[props(default = VNode::empty())] footer: Element,
     #[props(into, optional)] class: Option<String>,
     children: Element,
 ) -> Element {
-    let SidebarState { collapsed } = use_context::<SidebarState>();
+    let SidebarState { mut collapsed } = use_context::<SidebarState>();
     rsx! {
         aside {
             class: tw_merge::tw_merge!("cn-sidebar", class.as_deref().unwrap_or("")),
             "data-collapsed": collapsed().to_string(),
             div { class: "cn-sidebar-desktop",
+                if border_trigger {
+                    button {
+                        class: "cn-sidebar-toggle cn-sidebar-border-trigger",
+                        r#type: "button",
+                        title: if collapsed() { "Expand sidebar" } else { "Collapse sidebar" },
+                        "aria-label": if collapsed() { "Expand sidebar" } else { "Collapse sidebar" },
+                        "aria-expanded": (!collapsed()).to_string(),
+                        onclick: move |_| collapsed.toggle(),
+                        if collapsed() { icons::ChevronRight { class: "size-4" } }
+                        else { icons::ChevronLeft { class: "size-4" } }
+                    }
+                }
                 div { class: "cn-sidebar-head",
                     div { class: "cn-sidebar-brand", {header.clone()} }
+                    if collapsed() { {collapsed_header} }
                 }
                 nav { class: "cn-sidebar-content", "aria-label": label.clone(), {children.clone()} }
                 div { class: "cn-sidebar-footer", {footer.clone()} }
