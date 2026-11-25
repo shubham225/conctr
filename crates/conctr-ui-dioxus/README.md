@@ -25,49 +25,17 @@ fn App() -> Element {
 }
 ```
 
-Each base family has a Conctr-owned wrapper module under `src/ui/`, including
-families that forward upstream defaults. All 86 upstream UI modules are exposed
-through this facade. Button, Input, Textarea and Card add Conctr defaults.
-InputOTP uses native editing over upstream slots because the upstream root references
-a missing fixed-path JavaScript file. No app script setup is required.
-`BrandThemeToggle` is controlled by the application. The upstream ThemeToggle
-remains available for upstream demos; it manages the HTML class and storage itself.
-Prefer the controlled Conctr switch with scoped ThemeProvider.
+## Component and style ownership
 
-Conctr colors, fonts, logos and icons come from `design/`. Both palettes use
-semantic CSS variables. Button heights are 32/40/48 px and default control radius
-is 10 px. Caller Tailwind classes merge after wrapper defaults. Applications load
-bundled styles through ThemeProvider and need no Node or Tailwind setup.
+Base controls live in `src/ui/`. Put product-independent combinations in
+`src/composed/`. The library ships fonts, semantic theme tokens and compiled
+Tailwind CSS. Mount `ThemeProvider` at the application boundary and use the
+controlled `BrandThemeToggle` for product theme state.
 
-`src/rust-ui/` contains unchanged component, hook, demo and workflow files.
-`src/ui/` holds facade adapters; `src/composed/` holds Conctr combinations.
-Import `ui::input_group` for individual input-group controls, or use
-`composed::InputGroup` for a field with prefix and suffix slots. Keep custom CSS
-next to its component, as in `src/composed/resizable/`. Existing upstream skins
-are compiled from adjacent stylesheets into the shipped utility bundle.
-No customizations go into the upstream snapshot. See [provenance](UPSTREAM.md).
-
-## Library development
-
-Run `npm ci`, then `npm run build:css`. Cargo refreshes CSS when the local compiler
-is installed. Commit `assets/styles/tailwind.css` so consumers need no Node.
-The library compiler scans its own source, shell utilities and the shared app/gallery
-consumer paths declared in `tailwind.input.css`. Keep additional scan paths here;
-consuming apps do not own a Tailwind toolchain.
-Run `python3 scripts/check-upstream.py` to verify vendored source integrity.
-
-## Coverage and limits
-
-The fresh [showcase](../../apps/conctr-design-kit/README.md) includes 78 primary
-component demos and eight workflow examples. This does not establish accessibility,
-native-platform or production readiness for every upstream module. Upstream marks
-Rust UI experimental. Dioxus AutoForm is only a form shell; it has no derive-driven
-form generation. Browser-specific upstream controls may use JavaScript eval.
-Workflow nodes, edges and canvas history are presentation state, with no executable
-flow contract, persistence, authorization or connected runtime.
-
-See [adoption assessment](../../docs/development/rust-ui-adoption.md) for licensing,
-theming and the verification record.
+Use the [theming guide](../../docs/development/theming.md) when changing utilities
+or component CSS. For changes to the vendored base controls, see the
+[upstream record](UPSTREAM.md). Exercise changes through the
+[interactive gallery](../../apps/conctr-design-kit/README.md).
 
 ## Brand compositions
 
@@ -91,13 +59,6 @@ Escape dismissal. These are single-date controls, not range or timezone editors.
 reports changes, supports Enter/comma, Backspace and removal, and rejects empty
 or duplicate tags. `InputGroup` composes optional prefix/suffix slots with an
 application-supplied input. All five have Composed showcase entries.
-
-Checkbox now supports omitted `checked` for local state, or a supplied value with
-callbacks for controlled state. The theme switch uses accessible sun/moon icons.
-ToastTrigger renders semantic Alert content; the connection summary's amber
-packet moves along its links and stops with reduced motion. Table skins exclude
-calendar day geometry; styling adapters for Command, phone inputs, menus and tabs
-remain outside the vendored registry.
 
 `ui::sidebar::{SidebarProvider, Sidebar, SidebarTrigger, SidebarGroup, SidebarItem}`
 provides grouped navigation with a 56 px desktop icon rail. Wrap Sidebar and main
@@ -138,7 +99,7 @@ review and versioned YAML download. The classic FieldMappingEditor remains avail
 - [Resizable controls](src/composed/resizable/README.md): Rust pointer/keyboard resizing and panel modes.
 
 Component-specific geometry uses adjacent CSS modules and explicit per-document
-stylesheet registration. Product routes and drafts live in the
+stylesheet registration. The workspace components accept caller-owned state. Product routes live in the
 [shared app](../conctr-app-dioxus/README.md).
 
 `ui::code_block::CodeBlock` renders read-only snippets. Pass a `CodeLanguage`

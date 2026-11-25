@@ -1,6 +1,8 @@
 # Conctr brand kit
 
-Brand: **Conctr**, where systems meet. Logo concept: hex orbit.
+This kit owns Conctr’s logos, fonts, color tokens and HTML component references.
+The Dioxus UI library packages these assets for product use. The gallery carries
+a reference copy. Make brand changes in this kit first.
 
 ## Start here
 - **Designers and marketers:** `docs/BRAND-GUIDELINES.md`, then `logo/` and `colors/palette-preview.png`.
@@ -52,4 +54,3 @@ assets/
 - Move `fonts/`, `colors/` and `ui-kit/` together: the CSS uses relative paths between them.
 - Using Tailwind v4? Load `ui-kit/conctr-ui.layered.css` instead of `conctr-ui.css`. Unlayered CSS beats Tailwind's layered utilities, so with the plain file `p-4` or `rounded-none` on a component would be ignored (tested with the Tailwind CLI).
 - The color tokens were contrast-checked for WCAG AA. See the table in the guidelines.
-- This kit is a design starting point. It is not a trademark clearance. Check the name "Conctr" for availability before you commit to it publicly.

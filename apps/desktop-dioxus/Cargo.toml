@@ -8,10 +8,16 @@ publish    = { workspace = true }
 repository = { workspace = true }
 
 [dependencies]
-dioxus            = { workspace = true, features = ["router", "fullstack"] }
 conctr-app-dioxus = { workspace = true }
+dioxus            = { workspace = true, features = ["router", "fullstack"] }
+icons             = { version = "0.19", features = ["dioxus"] }
+image             = { version = "0.25", default-features = false, features = ["png"], optional = true }
 
 [features]
 default = []
-desktop = ["dioxus/desktop", "conctr-app-dioxus/native-client"]
+desktop = [
+    "dioxus/desktop",
+    "conctr-app-dioxus/native-client",
+    "dep:image",
+]
 server  = ["dioxus/server", "conctr-app-dioxus/server"]

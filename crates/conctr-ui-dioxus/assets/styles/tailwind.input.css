@@ -27,4 +27,5 @@
 
 /* Consumer sources are scanned here; apps never own a Tailwind build. */
 @source "../../../../apps/conctr-design-kit/src";
+@source "../../../../apps/desktop-dioxus/src";
 @source "../../../conctr-app-dioxus/src";

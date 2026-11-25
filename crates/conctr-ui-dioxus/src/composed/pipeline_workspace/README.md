@@ -10,6 +10,6 @@ context menus. Fit measures the available space using Dioxus `MountedData`.
 The inspector supports pointer/keyboard resizing and minimize/maximize/restore;
 narrow screens stack the library, canvas and inspector.
 
-This is presentation infrastructure. Node configuration, validation, persistence,
-credentials and execution belong to app/platform owners. The `/pipelines` page
-in `conctr-app-dioxus` demonstrates local authoring without external requests.
+The caller owns step configuration, validation and persistence. The component
+renders and edits canvas state. The current product route at `/pipelines`
+displays a heading. See the [route inventory](../../../../conctr-app-dioxus/README.md).

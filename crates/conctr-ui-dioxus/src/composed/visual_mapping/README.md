@@ -42,45 +42,29 @@ does not establish requiredness, constraints or production schema compatibility.
 
 ## Interaction and export
 
-The editor has a ribbon toolbar and a dotted, two-column workspace inspired by
-WorkflowBuilder. Select a card to enable Edit, Ignore/restore, Remove and Move
-up/down. New source/target opens a native modal (focus trapping, Escape dismissal,
-required fields and duplicate-path checks). There are no per-node popup menus.
-Renaming a path updates attached link endpoints while preserving pipelines.
+Rows show the field label, path, type and connection port. Filter by text or
+show unmapped fields. Auto-map links unused targets to source fields with
+matching normalized labels and types. Drag a source port to a target, or
+activate the two ports in sequence. One source can feed multiple targets.
+Replacing a target's source retains its link ID and transform pipeline.
 
-Drag a card or grip to reorder within its source/target column. Ordering is stored
-in `MappingSchema.fields` and changes presentation only. Arbitrary x/y positioning
-is deliberately constrained to these ordered columns. Drag a source **+ handle**
-to a target card to connect. Alternatively click source/target handles, or choose
-New link and then click source/target cards. Keyboard users can activate the same
-buttons and Move up/down actions. Touch drags start from the grip or link handle.
-Select a wire or connection chip to inspect and edit its pipeline. Each target
-has one inbound link; replacing its source keeps its ID and pipeline. Sources
-may fan out to multiple targets.
+With schema editing enabled, use a row's action menu to edit, ignore, restore
+or delete the field. Drag a row to reorder its schema. Select a connection to
+inspect its transforms. The resizable payload panels can show caller-supplied
+previews.
 
-`read_only` disables field editing and removal but allows connection inspection
-and download. A collapsed read-only YAML panel always mirrors the current draft.
-`mapping_yaml` validates references, IDs and unique targets before export. It
-emits a versioned `conctr.dev/v1alpha1` document containing path languages,
-namespaces, links and optional transform IDs, with no sample values. Strings use
-JSON-compatible quoted YAML scalars. Download uses the same serialization as preview.
-
-This is a Conctr mapping configuration, **not an executable Apache Camel route**.
-Camel YAML DSL requires route/EIP definitions and a supported expression language;
-see the [official DSL](https://camel.apache.org/components/4.18.x/others/yaml-dsl.html).
-An application/runtime adapter owns type compatibility, transform evaluation,
-route generation, validation and persistence. No network requests run here.
-
-See [caller usage and import demo](../demos/visual_mapping.rs). It shows editable
-and read-only modes, JSON sample import and normalized XML-to-JSON mapping.
+Standalone mode previews and downloads the mapping as YAML. Studio mode hides
+those export controls. Read-only mode supports inspection. The host owns
+validation of type compatibility, persistence and transform execution. See
+the [caller and import example](../demos/visual_mapping.rs) and
+[YAML serializer](export.rs).
 
 ## Transformer pipelines and field editing
 
 The connection inspector uses a searchable card picker rather than a long select.
 Pass `transformers: Vec<TransformerDefinition>` to extend the catalog (stable unique
 ID, label, category, description). Search matches all presentation fields. Each
-selection appends a step to `FieldLink.transforms`; steps execute in their listed
-order in the caller's future runtime adapter. The UI can move a step earlier or
+selection appends a step to the ordered `FieldLink.transforms` list. The UI can move a step earlier or
 remove it. Repeated transformers are allowed. Legacy `FieldLink.transform` is
 retained on load as the first step; editing normalizes it into the ordered list.
 YAML exports `transforms: [{type: ...}]` in that same order. These IDs are configuration,
@@ -102,7 +86,7 @@ decimal, boolean, null, array, object, date, time, datetime, binary and mixed.
 `MappingDraft` is serializable for host-owned persistence. Stable unique paths
 identify nodes; labels are presentation. `FieldEdit` handles Add, Update, Move,
 Remove and ToggleIgnored. Ignoring/removing prunes links atomically; restoring
-never recreates them. Ignored fields stay selectable to restore from the toolbar.
+never recreates them. Ignored fields stay selectable for restoration through their action menu.
 
 The implementation is split into `editor.rs` (controlled orchestration),
 `fields.rs` (cards/ports), `node_manager.rs` (modal form), `drag.rs` (scoped browser

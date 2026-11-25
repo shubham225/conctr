@@ -1,30 +1,16 @@
-# Development
+# Conctr mobile launcher
 
-The mobile crate defines the entrypoint for the mobile app along with any assets, components and dependencies that are specific to mobile builds. The mobile crate starts out something like this:
+Mobile is an existing workspace target scheduled for future removal. Current
+product development targets web and desktop. The [mobile entry point](src/main.rs)
+configures the native API client and launches the same
+[product app](../../crates/conctr-app-dioxus/README.md).
 
-```
-mobile/
-├─ assets/ # Assets used by the mobile app - Any platform specific assets should go in this folder
-├─ src/
-│  ├─ main.rs # The entrypoint for the mobile app.It also defines the routes for the mobile platform
-│  ├─ views/ # The views each route will render in the mobile version of the app
-│  │  ├─ mod.rs # Defines the module for the views route and re-exports the components for each route
-│  │  ├─ blog.rs # The component that will render at the /blog/:id route
-│  │  ├─ home.rs # The component that will render at the / route
-├─ Cargo.toml # The mobile crate's Cargo.toml - This should include all mobile specific dependencies
+For maintenance on an Android development machine with its SDK configured, run
+from the repository root.
+
+```sh
+CARGO_BUILD_JOBS=1 dx serve --package conctr-mobile-dioxus --platform android
 ```
 
-## Dependencies
-Since you have fullstack enabled, the mobile crate will be built two times:
-1. Once for the server build with the `server` feature enabled
-2. Once for the client build with the `mobile` feature enabled
-
-You should make all mobile specific dependencies optional and only enabled in the `mobile` feature. This will ensure that the server builds don't pull in mobile specific dependencies which cuts down on build times significantly.
-
-### Serving Your Mobile App
-
-Mobile platforms are shared in a single crate. To serve mobile, you need to explicitly set your target device to `android` or `ios`:
-
-```bash
-dx serve --platform android
-```
+Packaged clients use the HTTPS API origin described in the
+[native client settings](../../crates/conctr-api-dioxus/README.md).

@@ -1,18 +1,11 @@
-# Application instructions
+# Application packages
 
-Applies under `apps/` in addition to the root [AGENTS.md](../AGENTS.md).
-Read [presentation ownership](../docs/architecture/dioxus-presentation.md) and the
-[crate map](../docs/architecture/crate-map.md) before changing application ownership.
-
-- Web, desktop and mobile packages are launchers/adapters. Shared product routes,
-  pages, feature state and API integration belong in `crates/conctr-app-dioxus`.
-  That crate is currently a scaffold; inspect source before assuming an App exists.
-- Put actual OS capabilities in platform adapters; use responsive layouts for screen
-  width differences. Do not create three copies of the product UI or business rules.
-- `conctr-design-kit` is the interactive component showcase. Keep examples using
-  the shared library and maintain catalog/source coverage when components change.
-  Demo state and protocol artwork do not imply backend or connector support.
-- Keep shared styles/assets in their owning library; app assets hold only app-specific
-  presentation. Follow the [theming contract](../docs/development/theming.md).
-- Keep renderer/server features explicit. Check SSR/hydration and browser-only work
-  where applicable. Validate the renderer actually affected and state any SDK limits.
+- Keep launcher entry points thin. Put OS-specific behavior in the launcher
+  that needs it. Desktop owns its native title bar. Shared product routes,
+  pages and session UI belong in the [product app](../crates/conctr-app-dioxus/README.md).
+- Keep renderer and server features explicit. Check the affected renderer and,
+  for web changes, the transition from server markup to the interactive page.
+  Web and desktop are the active targets. Mobile is pending removal.
+- In the design kit, use library controls, local example state and the gallery's
+  own demo styles. Update the catalog and usage example when adding a control.
+  Use the [theming guide](../docs/development/theming.md) for shared assets and CSS.

@@ -1,30 +1,17 @@
-# Development
+# Conctr desktop launcher
 
-The desktop crate defines the entrypoint for the desktop app along with any assets, components and dependencies that are specific to desktop builds. The desktop crate starts out something like this:
+The desktop launcher supplies a native window, Conctr icon and custom title bar
+to the shared product app. Window dragging, minimizing, maximizing and closing
+are handled in the [desktop entry point](src/main.rs). Routes and session UI
+live in the [shared app](../../crates/conctr-app-dioxus/README.md).
 
-```
-desktop/
-├─ assets/ # Assets used by the desktop app - Any platform specific assets should go in this folder
-├─ src/
-│  ├─ main.rs # The entrypoint for the desktop app.It also defines the routes for the desktop platform
-│  ├─ views/ # The views each route will render in the desktop version of the app
-│  │  ├─ mod.rs # Defines the module for the views route and re-exports the components for each route
-│  │  ├─ blog.rs # The component that will render at the /blog/:id route
-│  │  ├─ home.rs # The component that will render at the / route
-├─ Cargo.toml # The desktop crate's Cargo.toml - This should include all desktop specific dependencies
+From the repository root, with the native desktop dependencies installed, run
+
+```sh
+CARGO_BUILD_JOBS=1 dx serve --package conctr-desktop-dioxus --platform desktop
 ```
 
-## Dependencies
-Since you have fullstack enabled, the desktop crate will be built two times:
-1. Once for the server build with the `server` feature enabled
-2. Once for the client build with the `desktop` feature enabled
-
-You should make all desktop specific dependencies optional and only enabled in the `desktop` feature. This will ensure that the server builds don't pull in desktop specific dependencies which cuts down on build times significantly.
-
-### Serving Your Desktop App
-
-You can start your desktop app with the following command:
-
-```bash
-dx serve
-```
+The `desktop` feature enables the renderer and native API client. The `server`
+feature hosts the workspace API for fullstack development. Packaged release
+clients need the HTTPS `CONCTR_NATIVE_API_ORIGIN` at build time. See the
+[configuration guide](../../crates/conctr-api-dioxus/README.md).

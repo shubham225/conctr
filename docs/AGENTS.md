@@ -1,21 +1,11 @@
-# Documentation instructions
+# Maintaining the documentation
 
-Applies under `docs/` in addition to the root [AGENTS.md](../AGENTS.md).
-Start with [AI context](ai/AI-INSTRUCTIONS.md) and
-[documentation maintenance](development/documentation.md).
+Use [the index](README.md) to find the page that owns a topic. Update the
+existing explanation and link callers to it. Keep runnable procedures in
+`development/`, package and HTTP references in `architecture/`, and AI
+navigation in `ai/`. Keep package startup instructions and caller examples in the owning README.
+Link to them from the index. Verify examples against the current source. Label a
+proposed responsibility explicitly and record the reason when it becomes a
+decision.
 
-- Distinguish implemented, scaffold, demo, proposed and deferred capabilities.
-  Verify source/manifests before updating dated inventories or checking off features.
-- Preserve accepted ADRs; record significant changed decisions with explicit status
-  and links. Proposed ADRs do not silently replace accepted policy.
-- Keep `ai/project.json` aligned with actual workspace packages and valid file paths.
-  Update relevant roadmap evidence/checklists only for observable deliverables.
-- Keep architectural contracts independent of UI framework details. Use the canonical
-  design kit for branding and the theming guide for library CSS ownership.
-- Root `AGENTS.md` owns repository-wide coding policy; `ai/AI-INSTRUCTIONS.md` routes
-  detailed context. Tool-specific entry files should import or point to these
-  sources, not maintain competing copies. Portable skills under `ai/skills/` are
-  task workflows, not universally auto-discovered instructions.
-- Validate documentation and AI entry links with
-  `python3 docs/development/scripts/check_docs.py` from the repository root.
-  Describe only validation actually performed.
+Run `python3 docs/development/scripts/check_docs.py` from the repository root.

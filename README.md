@@ -34,108 +34,109 @@
 
 ---
 
-## Vision
+## Project status
 
-One platform. Every integration.
+Conctr is in early development. Users can sign in, recover a local account and
+view server details on the Dashboard. Most other workspace pages currently show
+only their headings. The component showcase includes interactive mapping and
+workflow examples backed by sample data. The integration runtime and connector
+crates still contain starter code.
 
-## Goals
+## Goals and future work
 
-- Unified application and API integrations.
-- Reusable connectors.
-- Data transformation and mapping.
-- Workflow orchestration.
-- Authentication and authorization.
-- Integration execution and monitoring.
-- Extensible platform architecture.
+The goal is to let teams connect systems that use different APIs and message
+formats. For example, an order integration could receive JSON from a storefront,
+translate it into the XML expected by a supplier, and record whether delivery
+succeeded.
+
+Gregor Hohpe and Bobby Woolf’s *Enterprise Integration Patterns* guides this
+design. A **Message Translator** addresses the format change in the order
+example. A **Content-Based Router** could select a supplier using a field in
+the order. Future work includes reusable connections, mapping and routing,
+and a run history that helps operators trace failures. The execution model,
+connector interfaces and storage technology remain open.
 
 ## Technology
 
-- Rust
-- Cargo workspace
-- Dioxus (initial frontend framework)
+- **Rust and Cargo** provide the backend language and the workspace for shared libraries and application launchers.
+- **Axum, Tokio and Serde** serve the management API and encode its typed requests and responses as JSON.
+- **WebAssembly and native desktop builds** deliver the shared client to browsers and desktop users. Rust UI components and Tailwind CSS supply controls styled with Conctr’s brand tokens.
 
-## Repository Structure
+## Requirements
 
-```text
-CONCTR/
-├── apps/
-│   ├── web-dioxus/
-│   ├── desktop-dioxus/
-│   ├── mobile-dioxus/
-│   └── conctr-design-kit/
-├── crates/
-|   ├── conctr-api/
-│   ├── conctr-api-dioxus/
-│   ├── conctr-core/
-│   ├── conctr-auth/
-│   ├── conctr-connectors/
-│   ├── conctr-engine/
-│   ├── conctr-gateway/
-│   ├── conctr-storage/
-│   ├── conctr-transform/
-│   └── conctr-ui-dioxus/
-├── docs/
-│   ├── architecture/
-│   ├── development/
-│   └── product/
-├── assets/
-├── Cargo.toml
-├── Cargo.lock
-├── LICENSE-MIT
-├── LICENSE-APACHE
-├── README.md
-└── CONTRIBUTING.md
-```
+- Rust and Cargo with support for the 2024 edition
+- `dx` CLI 0.7.10
+- `wasm32-unknown-unknown` Rust target for the web client
 
-## Getting Started
+## Build and run
 
-Install the Rust toolchain and Dioxus CLI.
-
-```bash
-cargo install dioxus-cli
-```
-
-Check the workspace:
-
-```bash
-cargo check --workspace
-```
-
-Start the fullstack app and open its login window:
+From the repository root, install the web target and build the web client and server.
 
 ```sh
-dx serve --package conctr-web-dioxus
+rustup target add wasm32-unknown-unknown
+dx build --package conctr-web-dioxus --web --fullstack --release
 ```
 
-Startup creates a local `.env` with portable defaults. For your first login, use `admin` and the temporary password file named by the
-server. Choose your permanent password in the app. See the [workspace sign-in guide](crates/conctr-api-dioxus/README.md).
+## Apps
 
-## Architecture Principles
+For local development, run the command for the app you want from the repository root.
 
-1. Framework-independent platform logic.
-2. Modular and reusable Rust crates.
-3. Replaceable frontend applications.
-4. Clear separation of concerns.
-5. Explicit dependency boundaries.
+| App | Purpose | Run locally |
+| --- | --- | --- |
+| Design kit | Browse reusable components, icons and themes, and try mapping and workflow examples with sample data. | `dx serve --package conctr-design-kit --platform web` |
+| Web | Open the workspace in a browser and run the management API alongside it. | `dx serve --package conctr-web-dioxus` |
+| Desktop | Open the shared workspace in a native window with desktop window controls. | `dx serve --package conctr-desktop-dioxus --platform desktop` |
 
-## Project Status
+For the web app, open the URL printed in the terminal. On first launch, the server prints the path
+to a private temporary password file. Sign in as `admin` with that password and
+choose a permanent one. The Dashboard shows the server version, operating system
+and architecture.
 
-CONCTR is in its initial development stage. The current repository establishes the workspace structure and foundational application scaffolding.
+## Configuration
+
+Local startup creates a `.env` file using the [default settings](.env.example).
+Environment variables take precedence over file entries. Restart the server after
+changing a server setting.
+
+| Variable | Used by | Purpose |
+| --- | --- | --- |
+| `CONCTR_ACCOUNTS_FILE` | Server | Path to the account file. Leave blank to use the current OS user’s Conctr directory. Relative paths resolve from the directory containing `.env`. |
+| `CONCTR_PUBLIC_ORIGIN` | Server | HTTPS origin used by browsers for remote access. Leave blank for local development. |
+| `CONCTR_NATIVE_API_ORIGIN` | Desktop client build | HTTPS address of the server. Set before building a desktop release. |
+
+## Architecture
+
+The web and desktop clients share the workspace screens. Both call the versioned
+management API over HTTP. For example, opening Dashboard requests
+`GET /api/v1/system/details`. The server checks the session before returning its
+build and platform details.
+
+| Component | Responsibility |
+| --- | --- |
+| Application launchers | Start the web server or native window and load the shared workspace. |
+| Shared client | Provide sign-in, navigation and Dashboard, and send management requests. |
+| Management API (`conctr-api`) | Define request and response types and serve endpoints under `/api/v1`. |
+| Authentication (`conctr-auth`) | Verify account credentials, handle password setup and recovery, and issue and revoke sessions. |
+
+### Architecture principles
+
+- Keep business rules and management API contracts independent of the frontend
+  framework so another client can use the same operations.
+- Share screens across clients and keep operating-system behavior in each
+  launcher. The desktop launcher, for example, owns native window controls.
+- Enforce authorization on the server for every protected operation, including
+  requests made directly to the API.
+- Choose crate boundaries around working integrations. Start with a module and
+  extract a library when independent callers need the same behavior.
+
+## Tests
+
+```sh
+cargo test --workspace
+cargo test -p conctr-api --features server
+```
 
 ## License
 
-CONCTR is dual-licensed under your choice of:
-
-- [MIT License](LICENSE-MIT)
-- [Apache License 2.0](LICENSE-APACHE)
-
-## Design system
-
-Inspect the reusable Conctr UI components, typography and design tokens:
-
-```sh
-dx serve --package conctr-design-kit --platform web
-```
-
-The [gallery](apps/conctr-design-kit/README.md) includes live component examples
-and copyable Rust usage. Applications consume [conctr-ui-dioxus](crates/conctr-ui-dioxus/README.md).
+Conctr is available under either the [MIT License](LICENSE-MIT) or the
+[Apache License 2.0](LICENSE-APACHE).

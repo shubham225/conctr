@@ -1,4 +1,9 @@
-# Sign in and run Conctr
+# Conctr Dioxus API client
+
+This crate adapts the management API to Dioxus. Client calls reuse the response
+types from `conctr-api` and convert HTTP problems to `ServerFnError`. With the
+`server` feature it re-exports router setup for the fullstack host. See the
+[client implementation](src/lib.rs).
 
 ## Start the app
 
@@ -6,7 +11,7 @@ From the repository root, run this command. It starts the UI and API together
 and opens the login window in your browser.
 
 ```sh
-dx serve --package conctr-web-dioxus
+CARGO_BUILD_JOBS=1 dx serve --package conctr-web-dioxus
 ```
 
 1. On a fresh install the username is **admin**. The server prints the location
@@ -96,21 +101,13 @@ server loads the provisioned accounts at startup.
 
 The Dioxus client calls the management router hosted by the product launcher.
 Other frontends can use the same cookie and JSON endpoints. See the
-[HTTP contract and migration notes](../../docs/architecture/api-and-events.md).
+[HTTP contract](../../docs/architecture/api-and-events.md).
 
 For the password hash parameters and the reasons for pinning JWT algorithms,
 issuer and audience, see the [OWASP password storage guidance](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
 and [JWT best current practices](https://www.rfc-editor.org/rfc/rfc8725).
 
-## Adding Google or Microsoft later
+## Deployment scope
 
-Use OpenID Connect authorization code flow with PKCE. Validate state, nonce,
-issuer, audience and signature with an OIDC library. Map the verified
-`(issuer, subject)` pair to a provisioned local account ID and call the same
-Conctr session issuer. Keep local role assignment under administrator control.
-Provider callback handling and account linking are future work.
-
-The current account file, signing key, session registry and login budget serve a
-single process. Before running multiple replicas, move accounts and revocation
-state to shared storage, distribute signing keys with a rotation policy, and
-coordinate rate limiting across replicas.
+Local accounts, session revocation, signing keys and rate limits currently serve
+a single server process. Restarting the server requires clients to sign in again.

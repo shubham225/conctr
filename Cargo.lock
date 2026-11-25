@@ -717,6 +717,8 @@ version = "0.1.0"
 dependencies = [
  "conctr-app-dioxus",
  "dioxus",
+ "icons",
+ "image",
 ]
 
 [[package]]

@@ -1,21 +1,13 @@
-# Shared product app instructions
+# Shared product app
 
-Read the [root instructions](../../AGENTS.md),
-[presentation ownership](../../docs/architecture/dioxus-presentation.md) and
-[UI instructions](../conctr-ui-dioxus/AGENTS.md) before changing product UI.
-
-- Own product routes, pages, sample configuration and presentation drafts here.
-  Launchers supply renderer/OS behavior; do not duplicate pages in `apps/`.
-- Reuse `conctr-ui-dioxus::ui` controls and `composed` workspace components.
-  Put reusable component geometry/CSS in the UI library, not an app CSS toolchain.
-- Keep product-page-specific styling in `src/<component>/style.css` beside its
-  Rust module. Use the sign-in component as the CSS module and stylesheet
-  registration example. Check the rebuilt shared Tailwind bundle for one-off utilities.
-- Dashboard loads authenticated system details. Other product destinations contain page headings.
-- Keep future executable flow contracts independent of Dioxus and layout state.
-  Label local checks/previews accurately; never turn a simulated run into a claim
-  of backend support. Credentials are symbolic references, never fixture secrets.
-- Preserve user-supplied design references. Confirm consumers before removing
-  components, routes, public exports or browser regression scripts.
-- Run focused Rust checks and verify navigation, sidebar behavior and theme switching
-  in the browser.
+- Add product destinations in `src/routes.rs` and place navigation in the shell
+  or user menu as appropriate. Update the [route inventory](README.md) in the
+  same change.
+- Use `conctr-api-dioxus` for management requests. Keep session presentation in
+  the app and authorization checks on the server. Pass OS controls in through
+  the launcher's title-bar slot.
+- Reuse library controls and compositions. For page-specific styles, follow the
+  [sign-in example](src/sign_in/style.css) and [theming guide](../../docs/development/theming.md).
+- Verify direct navigation through sign-in and the affected page after login.
+  For shell changes, check the sidebar, narrow layout and theme switch. Confirm
+  callers before removing routes or public app entry points.

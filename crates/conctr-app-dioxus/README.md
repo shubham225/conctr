@@ -15,6 +15,8 @@ to every product page. See [account setup and API security](../conctr-api-dioxus
 | Channels & Routing | Channels/Queues (`/queues`), Workflow Pipeline (`/pipelines`) |
 | Operations | History (`/runs`) |
 | Administration | Settings (`/settings`), Help (`/help`) |
+| User menu | Profile (`/profile`), Notifications (`/notifications`) |
 
-The [pre-shell archive](../../backups/conctr-app-dioxus-before-shell.tar.gz) contains
-the previous app and its studio browser scripts. Those scripts target the earlier pages.
+Dashboard displays live system details. The other named destinations currently render
+headings. The login URL redirects to Dashboard, where the session gate handles
+access. See the [routes](src/routes.rs) and [app entry points](src/lib.rs).

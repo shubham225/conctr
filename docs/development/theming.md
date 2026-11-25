@@ -1,9 +1,10 @@
 # Tailwind and theming
 
-The fresh `conctr-ui-dioxus` owns Tailwind 4.1.18 tooling, input and shipped CSS.
-Apps use `ui::<family>` and mount `ui::theme::ThemeProvider`; no app Node setup.
-The facade uses shared utilities; specialized compositions also use adjacent
-CSS modules. See [Rust UI adoption](rust-ui-adoption.md).
+`conctr-ui-dioxus` owns Tailwind 4.1.18 tooling, compiler inputs, consumer scan
+paths and the shipped CSS. Apps mount `ThemeProvider` or `ConctrStyles` and use
+the shipped bundle without Node. Keep Tailwind configuration and generated CSS
+in the library. Write shared utility classes directly in component Rust. See
+[Rust UI adoption](rust-ui-adoption.md).
 
 | Library file | Ownership |
 | --- | --- |
@@ -46,7 +47,9 @@ Put component-specific selectors in `src/ui/<family>/style.css` or
 `#[css_module]` for scoped classes and register the asset with
 `document::Stylesheet` so each SSR document receives the link. The
 [resizable component](../../crates/conctr-ui-dioxus/src/composed/resizable/component.rs)
-shows both declarations.
+shows both declarations. Register styles in each component and keep ownership
+comments accurate. Use the shared compiler for generated CSS and keep stylesheet
+registration local to the component.
 
 Product screens follow the same rule in their owning app crate. For example,
 the [sign-in component stylesheet](../../crates/conctr-app-dioxus/src/sign_in/style.css)

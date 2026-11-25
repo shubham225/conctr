@@ -6,11 +6,11 @@
 | Inter | UI and body | 400, 500, 600 | SIL OFL 1.1 |
 | JetBrains Mono | Code and data | 400, 500 | SIL OFL 1.1 |
 
-Files are WOFF2, Latin subset (covers English and most Western European languages), self-hosted so the product works offline and does not send visitor data to a font CDN.
+Files are WOFF2, Latin subset (covers English and most Western European languages), bundled locally so loading these fonts requires no CDN request.
 
 **Use on the web:** `<link rel="stylesheet" href="fonts/fonts.css">` before `colors/tokens.css`. Keep the `files/` folder next to `fonts.css`.
 
-**Use in desktop or mobile (Dioxus, egui):** bundle the `.woff2` files, or convert to `.ttf` and register them with your UI toolkit. Family names are in `colors/conctr_tokens.rs`.
+**Dioxus applications** load the bundled fonts through the UI library’s `ThemeProvider` or `ConctrStyles`.
 
 **Need more languages?** Get extra subsets (latin-ext, cyrillic, greek, vietnamese) from the `@fontsource/*` npm packages and add matching `@font-face` rules with `unicode-range`.
 

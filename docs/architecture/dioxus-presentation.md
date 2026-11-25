@@ -1,48 +1,16 @@
-# Dioxus presentation structure
+# Presentation ownership
 
-Conctr's design system uses an immutable Rust UI source snapshot, a Conctr
-facade, and reusable compositions. Product pages/state remain in `conctr-app-dioxus`.
+For a screen shared by web and desktop, put its route, loading state and UI
+composition in `conctr-app-dioxus`. Put OS window controls in the desktop
+launcher. For a new server operation, define its wire types in `conctr-api`
+and adapt it to the UI in `conctr-api-dioxus`. Keep Dioxus signals, hooks and
+renderer types on the frontend side of that boundary.
 
-```text
-crates/conctr-ui-dioxus/src/
-  rust-ui/       # Unmodified UI, hooks, demos, workflows; MIT notice and hashes
-  ui/            # App-facing families, brand wrappers and theme provider
-  composed/      # Reusable Conctr combinations built over ui
-  assets/        # Dioxus asset handles and stylesheet loader
-```
+For a reusable control, look in `conctr_ui_dioxus::ui::<family>` first.
+Combine base controls in `composed` when the result is useful across screens.
+Exercise reusable interactions in the design-kit app. A gallery demo can use
+in-memory sample data independently of product feature availability.
 
-Product apps depend on `conctr-ui-dioxus`. They import base controls from
-`conctr_ui_dioxus::ui::<family>` and reusable combinations from
-`conctr_ui_dioxus::composed`. Each base family has its own Conctr-owned module,
-even when it forwards all upstream defaults. Add Conctr behavior to that module
-so callers can keep their import paths.
-
-For example, `composed::InputGroup` assembles the controls from `ui::input_group`
-and accepts a field such as `ui::input::Input` as its child. The private
-`rust_ui` module supplies the pinned implementation. Its internal absolute
-imports resolve through the library facade. Product pages, services and business
-rules stay in their owning app or platform crate.
-
-`apps/conctr-design-kit` is the runnable showcase with 78 component demos
-and eight workflow examples. `design/` remains the canonical design kit; the
-gallery's `assets/reference/` is its read-only snapshot. Integration pattern SVGs are
-exported through `conctr_ui_dioxus::assets::icons`.
-Canvas coordinates and interaction state are presentation only and must never
-become the platform's executable flow semantics. Demos do not establish integration
-support. See [adoption assessment](../development/rust-ui-adoption.md),
-[theme ownership](../development/theming.md), and
-[ADR 0013](decisions/0013-rust-ui-facade.md).
-
-## Local authoring pages
-
-The shared app owns `/mappings` (`src/mapping_studio`) and `/pipelines`
-(`src/pipeline_studio`). Mapping request/response drafts and history are app state.
-Pipeline sample configuration and authoring checks are app state; workflow nodes,
-positions and edges remain presentation data. Both pages are transient local
-previews without persistence, runtime execution or deployment.
-
-The UI library supplies `composed/visual_mapping`, `mapping_workspace`,
-`pipeline_workspace` and `resizable`. Reuse workflow facade components for canvas
-interaction. Resizable handles use Rust signals/events and mounted measurements;
-component geometry belongs in adjacent scoped CSS. The classic `field_mapping`
-control and `WorkflowBuilder` remain supported gallery/library consumers.
+Use the [brand kit](../../design/README.md) for colors, typography, logos and
+component appearance. Use the [Rust UI guide](../development/rust-ui-adoption.md)
+for base controls and the [theming guide](../development/theming.md) for CSS.
