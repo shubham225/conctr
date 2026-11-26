@@ -10,5 +10,7 @@ pub use attempts::LoginAttempts;
 pub use authority::{AuthError, Authority, SESSION_SECONDS};
 
 mod recovery;
+mod store;
 mod workspace;
+pub use store::AccountStore;
 pub use workspace::{PasswordLogin, WorkspaceAuth};

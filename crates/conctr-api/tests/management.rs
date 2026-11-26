@@ -41,19 +41,32 @@ async fn call(path: &str, body: String, cookie: &str) -> (u16, HeaderMap, Value)
     (parts.status.as_u16(), parts.headers, json)
 }
 
-#[tokio::test]
-async fn management_contract() {
+#[sqlx::test(migrations = false)]
+#[ignore = "requires DATABASE_URL on a PostgreSQL test server"]
+async fn management_contract(pool: sqlx::PgPool) {
+    use sqlx::ConnectOptions;
     // Process-local settings and signing keys must stay isolated from the operator's workspace.
-    if std::env::var_os("CONCTR_CONTRACT_TEST_CHILD").is_none() {
+    {
         let dir = tempfile::tempdir().unwrap();
         let status = std::process::Command::new(std::env::current_exe().unwrap())
-            .args(["--exact", "management_contract"])
+            .args(["--ignored", "--exact", "management_contract_child"])
             .current_dir(dir.path())
             .env("CONCTR_CONTRACT_TEST_CHILD", "1")
+            .env(
+                "CONCTR_DATABASE_URL",
+                pool.connect_options().to_url_lossy().as_str(),
+            )
             .env("CONCTR_ACCOUNTS_FILE", dir.path().join("accounts.json"))
             .status()
             .unwrap();
         assert!(status.success());
+    }
+}
+
+#[tokio::test]
+#[ignore = "spawned by management_contract with an isolated database"]
+async fn management_contract_child() {
+    if std::env::var_os("CONCTR_CONTRACT_TEST_CHILD").is_none() {
         return;
     }
     conctr_api::http::initialize().unwrap();

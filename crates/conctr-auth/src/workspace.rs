@@ -44,7 +44,7 @@ impl WorkspaceAuth {
 
     fn load(&self) -> Result<&RwLock<Authority>, &String> {
         self.authority
-            .get_or_init(|| load_authority(&self.accounts.path).map(RwLock::new))
+            .get_or_init(|| load_authority(self.accounts.store.as_ref()).map(RwLock::new))
             .as_ref()
     }
 
@@ -59,6 +59,17 @@ impl WorkspaceAuth {
             return Err(AuthError::InvalidSession);
         }
         self.load()
+            .map_err(|_| AuthError::Unavailable)?
+            .read()
+            .map_err(|_| AuthError::Unavailable)
+    }
+
+    /// Access sessions already issued by this process without waiting for storage.
+    pub fn session_authority(&self) -> Result<RwLockReadGuard<'_, Authority>, AuthError> {
+        self.authority
+            .get()
+            .ok_or(AuthError::InvalidSession)?
+            .as_ref()
             .map_err(|_| AuthError::Unavailable)?
             .read()
             .map_err(|_| AuthError::Unavailable)
@@ -131,7 +142,7 @@ impl WorkspaceAuth {
             .map_err(|_| SetupError::Storage)?
             .write()
             .map_err(|_| SetupError::Storage)?;
-        let token = authority.replace_password(&self.accounts.path, username, password)?;
+        let token = authority.replace_password(self.accounts.store.as_ref(), username, password)?;
         recovery.consume(username);
         Ok(token)
     }
@@ -150,19 +161,13 @@ impl WorkspaceAuth {
 
 // These diagnostics stay in the server terminal. Account contents (including
 // password hashes) must never be interpolated into configuration errors.
-fn load_authority(path: &std::path::Path) -> Result<Authority, String> {
-    let bytes = std::fs::read(path)
-        .map_err(|err| format!("Cannot read account file {}: {err}", path.display()))?;
-    if bytes.is_empty() {
-        return Err(format!(
-            "Account file {} is empty (0 bytes). For first-run setup, move the empty file aside and restart. For an existing installation, restore the provisioned account file.",
-            path.display()
-        ));
-    }
-    Authority::from_json(&bytes).map_err(|_| format!(
-        "Cannot initialize authentication from {}. Check that it contains a nonempty JSON array of provisioned accounts with unique names, IDs and Argon2id hashes.",
-        path.display()
-    ))
+fn load_authority(store: &dyn crate::AccountStore) -> Result<Authority, String> {
+    let accounts = store
+        .load()
+        .map_err(|_| "Cannot read provisioned accounts. Check the configured account store.")?;
+    Authority::from_accounts(accounts).map_err(|_| {
+        "Invalid provisioned accounts. Check account IDs, usernames and password hashes.".into()
+    })
 }
 
 #[cfg(test)]
@@ -179,14 +184,19 @@ mod tests {
         let member = Account::new("member".into(), Role::Member, old).unwrap();
         let admin = Account::new("admin".into(), Role::Admin, old).unwrap();
         let id = member.id.clone();
-        std::fs::write(&path, serde_json::to_vec(&[member, admin]).unwrap()).unwrap();
-        let open = || WorkspaceAuth::new(LocalAccounts::open(Some(path.clone())).unwrap());
+        let store = crate::store::TestStore::default();
+        *store.0.lock().unwrap() = vec![member, admin];
+        let open = || {
+            WorkspaceAuth::new(
+                LocalAccounts::with_store(path.clone(), Box::new(store.clone())).unwrap(),
+            )
+        };
         let workspace = open();
         workspace.request_recovery("missing").unwrap();
+        assert_eq!(dir.path().read_dir().unwrap().count(), 0);
+        workspace.request_recovery("member").unwrap();
+        workspace.request_recovery("member").unwrap();
         assert_eq!(dir.path().read_dir().unwrap().count(), 1);
-        workspace.request_recovery("member").unwrap();
-        workspace.request_recovery("member").unwrap();
-        assert_eq!(dir.path().read_dir().unwrap().count(), 2);
         let file = dir
             .path()
             .read_dir()
@@ -229,8 +239,7 @@ mod tests {
             workspace.set_password("member", temp, new),
             Err(SetupError::Denied)
         ));
-        let stored: Vec<Account> =
-            serde_json::from_slice(&std::fs::read(path.clone()).unwrap()).unwrap();
+        let stored = crate::AccountStore::load(&store).unwrap();
         assert_eq!(stored[0].id, id);
         assert!(matches!(
             open().login("member", old),
@@ -245,7 +254,11 @@ mod tests {
     #[test]
     fn pending_setup_can_become_an_active_session_without_restarting() {
         let dir = tempfile::tempdir().unwrap();
-        let accounts = LocalAccounts::open(Some(dir.path().join("accounts.json"))).unwrap();
+        let accounts = LocalAccounts::with_store(
+            dir.path().join("accounts.json"),
+            Box::<crate::store::TestStore>::default(),
+        )
+        .unwrap();
         let workspace = WorkspaceAuth::new(accounts);
         let invitation = workspace.initialize().unwrap().unwrap();
         let temporary = std::fs::read_to_string(invitation).unwrap();

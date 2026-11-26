@@ -8,3 +8,21 @@ publish    = { workspace = true }
 repository = { workspace = true }
 
 [dependencies]
+conctr-auth      = { workspace = true }
+futures-executor = "0.3"
+serde_json       = "1"
+sqlx             = { version = "0.8.6",
+                     default-features = false,
+                     features = [
+                        "runtime-tokio",
+                        "tls-rustls-ring-native-roots",
+                        "postgres",
+                        "mysql",
+                        "any",
+                        "migrate",
+                        "macros"]
+                    }
+tokio            = { version = "1", features = ["rt-multi-thread"] }
+
+[dev-dependencies]
+tempfile = "3"

@@ -12,19 +12,24 @@ use uuid::Uuid;
 /// The private first-login invitation belongs to one account file.
 pub struct LocalAccounts {
     pub path: PathBuf,
+    pub(crate) store: Box<dyn crate::AccountStore>,
     invitation: Option<PathBuf>,
+    setup_finished: std::sync::atomic::AtomicBool,
 }
 
 impl LocalAccounts {
-    /// An absent file enters first-run setup at the selected location. Existing
-    /// files always go through the regular account loader and validation.
-    pub fn open(configured: Option<PathBuf>) -> io::Result<Self> {
-        let path = match configured {
+    /// Resolve the legacy file location and operator handoff directory.
+    pub fn account_path(configured: Option<PathBuf>) -> io::Result<PathBuf> {
+        Ok(match configured {
             Some(path) => path,
             None => dirs::config_dir()
                 .ok_or_else(|| io::Error::other("Cannot locate user configuration directory"))?
                 .join("conctr/accounts.json"),
-        };
+        })
+    }
+
+    /// Use the given backend for account data and the path for private handoffs.
+    pub fn with_store(path: PathBuf, store: Box<dyn crate::AccountStore>) -> io::Result<Self> {
         let dir = path
             .parent()
             .ok_or_else(|| io::Error::other("Expected an account file path"))?;
@@ -36,10 +41,12 @@ impl LocalAccounts {
             builder.mode(0o700);
         }
         builder.create(dir)?;
-        if path.try_exists()? {
+        if store.provisioned()? {
             return Ok(Self {
                 path,
                 invitation: None,
+                setup_finished: true.into(),
+                store,
             });
         }
         // Multiple account files can share a directory. Keep the historical
@@ -65,12 +72,22 @@ impl LocalAccounts {
         Ok(Self {
             path,
             invitation: Some(invitation),
+            setup_finished: false.into(),
+            store,
         })
     }
 
-    /// Once accounts.json exists, stale setup requests can never replace it.
+    /// Return the handoff path only while the store accepts initial provisioning.
     pub fn invitation(&self) -> io::Result<Option<&Path>> {
-        if self.invitation.is_none() || self.path.try_exists()? {
+        if self
+            .setup_finished
+            .load(std::sync::atomic::Ordering::Acquire)
+        {
+            return Ok(None);
+        }
+        if self.store.provisioned()? {
+            self.setup_finished
+                .store(true, std::sync::atomic::Ordering::Release);
             Ok(None)
         } else {
             Ok(self.invitation.as_deref())
@@ -98,8 +115,10 @@ impl LocalAccounts {
         }
         let account =
             Account::new("admin".into(), Role::Admin, password).map_err(SetupError::Invalid)?;
-        publish(&self.path, &serde_json::to_vec_pretty(&[account])?)?;
-        // The account file is the commit point. The temporary password is
+        self.store.create_first(&account)?;
+        self.setup_finished
+            .store(true, std::sync::atomic::Ordering::Release);
+        // The account store is the commit point. The temporary password is
         // already invalid even if removing the private file fails.
         if let Some(path) = &self.invitation {
             let _ = fs::remove_file(path);
@@ -128,7 +147,7 @@ impl From<serde_json::Error> for SetupError {
 
 // tempfile creates a private file and publishes the complete contents without
 // replacing any existing file. Readers never observe a partial JSON document.
-fn publish(path: &Path, bytes: &[u8]) -> io::Result<()> {
+pub(crate) fn publish(path: &Path, bytes: &[u8]) -> io::Result<()> {
     let parent = path
         .parent()
         .ok_or_else(|| io::Error::other("Missing account directory"))?;
@@ -142,26 +161,35 @@ fn publish(path: &Path, bytes: &[u8]) -> io::Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::Authority;
+    use crate::{AccountStore, Authority, store::TestStore};
 
     #[test]
     fn missing_custom_files_get_independent_private_invitations() {
         let dir = tempfile::tempdir().unwrap();
         let nested = dir.path().join("workspace config");
-        let first = LocalAccounts::open(Some(nested.join("operators.json"))).unwrap();
-        let second = LocalAccounts::open(Some(nested.join("members.json"))).unwrap();
+        let first =
+            LocalAccounts::with_store(nested.join("operators.json"), Box::<TestStore>::default())
+                .unwrap();
+        let second =
+            LocalAccounts::with_store(nested.join("members.json"), Box::<TestStore>::default())
+                .unwrap();
         let code = fs::read_to_string(first.invitation().unwrap().unwrap()).unwrap();
         assert!(first.accepts_invitation("admin", &code).unwrap());
         assert!(!second.accepts_invitation("admin", &code).unwrap());
         first.complete(&code, "a new admin password").unwrap();
-        assert!(nested.join("operators.json").is_file());
+        assert!(!nested.join("operators.json").exists());
         assert!(second.invitation().unwrap().unwrap().is_file());
     }
 
     #[test]
     fn setup_survives_restart_and_is_consumed_once() {
         let dir = tempfile::tempdir().unwrap();
-        let accounts = LocalAccounts::open(Some(dir.path().join("accounts.json"))).unwrap();
+        let store = TestStore::default();
+        let open = || {
+            LocalAccounts::with_store(dir.path().join("accounts.json"), Box::new(store.clone()))
+                .unwrap()
+        };
+        let accounts = open();
         let path = accounts.invitation().unwrap().unwrap();
         let secret = fs::read_to_string(path).unwrap();
         #[cfg(unix)]
@@ -169,7 +197,7 @@ mod tests {
             use std::os::unix::fs::PermissionsExt;
             assert_eq!(fs::metadata(path).unwrap().permissions().mode() & 0o077, 0);
         }
-        let restarted = LocalAccounts::open(Some(dir.path().join("accounts.json"))).unwrap();
+        let restarted = open();
         assert!(restarted.accepts_invitation("admin", &secret).unwrap());
         assert!(matches!(
             accounts.complete("wrong", "a new admin password"),
@@ -185,9 +213,9 @@ mod tests {
             restarted.complete(&secret, "another admin password"),
             Err(SetupError::Denied)
         ));
-        let permanent = LocalAccounts::open(Some(dir.path().join("accounts.json"))).unwrap();
+        let permanent = open();
         assert!(permanent.invitation().unwrap().is_none());
-        let auth = Authority::from_json(&fs::read(permanent.path).unwrap()).unwrap();
+        let auth = Authority::from_accounts(store.load().unwrap()).unwrap();
         assert!(auth.password_login("admin", "a new admin password").is_ok());
         assert!(auth.password_login("admin", &secret).is_err());
     }

@@ -18,7 +18,7 @@ use conctr_auth::{AuthError, PasswordLogin, SESSION_SECONDS, local_accounts::Set
 
 pub(super) fn principal(headers: &HeaderMap) -> Result<(), Problem> {
     let token = token(headers).ok_or(AuthError::InvalidSession)?;
-    current_workspace()?.authority()?.principal(token)?;
+    current_workspace()?.session_authority()?.principal(token)?;
     Ok(())
 }
 
@@ -76,7 +76,7 @@ async fn first_password(Json(input): Json<FirstPassword>) -> Result<Response, Pr
 }
 async fn current(headers: HeaderMap) -> Result<Json<ApiResponse<Option<SessionInfo>>>, Problem> {
     let info = if let Some(token) = token(&headers) {
-        match current_workspace()?.authority()?.principal(token) {
+        match current_workspace()?.session_authority()?.principal(token) {
             Ok(p) => Some(SessionInfo {
                 username: p.username.into(),
                 remaining_seconds: p.remaining_seconds,
@@ -91,7 +91,7 @@ async fn current(headers: HeaderMap) -> Result<Json<ApiResponse<Option<SessionIn
 }
 async fn logout(headers: HeaderMap) -> Result<Response, Problem> {
     if let Some(token) = token(&headers) {
-        match current_workspace()?.authority()?.logout(token) {
+        match current_workspace()?.session_authority()?.logout(token) {
             Ok(()) | Err(AuthError::InvalidSession) => {}
             Err(e) => return Err(e.into()),
         }

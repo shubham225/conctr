@@ -3,7 +3,7 @@ use rand::rngs::OsRng;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-/// Roles are assigned by the server's account file.
+/// Roles are assigned by the workspace account store.
 #[derive(Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum Role {
@@ -22,7 +22,7 @@ pub struct Principal<'a> {
 
 /// Provisioned account. Keeping the local ID independent of the login name lets
 /// future identity providers map their verified (issuer, subject) to the same ID.
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Account {
     pub id: String,

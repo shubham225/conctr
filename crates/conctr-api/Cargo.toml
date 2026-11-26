@@ -11,14 +11,16 @@ repository = { workspace = true }
 serde       = { version = "1", features = ["derive"] }
 tempfile    = { version = "3", optional = true }
 
-axum        = { version = "0.8", default-features = false, features = ["json"], optional = true }
-conctr-auth = { workspace = true, optional = true }
-dotenvy     = { version = "0.15", optional = true }
-tokio       = { version = "1", features = ["rt", "sync"], optional = true }
-tracing     = { version = "0.1", optional = true }
-uuid        = { version = "1", features = ["v4"], optional = true }
+axum           = { version = "0.8", default-features = false, features = ["json"], optional = true }
+conctr-auth    = { workspace = true, optional = true }
+conctr-storage = { workspace = true, optional = true }
+dotenvy        = { version = "0.15", optional = true }
+tokio          = { version = "1", features = ["rt", "sync"], optional = true }
+tracing        = { version = "0.1", optional = true }
+uuid           = { version = "1", features = ["v4"], optional = true }
 
 [dev-dependencies]
+sqlx       = { version = "0.8.6", default-features = false, features = ["postgres", "runtime-tokio", "migrate", "macros"] }
 serde_json = "1"
 tokio      = { version = "1", features = ["macros", "rt"] }
 tower      = { version = "0.5", features = ["util"] }
@@ -28,6 +30,7 @@ server  = [
     "dep:tempfile",
     "dep:axum",
     "dep:conctr-auth",
+    "dep:conctr-storage",
     "dep:dotenvy",
     "dep:tokio",
     "dep:tracing",

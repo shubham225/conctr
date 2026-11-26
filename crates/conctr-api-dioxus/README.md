@@ -7,7 +7,7 @@ types from `conctr-api` and convert HTTP problems to `ServerFnError`. With the
 
 ## Start the app
 
-From the repository root, run this command. It starts the UI and API together
+Configure PostgreSQL as described below, then run this command from the repository root. It starts the UI and API together
 and opens the login window in your browser.
 
 ```sh
@@ -29,24 +29,51 @@ The first server start creates `.env` in the workspace root from the
 [bundled defaults](../../.env.example). With a standalone server, it uses an
 existing `.env` in the working directory or an ancestor, or creates one in the
 working directory. Keep that directory private. Existing files keep their
-contents. Missing or blank server settings use the built-in defaults, and
-process environment variables take precedence over file entries. Restart after edits.
+contents. Process environment variables take precedence over file entries. Restart after edits.
 
-The default account file is named `accounts.json`. The terminal prints the
-temporary password file's actual location, including any path overrides.
+### PostgreSQL account storage
 
-| Server OS | Default Conctr account directory |
-| --- | --- |
-| Linux | `$XDG_CONFIG_HOME/conctr`, normally `~/.config/conctr` |
-| macOS | `~/Library/Application Support/conctr` |
-| Windows | The user's roaming AppData folder under `conctr`, normally `%APPDATA%\conctr` |
+On Ubuntu, install the service and client. For a fresh installation run:
 
-Set `CONCTR_ACCOUNTS_FILE` to choose another account file.
-Relative paths start at the directory containing `.env`. With a missing account
-file, Conctr creates its parent directory and a private temporary password.
-Saving your permanent password creates the account file at the requested path.
-Existing account files are validated at startup. For a previously provisioned
-installation with a damaged account file, restore its backup.
+```sh
+sudo apt update
+sudo apt install postgresql postgresql-client
+sudo systemctl enable --now postgresql
+sudo -u postgres createuser --login conctr-admin
+sudo -u postgres psql -c '\password "conctr-admin"'
+sudo -u postgres createdb --owner=conctr-admin conctr
+```
+
+Skip creation commands for a role or database you already created. The password
+prompt hides input. The server role needs permission to create and update tables
+in the target database. Use this connection in the workspace `.env`:
+
+```dotenv
+CONCTR_DATABASE_URL=postgresql://conctr-admin@127.0.0.1:5432/conctr
+```
+
+Run `touch ~/.pgpass && chmod 600 ~/.pgpass` and edit that file privately. Add
+`127.0.0.1:5432:conctr:conctr-admin:YOUR_PASSWORD` using the role password.
+Escape a literal colon as `\:` and a backslash as `\\`. Verify the connection
+with `psql -X -w -h 127.0.0.1 -U conctr-admin -d conctr -c 'SELECT current_user'`.
+Restart Conctr. SQLx applies schema migrations automatically.
+
+### Switching database engines
+
+Conctr requires `CONCTR_DATABASE_URL`. To use MariaDB, provision a database and
+user with schema and data privileges, set the URL to
+`mysql://USER:PASSWORD@HOST:3306/DATABASE` in the private server environment,
+and restart. URL-encode special characters in credentials embedded in a URL.
+The URL selects the SQLx driver and matching migrations. Transfer current account
+records, including IDs, roles and password hashes, when moving an existing
+installation between engines. The target installation must also retain its
+provisioning state from `conctr_auth_installation`.
+
+Account writes go to the selected database. During its first initialization the
+server can import an existing `accounts.json` from the OS user's Conctr
+configuration directory. `CONCTR_ACCOUNTS_FILE` overrides the legacy import
+path. Relative paths resolve beside `.env`. The same directory holds the private
+initial-admin invitation and temporary password recovery handoffs.
 
 Open the exact URL printed by Dioxus. For remote access, set `CONCTR_PUBLIC_ORIGIN` to the exact external HTTPS origin
 (scheme, host and optional port, with an optional trailing slash), terminate TLS at a
@@ -62,14 +89,14 @@ the Dioxus local development server.
 
 ## Accounts and permissions
 
-The account file is a JSON array. To provision another account, run
+To generate another account's ID and Argon2id hash, run
 `cargo run -p conctr-auth --bin conctr-account -- USERNAME member` in a private
-terminal. Append the generated object to the existing array and restart. Give ordinary users the `member` role. Both roles can
-open the workspace and view server details on Dashboard.
+terminal. Insert the generated fields into `conctr_accounts` using a parameterized
+database client. Restart Conctr after administrative account edits.
 
 For password recovery, choose **Forgot password?** and submit the workspace
 username. For a provisioned account, the server writes a private JSON handoff
-file beside the account file and prints its path in the server terminal. The
+file in the private handoff directory and prints its path in the server terminal. The
 administrator verifies the requester's identity through a trusted channel before
 privately delivering the temporary password. It expires after 15 minutes or a
 server restart. Repeat requests reuse the active password.
@@ -77,10 +104,6 @@ server restart. Repeat requests reuse the active password.
 Sign in with the same username and temporary password, then choose a permanent
 password. Completing the reset consumes the temporary password and revokes that
 account's previous sessions. Other accounts keep their sessions.
-
-To disable an account, remove its
-record. Replace the file atomically and restart the server after changes. The
-server loads the provisioned accounts at startup.
 
 ## How a request is checked
 

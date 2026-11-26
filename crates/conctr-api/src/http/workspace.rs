@@ -6,7 +6,12 @@ use std::sync::LazyLock;
 
 static WORKSPACE: LazyLock<Result<WorkspaceAuth, String>> = LazyLock::new(|| {
     let settings = SETTINGS.as_ref().map_err(Clone::clone)?;
-    LocalAccounts::open(settings.accounts_file.clone())
+    let path =
+        LocalAccounts::account_path(settings.accounts_file.clone()).map_err(|e| e.to_string())?;
+    let database =
+        conctr_storage::Database::connect(&settings.database_url).map_err(|e| e.to_string())?;
+    let store = conctr_storage::SqlAccounts::open(database, &path).map_err(|e| e.to_string())?;
+    LocalAccounts::with_store(path, Box::new(store))
         .map(WorkspaceAuth::new)
         .map_err(|err| format!("Cannot prepare the account file or first-login invitation: {err}"))
 });

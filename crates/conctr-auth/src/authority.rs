@@ -46,6 +46,25 @@ impl Authority {
     pub fn from_json(json: &[u8]) -> Result<Self, AuthError> {
         let accounts: Vec<Account> =
             serde_json::from_slice(json).map_err(|_| AuthError::Unavailable)?;
+        Self::from_accounts(accounts)
+    }
+
+    /// Validate persisted identities and create a fresh session authority.
+    pub fn from_accounts(accounts: Vec<Account>) -> Result<Self, AuthError> {
+        Self::validate_accounts(&accounts)?;
+        let mut signing_key = [0; 32];
+        OsRng
+            .try_fill_bytes(&mut signing_key)
+            .map_err(|_| AuthError::Unavailable)?;
+        Ok(Self {
+            accounts,
+            signing_key,
+            sessions: Mutex::default(),
+        })
+    }
+
+    /// Validate the persisted identities before importing or activating them.
+    pub fn validate_accounts(accounts: &[Account]) -> Result<(), AuthError> {
         if accounts.is_empty() {
             return Err(AuthError::Unavailable);
         }
@@ -65,15 +84,7 @@ impl Authority {
                 return Err(AuthError::Unavailable);
             }
         }
-        let mut signing_key = [0; 32];
-        OsRng
-            .try_fill_bytes(&mut signing_key)
-            .map_err(|_| AuthError::Unavailable)?;
-        Ok(Self {
-            accounts,
-            signing_key,
-            sessions: Mutex::default(),
-        })
+        Ok(())
     }
 
     pub(crate) fn account(&self, username: &str) -> Option<&Account> {
@@ -84,7 +95,7 @@ impl Authority {
 
     pub(crate) fn replace_password(
         &mut self,
-        path: &std::path::Path,
+        store: &dyn crate::AccountStore,
         username: &str,
         password: &str,
     ) -> Result<String, crate::local_accounts::SetupError> {
@@ -97,22 +108,28 @@ impl Authority {
         let hash = Account::new(username.into(), account.role, password)
             .map_err(SetupError::Invalid)?
             .password_hash;
-        let mut stored: Vec<Account> = serde_json::from_slice(&std::fs::read(path)?)?;
-        let record = stored
-            .iter_mut()
-            .find(|a| {
-                a.id == account.id
-                    && a.username == username
-                    && a.password_hash == account.password_hash
-                    && a.role == account.role
-            })
-            .ok_or(SetupError::Storage)?;
-        record.password_hash.clone_from(&hash);
-        let mut tmp = tempfile::NamedTempFile::new_in(path.parent().ok_or(SetupError::Storage)?)?;
-        serde_json::to_writer_pretty(&mut tmp, &stored)?;
-        tmp.as_file().sync_all()?;
         let sessions = self.sessions.get_mut().map_err(|_| SetupError::Storage)?;
-        tmp.persist(path).map_err(|e| e.error)?;
+        if let Err(error) = store.replace_hash(account, &hash) {
+            // A lost acknowledgement can follow a committed change. Read the
+            // durable record before allowing another login with cached credentials.
+            let persisted = store.load().ok().and_then(|rows| {
+                rows.into_iter().find(|row| {
+                    row.id == account.id && row.username == username && row.role == account.role
+                })
+            });
+            sessions.retain(|_, (_, id)| id != &account.id);
+            match persisted {
+                Some(row) if row.password_hash == hash => {}
+                Some(row) => {
+                    account.password_hash = row.password_hash;
+                    return Err(error);
+                }
+                None => {
+                    self.accounts.retain(|row| row.username != username);
+                    return Err(error);
+                }
+            }
+        }
         account.password_hash = hash;
         sessions.retain(|_, (_, id)| id != &account.id);
         self.issue_session(self.account(username).ok_or(SetupError::Storage)?)
@@ -126,7 +143,10 @@ impl Authority {
             return Err(AuthError::InvalidCredentials);
         }
         let account = self.accounts.iter().find(|a| a.username == username);
-        let encoded = &account.unwrap_or(&self.accounts[0]).password_hash;
+        let encoded = &account
+            .or_else(|| self.accounts.first())
+            .ok_or(AuthError::Unavailable)?
+            .password_hash;
         let hash = PasswordHash::new(encoded).map_err(|_| AuthError::Unavailable)?;
         Argon2::default()
             .verify_password(password.as_bytes(), &hash)

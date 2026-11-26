@@ -27,11 +27,20 @@ pub(super) static SETTINGS: LazyLock<Result<Settings, String>> = LazyLock::new(|
             .map(|value| dir.join(value))
     };
     Ok(Settings {
+        database_url: match env::var("CONCTR_DATABASE_URL") {
+            Ok(url) if !url.trim().is_empty() => url,
+            Ok(_) | Err(env::VarError::NotPresent) => return Err(
+                "Set CONCTR_DATABASE_URL in the server environment or .env before starting Conctr."
+                    .into(),
+            ),
+            Err(_) => return Err("Invalid CONCTR_DATABASE_URL encoding".into()),
+        },
         accounts_file: path("CONCTR_ACCOUNTS_FILE"),
     })
 });
 
 pub(super) struct Settings {
+    pub database_url: String,
     pub accounts_file: Option<PathBuf>,
 }
 

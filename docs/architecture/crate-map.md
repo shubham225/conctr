@@ -19,6 +19,7 @@ small support binary, as authentication does for account provisioning.
 | [conctr-api-dioxus](../../crates/conctr-api-dioxus/) | Dioxus client for the management HTTP API. Reuses the server's contract types. |
 | [conctr-api](../../crates/conctr-api/) | Framework-independent management contracts and an optional Axum HTTP server. |
 | [conctr-auth](../../crates/conctr-auth/) | Local accounts, password setup and recovery, session issuance and revocation. |
+| [conctr-storage](../../crates/conctr-storage/) | Shared SQLx pool, account repository and versioned PostgreSQL and MariaDB migrations. Implements the account-store interface owned by authentication. |
 
 A working example crosses these boundaries on Dashboard. The page requests system
 details through the Dioxus client. The HTTP handler checks the session and returns
@@ -26,7 +27,7 @@ a typed response. A second frontend could consume the same endpoint and supply
 its own presentation state. See the [route definitions](../../crates/conctr-app-dioxus/src/routes.rs)
 and [HTTP handler](../../crates/conctr-api/src/http/system.rs).
 
-## Tentative responsibilities for the six scaffolds
+## Tentative responsibilities for the remaining scaffolds
 
 Each package below currently contains starter code. These placements are
 recommendations to revisit with the first working integration.
@@ -38,7 +39,6 @@ recommendations to revisit with the first working integration.
 | [conctr-connectors](../../crates/conctr-connectors/) | Adapt a particular external system or protocol | Send the translated order using the partner's API and interpret its reply. |
 | [conctr-gateway](../../crates/conctr-gateway/) | Expose integration endpoints to external systems | Accept an incoming order or webhook according to the sender's wire contract. |
 | [conctr-transform](../../crates/conctr-transform/) | Convert a message's structure or representation | Translate JSON order lines into the partner's XML format. |
-| [conctr-storage](../../crates/conctr-storage/) | Implement persistence required by a caller | Save and retrieve an integration definition using the selected store. |
 
 Keep definitions and pure rules in core. Extract engine logic when a use case
 has to coordinate steps, time or external effects. A small translation can begin

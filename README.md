@@ -54,7 +54,7 @@ design. A **Message Translator** addresses the format change in the order
 example. A **Content-Based Router** could select a supplier using a field in
 the order. Future work includes reusable connections, mapping and routing,
 and a run history that helps operators trace failures. The execution model,
-connector interfaces and storage technology remain open.
+connector interfaces and persistence needs for integration runs remain open.
 
 ## Technology
 
@@ -65,6 +65,7 @@ connector interfaces and storage technology remain open.
 ## Requirements
 
 - Rust and Cargo with support for the 2024 edition
+- A PostgreSQL database and role for the management server with the default configuration
 - `dx` CLI 0.7.10
 - `wasm32-unknown-unknown` Rust target for the web client
 
@@ -87,7 +88,7 @@ For local development, run the command for the app you want from the repository 
 | Web | Open the workspace in a browser and run the management API alongside it. | `dx serve --package conctr-web-dioxus` |
 | Desktop | Open the shared workspace in a native window with desktop window controls. | `dx serve --package conctr-desktop-dioxus --platform desktop` |
 
-For the web app, open the URL printed in the terminal. On first launch, the server prints the path
+For the web app, create the database and configure the server connection using the [account storage guide](crates/conctr-api-dioxus/README.md#postgresql-account-storage). Then open the URL printed in the terminal. On first launch, the server prints the path
 to a private temporary password file. Sign in as `admin` with that password and
 choose a permanent one. The Dashboard shows the server version, operating system
 and architecture.
@@ -100,7 +101,8 @@ changing a server setting.
 
 | Variable | Used by | Purpose |
 | --- | --- | --- |
-| `CONCTR_ACCOUNTS_FILE` | Server | Path to the account file. Leave blank to use the current OS user’s Conctr directory. Relative paths resolve from the directory containing `.env`. |
+| `CONCTR_DATABASE_URL` | Server | Required database URL. Use `postgresql://` for PostgreSQL or `mysql://` for MariaDB. |
+| `CONCTR_ACCOUNTS_FILE` | Server | Optional legacy import path. Its directory holds temporary password handoffs. Leave blank to use the current OS user’s Conctr directory. Relative paths resolve from the directory containing `.env`. |
 | `CONCTR_PUBLIC_ORIGIN` | Server | HTTPS origin used by browsers for remote access. Leave blank for local development. |
 | `CONCTR_NATIVE_API_ORIGIN` | Desktop client build | HTTPS address of the server. Set before building a desktop release. |
 
