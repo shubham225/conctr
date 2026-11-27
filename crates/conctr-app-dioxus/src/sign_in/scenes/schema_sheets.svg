@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" aria-hidden="true">
+  <rect x="34" y="45" width="218" height="224" rx="10" fill="var(--cn-surface)" stroke="var(--cn-border-strong)" />
+  <rect x="34" y="45" width="218" height="42" rx="8" fill="color-mix(in srgb,var(--cn-primary) 11%,var(--wash))" stroke="var(--cn-border-strong)" />
+  <text x="51" y="72">Source · JSON</text>
+  <text x="56" y="124">orderId</text>
+  <text x="56" y="178">quantity</text>
+  <text x="56" y="232">currency</text>
+  <rect x="470" y="45" width="218" height="224" rx="10" fill="var(--cn-surface)" stroke="var(--cn-border-strong)" />
+  <rect x="470" y="45" width="218" height="42" rx="8" fill="color-mix(in srgb,var(--cn-primary) 11%,var(--wash))" stroke="var(--cn-border-strong)" />
+  <text x="487" y="72">Target · XML</text>
+  <text x="492" y="124">Qty</text>
+  <text x="492" y="178">CurrencyCode</text>
+  <text x="492" y="232">OrderNumber</text>
+  <path d="M251 118C357 118 365 226 470 226" stroke="color-mix(in srgb,var(--cn-primary) 48%,var(--wash))" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <circle cx="251" cy="118" r="5" fill="var(--cn-primary)" stroke-width="2" />
+  <circle cx="470" cy="226" r="5" fill="var(--cn-primary)" stroke-width="2" />
+  <g>
+    <rect x="-11" y="-7" width="22" height="14" rx="5" fill="var(--cn-primary)" stroke="var(--cn-surface)" />
+    <animateMotion path="M251 118C357 118 365 226 470 226" dur="6s" begin="-0s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.08;.92;1" dur="6s" begin="-0s" repeatCount="indefinite" />
+  </g>
+  <path d="M251 172C357 172 365 118 470 118" stroke="color-mix(in srgb,var(--cn-teal-text) 48%,var(--wash))" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <circle cx="251" cy="172" r="5" fill="var(--cn-teal-text)" stroke-width="2" />
+  <circle cx="470" cy="118" r="5" fill="var(--cn-teal-text)" stroke-width="2" />
+  <g>
+    <rect x="-11" y="-7" width="22" height="14" rx="5" fill="var(--cn-teal-text)" stroke="var(--cn-surface)" />
+    <animateMotion path="M251 172C357 172 365 118 470 118" dur="6s" begin="-2s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.08;.92;1" dur="6s" begin="-2s" repeatCount="indefinite" />
+  </g>
+  <path d="M251 226C357 226 365 172 470 172" stroke="color-mix(in srgb,var(--cn-coral-text) 48%,var(--wash))" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <circle cx="251" cy="226" r="5" fill="var(--cn-coral-text)" stroke-width="2" />
+  <circle cx="470" cy="172" r="5" fill="var(--cn-coral-text)" stroke-width="2" />
+  <g>
+    <rect x="-11" y="-7" width="22" height="14" rx="5" fill="var(--cn-coral-text)" stroke="var(--cn-surface)" />
+    <animateMotion path="M251 226C357 226 365 172 470 172" dur="6s" begin="-4s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.08;.92;1" dur="6s" begin="-4s" repeatCount="indefinite" />
+  </g>
+</svg>

@@ -47,10 +47,8 @@ pub use visual_mapping::{
     mapping_yaml, schema_from_json,
 };
 
+pub mod loading;
 pub mod mapping_workspace;
-
-pub mod resizable;
-
 pub mod pipeline_workspace;
-
 pub mod queue;
+pub mod resizable;

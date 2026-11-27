@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" aria-hidden="true">
+  <defs>
+    <pattern id="transit-block" width="58" height="66" x="-25" y="-33" patternUnits="userSpaceOnUse">
+      <rect x=".5" y=".5" width="47" height="52" rx="6" fill="color-mix(in srgb,var(--cn-text) 3%,var(--wash))" stroke="color-mix(in srgb,var(--cn-text) 7%,var(--wash))" />
+    </pattern>
+  </defs>
+  <rect width="720" height="320" fill="url(#transit-block)" />
+  <path d="M405 -50 Q305 80 385 166 T375 370" stroke="color-mix(in srgb,var(--cn-teal-text) 13%,var(--wash))" stroke-width="37" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-24 52H156L252 148H432L532 48H744" stroke="var(--cn-surface)" stroke-width="14" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-24 52H156L252 148H432L532 48H744" stroke="color-mix(in srgb,var(--cn-primary) 70%,var(--wash))" stroke-width="8" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-24 250H150L252 148H432L528 244H744" stroke="var(--cn-surface)" stroke-width="14" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-24 250H150L252 148H432L528 244H744" stroke="color-mix(in srgb,var(--cn-teal-text) 70%,var(--wash))" stroke-width="8" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-24 110H133L240 217H357L426 148H744" stroke="var(--cn-surface)" stroke-width="14" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-24 110H133L240 217H357L426 148H744" stroke="color-mix(in srgb,var(--cn-coral-text) 70%,var(--wash))" stroke-width="8" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <circle cx="80" cy="52" r="6" fill="var(--cn-surface)" stroke="var(--cn-primary)" stroke-width="2" />
+  <circle cx="252" cy="148" r="6" fill="var(--cn-surface)" stroke="var(--cn-primary)" stroke-width="2" />
+  <circle cx="432" cy="148" r="6" fill="var(--cn-surface)" stroke="var(--cn-primary)" stroke-width="2" />
+  <circle cx="574" cy="48" r="6" fill="var(--cn-surface)" stroke="var(--cn-primary)" stroke-width="2" />
+  <circle cx="80" cy="250" r="6" fill="var(--cn-surface)" stroke="var(--cn-teal-text)" stroke-width="2" />
+  <circle cx="574" cy="244" r="6" fill="var(--cn-surface)" stroke="var(--cn-teal-text)" stroke-width="2" />
+  <circle cx="75" cy="110" r="6" fill="var(--cn-surface)" stroke="var(--cn-coral-text)" stroke-width="2" />
+  <circle cx="240" cy="217" r="6" fill="var(--cn-surface)" stroke="var(--cn-coral-text)" stroke-width="2" />
+  <circle cx="595" cy="148" r="6" fill="var(--cn-surface)" stroke="var(--cn-coral-text)" stroke-width="2" />
+  <g>
+    <circle cx="0" cy="0" r="8" fill="var(--cn-primary)" stroke="var(--cn-surface)" stroke-width="3" />
+    <animateMotion path="M-24 52H156L252 148H432L532 48H744" dur="10s" begin="-1s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.08;.92;1" dur="10s" begin="-1s" repeatCount="indefinite" />
+  </g>
+  <g>
+    <circle cx="0" cy="0" r="8" fill="var(--cn-teal-text)" stroke="var(--cn-surface)" stroke-width="3" />
+    <animateMotion path="M-24 250H150L252 148H432L528 244H744" dur="10s" begin="-4s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.08;.92;1" dur="10s" begin="-4s" repeatCount="indefinite" />
+  </g>
+  <g>
+    <circle cx="0" cy="0" r="8" fill="var(--cn-coral-text)" stroke="var(--cn-surface)" stroke-width="3" />
+    <animateMotion path="M-24 110H133L240 217H357L426 148H744" dur="10s" begin="-7s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.08;.92;1" dur="10s" begin="-7s" repeatCount="indefinite" />
+  </g>
+  <text x="58" y="32">Orders</text>
+  <text x="52" y="277">Inventory</text>
+  <text x="53" y="90">Billing</text>
+  <text x="278" y="126">Interchange</text>
+  <text x="551" y="28">Fulfillment</text>
+  <text x="555" y="270">Stock</text>
+  <text x="551" y="176">Accounts</text>
+</svg>

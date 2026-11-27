@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" aria-hidden="true">
+  <path d="M-28 160H210C292 160 306 64 398 64H745" stroke="color-mix(in srgb,var(--cn-primary) 40%,var(--wash))" stroke-width="13" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-28 160H210C292 160 306 64 398 64H745" stroke="var(--cn-surface)" stroke-width="6" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-28 160H210C292 160 306 64 398 64H745" stroke="var(--cn-primary)" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="3 10" />
+  <text x="505" y="40">Archive</text>
+  <path d="M-28 160H210C292 160 306 160 398 160H745" stroke="color-mix(in srgb,var(--cn-teal-text) 40%,var(--wash))" stroke-width="13" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-28 160H210C292 160 306 160 398 160H745" stroke="var(--cn-surface)" stroke-width="6" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-28 160H210C292 160 306 160 398 160H745" stroke="var(--cn-teal-text)" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="3 10" />
+  <text x="505" y="136">Process</text>
+  <path d="M-28 160H210C292 160 306 256 398 256H745" stroke="color-mix(in srgb,var(--cn-coral-text) 40%,var(--wash))" stroke-width="13" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-28 160H210C292 160 306 256 398 256H745" stroke="var(--cn-surface)" stroke-width="6" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-28 160H210C292 160 306 256 398 256H745" stroke="var(--cn-coral-text)" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="3 10" />
+  <text x="505" y="232">Review</text>
+  <circle cx="214" cy="160" r="11" fill="var(--cn-surface)" stroke="var(--cn-text)" stroke-width="2" />
+  <text x="47" y="133">Inbound</text>
+  <g>
+    <rect x="-16" y="-11" width="32" height="22" rx="3" fill="var(--cn-surface)" stroke="var(--cn-primary)" />
+    <path d="M-15 -10l15 11 15 -11" stroke="var(--cn-primary)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+    <animateMotion path="M-28 160H210C292 160 306 64 398 64H745" dur="10s" begin="-1s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.08;.92;1" dur="10s" begin="-1s" repeatCount="indefinite" />
+  </g>
+  <g>
+    <rect x="-16" y="-11" width="32" height="22" rx="3" fill="var(--cn-surface)" stroke="var(--cn-teal-text)" />
+    <path d="M-15 -10l15 11 15 -11" stroke="var(--cn-teal-text)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+    <animateMotion path="M-28 160H210C292 160 306 160 398 160H745" dur="10s" begin="-4.333333333333334s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.08;.92;1" dur="10s" begin="-4.333333333333334s" repeatCount="indefinite" />
+  </g>
+  <g>
+    <rect x="-16" y="-11" width="32" height="22" rx="3" fill="var(--cn-surface)" stroke="var(--cn-coral-text)" />
+    <path d="M-15 -10l15 11 15 -11" stroke="var(--cn-coral-text)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+    <animateMotion path="M-28 160H210C292 160 306 256 398 256H745" dur="10s" begin="-7.666666666666667s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.08;.92;1" dur="10s" begin="-7.666666666666667s" repeatCount="indefinite" />
+  </g>
+</svg>

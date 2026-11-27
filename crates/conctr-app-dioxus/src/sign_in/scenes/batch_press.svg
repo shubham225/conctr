@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" aria-hidden="true">
+  <rect x="430" y="68" width="230" height="185" rx="12" fill="var(--cn-surface)" stroke="var(--cn-amber-text)" />
+  <rect x="430" y="68" width="230" height="38" rx="8" fill="color-mix(in srgb,var(--cn-amber-text) 15%,var(--wash))" stroke="var(--cn-amber-text)" />
+  <text x="450" y="93">Batch envelope</text>
+  <path d="M219 95l60 43v44l-60 43Z" stroke="var(--cn-amber-text)" stroke-width="2" fill="color-mix(in srgb,var(--cn-amber-text) 16%,var(--wash))" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M279 160H427" stroke="color-mix(in srgb,var(--cn-amber-text) 45%,var(--wash))" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <g>
+    <rect x="-16" y="-11" width="32" height="22" rx="3" fill="var(--cn-surface)" stroke="var(--cn-amber-text)" />
+    <path d="M-15 -10l15 11 15 -11" stroke="var(--cn-amber-text)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+    <animateTransform attributeName="transform" type="translate" values="62 126;62 126;283 160;476 145;476 145;758 145" keyTimes="0;0.05;0.18;0.31;0.83;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.95;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+  </g>
+  <g>
+    <rect x="-16" y="-11" width="32" height="22" rx="3" fill="var(--cn-surface)" stroke="var(--cn-amber-text)" />
+    <path d="M-15 -10l15 11 15 -11" stroke="var(--cn-amber-text)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+    <animateTransform attributeName="transform" type="translate" values="114 126;114 126;283 160;542 145;542 145;824 145" keyTimes="0;0.142;0.272;0.402;0.83;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.95;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+  </g>
+  <g>
+    <rect x="-16" y="-11" width="32" height="22" rx="3" fill="var(--cn-surface)" stroke="var(--cn-amber-text)" />
+    <path d="M-15 -10l15 11 15 -11" stroke="var(--cn-amber-text)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+    <animateTransform attributeName="transform" type="translate" values="166 126;166 126;283 160;608 145;608 145;890 145" keyTimes="0;0.234;0.364;0.494;0.83;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.95;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+  </g>
+  <g>
+    <rect x="-16" y="-11" width="32" height="22" rx="3" fill="var(--cn-surface)" stroke="var(--cn-amber-text)" />
+    <path d="M-15 -10l15 11 15 -11" stroke="var(--cn-amber-text)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+    <animateTransform attributeName="transform" type="translate" values="62 178;62 178;283 160;476 206;476 206;758 206" keyTimes="0;0.326;0.456;0.586;0.83;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.95;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+  </g>
+  <g>
+    <rect x="-16" y="-11" width="32" height="22" rx="3" fill="var(--cn-surface)" stroke="var(--cn-amber-text)" />
+    <path d="M-15 -10l15 11 15 -11" stroke="var(--cn-amber-text)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+    <animateTransform attributeName="transform" type="translate" values="114 178;114 178;283 160;542 206;542 206;824 206" keyTimes="0;0.418;0.548;0.678;0.83;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.95;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+  </g>
+  <g>
+    <rect x="-16" y="-11" width="32" height="22" rx="3" fill="var(--cn-surface)" stroke="var(--cn-amber-text)" />
+    <path d="M-15 -10l15 11 15 -11" stroke="var(--cn-amber-text)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+    <animateTransform attributeName="transform" type="translate" values="166 178;166 178;283 160;608 206;608 206;890 206" keyTimes="0;0.51;0.64;0.77;0.83;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.95;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+  </g>
+  <text x="125" y="279" text-anchor="middle">Individual messages</text>
+  <text x="281" y="279" text-anchor="middle">Collection</text>
+  <text x="546" y="279" text-anchor="middle">Batch delivery</text>
+</svg>

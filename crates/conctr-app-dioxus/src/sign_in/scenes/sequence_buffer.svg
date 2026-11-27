@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" aria-hidden="true">
+  <rect x="315" y="58" width="94" height="60" rx="8" fill="var(--cn-surface)" stroke="var(--cn-border-strong)" />
+  <path d="M330 110h64" stroke="color-mix(in srgb,var(--cn-teal-text) 30%,var(--wash))" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <rect x="315" y="135" width="94" height="60" rx="8" fill="var(--cn-surface)" stroke="var(--cn-border-strong)" />
+  <path d="M330 187h64" stroke="color-mix(in srgb,var(--cn-teal-text) 30%,var(--wash))" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <rect x="315" y="212" width="94" height="60" rx="8" fill="var(--cn-surface)" stroke="var(--cn-border-strong)" />
+  <path d="M330 264h64" stroke="color-mix(in srgb,var(--cn-teal-text) 30%,var(--wash))" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-30 86H144L361 240H498L766 162" stroke="color-mix(in srgb,var(--cn-coral-text) 25%,var(--wash))" stroke-width="1.5" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-30 163H144L361 86H498L766 162" stroke="color-mix(in srgb,var(--cn-primary) 25%,var(--wash))" stroke-width="1.5" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M-30 240H144L361 163H498L766 162" stroke="color-mix(in srgb,var(--cn-teal-text) 25%,var(--wash))" stroke-width="1.5" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+  <g>
+    <rect x="-23" y="-19" width="46" height="38" rx="7" fill="color-mix(in srgb,var(--cn-coral-text) 18%,var(--wash))" stroke="var(--cn-coral-text)" />
+    <text x="0" y="5" text-anchor="middle">03</text>
+    <animateTransform attributeName="transform" type="translate" values="-32 86;-32 86;144 86;361 240;361 240;498 240;766 162;766 162" keyTimes="0;0.06;0.13;0.27;0.738;0.798;0.958;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+  </g>
+  <g>
+    <rect x="-23" y="-19" width="46" height="38" rx="7" fill="color-mix(in srgb,var(--cn-primary) 18%,var(--wash))" stroke="var(--cn-primary)" />
+    <text x="0" y="5" text-anchor="middle">01</text>
+    <animateTransform attributeName="transform" type="translate" values="-32 163;-32 163;144 163;361 86;361 86;498 86;766 162;766 162" keyTimes="0;0.143;0.213;0.353;0.57;0.63;0.79;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+  </g>
+  <g>
+    <rect x="-23" y="-19" width="46" height="38" rx="7" fill="color-mix(in srgb,var(--cn-teal-text) 18%,var(--wash))" stroke="var(--cn-teal-text)" />
+    <text x="0" y="5" text-anchor="middle">02</text>
+    <animateTransform attributeName="transform" type="translate" values="-32 240;-32 240;144 240;361 163;361 163;498 163;766 162;766 162" keyTimes="0;0.226;0.296;0.436;0.654;0.714;0.874;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+  </g>
+  <text x="96" y="279" text-anchor="middle">Out of order</text>
+  <text x="362" y="279" text-anchor="middle">Sequence buffer</text>
+  <text x="624" y="279" text-anchor="middle">Ordered output</text>
+</svg>

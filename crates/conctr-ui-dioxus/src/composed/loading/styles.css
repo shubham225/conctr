@@ -1,0 +1,209 @@
+/* Conctr loader.
+   Optional overrides, set on :root or any parent element:
+   --conctr-loader-duration, --conctr-loader-bg,
+   --conctr-loader-text, --conctr-loader-font
+
+   Text uses Sora, then Inter, if your app has loaded them. */
+
+.conctr-loader {
+  --cl-line: #4f46e5;
+  --cl-track: #e5e7eb;
+  --cl-frame: 0.32;
+  --cl-icon-shadow:
+    drop-shadow(0 2px 3px rgba(30, 27, 75, 0.1))
+    drop-shadow(0 10px 18px rgba(79, 70, 229, 0.22));
+  --cl-text-shadow: 0 2px 8px rgba(30, 27, 75, 0.12);
+  --cl-bar-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
+  --cl-time: var(--conctr-loader-duration, 2.2s);
+  --cl-ease: cubic-bezier(0.65, 0, 0.35, 1);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--conctr-loader-text, inherit);
+  font-family: var(--conctr-loader-font, "Sora", "Sora Variable", "sora-latin", "Inter", "Inter Variable", "inter-latin", system-ui, sans-serif);
+}
+
+.conctr-loader--fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--conctr-loader-bg, #ffffff);
+  color: var(--conctr-loader-text, #111827);
+}
+
+@media (prefers-color-scheme: dark) {
+  .conctr-loader {
+    --cl-line: #818cf8;
+    --cl-track: #262838;
+    --cl-frame: 0.45;
+    --cl-icon-shadow:
+      drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35))
+      drop-shadow(0 10px 20px rgba(99, 102, 241, 0.3));
+    --cl-text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  }
+
+  .conctr-loader--fullscreen {
+    background: var(--conctr-loader-bg, #0c0d14);
+    color: var(--conctr-loader-text, #f3f4f6);
+  }
+}
+
+/* ---------- layout and type ---------- */
+
+.conctr-loader__icon {
+  display: block;
+  overflow: visible;
+  filter: var(--cl-icon-shadow);
+}
+
+.conctr-loader__text {
+  font-family: system-ui, sans-serif;
+  max-width: 80vw;
+  margin-top: 18px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-shadow: var(--cl-text-shadow);
+}
+
+.conctr-loader__bar {
+  width: 168px;
+  height: 4px;
+  margin-top: 24px;
+  border-radius: 4px;
+  background: var(--cl-track);
+  /* clips the moving fill but still lets it cast a shadow */
+  clip-path: inset(-12px 0 round 4px);
+}
+
+.conctr-loader__bar span {
+  display: block;
+  width: 40%;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--cl-line);
+  box-shadow: var(--cl-bar-shadow);
+  animation: conctr-loader-slide var(--cl-time) var(--cl-ease) infinite;
+}
+
+/* ---------- icon ---------- */
+
+.conctr-loader__frame {
+  opacity: var(--cl-frame);
+}
+
+.conctr-loader__frame polygon {
+  fill: none;
+  stroke: var(--cl-line);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.conctr-loader__frame circle {
+  fill: var(--cl-line);
+}
+
+.conctr-loader__spokes {
+  fill: none;
+  stroke: var(--cl-line);
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.45;
+}
+
+.conctr-loader__spoke,
+.conctr-loader__node,
+.conctr-loader__core {
+  transform-box: view-box;
+  animation-duration: var(--cl-time);
+  animation-timing-function: var(--cl-ease);
+  animation-iteration-count: infinite;
+}
+
+.conctr-loader__spoke {
+  stroke-dasharray: 24.1 30;
+  animation-name: conctr-loader-spoke;
+}
+
+.conctr-loader__node--circle {
+  transform-origin: 32px 8px;
+  animation-name: conctr-loader-circle;
+}
+
+.conctr-loader__node--square {
+  transform-origin: 52.8px 44px;
+  animation-name: conctr-loader-square;
+}
+
+.conctr-loader__node--triangle {
+  transform-origin: 11.2px 44px;
+  animation-name: conctr-loader-triangle;
+}
+
+.conctr-loader__core {
+  transform-origin: 32px 32px;
+  animation-name: conctr-loader-core;
+}
+
+/* ---------- keyframes ---------- */
+
+/* Nodes glide into the core and back out */
+@keyframes conctr-loader-circle {
+  0%, 12% { transform: translate(0, 0) scale(1); }
+  44%, 56% { transform: translate(0, 24px) scale(0.4); }
+  88%, 100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes conctr-loader-square {
+  0%, 12% { transform: translate(0, 0) scale(1); }
+  44%, 56% { transform: translate(-20.8px, -12px) scale(0.4); }
+  88%, 100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes conctr-loader-triangle {
+  0%, 12% { transform: translate(0, 0) scale(1); }
+  44%, 56% { transform: translate(20.8px, -12px) scale(0.4); }
+  88%, 100% { transform: translate(0, 0) scale(1); }
+}
+
+/* Spokes shorten and lengthen in step with the nodes */
+@keyframes conctr-loader-spoke {
+  0%, 12% { stroke-dashoffset: 0; opacity: 1; }
+  43% { opacity: 1; }
+  44%, 56% { stroke-dashoffset: 24.1; opacity: 0; }
+  57% { opacity: 1; }
+  88%, 100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+/* A sixth of a turn looks identical at rest, so the loop is seamless */
+@keyframes conctr-loader-core {
+  0%, 30% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(30deg) scale(1.16); }
+  70%, 100% { transform: rotate(60deg) scale(1); }
+}
+
+@keyframes conctr-loader-slide {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(250%); }
+}
+
+/* Reduced motion: keep everything still and gently fade the core */
+@media (prefers-reduced-motion: reduce) {
+  .conctr-loader__spoke,
+  .conctr-loader__node,
+  .conctr-loader__bar span {
+    animation: none;
+  }
+
+  .conctr-loader__bar { display: none; }
+  .conctr-loader__core { animation-name: conctr-loader-fade; }
+}
+
+@keyframes conctr-loader-fade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}

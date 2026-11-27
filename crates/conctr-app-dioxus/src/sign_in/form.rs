@@ -9,6 +9,7 @@ use conctr_ui_dioxus::ui::{
     },
 };
 use dioxus::prelude::*;
+
 #[component]
 pub(super) fn LoginForm() -> Element {
     let mut session = use_context::<SessionState>();
@@ -20,8 +21,9 @@ pub(super) fn LoginForm() -> Element {
         return rsx! {super::recovery_form::RecoveryForm { on_back:move |_|recovering.set(false) }};
     }
     rsx! {
-        h1 { class: "text-2xl font-semibold", if setup() { "Set your new password" } else { "Sign in to your workspace" } }
+        h1 { class: "text-2xl font-semibold", if setup() { "Set your new password" } else { "Welcome back" } }
         if setup() { p { class: "text-sm text-muted-foreground", "Choose a password of at least 15 characters for future sign-ins." } }
+        if !setup() { p { class: Styles::subtitle.inner, "Sign in to your Conctr workspace." } }
         form {
             class: "grid gap-4", method: "post",
             onsubmit: move |event| {
@@ -65,13 +67,13 @@ pub(super) fn LoginForm() -> Element {
             },
             div { class: if setup() { "hidden" } else { "grid gap-1" },
                 label { r#for: "username", class: "text-sm font-medium", "Username" }
-                Input { class: "h-12", id: "username", name: "username", placeholder: "admin", required: true }
+                Input { class: "h-12", id: "username", name: "username", placeholder: "Enter your username", required: true }
             }
             div { hidden: setup(),
                 PasswordField { name: "password", label: "Password" }
             }
             if !setup() {
-                button { r#type:"button", class:"justify-self-end text-sm font-medium text-primary hover:underline", disabled:busy(),onclick: move |_|recovering.set(true),"Forgot password?" }
+                button { r#type:"button", class:"justify-self-end text-sm font-medium text-primary hover:underline cursor-pointer", disabled:busy(),onclick: move |_|recovering.set(true),"Forgot password?" }
             }
             if setup() {
                 PasswordField { name: "new-password", label: "New password" }

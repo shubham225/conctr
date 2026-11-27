@@ -44,17 +44,17 @@ pub(super) fn UserControl() -> Element {
                         }
                     }
                     DropdownMenuSeparator {}
-                    button { r#type: "button",
-                        onclick: move |_| async move {
-                            match conctr_api_dioxus::logout().await {
-                                Ok(()) => session.set(None),
-                                Err(_) => failure.set(true),
-                            }
-                        },
-                        class: "flex w-full items-center gap-2 px-2 py-2 text-sm text-foreground hover:bg-accent",
-                        icons::LogOut { class: "size-4" } "Log out"
-                    }
-                    if failure() { p { role: "alert", "Sign-out failed. Try again." } }
+                      button { r#type: "button",
+                          onclick: move |_| async move {
+                              match conctr_api_dioxus::logout().await {
+                                  Ok(()) => session.set(None),
+                                  Err(_) => failure.set(true),
+                              }
+                          },
+                          class: "flex w-full items-center gap-2 px-2 py-2 text-sm text-foreground hover:bg-destructive hover:text-destructive-foreground",
+                          icons::LogOut { class: "size-4" } "Log out"
+                      }
+                      if failure() { p { role: "alert", "Sign-out failed. Try again." } }
                 }
             }
         }

@@ -2,10 +2,17 @@
 //! HTTP cookie jar automatically attaches the secret cookie to API requests.
 use crate::Route;
 mod form;
-mod protocol_hub;
 mod recovery_form;
+mod scenes;
 use conctr_api_dioxus::{SessionInfo, current_session};
-use conctr_ui_dioxus::{assets::images, ui::theme::ThemeProvider};
+use conctr_ui_dioxus::{
+    assets::images,
+    composed::loading::ConctrLoader,
+    ui::{
+        theme::{Theme, ThemeProvider},
+        toast::{ToastMessage, ToastTrigger, ToastType},
+    },
+};
 use dioxus::prelude::*;
 use form::LoginForm;
 
@@ -20,6 +27,7 @@ pub(super) fn SessionGate() -> Element {
     let mut session = use_context_provider(|| Signal::new(None::<SessionInfo>));
     let mut ready = use_signal(|| false);
     let mut failure = use_signal(|| "");
+    let mut dark = use_signal(|| false);
     let titlebar = use_context::<Option<Element>>();
     // Effects run on the client after hydration. The first HTML response can
     // therefore be shared safely and never contains a protected product page.
@@ -42,25 +50,22 @@ pub(super) fn SessionGate() -> Element {
     rsx! {
         document::Stylesheet { href: CSS }
         document::Title { "Sign in · Conctr" }
-        ThemeProvider {
-            div { class: format!("{} flex flex-col bg-background", Styles::screen.inner),
+        ThemeProvider { theme: if dark() { Theme::Dark } else { Theme::Light },
+            div { class: Styles::screen.inner,
                 {titlebar}
-                main { class: "flex flex-1 items-center justify-center p-4",
-                    div { class: Styles::panel.inner,
-                        aside { class: Styles::brand.inner, "data-theme": "dark",
-                            img { src: images::HORIZONTAL_COLOR_DARK_SVG, alt: "Conctr", width: 148, height: 40 }
-                            protocol_hub::ProtocolHub {}
-                            p { class: Styles::tagline.inner, "Where systems meet." }
-                        }
-                        section { class: Styles::pane.inner,
-                        if !ready() {
-                            p { role: "status", "Checking your session…" }
-                        } else {
-                            if !failure().is_empty() { p { role: "alert", "{failure}" } }
-                            LoginForm {}
-                        }
-                        }
+                if !ready() {
+                  ConctrLoader { fullscreen: true, text: "Checking your session…" }
+                } else {
+                  main { class: Styles::panel.inner,
+                    scenes::ScenePanel { dark: dark(), on_theme_change: move |value| dark.set(value) }
+                    section { class: Styles::pane.inner,
+                      div { class: Styles::form_box.inner,
+                        img { class: Styles::mark.inner, alt: "", src: if dark() { images::HUB_DARK } else { images::HUB } }
+                        if !failure().is_empty() { p { role: "alert", "{failure}" } }
+                        LoginForm {}
+                      }
                     }
+                  }
                 }
             }
         }
