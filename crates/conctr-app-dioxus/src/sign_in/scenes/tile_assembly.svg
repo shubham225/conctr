@@ -4,7 +4,7 @@
       <rect x="0" y="0" width="66" height="66" rx="3" fill="color-mix(in srgb,var(--cn-primary) 18%,var(--wash))" stroke="var(--cn-primary)" />
       <path d="M0 32h66 M32 0v66" stroke="color-mix(in srgb,var(--cn-primary) 33%,var(--wash))" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
       <circle cx="32" cy="32" r="6" fill="var(--cn-surface)" stroke="var(--cn-primary)" stroke-width="2" />
-      <animateTransform attributeName="transform" type="translate" values="0 0;-80 -45;-80 -45;-15 -15;-15 -15;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="10.8s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+      <animateTransform begin="-.12s" attributeName="transform" type="translate" values="0 0;-80 -45;-80 -45;-15 -15;-15 -15;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="8.4s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
     </g>
   </g>
   <g transform="translate(316 61)">
@@ -12,7 +12,7 @@
       <rect x="0" y="0" width="66" height="66" rx="3" fill="color-mix(in srgb,var(--cn-primary) 28%,var(--wash))" stroke="var(--cn-primary)" />
       <path d="M0 32h66 M32 0v66" stroke="color-mix(in srgb,var(--cn-primary) 33%,var(--wash))" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
       <circle cx="32" cy="32" r="6" fill="var(--cn-surface)" stroke="var(--cn-primary)" stroke-width="2" />
-      <animateTransform attributeName="transform" type="translate" values="0 0;-35 -45;-35 -45;0 -15;0 -15;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="10.8s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+      <animateTransform begin="-.12s" attributeName="transform" type="translate" values="0 0;-35 -45;-35 -45;0 -15;0 -15;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="8.4s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
     </g>
   </g>
   <g transform="translate(382 61)">
@@ -20,7 +20,7 @@
       <rect x="0" y="0" width="66" height="66" rx="3" fill="color-mix(in srgb,var(--cn-primary) 38%,var(--wash))" stroke="var(--cn-primary)" />
       <path d="M0 32h66 M32 0v66" stroke="color-mix(in srgb,var(--cn-primary) 33%,var(--wash))" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
       <circle cx="32" cy="32" r="6" fill="var(--cn-surface)" stroke="var(--cn-primary)" stroke-width="2" />
-      <animateTransform attributeName="transform" type="translate" values="0 0;10 -45;10 -45;15 -15;15 -15;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="10.8s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+      <animateTransform begin="-.12s" attributeName="transform" type="translate" values="0 0;10 -45;10 -45;15 -15;15 -15;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="8.4s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
     </g>
   </g>
   <g transform="translate(250 127)">
@@ -28,7 +28,7 @@
       <rect x="0" y="0" width="66" height="66" rx="3" fill="color-mix(in srgb,var(--cn-teal-text) 18%,var(--wash))" stroke="var(--cn-teal-text)" />
       <path d="M0 32h66 M32 0v66" stroke="color-mix(in srgb,var(--cn-teal-text) 33%,var(--wash))" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
       <circle cx="32" cy="32" r="6" fill="var(--cn-surface)" stroke="var(--cn-teal-text)" stroke-width="2" />
-      <animateTransform attributeName="transform" type="translate" values="0 0;-45 0;-45 0;-15 0;-15 0;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="10.8s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+      <animateTransform begin="-.12s" attributeName="transform" type="translate" values="0 0;-45 0;-45 0;-15 0;-15 0;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="8.4s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
     </g>
   </g>
   <g transform="translate(316 127)">
@@ -36,7 +36,7 @@
       <rect x="0" y="0" width="66" height="66" rx="3" fill="color-mix(in srgb,var(--cn-teal-text) 28%,var(--wash))" stroke="var(--cn-teal-text)" />
       <path d="M0 32h66 M32 0v66" stroke="color-mix(in srgb,var(--cn-teal-text) 33%,var(--wash))" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
       <circle cx="32" cy="32" r="6" fill="var(--cn-surface)" stroke="var(--cn-teal-text)" stroke-width="2" />
-      <animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 0;0 0;0 0;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="10.8s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+      <animateTransform begin="-.12s" attributeName="transform" type="translate" values="0 0;0 0;0 0;0 0;0 0;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="8.4s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
     </g>
   </g>
   <g transform="translate(382 127)">
@@ -44,7 +44,7 @@
       <rect x="0" y="0" width="66" height="66" rx="3" fill="color-mix(in srgb,var(--cn-teal-text) 38%,var(--wash))" stroke="var(--cn-teal-text)" />
       <path d="M0 32h66 M32 0v66" stroke="color-mix(in srgb,var(--cn-teal-text) 33%,var(--wash))" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
       <circle cx="32" cy="32" r="6" fill="var(--cn-surface)" stroke="var(--cn-teal-text)" stroke-width="2" />
-      <animateTransform attributeName="transform" type="translate" values="0 0;45 0;45 0;15 0;15 0;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="10.8s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+      <animateTransform begin="-.12s" attributeName="transform" type="translate" values="0 0;45 0;45 0;15 0;15 0;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="8.4s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
     </g>
   </g>
   <g transform="translate(250 193)">
@@ -52,7 +52,7 @@
       <rect x="0" y="0" width="66" height="66" rx="3" fill="color-mix(in srgb,var(--cn-coral-text) 18%,var(--wash))" stroke="var(--cn-coral-text)" />
       <path d="M0 32h66 M32 0v66" stroke="color-mix(in srgb,var(--cn-coral-text) 33%,var(--wash))" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
       <circle cx="32" cy="32" r="6" fill="var(--cn-surface)" stroke="var(--cn-coral-text)" stroke-width="2" />
-      <animateTransform attributeName="transform" type="translate" values="0 0;-10 45;-10 45;-15 15;-15 15;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="10.8s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+      <animateTransform begin="-.12s" attributeName="transform" type="translate" values="0 0;-10 45;-10 45;-15 15;-15 15;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="8.4s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
     </g>
   </g>
   <g transform="translate(316 193)">
@@ -60,7 +60,7 @@
       <rect x="0" y="0" width="66" height="66" rx="3" fill="color-mix(in srgb,var(--cn-coral-text) 28%,var(--wash))" stroke="var(--cn-coral-text)" />
       <path d="M0 32h66 M32 0v66" stroke="color-mix(in srgb,var(--cn-coral-text) 33%,var(--wash))" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
       <circle cx="32" cy="32" r="6" fill="var(--cn-surface)" stroke="var(--cn-coral-text)" stroke-width="2" />
-      <animateTransform attributeName="transform" type="translate" values="0 0;35 45;35 45;0 15;0 15;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="10.8s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+      <animateTransform begin="-.12s" attributeName="transform" type="translate" values="0 0;35 45;35 45;0 15;0 15;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="8.4s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
     </g>
   </g>
   <g transform="translate(382 193)">
@@ -68,7 +68,7 @@
       <rect x="0" y="0" width="66" height="66" rx="3" fill="color-mix(in srgb,var(--cn-coral-text) 38%,var(--wash))" stroke="var(--cn-coral-text)" />
       <path d="M0 32h66 M32 0v66" stroke="color-mix(in srgb,var(--cn-coral-text) 33%,var(--wash))" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
       <circle cx="32" cy="32" r="6" fill="var(--cn-surface)" stroke="var(--cn-coral-text)" stroke-width="2" />
-      <animateTransform attributeName="transform" type="translate" values="0 0;80 45;80 45;15 15;15 15;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="10.8s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+      <animateTransform begin="-.12s" attributeName="transform" type="translate" values="0 0;80 45;80 45;15 15;15 15;0 0;0 0" keyTimes="0;0.1389;0.3333;0.4722;0.6667;0.8056;1" dur="8.4s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
     </g>
   </g>
   <text x="32" y="165">Fragments</text>

@@ -13,7 +13,7 @@
       </g>
       <path d="M185 2h27l12 -11h24" stroke="var(--cn-teal-text)" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
       <text x="257" y="-5">Transport</text>
-      <animateTransform attributeName="transform" type="translate" values="0 0;0 7;0 7;0 0;0 0" keyTimes="0;0.4;0.52;0.93;1" dur="9s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+      <animateTransform begin="-.18s" attributeName="transform" type="translate" values="0 0;0 7;0 7;0 0;0 0" keyTimes="0;0.4;0.52;0.93;1" dur="9s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
     </g>
   </g>
   <g transform="translate(320 155)">
@@ -30,7 +30,7 @@
       </g>
       <path d="M185 2h27l12 -11h24" stroke="var(--cn-primary)" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
       <text x="257" y="-5">Format</text>
-      <animateTransform attributeName="transform" type="translate" values="0 0;0 -9;0 -9;0 0;0 0" keyTimes="0;0.4;0.52;0.93;1" dur="9s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+      <animateTransform begin="-.18s" attributeName="transform" type="translate" values="0 0;0 -9;0 -9;0 0;0 0" keyTimes="0;0.4;0.52;0.93;1" dur="9s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
     </g>
   </g>
   <g transform="translate(320 109)">
@@ -50,7 +50,7 @@
       </g>
       <path d="M185 2h27l12 -11h24" stroke="var(--cn-coral-text)" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
       <text x="257" y="-5">Mapping</text>
-      <animateTransform attributeName="transform" type="translate" values="0 0;0 -27;0 -27;0 0;0 0" keyTimes="0;0.4;0.52;0.93;1" dur="9s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+      <animateTransform begin="-.18s" attributeName="transform" type="translate" values="0 0;0 -27;0 -27;0 0;0 0" keyTimes="0;0.4;0.52;0.93;1" dur="9s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
     </g>
   </g>
 </svg>

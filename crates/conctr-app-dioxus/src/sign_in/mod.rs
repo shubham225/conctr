@@ -10,7 +10,7 @@ use conctr_ui_dioxus::{
     composed::loading::ConctrLoader,
     ui::{
         theme::{Theme, ThemeProvider},
-        toast::{ToastMessage, ToastTrigger, ToastType},
+        toast::{ToastType, use_toast},
     },
 };
 use dioxus::prelude::*;
@@ -24,26 +24,10 @@ pub(super) type SessionState = Signal<Option<SessionInfo>>;
 
 #[component]
 pub(super) fn SessionGate() -> Element {
-    let mut session = use_context_provider(|| Signal::new(None::<SessionInfo>));
-    let mut ready = use_signal(|| false);
-    let mut failure = use_signal(|| "");
+    let session = use_context_provider(|| Signal::new(None::<SessionInfo>));
+    let ready = use_signal(|| false);
     let mut dark = use_signal(|| false);
     let titlebar = use_context::<Option<Element>>();
-    // Effects run on the client after hydration. The first HTML response can
-    // therefore be shared safely and never contains a protected product page.
-    use_effect(move || {
-        spawn(async move {
-            match current_session().await {
-                Ok(info) => {
-                    session.set(info);
-                    failure.set("");
-                }
-                Err(ServerFnError::ServerError { code: 403, .. }) => failure.set("Open the localhost address printed by the server, or use the configured public HTTPS address."),
-                Err(_) => failure.set("Session check failed. Make sure the Conctr fullstack server is running, then sign in again."),
-            }
-            ready.set(true);
-        });
-    });
     if let Some(info) = session() {
         return rsx! { SignedIn { remaining_seconds: info.remaining_seconds } };
     }
@@ -54,15 +38,15 @@ pub(super) fn SessionGate() -> Element {
             div { class: Styles::screen.inner,
                 {titlebar}
                 if !ready() {
-                  ConctrLoader { fullscreen: true, text: "Checking your session…" }
+                  SessionCheck { ready }
                 } else {
                   main { class: Styles::panel.inner,
                     scenes::ScenePanel { dark: dark(), on_theme_change: move |value| dark.set(value) }
                     section { class: Styles::pane.inner,
                       div { class: Styles::form_box.inner,
                         img { class: Styles::mark.inner, alt: "", src: if dark() { images::HUB_DARK } else { images::HUB } }
-                        if !failure().is_empty() { p { role: "alert", "{failure}" } }
                         LoginForm {}
+                        TestToastButton {}
                       }
                     }
                   }
@@ -70,6 +54,49 @@ pub(super) fn SessionGate() -> Element {
             }
         }
     }
+}
+
+#[component]
+fn TestToastButton() -> Element {
+    let toast = use_toast();
+    rsx! {
+        button {
+            r#type: "button",
+            onclick: move |_| toast.push(
+                "Session check failed",
+                "Make sure the Conctr fullstack server is running, then sign in again.",
+                ToastType::Error,
+            ),
+            "Test error toast"
+        }
+    }
+}
+
+#[component]
+fn SessionCheck(mut ready: Signal<bool>) -> Element {
+    let mut session = use_context::<SessionState>();
+    let toast = use_toast();
+    // Run after hydration so the initial response can be shared safely.
+    use_effect(move || {
+        spawn(async move {
+            match current_session().await {
+                Ok(info) => session.set(info),
+                Err(ServerFnError::ServerError { code: 403, .. }) => toast.push(
+                    "Session check blocked",
+                    "Open the localhost address printed by the server, or use the configured public HTTPS address.",
+                    ToastType::Warning,
+                ),
+                Err(_) => toast.push(
+                    "Session check failed",
+                    "Make sure the Conctr fullstack server is running, then sign in again.",
+                    ToastType::Error,
+                ),
+            }
+            ready.set(true);
+        });
+    });
+
+    rsx! { ConctrLoader { fullscreen: true, text: "Checking your session…" } }
 }
 
 #[component]

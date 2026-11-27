@@ -4,6 +4,8 @@ use dioxus::prelude::*;
 pub fn FeedbackDemo() -> Element {
     rsx! {
         div { class: "grid gap-3",
+            crate::composed::loading::ConctrLoader { size: 80, progress_bar: true }
+            crate::composed::loading::ConctrLoader { size: 80, text: "Importing connections", value: 42.0 }
             FeedbackMessage {
                 variant: AlertVariant::Success,
                 title: "Connection created",

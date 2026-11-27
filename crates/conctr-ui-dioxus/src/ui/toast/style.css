@@ -14,8 +14,84 @@
 .cn-toast-close:hover { background:var(--cn-sunken); color:var(--cn-text); }
 .cn-toast-region.cn-toast { position:fixed; inset:auto 24px 24px auto; z-index:500; width:min(440px,calc(100vw - 32px)); max-width:none; padding:0; border:0; background:transparent; box-shadow:none; }
 @media(pointer:coarse) { .cn-toast-close { min-width:44px; min-height:44px; } }
-/* Shared notification queue: newest items sit closest to the lower viewport edge. */
-.cn-toast-stack { position:fixed; right:24px; bottom:24px; z-index:500; display:flex; flex-direction:column; gap:var(--cn-space-3); width:min(440px,calc(100vw - 32px)); max-height:calc(100dvh - 48px); overflow:auto; padding:var(--cn-space-1); }
-.cn-toast-stack-item { flex-shrink:0; }
-@media(max-width:639px) { .cn-toast-stack { right:16px; bottom:16px; max-height:calc(100dvh - 32px); } }
-@media(max-width:639px) { .cn-toast-region.cn-toast { right:16px; bottom:16px; } }
+/* Only the front card sets the viewport height. Older cards peek out above it. */
+.cn-toast-stack {
+    --toast-inset: var(--cn-space-6);
+    position: fixed;
+    inset: auto var(--toast-inset) var(--toast-inset) auto;
+    z-index: var(--cn-z-toast);
+    width: min(420px, calc(100% - 2 * var(--toast-inset)));
+    isolation: isolate;
+}
+.cn-toast-stack-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--cn-radius-lg);
+    background: var(--cn-raised);
+    outline: 1px solid var(--cn-border);
+    outline-offset: -1px;
+    box-shadow: var(--cn-shadow-3);
+}
+@media not (pointer: coarse) {
+    .cn-toast-stack:not(:hover, :focus-within) .cn-toast-stack-item:not(:first-child) {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        transform: translateY(-8px) scaleX(.96);
+        pointer-events: none;
+    }
+    .cn-toast-stack:not(:hover, :focus-within) .cn-toast-stack-item:nth-child(n+3) {
+        z-index: -2;
+        transform: translateY(-16px) scaleX(.92);
+    }
+    .cn-toast-stack:not(:hover, :focus-within) .cn-toast-stack-item:nth-child(n+4),
+    .cn-toast-stack:not(:hover, :focus-within) .cn-toast-stack-item:not(:first-child) > * {
+        visibility: hidden;
+    }
+}
+.cn-toast-stack:is(:hover, :focus-within) {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--cn-space-2);
+    max-height: calc(100dvh - 2 * var(--toast-inset));
+    overflow: auto;
+    overscroll-behavior: contain;
+}
+@media (pointer: coarse) {
+    .cn-toast-stack {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: var(--cn-space-2);
+        max-height: min(45dvh, calc(100dvh - 2 * var(--toast-inset)));
+        overflow: auto;
+        overscroll-behavior: contain;
+    }
+}
+.cn-toast-stack-item { flex-shrink: 0; }
+.cn-toast-stack-item .cn-toast-message { box-shadow: none; }
+.cn-toast-countdown {
+    position: absolute;
+    inset: auto 0 0;
+    height: 3px;
+    pointer-events: none;
+    background: var(--cn-primary);
+    transform-origin: left;
+    animation: cn-toast-expiry 5s linear forwards;
+}
+@keyframes cn-toast-expiry { to { transform: scaleX(0); } }
+.cn-toast-stack:is(:hover, :focus-within) .cn-toast-countdown {
+    animation-play-state: paused;
+}
+/* Preserve the reading time while reducing motion to five discrete changes. */
+@layer base {
+    @media (prefers-reduced-motion: reduce) {
+        .cn-toast-countdown {
+            animation-duration: 5s !important;
+            animation-timing-function: steps(5);
+        }
+    }
+}
+@media (max-width: 639px) {
+    .cn-toast-stack { --toast-inset: var(--cn-space-4); left: var(--toast-inset); margin-inline: auto; }
+    .cn-toast-region.cn-toast { right: 16px; bottom: 16px; }
+}

@@ -47,6 +47,22 @@ summary, separate from the interactive WorkflowBuilder and executable flow state
 EmptyState accepts action children so the application owns the action.
 The gallery groups these examples under Composed.
 
+### Loading indicator
+
+Use `composed::loading::ConctrLoader` inline or pass `fullscreen: true` to center
+the logo in the viewport. The caption defaults to `Loading...`. Pass `text` to
+customize it or an empty string to hide it.
+
+```rust,ignore
+ConctrLoader {}
+ConctrLoader { fullscreen: true, text: "Checking your session…", progress_bar: true }
+ConctrLoader { text: "Importing connections", value: 42.0 }
+```
+
+A finite `value` shows percentage completion, including zero, and takes priority
+over the looping `progress_bar`. Without either prop, the loader shows the logo
+and caption alone.
+
 ## Form and date compositions
 
 Each composition has its own file in `src/composed/`. `Calendar` accepts initial
@@ -130,3 +146,34 @@ fn SplitterLabel() -> Element {
     }
 }
 ```
+
+## Toast notifications
+
+`ThemeProvider` includes a shared toast viewport. In a descendant component,
+get the handle with `ui::toast::use_toast()` and call `push` from an event or
+async task. Pass `ToastType::Warning` for warnings and `ToastType::Error` for
+errors.
+
+```rust,ignore
+use conctr_ui_dioxus::ui::toast::{ToastType, use_toast};
+
+let toast = use_toast();
+rsx! {
+    Button {
+        onclick: move |_| toast.push(
+            "Sync delayed",
+            "Check the target and try again.",
+            ToastType::Warning,
+        ),
+        "Check sync"
+    }
+}
+```
+
+Use `ToastTrigger` for a button with a fixed message. Both ways of publishing
+use the same compact stack. The newest toast sits in front of two visible card
+edges. Each toast has a five-second countdown line and dismisses when it empties.
+Hover over the stack or focus its close button to reveal every toast and pause
+the countdowns. Each close button dismisses its own toast. Touch devices show
+the toasts in a scrollable list. In a custom theme scope, mount `ToastProvider` once to create the
+viewport.

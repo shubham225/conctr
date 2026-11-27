@@ -3,7 +3,7 @@
   <path d="M91 66V251" stroke="var(--cn-border-strong)" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="3 5" />
   <g>
     <rect x="104" y="58" width="527" height="58" rx="5" fill="color-mix(in srgb,var(--cn-primary) 13%,var(--wash))" />
-    <animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 68;0 68;0 136;0 136;0 0" keyTimes="0;0.18;0.34;0.5;0.66;0.82;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+    <animateTransform begin="-2.25s" attributeName="transform" type="translate" values="0 0;0 0;0 68;0 68;0 136;0 136;0 0" keyTimes="0;0.18;0.34;0.5;0.66;0.82;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
   </g>
   <circle cx="90" cy="87" r="6" fill="var(--cn-surface)" stroke="var(--cn-primary)" stroke-width="2" />
   <text x="121" y="92">T + 00</text>
@@ -67,6 +67,6 @@
   <rect x="585" y="209" width="2" height="28" rx="3" fill="var(--cn-text)" />
   <g>
     <path d="M473 67v40" stroke="var(--cn-primary)" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
-    <animateTransform attributeName="transform" type="translate" values="0 0;120 0;0 68;120 68;0 136;120 136;0 0" keyTimes="0;0.18;0.34;0.5;0.66;0.82;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
+    <animateTransform begin="-2.25s" attributeName="transform" type="translate" values="0 0;120 0;0 68;120 68;0 136;120 136;0 0" keyTimes="0;0.18;0.34;0.5;0.66;0.82;1" dur="12s" calcMode="spline" keySplines="0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1;0.22 0.7 0.25 1" repeatCount="indefinite" />
   </g>
 </svg>

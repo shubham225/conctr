@@ -56,3 +56,5 @@ lcov.info
 # Local configuration and cache
 .local/
 .cache/
+skills-lock.json
+.agents/skills/

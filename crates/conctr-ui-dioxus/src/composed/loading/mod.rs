@@ -1,114 +1,67 @@
-//! Conctr loading indicator: animated icon with optional status text
-//! and progress bar.
+//! Animated Conctr loading indicator with optional progress.
 
+use crate::ui::progress::Progress;
 use dioxus::prelude::*;
 
-// Embedded at compile time, so the loader is styled on its very first frame.
-const STYLES: &str = include_str!("styles.css");
+#[css_module("/src/composed/loading/styles.css")]
+struct Styles;
 
-/// Animated Conctr loader. Shows only the icon unless asked for more.
-///
-/// ```ignore
-/// ConctrLoader {}
-/// ConctrLoader { text: "Loading" }
-/// ConctrLoader { fullscreen: true, text: "Syncing workspace", progress_bar: true }
-/// ```
+const CSS: Asset = asset!(
+    "/src/composed/loading/styles.css",
+    AssetOptions::css_module()
+);
+const LOGO: &str = include_str!("logo.svg");
+
+/// Centers the animated Conctr mark above its status text and optional progress.
 #[component]
 pub fn ConctrLoader(
-    /// Status text under the icon. Hidden when empty, which is the default.
-    #[props(into, default)]
+    /// Caption below the icon. Pass an empty string to hide it.
+    #[props(into, default = "Loading...".to_string())]
     text: String,
-    /// Show a thin looping progress bar at the bottom.
+    /// Show an indeterminate bar when no finite value is supplied.
     #[props(default)]
     progress_bar: bool,
+    /// Completion percentage. A finite value shows a determinate bar, clamped to 0–100.
+    value: Option<f64>,
     /// Icon width and height in pixels.
     #[props(default = 128)]
     size: u32,
-    /// Cover the whole viewport with a background.
+    /// Center the icon within a viewport-covering surface.
     #[props(default)]
     fullscreen: bool,
 ) -> Element {
-    let class = if fullscreen {
-        "conctr-loader conctr-loader--fullscreen"
+    let layout = if fullscreen {
+        Styles::fullscreen.inner
     } else {
-        "conctr-loader"
+        ""
     };
+    let percent = value.filter(|v| v.is_finite()).map(|v| v.clamp(0.0, 100.0));
+    let label = if text.is_empty() { "Loading" } else { &text };
 
     rsx! {
-        style { dangerous_inner_html: STYLES }
-
+        document::Stylesheet { href: CSS }
         div {
-            class: "{class}",
-            role: "status",
-            aria_live: "polite",
-            // Screen readers still get a name when there is no visible text
-            aria_label: if text.is_empty() { "Loading" },
-
-            svg {
-                class: "conctr-loader__icon",
-                width: "{size}",
-                height: "{size}",
-                view_box: "0 0 64 64",
-                "aria-hidden": "true",
-
-                // Outer hexagon and corner dots
-                g { class: "conctr-loader__frame",
-                    polygon { points: "32,8 52.8,20 52.8,44 32,56 11.2,44 11.2,20" }
-                    circle { cx: "52.8", cy: "20", r: "1.8" }
-                    circle { cx: "32", cy: "56", r: "1.8" }
-                    circle { cx: "11.2", cy: "20", r: "1.8" }
-                }
-
-                g { class: "conctr-loader__spokes",
-                    path { class: "conctr-loader__spoke", d: "M32 32V8" }
-                    path { class: "conctr-loader__spoke", d: "M32 32L52.8 44" }
-                    path { class: "conctr-loader__spoke", d: "M32 32L11.2 44" }
-                }
-
-                // Nodes
-                circle {
-                    class: "conctr-loader__node conctr-loader__node--circle",
-                    cx: "32",
-                    cy: "8",
-                    r: "5.5",
-                    fill: "#14B8A6",
-                }
-                rect {
-                    class: "conctr-loader__node conctr-loader__node--square",
-                    x: "47.3",
-                    y: "38.5",
-                    width: "11",
-                    height: "11",
-                    rx: "2.2",
-                    fill: "#F2603C",
-                }
-                polygon {
-                    class: "conctr-loader__node conctr-loader__node--triangle",
-                    points: "11.2,37.5 17.6,49 4.8,49",
-                    fill: "#F5A524",
-                    stroke: "#F5A524",
-                    stroke_width: "1.5",
-                    stroke_linejoin: "round",
-                }
-
-                // Core is drawn last so the nodes disappear underneath it
-                polygon {
-                    class: "conctr-loader__core",
-                    points: "32,22 40.7,27 40.7,37 32,42 23.3,37 23.3,27",
-                    fill: "#4F46E5",
-                    stroke: "#4F46E5",
-                    stroke_width: "2",
-                    stroke_linejoin: "round",
-                }
-            }
-
-            if !text.is_empty() {
-                span { class: "conctr-loader__text", "{text}" }
-            }
-
-            if progress_bar {
-                div { class: "conctr-loader__bar", "aria-hidden": "true",
-                    span {}
+            class: "flex flex-col items-center text-center {layout}",
+            style: "--loader-size: {size}px",
+            div { class: Styles::icon.inner, dangerous_inner_html: LOGO }
+            div { class: "flex w-full flex-col items-center gap-3 {Styles::details}",
+                span { role: "status", aria_label: if text.is_empty() { "Loading" }, "{text}" }
+                if percent.is_some() || progress_bar {
+                    div {
+                        class: Styles::track.inner,
+                        role: "progressbar",
+                        aria_label: "{label}",
+                        aria_valuemin: "0",
+                        aria_valuemax: "100",
+                        aria_valuenow: percent.map(|v| v.to_string()),
+                        if let Some(value) = percent {
+                            div { aria_hidden: "true", Progress { value } }
+                        } else {
+                            div { class: "h-2 overflow-hidden rounded-full bg-secondary {Styles::looping}",
+                                div { class: "h-full bg-primary" }
+                            }
+                        }
+                    }
                 }
             }
         }

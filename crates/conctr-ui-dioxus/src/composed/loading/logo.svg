@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="conctr-loader__icon" viewBox="0 0 64 64" aria-hidden="true">
+  <style>
+    .conctr-loader__frame {
+      opacity: .32;
+    }
+
+    .conctr-loader__frame polygon {
+      fill: none;
+      stroke: var(--cn-primary);
+      stroke-width: 2;
+      stroke-linejoin: round;
+    }
+
+    .conctr-loader__frame circle {
+      fill: var(--cn-primary);
+    }
+
+    .conctr-loader__spokes {
+      fill: none;
+      stroke: var(--cn-primary);
+      stroke-width: 2;
+      stroke-linecap: round;
+      opacity: 0.45;
+    }
+
+    .conctr-loader__spoke,
+    .conctr-loader__node,
+    .conctr-loader__core {
+      transform-box: view-box;
+      animation-duration: var(--conctr-loader-duration, 2.2s);
+      animation-timing-function: cubic-bezier(.65,0,.35,1);
+      animation-iteration-count: infinite;
+    }
+
+    .conctr-loader__spoke {
+      stroke-dasharray: 24.1 30;
+      animation-name: conctr-loader-spoke;
+    }
+
+    .conctr-loader__node--circle {
+      transform-origin: 32px 8px;
+      animation-name: conctr-loader-circle;
+    }
+
+    .conctr-loader__node--square {
+      transform-origin: 52.8px 44px;
+      animation-name: conctr-loader-square;
+    }
+
+    .conctr-loader__node--triangle {
+      transform-origin: 11.2px 44px;
+      animation-name: conctr-loader-triangle;
+    }
+
+    .conctr-loader__core {
+      transform-origin: 32px 32px;
+      animation-name: conctr-loader-core;
+    }
+
+    /* ---------- keyframes ---------- */
+
+    /* Nodes glide into the core and back out */
+    @keyframes conctr-loader-circle {
+      0%, 12% { transform: translate(0, 0) scale(1); }
+      44%, 56% { transform: translate(0, 24px) scale(0.4); }
+      88%, 100% { transform: translate(0, 0) scale(1); }
+    }
+
+    @keyframes conctr-loader-square {
+      0%, 12% { transform: translate(0, 0) scale(1); }
+      44%, 56% { transform: translate(-20.8px, -12px) scale(0.4); }
+      88%, 100% { transform: translate(0, 0) scale(1); }
+    }
+
+    @keyframes conctr-loader-triangle {
+      0%, 12% { transform: translate(0, 0) scale(1); }
+      44%, 56% { transform: translate(20.8px, -12px) scale(0.4); }
+      88%, 100% { transform: translate(0, 0) scale(1); }
+    }
+
+    /* Spokes shorten and lengthen in step with the nodes */
+    @keyframes conctr-loader-spoke {
+      0%, 12% { stroke-dashoffset: 0; opacity: 1; }
+      43% { opacity: 1; }
+      44%, 56% { stroke-dashoffset: 24.1; opacity: 0; }
+      57% { opacity: 1; }
+      88%, 100% { stroke-dashoffset: 0; opacity: 1; }
+    }
+
+    /* A sixth of a turn looks identical at rest, so the loop is seamless */
+    @keyframes conctr-loader-core {
+      0%, 30% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(30deg) scale(1.16); }
+      70%, 100% { transform: rotate(60deg) scale(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .conctr-loader__icon * { animation: none; }
+    }
+  </style>
+  <g class="conctr-loader__frame">
+    <polygon points="32,8 52.8,20 52.8,44 32,56 11.2,44 11.2,20"/>
+    <circle cx="52.8" cy="20" r="1.8"/>
+    <circle cx="32" cy="56" r="1.8"/>
+    <circle cx="11.2" cy="20" r="1.8"/>
+  </g>
+  <g class="conctr-loader__spokes">
+    <path class="conctr-loader__spoke" d="M32 32V8"/>
+    <path class="conctr-loader__spoke" d="M32 32L52.8 44"/>
+    <path class="conctr-loader__spoke" d="M32 32L11.2 44"/>
+  </g>
+  <circle class="conctr-loader__node conctr-loader__node--circle" cx="32" cy="8" r="5.5" fill="var(--cn-teal)"/>
+  <rect class="conctr-loader__node conctr-loader__node--square" x="47.3" y="38.5" width="11" height="11" rx="2.2" fill="var(--cn-coral)"/>
+  <polygon class="conctr-loader__node conctr-loader__node--triangle" points="11.2,37.5 17.6,49 4.8,49" fill="var(--cn-amber)" stroke="var(--cn-amber)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon class="conctr-loader__core" points="32,22 40.7,27 40.7,37 32,42 23.3,37 23.3,27" fill="var(--cn-primary)" stroke="var(--cn-primary)" stroke-width="2" stroke-linejoin="round"/>
+</svg>

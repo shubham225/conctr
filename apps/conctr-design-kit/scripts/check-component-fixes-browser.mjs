@@ -103,14 +103,40 @@ await evaluate(`document.querySelectorAll('main [data-name="DrawerTrigger"]')[1]
 await evaluate(`document.querySelector('main .cn-drawer-surface[open] .cn-drawer-icon-close').click()`);await delay(100);
 await check('last drawer close icon dismisses drawer', `!document.querySelector('main .cn-drawer-surface[open]')`);
 await navigate('/components/toast','.cn-toast-buttons');
+await call('Input.dispatchMouseEvent', {type: 'mouseMoved', x: 1, y: 1});
 await evaluate(`var successButton=[...document.querySelectorAll('.cn-toast-buttons button')].find(b=>b.textContent.includes('Show success'));successButton.click();successButton.click();successButton.click()`);await delay(200);
 await check('repeated toast clicks stack three notifications', `document.querySelectorAll('.cn-toast-stack-item').length===3 && document.querySelectorAll('.cn-toast-stack').length===1`);
 await evaluate(`[...document.querySelectorAll('.cn-toast-buttons button')].find(b=>b.textContent.includes('Show error')).click()`);await delay(100);
 await check('different triggers share the notification stack', `document.querySelectorAll('.cn-toast-stack-item').length===4`);
 await evaluate(`document.querySelector('.cn-toast-stack-item .cn-toast-close').click()`);await delay(100);
-await check('closing one toast preserves other notifications', `document.querySelectorAll('.cn-toast-stack-item').length===3 && document.querySelector('.cn-toast-stack').textContent.includes('Stock sync failed')`);
-await check('stacked toast rectangles do not overlap', `(()=>{const r=[...document.querySelectorAll('.cn-toast-stack-item')].map(e=>e.getBoundingClientRect());return r.every((e,i)=>i===0||e.top>=r[i-1].bottom)})()`);
+await check('closing one toast preserves other notifications', `document.querySelectorAll('.cn-toast-stack-item').length===3 && !document.querySelector('.cn-toast-stack').textContent.includes('Stock sync failed')`);
+await check('toasts overlap inside a single-card viewport', `(() => {
+  const stack = document.querySelector('.cn-toast-stack');
+  const [front, middle, back] = [...stack.children].map(item => item.getBoundingClientRect());
+  return stack.offsetHeight === Math.round(front.height) && back.top < middle.top &&
+    middle.top < front.top && back.bottom > front.top;
+})()`);
 await call('Page.captureScreenshot',{format:'png'}).then(r=>fs.writeFileSync('/tmp/conctr-toasts-stacked.png',Buffer.from(r.data,'base64')));
+const toastCenter = await evaluate(`(() => {
+  const rect = document.querySelector('.cn-toast-stack-item').getBoundingClientRect();
+  return {x: rect.x + rect.width / 2, y: rect.y + rect.height / 2};
+})()`);
+await call('Input.dispatchMouseEvent', {type: 'mouseMoved', ...toastCenter});
+await check('hover expands the stack and pauses every countdown', `(() => {
+  const cards = [...document.querySelectorAll('.cn-toast-stack-item')];
+  return cards.every((card, i) => getComputedStyle(card.lastElementChild).animationPlayState === 'paused' &&
+    (i === 0 || card.getBoundingClientRect().bottom < cards[i - 1].getBoundingClientRect().top));
+})()`);
+const olderClose = await evaluate(`(() => {
+  const rect = document.querySelector('.cn-toast-stack-item:nth-child(2) .cn-toast-close').getBoundingClientRect();
+  return {x: rect.x + rect.width / 2, y: rect.y + rect.height / 2};
+})()`);
+await call('Input.dispatchMouseEvent', {type: 'mouseMoved', ...olderClose});
+await call('Input.dispatchMouseEvent', {type: 'mousePressed', button: 'left', clickCount: 1, ...olderClose});
+await call('Input.dispatchMouseEvent', {type: 'mouseReleased', button: 'left', clickCount: 1, ...olderClose});
+await delay(100);
+await check('an older toast can be dismissed with its close button', `document.querySelectorAll('.cn-toast-stack-item').length === 2`);
+await call('Input.dispatchMouseEvent', {type: 'mouseMoved', x: 1, y: 1});
 await evaluate(`document.querySelector('[aria-label="Switch to dark theme"]').click()`);await delay(100);
 await check('sidebar and notifications support dark palette', `getComputedStyle(document.querySelector('.cn-body')).getPropertyValue('--cn-bg').trim().toUpperCase()==='#0B1020' && getComputedStyle(document.querySelector('.cn-toast-message')).backgroundColor!=='rgb(255, 255, 255)'`);
 await call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:false});await delay(100);

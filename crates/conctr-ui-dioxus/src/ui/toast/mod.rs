@@ -53,23 +53,40 @@ struct Notification {
     description: String,
     variant: ToastType,
 }
+/// Handle for adding notifications to the nearest provider.
 #[derive(Clone, Copy, PartialEq)]
-struct ToastStore {
+pub struct ToastStore {
     entries: Signal<Vec<Notification>>,
     next: Signal<u64>,
 }
 impl ToastStore {
-    fn push(mut self, title: String, description: String, variant: ToastType) {
+    /// Add a notification to the shared viewport from an event or async task.
+    pub fn push(
+        mut self,
+        title: impl Into<String>,
+        description: impl Into<String>,
+        variant: ToastType,
+    ) {
         let id = (self.next)();
         self.next.set(id + 1);
         self.entries.write().push(Notification {
             id,
-            title,
-            description,
+            title: title.into(),
+            description: description.into(),
             variant,
         });
     }
+
+    fn dismiss(mut self, id: u64) {
+        self.entries.write().retain(|entry| entry.id != id);
+    }
 }
+
+/// Get the notification handle inside a `ThemeProvider` or `ToastProvider`.
+pub fn use_toast() -> ToastStore {
+    use_context::<ToastStore>()
+}
+
 /// One shared notification stack for all descendant triggers. ThemeProvider mounts this automatically.
 #[component]
 pub fn ToastProvider(children: Element) -> Element {
@@ -83,28 +100,43 @@ pub fn ToastProvider(children: Element) -> Element {
     }
 }
 #[component]
-fn ToastViewport(mut store: ToastStore) -> Element {
+fn ToastViewport(store: ToastStore) -> Element {
     let entries = (store.entries)();
     rsx! {
         if !entries.is_empty() {
             div {
-                class: "cn-toast-stack cn-toast-region",
+                class: "cn-toast-stack",
                 role: "region",
                 "aria-label": "Notifications",
-                for entry in entries {
-                    div { key: "{entry.id}", class: "cn-toast-stack-item",
-                        ToastMessage {
-                            title: entry.title,
-                            description: entry.description,
-                            variant: entry.variant,
-                            on_dismiss: move |_| store.entries.write().retain(|item| item.id != entry.id),
-                        }
-                    }
+                for entry in entries.into_iter().rev() {
+                    ToastEntry { key: "{entry.id}", entry, store }
                 }
             }
         }
     }
 }
+
+#[component]
+fn ToastEntry(entry: Notification, store: ToastStore) -> Element {
+    let id = entry.id;
+    rsx! {
+        div {
+            class: "cn-toast-stack-item",
+            ToastMessage {
+                title: entry.title,
+                description: entry.description,
+                variant: entry.variant,
+                on_dismiss: move |_| store.dismiss(id),
+            }
+            div {
+                class: "cn-toast-countdown",
+                "aria-hidden": "true",
+                onanimationend: move |_| store.dismiss(id),
+            }
+        }
+    }
+}
+
 /// Repeated clicks enqueue independent notifications, including from different triggers.
 #[allow(non_snake_case)]
 pub fn ToastTrigger(props: ToastTriggerProps) -> Element {

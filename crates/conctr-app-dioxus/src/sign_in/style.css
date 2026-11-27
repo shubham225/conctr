@@ -54,12 +54,8 @@
 }
 @media (max-width: 46.25rem) {
     .panel { grid-template-columns: 1fr; }
-    .poster { --inset: 1.25rem; gap: 0.75rem; border-inline-end: 0; border-bottom: 1px solid var(--cn-border); }
-    .identity { gap: 0.5rem; }
-    .identity img { width: 6.5rem; }
-    .intro { margin-top: 0; }
-    .intro h2, .pane h1 { font-size: var(--cn-fs-h2); }
-    .art svg { height: clamp(7.5rem, 35vw, 14rem); }
+    .poster { display: none; }
+    .pane h1 { font-size: var(--cn-fs-h2); }
     .pane { padding: 2rem 1.5rem; }
     .mark { width: 3.5rem; height: 3.5rem; }
 }

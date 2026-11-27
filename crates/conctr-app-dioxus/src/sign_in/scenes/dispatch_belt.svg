@@ -28,7 +28,7 @@
       <use href="#dispatch-parcel" x="576" y="107" color="var(--cn-primary)" />
       <use href="#dispatch-parcel" x="672" y="107" color="var(--cn-teal-text)" />
       <use href="#dispatch-parcel" x="768" y="107" color="var(--cn-coral-text)" />
-      <animateTransform attributeName="transform" type="translate" values="0 0;288 0" keyTimes="0;1" dur="12s" calcMode="linear" repeatCount="indefinite" />
+      <animateTransform begin="-.3s" attributeName="transform" type="translate" values="0 0;288 0" keyTimes="0;1" dur="12s" calcMode="linear" repeatCount="indefinite" />
     </g>
   </g>
   <path d="M48 243v7h190v-7" stroke="var(--cn-border-strong)" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round" />
