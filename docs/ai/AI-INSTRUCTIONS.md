@@ -16,27 +16,31 @@ Use a source path or a focused test to support claims about implementation.
 Describe suggestions for the integration runtime as proposals until the team
 adopts them. Keep user-facing behavior and design-kit demonstrations distinct.
 
-# Token & Build Efficiency Rules
+For Dioxus changes, use Rust components with `rsx!` and follow the theming
+guide for Tailwind utilities and scoped styles. Check responsive layouts and
+keyboard focus on the affected renderer. Start verification with a focused
+`cargo check --message-format=short` or a relevant `dx check`.
 
-## CLI & Output Compression
-- Use `rtk` when reading large files (`rtk read <file> -l aggressive` for signatures/structs first) or searching (`rtk grep`).
-- Prefer `cargo check --message-format=short` or `dx check` over full builds when verifying RSX syntax or types.
-- Never run `cargo tree`, `cargo build --verbose`, or dump full `Cargo.lock` contents.
+## Optional AI tooling
 
-## Dioxus & Rust Context Boundaries
-- Never read or search inside `target/`, `dist/`, `.dioxus/`, `node_modules/`, or `assets/` unless explicitly asked.
-- When editing Dioxus components (`rsx!`), only read the specific component module you are modifying rather than the entire `src/` tree.
-- Keep responses concise: output diffs or targeted code blocks without conversational filler.
+Contributors can use the [development setup](../development/setup.md) with any
+editor. AI assistants, RTK and skill installers are optional for all changes.
 
-# Stack & Architecture
-- Language/Framework: Rust + Dioxus (targeting both Web and Desktop).
-- UI Syntax: Always write UI with `#[component]` and `rsx!` using Tailwind CSS utility classes (`class: "..."`). Never output React/JSX.
-- Cross-Platform (Web + Desktop):
-  - Avoid browser-only DOM hacks unless gated behind `#[cfg(target_arch = "wasm32")]`.
-  - Ensure responsive layouts, keyboard navigation, focus states, and window resizing work cleanly on both desktop viewports and web browsers.
+- [RTK](https://github.com/rtk-ai/rtk) is a personal command-output filter. Use
+  standard shell commands by default, such as `rg` for search. If you use RTK
+  with Codex, follow the upstream user-global setup so it applies from your own
+  configuration.
+- [Rewrite Rust skills](https://github.com/rewrite-rs/skills) are available from
+  upstream. For a personal install, run
+  `npx skills add rewrite-rs/skills --global` and select your agent and the
+  skills you need.
+- [UI Skills](https://github.com/ibelick/ui-skills) provides optional UI review
+  guidance. If you choose to use the CLI, `npx ui-skills list` browses the
+  registry and `npx ui-skills get baseline-ui` fetches a specific skill. The
+  [design instructions](../../design/docs/AI-INSTRUCTIONS.md) cover project UI
+  conventions and verification for everyone.
 
-# Design Kit Priority (Strict)
-1. **Your Design Kit is the source of truth:** Always use existing components, color tokens, spacing scales, typography, and Tailwind theme classes from this repo's design kit first. Do not invent new colors, arbitrary spacing values, or duplicate primitives when a design kit component exists.
-2. **Use `ui-skills` for layout, polish, and UX rigor:**
-   - Before building or refactoring UI, run `npx ui-skills list` (or check `ui-skills-root`) and fetch relevant skills via `npx ui-skills get <slug>` (such as `baseline-ui`, motion, or layout skills).
-   - Apply `ui-skills` rules for hierarchy, alignment, micro-interactions, accessible states, and visual polish—while mapping all colors, radii, and typography to our existing design kit tokens.
+Codex reads the repository's `AGENTS.md` files without project-level
+`.codex/` configuration. `CLAUDE.md`, `GEMINI.md` and
+`.github/copilot-instructions.md` are entry points for other clients. Keep
+shared instructions in `AGENTS.md` and follow scoped guidance before editing.

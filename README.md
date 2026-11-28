@@ -131,6 +131,13 @@ build and platform details.
 - Choose crate boundaries around working integrations. Start with a module and
   extract a library when independent callers need the same behavior.
 
+## Contributing
+
+Start with the [development setup](docs/development/setup.md) and use the
+[task guide](docs/ai/AI-INSTRUCTIONS.md) to find the relevant project rules.
+Manual and AI-assisted contributions follow the same build and review workflow.
+AI tools and skills are optional.
+
 ## Tests
 
 ```sh

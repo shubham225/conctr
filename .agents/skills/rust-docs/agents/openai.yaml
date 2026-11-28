@@ -1,3 +1,0 @@
-interface:
-  display_name: "Rust Docs"
-  short_description: "Doc comments as API contract, with doctests that actually run"

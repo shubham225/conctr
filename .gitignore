@@ -56,3 +56,13 @@ lcov.info
 # Local configuration and cache
 .local/
 .cache/
+
+# Personal AI tooling
+/.codex/
+/.agents/skills/
+/skills-lock.json
+/AGENTS.override.md
+/RTK.md
+
+# Local AWS configuration
+/.aws/

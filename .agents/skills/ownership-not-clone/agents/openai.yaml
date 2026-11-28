@@ -1,3 +1,0 @@
-interface:
-  display_name: "Ownership, Not Clone"
-  short_description: "Ownership and borrowing instead of clone, Rc, and RefCell"
