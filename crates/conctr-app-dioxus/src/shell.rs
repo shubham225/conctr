@@ -6,19 +6,27 @@ use conctr_ui_dioxus::{
 };
 use dioxus::prelude::*;
 use user_control::UserControl;
+
+#[css_module("/src/shell/style.css")]
+struct Styles;
+const CSS: Asset = asset!("/src/shell/style.css", AssetOptions::css_module());
+
 #[component]
 pub(crate) fn Shell() -> Element {
     let window_titlebar = use_context::<Option<Element>>();
     let mut dark = use_signal(|| false);
+    let route = use_route::<Route>();
+    let page = route.label();
     rsx! {
-        document::Title { "Conctr · Where systems meet" }
+        document::Title { "{page} · Conctr" }
+        document::Stylesheet { href: CSS }
         document::Link { rel: "icon", href: images::FAVICON }
         ThemeProvider { theme: if dark() { Theme::Dark } else { Theme::Light },
-            div { class: "flex h-svh flex-col overflow-hidden bg-background text-foreground",
+            div { class: "{Styles::workspace.inner} flex h-svh flex-col overflow-hidden bg-background text-foreground",
+                a { class: Styles::skip_link.inner, href: "#workspace-content", "Skip to main content" }
                 if let Some(titlebar) = window_titlebar { {titlebar} }
                 SidebarProvider { class: "flex min-h-0 flex-1",
                     Sidebar {
-                        border_trigger: true,
                         footer: rsx! { UserControl {} },
                         collapsed_header: rsx! { img { src: images::HUB, alt: "Conctr", width: 32, height: 32 } },
                         header: rsx! { img {
@@ -33,11 +41,11 @@ pub(crate) fn Shell() -> Element {
                             NavigationItem { to: Route::Connections {}, icon: rsx! { icons::Network {} } }
                             NavigationItem { to: Route::Endpoints {}, icon: rsx! { icons::Plug {} } }
                         }
-                        SidebarGroup { title: "Message Transformation",
+                        SidebarGroup { title: "Message transformation",
                             NavigationItem { to: Route::FieldMappings {}, icon: rsx! { icons::GitMerge {} } }
                             NavigationItem { to: Route::Transformers {}, icon: rsx! { icons::Braces {} } }
                         }
-                        SidebarGroup { title: "Channels & Routing",
+                        SidebarGroup { title: "Channels and routing",
                             NavigationItem { to: Route::ChannelsQueues {}, icon: rsx! { icons::Layers {} } }
                             NavigationItem { to: Route::WorkflowPipeline {}, icon: rsx! { icons::Workflow {} } }
                         }
@@ -49,15 +57,18 @@ pub(crate) fn Shell() -> Element {
                             NavigationItem { to: Route::Help {}, icon: rsx! { icons::CircleHelp {} } }
                         }
                     }
-                    main { class: "flex min-w-0 flex-1 flex-col",
+                    div { class: "flex min-w-0 flex-1 flex-col",
                         header { class: "flex h-16 shrink-0 items-center gap-3 border-b border-border bg-card px-4 md:px-8",
                             SidebarTrigger {}
-                            WorkspaceBreadcrumb {}
+                            WorkspaceBreadcrumb { page, at_dashboard: route == Route::Dashboard {} }
                             div { class: "ml-auto",
                                 BrandThemeToggle { compact: true, dark: dark(), on_change: move |value| dark.set(value) }
                             }
                         }
-                        div { class: "min-h-0 flex-1 overflow-y-auto p-4 md:p-5",
+                        main {
+                            id: "workspace-content",
+                            tabindex: "-1",
+                            class: "min-h-0 flex-1 overflow-y-auto p-4 md:p-8",
                             Outlet::<Route> {}
                         }
                     }
@@ -68,15 +79,16 @@ pub(crate) fn Shell() -> Element {
 }
 
 #[component]
-fn WorkspaceBreadcrumb() -> Element {
-    let page = use_route::<Route>().label();
+fn WorkspaceBreadcrumb(page: &'static str, at_dashboard: bool) -> Element {
     rsx! {
         Breadcrumb { class: "min-w-0",
             BreadcrumbList { class: "flex-nowrap",
-                BreadcrumbItem { class: "hidden sm:inline-flex",
-                    Link { to: Route::Dashboard {}, class: "hover:text-foreground", "Workspace" }
+                if !at_dashboard {
+                    BreadcrumbItem { class: "hidden sm:inline-flex",
+                        Link { to: Route::Dashboard {}, class: "hover:text-foreground", "Dashboard" }
+                    }
+                    BreadcrumbSeparator { class: "hidden sm:block" }
                 }
-                li { class: "hidden sm:block", "aria-hidden": "true", "/" }
                 BreadcrumbItem { class: "min-w-0",
                     BreadcrumbPage { class: "truncate font-medium", "{page}" }
                 }

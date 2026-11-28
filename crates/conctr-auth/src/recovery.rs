@@ -51,12 +51,14 @@ impl Recovery {
         );
         Ok(())
     }
+
     pub fn accepts(&self, username: &str, temporary: &str) -> bool {
         self.pending.get(username).is_some_and(|invite| {
             invite.expires > Instant::now()
                 && bool::from(invite.secret.as_bytes().ct_eq(temporary.as_bytes()))
         })
     }
+
     pub fn consume(&mut self, username: &str) {
         self.pending.remove(username);
     }

@@ -1,0 +1,23 @@
+.workspace {
+    scrollbar-color: var(--scrollbar-thumb) var(--cn-surface);
+}
+
+.skip_link {
+    position: absolute;
+    inset-block-start: var(--cn-space-2);
+    inset-inline-start: var(--cn-space-2);
+    z-index: var(--cn-z-sticky);
+    border-radius: var(--cn-radius-md);
+    padding: var(--cn-space-2) var(--cn-space-4);
+    background: var(--cn-surface);
+    color: var(--cn-primary);
+}
+
+.skip_link:not(:focus) {
+    clip-path: inset(50%);
+}
+
+/* The dropdown keeps its inline visibility after the first open. */
+.account_menu[data-state="closed"] {
+    visibility: hidden !important;
+}

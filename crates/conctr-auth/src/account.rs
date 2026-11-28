@@ -35,17 +35,10 @@ impl Account {
     /// Apply the same password policy and Argon2id parameters in the CLI and
     /// the first-login form. Each account gets an independent random salt.
     pub fn new(username: String, role: Role, password: &str) -> Result<Self, &'static str> {
-        use argon2::{PasswordHasher, password_hash::SaltString};
         if username.trim().is_empty() || username.len() > 128 {
             return Err("Choose a username between 1 and 128 bytes.");
         }
-        if password.chars().count() < 15 || password.len() > 1024 {
-            return Err("Use at least 15 characters and at most 1024 bytes.");
-        }
-        let password_hash = Argon2::default()
-            .hash_password(password.as_bytes(), &SaltString::generate(&mut OsRng))
-            .map_err(|_| "Cannot hash password.")?
-            .to_string();
+        let password_hash = hash_password(password)?;
         Ok(Self {
             id: Uuid::new_v4().to_string(),
             username,
@@ -53,4 +46,15 @@ impl Account {
             password_hash,
         })
     }
+}
+
+pub(crate) fn hash_password(password: &str) -> Result<String, &'static str> {
+    use argon2::{PasswordHasher, password_hash::SaltString};
+    if password.chars().count() < 15 || password.len() > 1024 {
+        return Err("Use at least 15 characters and at most 1024 bytes.");
+    }
+    Ok(Argon2::default()
+        .hash_password(password.as_bytes(), &SaltString::generate(&mut OsRng))
+        .map_err(|_| "Cannot hash password.")?
+        .to_string())
 }

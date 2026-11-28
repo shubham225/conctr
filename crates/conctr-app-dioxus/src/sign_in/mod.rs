@@ -26,48 +26,31 @@ pub(super) type SessionState = Signal<Option<SessionInfo>>;
 pub(super) fn SessionGate() -> Element {
     let session = use_context_provider(|| Signal::new(None::<SessionInfo>));
     let ready = use_signal(|| false);
-    let mut dark = use_signal(|| false);
     let titlebar = use_context::<Option<Element>>();
-    if let Some(info) = session() {
-        return rsx! { SignedIn { remaining_seconds: info.remaining_seconds } };
+    let remaining_seconds = session.read().as_ref().map(|info| info.remaining_seconds);
+    if let Some(remaining_seconds) = remaining_seconds {
+        return rsx! { SignedIn { remaining_seconds } };
     }
     rsx! {
         document::Stylesheet { href: CSS }
         document::Title { "Sign in · Conctr" }
-        ThemeProvider { theme: if dark() { Theme::Dark } else { Theme::Light },
+        ThemeProvider { theme: Theme::Light,
             div { class: Styles::screen.inner,
                 {titlebar}
                 if !ready() {
                   SessionCheck { ready }
                 } else {
                   main { class: Styles::panel.inner,
-                    scenes::ScenePanel { dark: dark(), on_theme_change: move |value| dark.set(value) }
+                    scenes::ScenePanel {}
                     section { class: Styles::pane.inner,
                       div { class: Styles::form_box.inner,
-                        img { class: Styles::mark.inner, alt: "", src: if dark() { images::HUB_DARK } else { images::HUB } }
+                        img { class: Styles::mark.inner, alt: "", src: images::HUB }
                         LoginForm {}
-                        TestToastButton {}
                       }
                     }
                   }
                 }
             }
-        }
-    }
-}
-
-#[component]
-fn TestToastButton() -> Element {
-    let toast = use_toast();
-    rsx! {
-        button {
-            r#type: "button",
-            onclick: move |_| toast.push(
-                "Session check failed",
-                "Make sure the Conctr fullstack server is running, then sign in again.",
-                ToastType::Error,
-            ),
-            "Test error toast"
         }
     }
 }

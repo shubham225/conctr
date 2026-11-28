@@ -1,6 +1,6 @@
 #[cfg(test)]
 use crate::Role;
-use crate::{Account, Principal};
+use crate::{Account, Principal, account::hash_password};
 use argon2::{Argon2, PasswordHash, PasswordVerifier};
 use jsonwebtoken::{
     Algorithm, DecodingKey, EncodingKey, Header, Validation, decode, encode, get_current_timestamp,
@@ -105,9 +105,7 @@ impl Authority {
             .iter_mut()
             .find(|a| a.username == username)
             .ok_or(SetupError::Denied)?;
-        let hash = Account::new(username.into(), account.role, password)
-            .map_err(SetupError::Invalid)?
-            .password_hash;
+        let hash = hash_password(password).map_err(SetupError::Invalid)?;
         let sessions = self.sessions.get_mut().map_err(|_| SetupError::Storage)?;
         if let Err(error) = store.replace_hash(account, &hash) {
             // A lost acknowledgement can follow a committed change. Read the

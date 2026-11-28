@@ -2,7 +2,11 @@ mod catalog;
 mod demo;
 mod examples;
 mod icon_library;
-use conctr_ui_dioxus::{assets::images, prelude::*};
+use conctr_ui_dioxus::{
+    assets::images,
+    prelude::*,
+    ui::input::{Input, InputType},
+};
 use dioxus::prelude::*;
 #[derive(Clone, PartialEq, Routable)]
 enum Route {
@@ -34,8 +38,9 @@ fn App() -> Element {
 fn Shell() -> Element {
     let mut dark = use_context::<Signal<bool>>();
     rsx! {
-        div { class: "min-h-screen",
-            header { class: "sticky top-0 z-50 flex flex-wrap items-center justify-between gap-4 border-b border-border bg-background p-4 md:px-8",
+        div { class: "min-h-screen", "data-gallery-theme": if dark() { "dark" } else { "light" },
+            a { class: "cn-gallery-skip", href: "#gallery-main", "Skip to content" }
+            header { class: "cn-gallery-header sticky top-0 z-50 flex flex-wrap items-center justify-between gap-3 border-b border-border bg-background p-4 md:px-8",
                 Link { to: Route::Home {},
                     img {
                         src: if dark() { images::HORIZONTAL_COLOR_DARK_SVG } else { images::HORIZONTAL_COLOR_SVG },
@@ -48,34 +53,62 @@ fn Shell() -> Element {
                 BrandThemeToggle { dark: dark(), on_change: move |value| dark.set(value) }
             }
             div { class: "cn-gallery-frame",
-                nav {
-                    class: "cn-component-explorer",
-                    "aria-label": "Component explorer",
-                    strong { class: "cn-explorer-title", "Explore the kit" }
-                    Link { to: Route::Home {}, class: "cn-explorer-link", "Brand foundations" }
-                    Link { to: Route::Icons {}, class: "cn-explorer-link", "Icons" }
-                    h2 { class: "cn-explorer-group", "Composed" }
-                    for entry in catalog::COMPOSED {
+                ComponentExplorer {}
+                main { id: "gallery-main", tabindex: "-1", class: "cn-gallery-main min-w-0",
+                    Outlet::<Route> {}
+                }
+            }
+        }
+    }
+}
+
+#[component]
+fn ComponentExplorer() -> Element {
+    let mut query = use_signal(String::new);
+    let filter = query.read().trim().to_ascii_lowercase().replace('-', " ");
+    let groups = [
+        ("Composed", catalog::COMPOSED),
+        ("Components", catalog::ENTRIES),
+    ]
+    .map(|(label, catalog)| {
+        let entries = catalog
+            .iter()
+            .filter(|entry| entry.slug.replace('-', " ").contains(&filter))
+            .collect::<Vec<_>>();
+        (label, entries)
+    });
+    let no_matches = groups.iter().all(|(_, entries)| entries.is_empty());
+
+    rsx! {
+        nav { class: "cn-component-explorer", aria_label: "Component explorer",
+            strong { class: "cn-explorer-title", "Explore the kit" }
+            div { class: "cn-explorer-search",
+                label { class: "sr-only", r#for: "component-filter", "Filter components" }
+                Input {
+                    id: "component-filter",
+                    r#type: InputType::Search,
+                    placeholder: "Filter components",
+                    value: query(),
+                    oninput: move |event: FormEvent| query.set(event.value()),
+                }
+            }
+            Link { to: Route::Home {}, class: "cn-explorer-link", "Brand foundations" }
+            Link { to: Route::Icons {}, class: "cn-explorer-link", "Icons" }
+            if no_matches {
+                p { class: "cn-explorer-group", role: "status", "No matching components." }
+            }
+            for (label, entries) in groups {
+                if !entries.is_empty() {
+                    h2 { class: "cn-explorer-group", "{label}" }
+                    for entry in entries {
                         Link {
-                            to: Route::ComponentPage {
-                                slug: entry.slug.into(),
-                            },
-                            class: "cn-explorer-link",
-                            {entry.slug.replace('-', " ")}
-                        }
-                    }
-                    h2 { class: "cn-explorer-group", "Components" }
-                    for entry in catalog::ENTRIES {
-                        Link {
-                            to: Route::ComponentPage {
-                                slug: entry.slug.into(),
-                            },
+                            key: "{entry.slug}",
+                            to: Route::ComponentPage { slug: entry.slug.into() },
                             class: "cn-explorer-link",
                             {entry.slug.replace('-', " ")}
                         }
                     }
                 }
-                main { class: "cn-gallery-main min-w-0", Outlet::<Route> {} }
             }
         }
     }
@@ -165,11 +198,11 @@ fn ComponentPage(slug: String) -> Element {
                     class: "grid min-w-0 gap-6",
                     style: "grid-template-columns:minmax(0,1fr)",
                     key: "{slug}",
-                    h1 { {slug.replace('-', " ")} }
+                    h1 { class: "cn-demo-title text-2xl font-semibold", {slug.replace('-', " ")} }
                     div {
                         class: if ["table", "data-table", "data-grid", "toast", "field-mapping"]
         .contains(&slug.as_str()) { "min-w-0" } else { "min-w-0 rounded-lg border border-border bg-card p-6" },
-                        style: if [
+                        style: if slug == "toast" { "overflow:visible" } else if [
         "date-picker",
         "composed-date-picker",
         "date-time-picker",

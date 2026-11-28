@@ -5,6 +5,7 @@ use row::MappingRow;
 
 use crate::ui::button::{Button, ButtonSize, ButtonVariant};
 use dioxus::prelude::*;
+use std::rc::Rc;
 
 #[css_module("/src/composed/field_mapping/style.css")]
 struct Styles;
@@ -54,7 +55,13 @@ pub fn FieldMappingEditor(
                 transform: None,
             }
         });
-    let additions = mappings.clone();
+    // Rows and event handlers share the render's inputs. Each edit emits an
+    // owned draft for the caller.
+    let source_fields = Rc::new(source_fields);
+    let target_fields = Rc::new(target_fields);
+    let transforms = Rc::new(transforms);
+    let mappings = Rc::new(mappings);
+    let additions = Rc::clone(&mappings);
     let count = mappings.len();
     rsx! {
         document::Stylesheet { href: CSS }
@@ -71,7 +78,7 @@ pub fn FieldMappingEditor(
                         disabled: next_link.is_none(),
                         onclick: move |_| {
                             if let Some(link) = next_link.clone() {
-                                let mut updated = additions.clone();
+                                let mut updated = additions.as_ref().clone();
                                 updated.push(link);
                                 on_change.call(updated);
                             }
@@ -124,9 +131,9 @@ pub fn FieldMappingEditor(
                             key: "{link.id}",
                             number: index + 1,
                             link: link.clone(),
-                            source_fields: source_fields.clone(),
-                            target_fields: target_fields.clone(),
-                            transforms: transforms.clone(),
+                            source_fields: Rc::clone(&source_fields),
+                            target_fields: Rc::clone(&target_fields),
+                            transforms: Rc::clone(&transforms),
                             occupied: mappings
                                 .iter()
                                 .filter(|other| other.id != link.id)
@@ -134,17 +141,17 @@ pub fn FieldMappingEditor(
                                 .collect(),
                             read_only,
                             on_change: {
-                                let snapshot = mappings.clone();
+                                let snapshot = Rc::clone(&mappings);
                                 move |updated| {
-                                    let mut next = snapshot.clone();
+                                    let mut next = snapshot.as_ref().clone();
                                     next[index] = updated;
                                     on_change.call(next);
                                 }
                             },
                             on_remove: {
-                                let snapshot = mappings.clone();
+                                let snapshot = Rc::clone(&mappings);
                                 move |_| {
-                                    let mut next = snapshot.clone();
+                                    let mut next = snapshot.as_ref().clone();
                                     next.remove(index);
                                     on_change.call(next);
                                 }

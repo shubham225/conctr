@@ -44,11 +44,20 @@ pub fn VisualFieldMapper(
     let mut selected = use_signal(|| None::<String>);
     let mut notice =
         use_signal(|| String::from("Choose a source field, then a target to connect them."));
-    let problem = validate_mapping(&source, &target, &links).err();
-    let yaml = mapping_yaml(&source, &target, &links);
-    let active = links
-        .iter()
-        .find(|link| Some(&link.id) == selected.read().as_ref());
+    let (yaml, problem) = if studio {
+        (None, validate_mapping(&source, &target, &links).err())
+    } else {
+        match mapping_yaml(&source, &target, &links) {
+            Ok(yaml) => (Some(yaml), None),
+            Err(problem) => (None, Some(problem)),
+        }
+    };
+    let active = {
+        let selection = selected.read();
+        selection
+            .as_ref()
+            .and_then(|id| links.iter().find(|link| &link.id == id))
+    };
     let source_for_click = source.clone();
     let changes = links.clone();
     let source_selection = links.clone();
@@ -149,14 +158,16 @@ pub fn VisualFieldMapper(
             notice.set("Choose a source first to link this target.".into());
         }
     });
+    let folded_query = query.read().to_lowercase();
+    let unmapped_only = unmapped();
     let filter = |schema: &MappingSchema, source_side: bool| {
         let mut visible = schema.clone();
         visible.fields.retain(|field| {
-            (query().is_empty()
+            (folded_query.is_empty()
                 || format!("{} {}", field.label, field.path)
                     .to_lowercase()
-                    .contains(&query().to_lowercase()))
-                && (!unmapped()
+                    .contains(&folded_query))
+                && (!unmapped_only
                     || !links.iter().any(|l| {
                         if source_side {
                             l.source == field.path
@@ -178,7 +189,6 @@ pub fn VisualFieldMapper(
     let auto_source = source.clone();
     let auto_target = target.clone();
     let auto_links = links.clone();
-    let yaml_text = yaml.clone().unwrap_or_else(|error| format!("# {error}"));
     rsx! {
         document::Stylesheet { href: CSS }
         ResizablePanelGroup {
@@ -268,7 +278,7 @@ pub fn VisualFieldMapper(
             for message in &validation_messages {
                 p { class:Styles::error.inner, role:"status", "{message}" }
             }
-            if let Some(problem) = problem {
+            if let Some(problem) = &problem {
                 p { class: Styles::error.inner, role: "alert", "{problem}" }
             }
             div {
@@ -487,12 +497,15 @@ pub fn VisualFieldMapper(
                     "{links.len()} connections · {target.fields.iter().filter(|f|!f.ignored).count().saturating_sub(links.len())} unmapped targets"
                 }
                 if !studio {
-                    if let Ok(text)=&yaml {a { href:super::export::download_url(text), download:"conctr-mapping.yaml", "Download YAML" }}
+                    if let Some(text)=&yaml {a { href:super::export::download_url(text), download:"conctr-mapping.yaml", "Download YAML" }}
                     details {
                     summary { "Mapping YAML · read only" }
                     p { "Conctr mapping format · not an executable Camel route." }
                     pre {
-                        code { "{yaml_text}" }
+                        code {
+                            if let Some(text) = &yaml { "{text}" }
+                            else if let Some(problem) = &problem { "# {problem}" }
+                        }
                     }
                 }
             }

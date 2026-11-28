@@ -43,10 +43,10 @@ impl Route {
             Self::Credentials {} => "Credentials",
             Self::Connections {} => "Connections",
             Self::Endpoints {} => "Endpoints",
-            Self::FieldMappings {} => "Field Mappings",
+            Self::FieldMappings {} => "Field mappings",
             Self::Transformers {} => "Transformers",
-            Self::ChannelsQueues {} => "Channels/Queues",
-            Self::WorkflowPipeline {} => "Workflow Pipeline",
+            Self::ChannelsQueues {} => "Channels and queues",
+            Self::WorkflowPipeline {} => "Workflow pipeline",
             Self::History {} => "History",
             Self::Settings {} => "Settings",
             Self::Profile {} => "Profile",
@@ -59,65 +59,85 @@ impl Route {
 
 #[component]
 fn Credentials() -> Element {
-    rsx! { h1 { class: "text-2xl", "Credentials" } }
+    rsx! { UnavailablePage { route: Route::Credentials {} } }
 }
 
 #[component]
 fn Connections() -> Element {
-    rsx! { h1 { class: "text-2xl", "Connections" } }
+    rsx! { UnavailablePage { route: Route::Connections {} } }
 }
 
 #[component]
 fn Endpoints() -> Element {
-    rsx! { h1 { class: "text-2xl", "Endpoints" } }
+    rsx! { UnavailablePage { route: Route::Endpoints {} } }
 }
 
 #[component]
 fn FieldMappings() -> Element {
-    rsx! { h1 { class: "text-2xl", "Field Mappings" } }
+    rsx! { UnavailablePage { route: Route::FieldMappings {} } }
 }
 
 #[component]
 fn Transformers() -> Element {
-    rsx! { h1 { class: "text-2xl", "Transformers" } }
+    rsx! { UnavailablePage { route: Route::Transformers {} } }
 }
 
 #[component]
 fn ChannelsQueues() -> Element {
-    rsx! { h1 { class: "text-2xl", "Channels/Queues" } }
+    rsx! { UnavailablePage { route: Route::ChannelsQueues {} } }
 }
 
 #[component]
 fn WorkflowPipeline() -> Element {
-    rsx! { h1 { class: "text-2xl", "Workflow Pipeline" } }
+    rsx! { UnavailablePage { route: Route::WorkflowPipeline {} } }
 }
 
 #[component]
 fn History() -> Element {
-    rsx! { h1 { class: "text-2xl", "History" } }
+    rsx! { UnavailablePage { route: Route::History {} } }
 }
 
 #[component]
 fn Settings() -> Element {
-    rsx! { h1 { class: "text-2xl", "Settings" } }
+    rsx! { UnavailablePage { route: Route::Settings {} } }
 }
 
 #[component]
 fn Profile() -> Element {
-    rsx! { h1 { class: "text-2xl", "Profile" } }
+    rsx! { UnavailablePage { route: Route::Profile {} } }
 }
 
 #[component]
 fn Notifications() -> Element {
-    rsx! { h1 { class: "text-2xl", "Notifications" } }
+    rsx! { UnavailablePage { route: Route::Notifications {} } }
 }
 
 #[component]
 fn Help() -> Element {
-    rsx! { h1 { class: "text-2xl", "Help" } }
+    rsx! { UnavailablePage { route: Route::Help {} } }
+}
+
+#[component]
+fn UnavailablePage(route: Route) -> Element {
+    rsx! {
+        div { class: "grid gap-2",
+            h1 { class: "text-2xl font-semibold", "{route.label()}" }
+            p { class: "text-sm text-muted-foreground", "This page is under development." }
+        }
+    }
 }
 
 #[component]
 fn NotFound(segments: Vec<String>) -> Element {
-    rsx! { h1 { "Page not found" } Link { to: Route::Dashboard {}, "Back to dashboard" } }
+    rsx! {
+        div { class: "grid gap-2",
+            h1 { class: "text-2xl font-semibold", "Page not found" }
+            p { class: "text-sm text-muted-foreground", "Check the address or return to Dashboard." }
+            Link {
+                to: Route::Dashboard {},
+                class: "w-fit rounded-sm text-sm font-medium text-primary underline",
+                "Go to Dashboard"
+            }
+        }
+    }
 }

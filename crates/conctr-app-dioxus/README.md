@@ -1,9 +1,11 @@
 # Shared Conctr app
 
 The web, desktop and mobile launchers share a responsive sidebar and session theme toggle.
+Use the header control to collapse the sidebar or open the drawer on narrow screens.
 Dashboard loads server build details from `GET /api/v1/system/details`.
-The header breadcrumb links Workspace to Dashboard and shows the current page.
-On small screens, it shows only the current page. The sidebar footer identifies the signed-in user and provides Profile,
+The header breadcrumb shows the current page and links back to Dashboard from other
+destinations on larger screens. The first keyboard stop skips to the page content.
+The sidebar footer identifies the signed-in user and provides Profile,
 Notifications and Log out. The shared sign-in screen protects direct navigation
 to every product page. See [account setup and API security](../conctr-api-dioxus/README.md).
 
@@ -11,14 +13,14 @@ to every product page. See [account setup and API security](../conctr-api-dioxus
 | --- | --- |
 | Workspace | Dashboard (`/`) |
 | Connectivity | Credentials (`/credentials`), Connections (`/connections`), Endpoints (`/endpoints`) |
-| Message Transformation | Field Mappings (`/mappings`), Transformers (`/transformers`) |
-| Channels & Routing | Channels/Queues (`/queues`), Workflow Pipeline (`/pipelines`) |
+| Message transformation | Field mappings (`/mappings`), Transformers (`/transformers`) |
+| Channels and routing | Channels and queues (`/queues`), Workflow pipeline (`/pipelines`) |
 | Operations | History (`/runs`) |
 | Administration | Settings (`/settings`), Help (`/help`) |
 | User menu | Profile (`/profile`), Notifications (`/notifications`) |
 
-Dashboard displays live system details. The other named destinations currently render
-headings. The login URL redirects to Dashboard, where the session gate handles
+Dashboard displays live system details. The other named destinations say they are
+under development. The login URL redirects to Dashboard, where the session gate handles
 access. See the [routes](src/routes.rs) and [app entry points](src/lib.rs).
 
 Session-check failures appear in the shared toast viewport on the sign-in screen.

@@ -2,8 +2,8 @@
 use conctr_auth::{Account, Role};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let args: Vec<_> = std::env::args().skip(1).collect();
-    let [username, role] = args.as_slice() else {
+    let mut args = std::env::args().skip(1);
+    let (Some(username), Some(role), None) = (args.next(), args.next(), args.next()) else {
         return Err("Usage: conctr-account USERNAME admin|member".into());
     };
     let role = match role.as_str() {
@@ -15,7 +15,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if rpassword::prompt_password("Confirm password: ")? != password {
         return Err("Passwords differ.".into());
     }
-    let account = Account::new(username.clone(), role, &password)?;
+    let account = Account::new(username, role, &password)?;
     println!("{}", serde_json::to_string_pretty(&[account])?);
     Ok(())
 }

@@ -6,22 +6,27 @@
 .cn-toast-message[data-tone="danger"] { --toast-tone:var(--cn-danger); --toast-tint:var(--cn-danger-soft); }
 .cn-toast-message[data-tone="warning"] { --toast-tone:var(--cn-amber-text); --toast-tint:var(--cn-warning-soft); }
 .cn-toast-icon { display:grid; place-items:center; flex-shrink:0; width:32px; height:32px; border-radius:var(--cn-radius-full); background:var(--toast-tint); color:var(--toast-tone); }
-.cn-toast-copy { flex:1; min-width:0; padding-top:var(--cn-space-1); }
+.cn-toast-copy { flex:1; min-width:0; padding-top:var(--cn-space-1); overflow-wrap:anywhere; }
 .cn-body .cn-toast-copy [role="alert"] { padding:0; border:0; border-radius:0; background:transparent; box-shadow:none; }
 .cn-body .cn-toast-copy h4 { font-size:var(--cn-fs-small); line-height:var(--cn-lh-small); font-weight:600; margin:0 0 var(--cn-space-1); letter-spacing:0; }
 .cn-body .cn-toast-copy p { color:var(--cn-text-muted); font-size:var(--cn-fs-small); line-height:var(--cn-lh-small); margin:0; }
 .cn-toast-close { display:grid; place-items:center; flex-shrink:0; width:32px; height:32px; margin:-4px -4px 0 0; border-radius:var(--cn-radius-sm); color:var(--cn-text-subtle); cursor:pointer; }
 .cn-toast-close:hover { background:var(--cn-sunken); color:var(--cn-text); }
+.cn-toast-close:focus-visible { outline-offset:-2px; }
 .cn-toast-region.cn-toast { position:fixed; inset:auto 24px 24px auto; z-index:500; width:min(440px,calc(100vw - 32px)); max-width:none; padding:0; border:0; background:transparent; box-shadow:none; }
 @media(pointer:coarse) { .cn-toast-close { min-width:44px; min-height:44px; } }
 /* Only the front card sets the viewport height. Older cards peek out above it. */
 .cn-toast-stack {
     --toast-inset: var(--cn-space-6);
+    --toast-visible-height: 60dvh;
     position: fixed;
     inset: auto var(--toast-inset) var(--toast-inset) auto;
     z-index: var(--cn-z-toast);
     width: min(420px, calc(100% - 2 * var(--toast-inset)));
     isolation: isolate;
+    background: transparent;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+    scrollbar-width: thin;
 }
 .cn-toast-stack-item {
     position: relative;
@@ -53,22 +58,31 @@
     display: flex;
     flex-direction: column-reverse;
     gap: var(--cn-space-2);
-    max-height: calc(100dvh - 2 * var(--toast-inset));
+    max-height: min(var(--toast-visible-height), calc(100dvh - 2 * var(--toast-inset)));
     overflow: auto;
     overscroll-behavior: contain;
 }
 @media (pointer: coarse) {
     .cn-toast-stack {
+        --toast-visible-height: 45dvh;
         display: flex;
         flex-direction: column-reverse;
         gap: var(--cn-space-2);
-        max-height: min(45dvh, calc(100dvh - 2 * var(--toast-inset)));
+        max-height: min(var(--toast-visible-height), calc(100dvh - 2 * var(--toast-inset)));
         overflow: auto;
         overscroll-behavior: contain;
     }
 }
 .cn-toast-stack-item { flex-shrink: 0; }
-.cn-toast-stack-item .cn-toast-message { box-shadow: none; }
+.cn-toast-stack-item .cn-toast-message {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
+.cn-toast-stack:is(:hover, :focus-within) .cn-toast-stack-item { box-shadow: none; }
+@media (pointer: coarse) {
+    .cn-toast-stack-item { box-shadow: none; }
+}
 .cn-toast-countdown {
     position: absolute;
     inset: auto 0 0;

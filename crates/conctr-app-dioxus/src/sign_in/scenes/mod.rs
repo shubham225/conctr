@@ -6,15 +6,12 @@ use super::Styles;
 use catalog::{SCENES, Scene};
 use conctr_ui_dioxus::{
     assets::images,
-    ui::{
-        button::{Button, ButtonSize, ButtonVariant},
-        theme_toggle::BrandThemeToggle,
-    },
+    ui::button::{Button, ButtonSize, ButtonVariant},
 };
 use dioxus::prelude::*;
 
 #[component]
-pub(super) fn ScenePanel(dark: bool, on_theme_change: EventHandler<bool>) -> Element {
+pub(super) fn ScenePanel() -> Element {
     let mut selection = use_signal(|| None::<usize>);
     use_effect(move || {
         spawn(async move {
@@ -30,9 +27,8 @@ pub(super) fn ScenePanel(dark: bool, on_theme_change: EventHandler<bool>) -> Ele
             "data-paper": scene.map_or("dots", |s| s.texture),
             style: format!("--ink: var(--cn-{});", scene.map_or("primary", |s| s.accent)),
             div { class: Styles::identity.inner,
-                img { src: if dark { images::HORIZONTAL_COLOR_DARK_SVG } else { images::HORIZONTAL_COLOR_SVG }, alt: "Conctr", width: 130, height: 36 }
+                img { src: images::HORIZONTAL_COLOR_SVG, alt: "Conctr", width: 130, height: 36 }
                 span { "Where systems meet." }
-                // BrandThemeToggle { compact: true, dark, on_change: on_theme_change }
             }
             if let Some(scene) = scene {
                 div { class: Styles::intro.inner,

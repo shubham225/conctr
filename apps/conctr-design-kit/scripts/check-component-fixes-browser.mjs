@@ -127,6 +127,13 @@ await check('hover expands the stack and pauses every countdown', `(() => {
   return cards.every((card, i) => getComputedStyle(card.lastElementChild).animationPlayState === 'paused' &&
     (i === 0 || card.getBoundingClientRect().bottom < cards[i - 1].getBoundingClientRect().top));
 })()`);
+await check('expanded toasts have transparent gaps and scrollbar track', `(() => {
+  const stack = document.querySelector('.cn-toast-stack');
+  const viewport = getComputedStyle(stack);
+  return viewport.backgroundColor === 'rgba(0, 0, 0, 0)' &&
+    viewport.scrollbarColor.endsWith('rgba(0, 0, 0, 0)') &&
+    [...stack.children].every(card => getComputedStyle(card).boxShadow === 'none');
+})()`);
 const olderClose = await evaluate(`(() => {
   const rect = document.querySelector('.cn-toast-stack-item:nth-child(2) .cn-toast-close').getBoundingClientRect();
   return {x: rect.x + rect.width / 2, y: rect.y + rect.height / 2};

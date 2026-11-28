@@ -9,13 +9,13 @@ repository = { workspace = true }
 
 [dependencies]
 conctr-api-dioxus = { workspace = true }
-dioxus            = { workspace = true, features = ["router"] }
+dioxus            = { workspace = true, features = ["fullstack", "router"] }
 conctr-ui-dioxus  = { workspace = true }
 icons             = { version = "0.19", features = ["dioxus"] }
 
 [features]
 native-client = ["dep:dotenvy"]
-server        = ["conctr-ui-dioxus/server", "conctr-api-dioxus/server"]
+server        = ["dioxus/server", "conctr-ui-dioxus/server", "conctr-api-dioxus/server"]
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 gloo-timers = { version = "0.3", features = ["futures"] }

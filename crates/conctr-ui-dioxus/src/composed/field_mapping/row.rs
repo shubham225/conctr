@@ -4,9 +4,9 @@ use super::*;
 pub(super) fn MappingRow(
     number: usize,
     link: MappingLink,
-    source_fields: Vec<MappingField>,
-    target_fields: Vec<MappingField>,
-    transforms: Vec<MappingTransform>,
+    source_fields: Rc<Vec<MappingField>>,
+    target_fields: Rc<Vec<MappingField>>,
+    transforms: Rc<Vec<MappingTransform>>,
     occupied: Vec<String>,
     read_only: bool,
     on_change: EventHandler<MappingLink>,
@@ -61,11 +61,8 @@ pub(super) fn MappingRow(
                         disabled: read_only,
                         onchange: move |event: Event<FormData>| {
                             let mut updated = transform_link.clone();
-                            updated.transform = if event.value().is_empty() {
-                                None
-                            } else {
-                                Some(event.value())
-                            };
+                            let value = event.value();
+                            updated.transform = (!value.is_empty()).then_some(value);
                             on_change.call(updated);
                         },
                         option { value: "", selected: link.transform.is_none(), "Direct copy" }
@@ -77,7 +74,7 @@ pub(super) fn MappingRow(
                                 "Missing transform"
                             }
                         }
-                        for item in &transforms {
+                        for item in transforms.iter() {
                             option {
                                 value: item.id.clone(),
                                 selected: Some(&item.id) == link.transform.as_ref(),
@@ -113,7 +110,7 @@ pub(super) fn MappingRow(
 fn FieldPicker(
     role: &'static str,
     number: usize,
-    fields: Vec<MappingField>,
+    fields: Rc<Vec<MappingField>>,
     selected: String,
     read_only: bool,
     #[props(default)] occupied: Vec<String>,
@@ -151,7 +148,7 @@ fn FieldPicker(
                             "Missing {side} field"
                         }
                     }
-                    for field in &fields {
+                    for field in fields.iter() {
                         option {
                             value: field.id.clone(),
                             selected: field.id == selected,

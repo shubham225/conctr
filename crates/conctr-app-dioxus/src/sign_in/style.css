@@ -44,10 +44,9 @@
 .art text { font: 500 13px var(--cn-font-mono); fill: var(--cn-text); paint-order: stroke; stroke: var(--wash); stroke-width: 5px; stroke-linejoin: round; }
 .legend { margin-top: auto; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--cn-border-strong); }
 .pane { display: grid; place-items: center; padding: 3rem 2rem; }
-.form_box { display: grid; gap: 1rem; width: min(100%, 23rem); }
-.mark { width: 4rem; height: 4rem; margin: 0 auto; }
-.pane h1 { margin: 0; text-align: center; font: 600 var(--cn-fs-h1)/var(--cn-lh-h1) var(--cn-font-display); letter-spacing: -0.04em; }
-.subtitle { text-align: center; margin: 0 0 0.75rem; color: var(--cn-text-muted); }
+.form_box { display: grid; gap: var(--cn-space-4); width: min(100%, 23rem); }
+.mark { width: var(--cn-space-12); height: var(--cn-space-12); }
+.pane h1 { font-size: var(--cn-fs-h2); line-height: var(--cn-lh-h2); }
 .password_toggle:focus-visible { outline: 2px solid var(--cn-focus); outline-offset: -2px; }
 @media (prefers-reduced-motion: reduce) {
     .motion_control { display: none; }
@@ -55,7 +54,5 @@
 @media (max-width: 46.25rem) {
     .panel { grid-template-columns: 1fr; }
     .poster { display: none; }
-    .pane h1 { font-size: var(--cn-fs-h2); }
-    .pane { padding: 2rem 1.5rem; }
-    .mark { width: 3.5rem; height: 3.5rem; }
+    .pane { padding: var(--cn-space-8) var(--cn-space-6); }
 }
